@@ -98,8 +98,41 @@ bool fdibuf::get(char& ch)
   return r;
 }
 
+bool fdibuf::read_large(char* data, unsigned datalen)
+{
+  lock();
+  count = 0;
+  unsigned len = buflength - bufstart;
+  if(len > datalen)
+    len = datalen;
+  memcpy(data, buf+bufstart, len);
+  data += len;
+  datalen -= len;
+  bufstart += len;
+  count += len;
+  while(datalen > 0) {
+    ssize_t red = ::read(fd, data, datalen);
+    if(red == -1) {
+      errnum = errno;
+      flags |= flag_error;
+      break;
+    }
+    else if(red == 0) {
+      flags |= flag_eof;
+      break;
+    }
+    data += len;
+    datalen -= red;
+    offset += red;
+  }
+  unlock();
+  return datalen == 0;
+}
+
 bool fdibuf::read(char* data, unsigned datalen)
 {
+  if(datalen >= bufsize)
+    return read_large(data, datalen);
   lock();
   count = 0;
   char* ptr = data;

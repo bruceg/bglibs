@@ -1,4 +1,25 @@
+2000-04-07  Bruce Guenter  <bguenter@bguenter.pointsnorth.com>
+
+	* fdobuf_signed.cc (operator<<): Immediately output a '-' for
+	negative numbers rather than storing a negative flag for later.
+
+	* fdobuf_unsigned.cc (operator<<): Moved the integer versions of
+	this operator into their own modules.
+
+	* fdobuf_seek.cc (seek): Moved this routine out of fdobuf.cc
+
+	* fdibuf.cc (read_large): Added this routine to read in a chunk of
+	data larger than the size of the buffer.
+
 2000-04-06  Bruce Guenter  <bguenter@bguenter.pointsnorth.com>
+
+	* fdibuf_netstring.cc (getnetstring): Moved this routine into its
+	own source file.
+
+	* fdobuf.cc (write_large): Added this routine to write out a chunk
+	of data larger than the size of the buffer, to avoid doing extra
+	copies.
+	(write): Removed an extraneous code segment.
 
 	* fdobuf.h: Moved the fdobuf declarations here.
 

@@ -18,33 +18,24 @@
 #include "fdbuf.h"
 #include "mystring/mystring.h"
 
-bool fdibuf::getline(mystring& out, char terminator)
+bool fdibuf::getnetstring(mystring& out)
 {
-  lock();
-  count = 0;
-  if(bufstart >= buflength)
-    refill();
-  if(eof() || error()) {
-    unlock();
-    return false;
-  }
-  out = "";
-  while(!eof() && !error()) {
-    char* ptr = buf+bufstart;
-    const char* end = (const char*)memchr(ptr, terminator, buflength-bufstart);
-    if(!end) {
-      out += mystring(ptr, buflength-bufstart);
-      bufstart = buflength;
-      count += buflength-bufstart;
-      refill();
-    }
-    else {
-      out += mystring(ptr, end-ptr);
-      bufstart += (end-ptr)+1;
-      count += (end-ptr)+1;
+  // Read in the size
+  char ch;
+  unsigned long size = 0;
+  for(;;) {
+    if(!get(ch))
+      return false;
+    if(ch == ':')
       break;
-    }
+    else if(ch >= '0' && ch <= '9')
+      size = size*10 + (ch-'0');
+    else
+      return false;
   }
-  unlock();
+  char tmp[size];
+  if(!read(tmp, size) || !get(ch) || ch != ',')
+    return false;
+  out = mystring(tmp, size);
   return true;
 }

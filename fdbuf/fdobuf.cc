@@ -110,11 +110,12 @@ bool fdobuf::write(char ch)
   lock();
   count = 0;
   buf[bufpos++] = ch;
-  if(buflength >= bufsize && !nflush(false)) {
-    unlock();
-    return false;
-  }
-  if(bufpos >= buflength) buflength = bufpos;
+  //if(buflength >= bufsize && !nflush(false)) {
+  //  unlock();
+  //  return false;
+  //}
+  if(bufpos >= buflength)
+    buflength = bufpos;
   if(buflength >= bufsize && !nflush(false)) {
     unlock();
     return false;
@@ -124,8 +125,41 @@ bool fdobuf::write(char ch)
   return true;
 }
 
+bool fdobuf::write_large(const char* data, unsigned datalen)
+{
+  if(flags)
+    return false;
+
+  lock();
+  count = 0;
+
+  if(!nflush(false)) {
+    unlock();
+    return false;
+  }
+
+  while(datalen > 0) {
+    ssize_t written = ::write(fd, data, datalen);
+    if(written == -1) {
+      flags |= flag_error;
+      errnum = errno;
+      unlock();
+      return false;
+    }
+    datalen -= written;
+    data += written;
+    offset += written;
+    count += written;
+  }
+  unlock();
+  return true;
+}
+
 bool fdobuf::write(const char* data, unsigned datalen)
 {
+  if(datalen >= bufsize)
+    return write_large(data, datalen);
+  
   if(flags)
     return false;
 
@@ -156,74 +190,6 @@ bool fdobuf::write(const char* data, unsigned datalen)
   if(bufpos > buflength) buflength = bufpos;
   unlock();
   return true;
-}
-
-bool fdobuf::seek(unsigned o)
-{
-  if(flags)
-    return false;
-
-  lock();
-  unsigned buf_start = offset;
-  unsigned buf_end = offset + buflength;
-  if(o >= buf_start && o < buf_end) {
-    bufpos = o - buf_start;
-  }
-  else {
-    if(!nflush(false)) {
-      unlock();
-      return false;
-    }
-    if(lseek(fd, o, SEEK_SET) != (off_t)o) {
-      errnum = errno;
-      flags |= flag_error;
-      unlock();
-      return false;
-    }
-    offset = o;
-  }
-  count = 0;
-  unlock();
-  return true;
-}
-
-fdobuf& fdobuf::operator<<(signed long i)
-{
-  if(i == 0)
-    return operator<<('0');
-  else {
-    char buf[20];
-    char* ptr = buf+19;
-    *ptr-- = 0;
-    bool negative = false;
-    if(i < 0) {
-      negative = true;
-      i = -i;
-    }
-    while(i) {
-      *ptr-- = i % 10 + '0';
-      i /= 10;
-    }
-    if(negative)
-      *ptr-- = '-';
-    return operator<<(ptr+1);
-  }
-}
-
-fdobuf& fdobuf::operator<<(unsigned long i)
-{
-  if(i == 0)
-    return operator<<('0');
-  else {
-    char buf[20];
-    char* ptr = buf+19;
-    *ptr-- = 0;
-    while(i) {
-      *ptr-- = i % 10 + '0';
-      i /= 10;
-    }
-    return operator<<(ptr+1);
-  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////

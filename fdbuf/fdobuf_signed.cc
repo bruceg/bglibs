@@ -14,37 +14,25 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#include <string.h>
 #include "fdbuf.h"
-#include "mystring/mystring.h"
+#include <limits.h>
 
-bool fdibuf::getline(mystring& out, char terminator)
+#define MAXSTRLEN ((sizeof(signed long)*CHAR_BIT)/3)
+
+fdobuf& fdobuf::operator<<(signed long i)
 {
-  lock();
-  count = 0;
-  if(bufstart >= buflength)
-    refill();
-  if(eof() || error()) {
-    unlock();
-    return false;
+  if(i == 0)
+    return operator<<('0');
+  if(i < 0) {
+    operator<<('-');
+    i = -i;
   }
-  out = "";
-  while(!eof() && !error()) {
-    char* ptr = buf+bufstart;
-    const char* end = (const char*)memchr(ptr, terminator, buflength-bufstart);
-    if(!end) {
-      out += mystring(ptr, buflength-bufstart);
-      bufstart = buflength;
-      count += buflength-bufstart;
-      refill();
-    }
-    else {
-      out += mystring(ptr, end-ptr);
-      bufstart += (end-ptr)+1;
-      count += (end-ptr)+1;
-      break;
-    }
+  char buf[MAXSTRLEN+1];
+  char* ptr = buf+MAXSTRLEN;
+  *ptr-- = 0;
+  while(i) {
+    *ptr-- = i % 10 + '0';
+    i /= 10;
   }
-  unlock();
-  return true;
+  return operator<<(ptr+1);
 }

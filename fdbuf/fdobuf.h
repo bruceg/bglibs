@@ -43,6 +43,7 @@ public:
   virtual bool write(const char*, unsigned);
   bool write(const unsigned char* b, unsigned l) { return write((char*)b, l); }
   bool write(const signed char* b, unsigned l) { return write((char*)b, l); }
+  virtual bool write_large(const char*, unsigned);
   unsigned last_count() { return count; }
   bool seek(unsigned o);
   bool rewind() { return seek(0); }

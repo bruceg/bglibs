@@ -31,6 +31,7 @@ public:
   virtual bool getline(mystring& out, char terminator = '\n');
   virtual bool getnetstring(mystring& out);
   virtual bool read(char*, unsigned);
+  virtual bool read_large(char*, unsigned);
   bool read(unsigned char* b, unsigned l) { return read((char*)b, l); }
   bool read(signed char* b, unsigned l) { return read((char*)b, l); }
   unsigned last_count() { return count; }
