@@ -5,8 +5,10 @@ ibuf_getstr.o
 ibuf_getu.o
 ibuf_init.o
 ibuf_open.o
+ibuf_openreadclose.o
 ibuf_peek.o
 ibuf_read.o
+ibuf_readall.o
 ibuf_refill.o
 ibuf_seek.o
 ibuf_status.o
