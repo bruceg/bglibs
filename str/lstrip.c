@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 #include <ctype.h>
+#include <string.h>
 #include "str.h"
 
 void str_lstrip(str* s)
@@ -23,7 +24,7 @@ void str_lstrip(str* s)
   unsigned off;
   for (off = 0; off < s->len && isspace(s->s[off]); ++off) ;
   if (off) {
-    memcpy(s->s, s->s+off, s->len-off+1);
+    memmove(s->s, s->s+off, s->len-off+1);
     s->len -= off;
   }
 }
