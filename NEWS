@@ -1,4 +1,10 @@
 -------------------------------------------------------------------------------
+Changes in version 1.016
+
+
+Development of this version has been sponsored by FutureQuest, Inc.
+ossi@FutureQuest.net  http://www.FutureQuest.net/
+-------------------------------------------------------------------------------
 Changes in version 1.015
 
 - Added a "libbg.a" build target, including all the other libraries that
