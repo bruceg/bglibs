@@ -1,9 +1,14 @@
+#include <sys/types.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/mman.h>
 #include "iobuf.h"
 
 unsigned iobuf_bufsize = 8192;
+
+#ifndef MAP_ANONYMOUS
+#define MAP_ANONYMOUS MAP_ANON
+#endif
 
 int iobuf_init(iobuf* io, int fd, unsigned bufsize, char* buffer, unsigned flags)
 {
