@@ -13,6 +13,8 @@ Changes in version 1.010
 - Split the case insensitive parts of the str_glob and str_match
   functions into str_case_glob and str_case_match respectively.
 
+- wrap_* functions can now exit with a customized error code.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
