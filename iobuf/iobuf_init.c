@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "iobuf.h"
 
 unsigned iobuf_bufsize = 4096;
