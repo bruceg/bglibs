@@ -124,6 +124,7 @@ bool fdibuf::read_large(char* data, unsigned datalen)
     data += len;
     datalen -= red;
     offset += red;
+    count += red;
   }
   unlock();
   return datalen == 0;

@@ -1,3 +1,8 @@
+2000-04-08  Bruce Guenter  <bguenter@bguenter.pointsnorth.com>
+
+	* fdibuf.cc (read_large): Fixed bug: count needed to be
+	incremented after reading data in.
+
 2000-04-07  Bruce Guenter  <bguenter@bguenter.pointsnorth.com>
 
 	* fdobuf_signed.cc (operator<<): Immediately output a '-' for
