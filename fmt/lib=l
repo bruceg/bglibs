@@ -1,0 +1,16 @@
+lcase.o
+pad.o
+sign_pad.o
+sdec.o
+slldec.o
+sllnum.o
+snum.o
+ucase.o
+udec.o
+ulldec.o
+uHex.o
+uhex.o
+ullHex.o
+ullhex.o
+ullnum.o
+unum.o
