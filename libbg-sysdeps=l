@@ -1,5 +1,5 @@
-iopoll.o
-setenv.o
+sys/iopoll.o
+sys/setenv.o
 uint16/get.o
 uint16/pack.o
 uint16/unpack.o
@@ -15,4 +15,4 @@ uint64/pack_lsb.o
 uint64/pack_msb.o
 uint64/unpack_lsb.o
 uint64/unpack_msb.o
-unsetenv.o
+sys/unsetenv.o
