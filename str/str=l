@@ -24,9 +24,13 @@ findprev.o
 findprevof.o
 free.o
 init.o
+join.o
+lower.o
 lstrip.o
 ready.o
 realloc.o
 rstrip.o
 sort.o
+subst.o
 truncate.o
+upper.o
