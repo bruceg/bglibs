@@ -31,17 +31,19 @@ bool fdibuf::getline(mystring& out, char terminator)
   out = "";
   while(!eof() && !error()) {
     char* ptr = buf+bufstart;
-    const char* end = (const char*)memchr(ptr, terminator, buflength-bufstart);
+    unsigned bufleft = buflength - bufstart;
+    const char* end = (const char*)memchr(ptr, terminator, bufleft);
     if(!end) {
-      out += mystring(ptr, buflength-bufstart);
+      out += mystring(ptr, bufleft);
       bufstart = buflength;
-      count += buflength-bufstart;
+      count += bufleft;
       refill();
     }
     else {
-      out += mystring(ptr, end-ptr);
-      bufstart += (end-ptr)+1;
-      count += (end-ptr)+1;
+      unsigned copylen = end - ptr;
+      out += mystring(ptr, copylen);
+      bufstart += copylen+1;
+      count += copylen+1;
       break;
     }
   }

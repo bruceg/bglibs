@@ -1,3 +1,10 @@
+2000-08-10  Bruce Guenter  <bruce@bruce-guenter.dyndns.org>
+
+	* fdibuf.cc (read_large): Fixed a bug in the increment of data.
+
+	* fdibuf_mystring.cc (getline): Reduced some of the expressions
+	into variables.
+
 2000-04-08  Bruce Guenter  <bguenter@bguenter.pointsnorth.com>
 
 	* fdibuf.cc (read_large): Fixed bug: count needed to be

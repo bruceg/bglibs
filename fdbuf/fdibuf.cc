@@ -102,6 +102,8 @@ bool fdibuf::read_large(char* data, unsigned datalen)
 {
   lock();
   count = 0;
+
+  // If there's any content in the buffer, memcpy it out first.
   unsigned len = buflength - bufstart;
   if(len > datalen)
     len = datalen;
@@ -110,6 +112,9 @@ bool fdibuf::read_large(char* data, unsigned datalen)
   datalen -= len;
   bufstart += len;
   count += len;
+
+  // After the buffer is empty and there's still data to read,
+  // read it straight from the fd instead of copying it through the buffer.
   while(datalen > 0) {
     ssize_t red = ::read(fd, data, datalen);
     if(red == -1) {
@@ -121,7 +126,7 @@ bool fdibuf::read_large(char* data, unsigned datalen)
       flags |= flag_eof;
       break;
     }
-    data += len;
+    data += red;
     datalen -= red;
     offset += red;
     count += red;
