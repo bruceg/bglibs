@@ -57,6 +57,9 @@ void insthier(void)
   CF(dict, dict.h);
   CF(dict, load.h);
   
+  DI(fmt);
+  CF(fmt, number.h);
+
   DI(iobuf);
   CF(iobuf, iobuf.h);
 
@@ -113,6 +116,7 @@ void insthier(void)
   L(crc);
   L(crypto);
   L(dict);
+  L(fmt);
   L(iobuf);
   L(misc);
   L(msg);

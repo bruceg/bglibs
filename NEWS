@@ -5,6 +5,8 @@ Changes in version 1.012
 
 - Added IPv6 address parsing/formatting and network functions.
 
+- Added a library of number formatting routines.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
