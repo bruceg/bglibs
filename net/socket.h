@@ -30,6 +30,7 @@ int socket_send4(int sock, const char* buffer, unsigned buflen,
 int socket_getaddr4(int sock, ipv4addr* ip, ipv4port* port);
 int socket_cork(int sock);
 int socket_uncork(int sock);
+int socket_notcpdelay(int sock, int enable);
 /* @} */
 
 /** \name UNIX local-domain socket functions

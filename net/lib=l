@@ -16,6 +16,7 @@ ipv6_format.o
 ipv6_scan.o
 linger.o
 listen.o
+notcpdelay.o
 pairdgm.o
 pairstr.o
 recv4.o
