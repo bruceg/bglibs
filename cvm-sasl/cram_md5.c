@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include "cvm/client.h"
 #include "systime.h"
 #include "cvm-sasl.h"
 #include "internal.h"
@@ -13,7 +14,7 @@ int sasl_cram_md5_start(const str* response, str* challenge)
   const char* hostname;
   
   if (response) return SASL_RESP_NOTALLOWED;
-  if ((hostname = getenv("TCPLOCALHOST"))) hostname = "unknown";
+  if ((hostname = cvm_ucspi_domain()) == 0) hostname = "unknown";
   if (gettimeofday(&tv, 0) == -1 ||
       !str_copys(&init, "<") ||
       !str_cati(&init, getpid()) ||
