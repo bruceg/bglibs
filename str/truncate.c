@@ -20,9 +20,8 @@
 int str_truncate(str* s, unsigned len)
 {
   if (!str_realloc(s, len)) return 0;
-  if (len < s->len) {
+  if (len < s->len)
     s->len = len;
-    s->s[len] = 0;
-  }
+  s->s[len] = 0;
   return 1;
 }
