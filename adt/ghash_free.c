@@ -4,8 +4,8 @@
 #include "ghash.h"
 
 void ghash_free(struct ghash* d,
-		ghash_free_fn* keyfree, unsigned keysize,
-		ghash_free_fn* datafree)
+		adt_free_fn* keyfree, unsigned keysize,
+		adt_free_fn* datafree)
 {
   unsigned long i;
   void** p;

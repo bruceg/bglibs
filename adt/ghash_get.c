@@ -1,7 +1,7 @@
 #include "ghash.h"
 
 void* ghash_get(struct ghash* d, const void* key, unsigned long hash,
-		ghash_cmp_fn* keycmp)
+		adt_cmp_fn* keycmp)
 {
   const unsigned size = d->size;
   const unsigned start = hash % size;

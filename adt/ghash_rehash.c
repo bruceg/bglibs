@@ -3,7 +3,7 @@
 
 #include "ghash.h"
 
-int ghash_rehash(struct ghash* d, ghash_hash_fn* hash)
+int ghash_rehash(struct ghash* d, adt_hash_fn* hash)
 {
   unsigned i;
   void** newtable;

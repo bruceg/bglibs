@@ -1,10 +1,7 @@
-#ifndef GENERIC_HASH__H__
-#define GENERIC_HASH__H__
+#ifndef BGLIBS__GENERIC_HASH__H__
+#define BGLIBS__GENERIC_HASH__H__
 
-typedef void ghash_free_fn(void*);
-typedef int ghash_copy_fn(void*, const void*);
-typedef int ghash_cmp_fn(const void*, const void*);
-typedef unsigned long ghash_hash_fn(const void*);
+#include <adt/common.h>
 
 struct ghash
 {
@@ -24,16 +21,16 @@ unsigned long ghash_hashs(const unsigned char*);
 void ghash_insert(struct ghash* d, void* e);
 int ghash_add(struct ghash* d, unsigned keysize, unsigned totalsize,
 	      unsigned long hash, const void* key, const void* data,
-	      ghash_copy_fn* keycopy,
-	      ghash_copy_fn* datacopy,
-	      ghash_free_fn* keyfree);
+	      adt_copy_fn* keycopy,
+	      adt_copy_fn* datacopy,
+	      adt_free_fn* keyfree);
 void ghash_free(struct ghash* d,
-		ghash_free_fn* keyfree, unsigned keysize,
-		ghash_free_fn* datafree);
+		adt_free_fn* keyfree, unsigned keysize,
+		adt_free_fn* datafree);
 void* ghash_get(struct ghash* d, const void* key, unsigned long hash,
-		ghash_cmp_fn* keycmp);
+		adt_cmp_fn* keycmp);
 void ghash_init(struct ghash* d);
-int ghash_rehash(struct ghash* d, ghash_hash_fn* hash);
+int ghash_rehash(struct ghash* d, adt_hash_fn* hash);
 void ghash_foreach(struct ghash* d, void (*fn)(void* entry));
 void* ghash_search(struct ghash* d, int (*fn)(const void* entry));
 
@@ -71,26 +68,26 @@ void PREFIX##_init(struct ghash* d) { \
 
 #define GHASH_FREE_DEFN(PREFIX,KFREE,KTYPE,DFREE) \
 void PREFIX##_free(struct ghash* d) { \
-  ghash_free(d,(ghash_free_fn*)KFREE, \
-	     GHASH_KEYSIZE(PREFIX),(ghash_free_fn*)DFREE); \
+  ghash_free(d,(adt_free_fn*)KFREE, \
+	     GHASH_KEYSIZE(PREFIX),(adt_free_fn*)DFREE); \
 }
 
 #define GHASH_ADD_DEFN(PREFIX,KTYPE,DTYPE,HASHFN,KCOPY,DCOPY,KFREE) \
 int PREFIX##_add(struct ghash* d, KTYPE const* key, DTYPE const* data) { \
   return ghash_add(d, GHASH_KEYSIZE(PREFIX), sizeof(struct PREFIX##_entry), \
                    HASHFN(key), key, data, \
-                   (ghash_copy_fn*)KCOPY, (ghash_copy_fn*)DCOPY, \
-		   (ghash_free_fn*)KFREE); \
+                   (adt_copy_fn*)KCOPY, (adt_copy_fn*)DCOPY, \
+		   (adt_free_fn*)KFREE); \
 }
 
 #define GHASH_GET_DEFN(PREFIX,KTYPE,HASHFN,CMPFN) \
 struct PREFIX##_entry* PREFIX##_get(struct ghash* d, KTYPE const* key) { \
-  return ghash_get(d, key, HASHFN(key), (ghash_cmp_fn*)CMPFN); \
+  return ghash_get(d, key, HASHFN(key), (adt_cmp_fn*)CMPFN); \
 }
 
 #define GHASH_REHASH_DEFN(PREFIX,HASHFN) \
 int PREFIX##_rehash(struct ghash* d) { \
-  return ghash_rehash(d, (ghash_hash_fn*)HASHFN); \
+  return ghash_rehash(d, (adt_hash_fn*)HASHFN); \
 }
 
 #define GHASH_FOREACH_DEFN(PREFIX) \

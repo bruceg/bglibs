@@ -67,9 +67,9 @@ static int ghash_grow(struct ghash* d, unsigned count)
 
 int ghash_add(struct ghash* d, unsigned keysize, unsigned totalsize,
 	      unsigned long hash, const void* key, const void* data,
-	      ghash_copy_fn* keycopy,
-	      ghash_copy_fn* datacopy,
-	      ghash_free_fn* keyfree)
+	      adt_copy_fn* keycopy,
+	      adt_copy_fn* datacopy,
+	      adt_free_fn* keyfree)
 {
   void* newe;
   if (!ghash_grow(d, d->count + 1)) return 0;
