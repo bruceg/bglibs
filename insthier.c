@@ -71,6 +71,7 @@ void insthier(void)
 
   DI(misc);
   CF(misc, misc.h);
+  CF(misc, ucspi.h);
   
   DI(msg);
   CF(msg, msg.h);
