@@ -22,7 +22,9 @@
 int fcntl_fd_on(int fd, int flag)
 {
   int flags;
+  int newflags;
   if ((flags = fcntl(fd, F_GETFD, 0)) == -1) return 0;
-  if (fcntl(fd, F_SETFD, flags | flag)) return 0;
+  if ((newflags = flags | flag) != flags)
+    if (fcntl(fd, F_SETFD, newflags)) return 0;
   return 1;
 }
