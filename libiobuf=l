@@ -35,6 +35,7 @@ iobuf/obuf_putnetstring.o
 iobuf/obuf_putsflush.o
 iobuf/obuf_putuwll.o
 iobuf/obuf_putuw.o
+iobuf/obuf_putxw.o
 iobuf/obuf_seek.o
 iobuf/obuf_stderr.o
 iobuf/obuf_stdout.o
