@@ -3,6 +3,9 @@ Changes in version 1.004
 
 - Portability fixes for *BSD (possibly others).
 
+- #define MSG_NO_DEBUG before including <msg/msg.h> and no debugging
+  messages will be compiled into the object code.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

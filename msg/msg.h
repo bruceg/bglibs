@@ -7,7 +7,11 @@ extern int msg_debug_bits;
 
 void msg_common(const char* type, const char*, const char*, const char*, const char*, const char*, const char*, int);
 #define msg(a,b,c,d,e,f) msg_common(0,a,b,c,d,e,f,0)
+#ifdef MSG_NO_DEBUG
+#define msg_debug(I,A,B,C,D,E,F,X) do{}while(0)
+#else
 void msg_debug(int, const char*, const char*, const char*, const char*, const char*, const char*, int);
+#endif
 void msg_warn(const char*, const char*, const char*, const char*, const char*, const char*, int);
 void msg_error(const char*, const char*, const char*, const char*, const char*, const char*, int);
 void msg_die(int, const char*, const char*, const char*, const char*, const char*, const char*, int);
