@@ -27,8 +27,7 @@ int str_ready(str* s, unsigned size)
     size += size/8 + STR_BLOCKSIZE-1;
     size -= size % STR_BLOCKSIZE;
     if ((news = malloc(size)) == 0) return 0;
-    if (s->s)
-      memcpy(news, s->s, s->len+1);
+    if (s->s) free(s->s);
     s->size = size;
     s->s = news;
   }
