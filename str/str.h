@@ -36,11 +36,11 @@ int str_catuw(str* s, unsigned long in, unsigned width, char pad);
 void str_buildmap(int map[256], const char* list);
 int str_findfirst(str* s, char ch);
 int str_findfirstof(str* s, const char* list);
-/* int str_findlast(str* s, char ch); */
-/* int str_findlastof(str* s, const char* list); */
+int str_findlast(str* s, char ch);
+int str_findlastof(str* s, const char* list);
 int str_findnext(str* s, char ch, unsigned pos);
 int str_findnextof(str* s, const char* list, unsigned pos);
-/* int str_findprev(str* s, char ch, unsigned pos); */
-/* int str_findprevof(str* s, const char* list, unsigned pos); */
+int str_findprev(str* s, char ch, unsigned pos);
+int str_findprevof(str* s, const char* list, unsigned pos);
 
 #endif
