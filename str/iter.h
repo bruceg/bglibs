@@ -1,7 +1,7 @@
 #ifndef STR_ITER__H__
 #define STR_ITER__H__
 
-#include "str.h"
+struct str;
 
 /** \defgroup striter striter: Iterator over substrings of a str.
 
@@ -15,7 +15,7 @@ iterator is no longer valid, and non-zero (true) otherwise.
 typedef struct
 {
   /** A pointer to the str being iterated over. */
-  const str* str;
+  const struct str* str;
   /** The starting offset of the current substring. */
   unsigned start;
   /** Pointer to the current substring. */
@@ -26,7 +26,7 @@ typedef struct
   char sep;
 } striter;
 
-void striter_start(striter* iter, const str* s, char sep);
+void striter_start(striter* iter, const struct str* s, char sep);
 int striter_valid(striter*);
 int striter_advance(striter*);
 
