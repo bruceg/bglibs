@@ -28,16 +28,15 @@ typedef unsigned long uint32;
 class cdb_reader
 {
 private:
-  fdibuf in;
-  uint32 eod;
-  uint32 pos;
+  unsigned char* map;
+  size_t size;
+  unsigned char* ptr;
+  unsigned char* eod;
   bool failed;
   bool eof;
 
-  unsigned char header[2048];
-  
   void abort();
-  int seek(const mystring& key, uint32& len);
+  char* seek(const mystring& key, uint32& len);
 public:
   cdb_reader(const mystring& filename);
   ~cdb_reader();

@@ -14,6 +14,10 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/mman.h>
+#include <unistd.h>
 #include "cdb++.h"
 #include "internal.h"
 
@@ -25,10 +29,17 @@ inline uint32 max(uint32 a, uint32 b)
 }
 
 cdb_reader::cdb_reader(const mystring& filename)
-  : in(filename.c_str()),
-    failed(!in),
+  : map(0),
+    failed(1),
     eof(false)
 {
+  int fd = open(filename.c_str(), O_RDONLY);
+  if(fd == -1) return;
+  struct stat buf;
+  if(fstat(fd, &buf) != -1)
+    map = (unsigned char*)mmap(0, buf.st_size, PROT_READ, MAP_SHARED, fd, 0);
+  close(fd);
+  failed = !map;
   firstrec();
 }
 
@@ -39,43 +50,31 @@ cdb_reader::~cdb_reader()
 void cdb_reader::abort()
 {
   failed = true;
-  in.close();
+  if(map)
+    munmap(map, size);
 }
 
 bool cdb_reader::firstrec()
 {
   if(failed) return false;
-  if(!in.seek(0) || !in.read(header, 2048)) {
-    abort();
-    return false;
-  }
-  eof = false;
-  eod = unpack(header);
-  pos = 2048;
+  ptr = map + 2048;
+  eod = map + unpack(map);
   return true;
 }
 
 datum* cdb_reader::nextrec()
 {
   if(eof) return 0;
-  if(pos >= eod) {
+  if(ptr >= eod) {
     eof = true;
     return 0;
   }
-  if(failed || eod-pos < 8 || !in.seek(pos)) FAIL;
-  pos += 8;
-  unsigned char buf[8];
-  if(!in.read(buf, 8)) FAIL;
-  uint32 klen = unpack(buf);
-  uint32 dlen = unpack(buf+4);
-  if (eod - pos < klen) FAIL;
-  pos += klen;
-  if (eod - pos < dlen) FAIL;
-  pos += dlen;
-  char tmp[max(klen, dlen)];
-  if(!in.read(tmp, klen)) FAIL;
-  mystring key(tmp, klen);
-  if(!in.read(tmp, dlen)) FAIL;
-  mystring data(tmp, dlen);
-  return new datum(key, data);
+  if(failed || eod-ptr < 8) FAIL;
+  uint32 klen = unpack(ptr); ptr += 4;
+  uint32 dlen = unpack(ptr); ptr += 4;
+  if ((uint32)(eod - ptr) < klen + dlen) FAIL;
+  datum* result = new datum(mystring((char*)ptr,      klen),
+			    mystring((char*)ptr+klen, dlen));
+  ptr += klen + dlen;
+  return result;
 }

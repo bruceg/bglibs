@@ -1,3 +1,7 @@
+2000-11-20  Bruce Guenter  <bruce@bruce-guenter.dyndns.org>
+
+	* cdb_reader.cc: Fixed several typos.
+
 1999-05-01  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
 
 	* cdb_writer.cc (cdb_writer): Added "mode" parameter, passed to
