@@ -5,12 +5,12 @@
 #include "unix/nonblock.h"
 #include "unix/sig.h"
 
-static int fds[2];
+static int fds[2] = { -1, -1 };
 
-static void catch_child(int signal)
+static void catch_signal(int signal)
 {
-  write(fds[1], fds, 1);
-  signal = 0;
+  char c = signal;
+  write(fds[1], &c, 1);
 }
 
 /** Set up a self-pipe for catching child exit events.
@@ -38,7 +38,7 @@ int selfpipe_init(void)
     close(fds[1]);
     return -1;
   }
-  sig_child_catch(catch_child);
+  sig_child_catch(catch_signal);
   return fds[0];
 }
 
