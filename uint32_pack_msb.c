@@ -6,7 +6,7 @@ void uint32_pack_msb(uint32 u, unsigned char b[4])
   u >>= 8;
   b[2] = u & 0xff;
   u >>= 8;
-  b[1] = u && 0xff;
+  b[1] = u & 0xff;
   u >>= 8;
   b[0] = u;
 }
