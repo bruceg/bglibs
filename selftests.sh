@@ -4,11 +4,11 @@ exitcode=true
 t=$0.tmp.$$
 mkdir -v $t
 trap 'rm -r $t' EXIT
-fgrep -l '#ifdef SELFTEST_MAIN' */*.c | while read c
+for c in `fgrep -l '#ifdef SELFTEST_MAIN' */*.c`
 do
   echo "Testing $c"
-  sed -e '1,/^#ifdef SELFTEST_EXP$/d' -e '/^#endif/,$d' "$c" >$t/test.exp
-  if ! ./compile "$c" -DSELFTEST_MAIN -o $t/test.o
+  sed -e '1,/^#ifdef SELFTEST_EXP$/d' -e '/^#endif/,$d' $c >$t/test.exp
+  if ! ./compile $c -DSELFTEST_MAIN -o $t/test.o
   then
     echo "=====> Compile failed! <====="
     exitcode=false
