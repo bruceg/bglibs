@@ -18,6 +18,7 @@
 #include <string.h>
 #include "str.h"
 
+/** Copy in the concatenation of 3 C strings */
 int str_copy3s(str* s, const char* a, const char* b, const char* c)
 {
   char* ptr;

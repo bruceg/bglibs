@@ -17,6 +17,7 @@
  */
 #include "str.h"
 
+/** Simple but fast (linear time) pattern matching. */
 int str_match(const str* s, const char* pattern)
 {
   const char* sptr;

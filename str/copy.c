@@ -18,16 +18,19 @@
 #include <string.h>
 #include "str.h"
 
+/** Copy in a string */
 int str_copy(str* s, const str* in)
 {
   return str_copyb(s, in->s, in->len);
 }
 
+/** Copy in a C string */
 int str_copys(str* s, const char* in)
 {
   return str_copyb(s, in, strlen(in));
 }
 
+/** Copy in a binary block */
 int str_copyb(str* s, const char* in, unsigned len)
 {
   if (!str_ready(s, len)) return 0;

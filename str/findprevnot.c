@@ -17,6 +17,8 @@
  */
 #include "str.h"
 
+/** Find the previous instance of a character not in the given
+    list of characters, on or before \c pos */
 int str_findprevnot(const str* s, const char* list, unsigned pos)
 {
   char* p;

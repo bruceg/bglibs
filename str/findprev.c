@@ -17,6 +17,7 @@
  */
 #include "str.h"
 
+/** Find the previous instance of the given character on or before \c pos */
 int str_findprev(const str* s, char ch, unsigned pos)
 {
   char* p;

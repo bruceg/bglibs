@@ -18,6 +18,7 @@
 #include <ctype.h>
 #include "str.h"
 
+/** Substitute one character for another throughout the string */
 void str_subst(str* s, char from, char to)
 {
   char* ptr;

@@ -18,6 +18,7 @@
 #include <string.h>
 #include "str.h"
 
+/** Cut \c count bytes from the right (end) of the string */
 void str_rcut(str* s, unsigned count)
 {
   unsigned newlen;
@@ -25,6 +26,7 @@ void str_rcut(str* s, unsigned count)
   str_truncate(s, newlen);
 }
 
+/** Cut \c count bytes from the left (front) of the string */
 void str_lcut(str* s, unsigned count)
 {
   unsigned newlen;

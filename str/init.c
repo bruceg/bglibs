@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include "str.h"
 
+/** Initialize a string, giving it a small empty allocation. */
 int str_init(str* s)
 {
   char* p;

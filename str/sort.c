@@ -37,6 +37,17 @@ static int default_cmp(const str_sortentry* a,
     return memcmp(a->str, b->str, blen);
 }
 
+/** Sort a string.
+
+\param s The string to sort.
+\param sep The character which delimits the substrings.
+\param count The number of substrings within \c s (set to \c -1 if not known).
+\param fn The comparison function.  Defaults to a function that works like \c memcmp.
+
+\note This function allocates a temporary array of substring pointers,
+and so may return \c 0 if memory allocation fails.  The string itself is
+not reallocated.
+*/
 int str_sort(str* s, char sep, long count,
 	     int (*fn)(const str_sortentry* a, const str_sortentry* b))
 {

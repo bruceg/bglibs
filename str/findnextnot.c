@@ -17,6 +17,8 @@
  */
 #include "str.h"
 
+/** Find the next instance of a character not in the given list of
+    characters, on or after \c pos */
 int str_findnextnot(const str* s, const char* list, unsigned pos)
 {
   char* p;

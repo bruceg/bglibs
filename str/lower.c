@@ -18,6 +18,7 @@
 #include <ctype.h>
 #include "str.h"
 
+/** Translate all upper-case characters to lower-case */
 void str_lower(str* s)
 {
   char* ptr;

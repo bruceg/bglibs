@@ -17,6 +17,8 @@
  */
 #include "str.h"
 
+/** Append a signed integer in decimal, optionally padded to a minimum
+    width */
 int str_catiw(str* s, long in, unsigned width, char pad)
 {
   long tmp;

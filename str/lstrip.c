@@ -19,6 +19,7 @@
 #include <string.h>
 #include "str.h"
 
+/** Strip all white space from the left (front) of the string */
 void str_lstrip(str* s)
 {
   unsigned off;

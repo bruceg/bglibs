@@ -18,6 +18,7 @@
 #include <string.h>
 #include "str.h"
 
+/** Find the next instance of the given character, on or after \c pos */
 int str_findnext(const str* s, char ch, unsigned pos)
 {
   char* p;

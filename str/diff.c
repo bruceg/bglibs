@@ -18,16 +18,26 @@
 #include <string.h>
 #include "str.h"
 
+/** Differentiate two strings.
+
+The first non-zero difference between \c a and \c b is returned.  If \c
+a is longer than \c b and no differences are found up to the length of
+\c b, then the return value is positive.  If \c b is longer than \c a
+and no differences are found up to the length of \c a, then the return
+value is negative.
+*/
 int str_diff(const str* a, const str* b)
 {
   return str_diffb(a, b->s, b->len);
 }
 
+/** Differentiate a string and a C string. */
 int str_diffs(const str* a, const char* b)
 {
   return str_diffb(a, b, strlen(b));
 }
 
+/** Differentiate a string and a binary block. */
 int str_diffb(const str* a, const char* b, unsigned len)
 {
   unsigned max;

@@ -1,5 +1,6 @@
 #include "iter.h"
 
+/** Advance a striter to the next substring. */
 int striter_advance(striter* iter)
 {
   unsigned end;

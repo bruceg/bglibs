@@ -17,6 +17,8 @@
  */
 #include "str.h"
 
+/** Append an unsigned integer in decimal, optionally padded to a
+    minimum width */
 int str_catuw(str* s, unsigned long in, unsigned width, char pad)
 {
   unsigned long tmp;

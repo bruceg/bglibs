@@ -18,6 +18,7 @@
 #include <string.h>
 #include "str.h"
 
+/** Copy in the concatenation of 2 C strings */
 int str_copy2s(str* s, const char* a, const char* b)
 {
   char* ptr;

@@ -19,6 +19,8 @@
 
 static const char bin2hex[16] = "0123456789abcdef";
 
+/** Append an unsigned integer in hexadecimal, optionally padded to a
+    minimum width */
 int str_catxw(str* s, unsigned long in, unsigned width, char pad)
 {
   unsigned long tmp;

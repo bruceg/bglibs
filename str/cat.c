@@ -18,16 +18,19 @@
 #include <string.h>
 #include "str.h"
 
+/** Append another string */
 int str_cat(str* s, const str* in)
 {
   return str_catb(s, in->s, in->len);
 }
 
+/** Append a C string */
 int str_cats(str* s, const char* in)
 {
   return str_catb(s, in, strlen(in));
 }
 
+/** Append a single character */
 int str_catc(str* s, char in)
 {
   if (!str_realloc(s, s->len+1)) return 0;
@@ -36,6 +39,7 @@ int str_catc(str* s, char in)
   return 1;
 }
 
+/** Append a binary block */
 int str_catb(str* s, const char* in, unsigned len)
 {
   if (!str_realloc(s, s->len + len)) return 0;

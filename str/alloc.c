@@ -19,6 +19,16 @@
 #include <string.h>
 #include "str.h"
 
+/** Allocate storage for a string.
+ *
+ * \param s String to modify.
+ * \param size Minimum number of bytes for which to allocate.
+ * \param copy If set, the existing string will be copied into the new string.
+ *
+ * The size given is incremented to account for adding a trailing \c NUL
+ * byte (to ensure compatibility with C string functions) and is then
+ * rounded up to the nearest \c STR_BLOCKSIZE interval.
+ */
 int str_alloc(str* s, unsigned size, int copy)
 {
   char* news;

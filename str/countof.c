@@ -17,6 +17,7 @@
  */
 #include "str.h"
 
+/** Count the number of instances of a list of characters */
 unsigned str_countof(const str* s, const char* list)
 {
   const char* ptr;

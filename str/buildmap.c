@@ -18,6 +18,12 @@
 #include <string.h>
 #include "str.h"
 
+/** Build a map from the list of characters.
+
+Each byte in the output map contains either \c -1 if the corresponding
+character was not present in the input string, or the offset of the last
+instance of the character in the list.
+*/
 void str_buildmap(int map[256], const char* list)
 {
   unsigned i;

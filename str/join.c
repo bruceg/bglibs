@@ -18,17 +18,19 @@
 #include <string.h>
 #include "str.h"
 
+/** Join two strings together with exactly one instance of the seperator. */
 int str_join(str* s, char sep, const str* in)
 {
   return str_joinb(s, sep, in->s, in->len);
 }
 
+/** Join a C string to this string */
 int str_joins(str* s, char sep, const char* in)
 {
   return str_joinb(s, sep, in, strlen(in));
 }
 
-/* Join two strings together with exactly one instance of the seperator */
+/** Join a binary block to this string */
 int str_joinb(str* s, char sep, const char* in, unsigned len)
 {
   unsigned len1;

@@ -17,6 +17,7 @@
  */
 #include "str.h"
 
+/** Count the number of instances of a character */
 unsigned str_count(const str* s, char ch)
 {
   int pos;

@@ -18,6 +18,7 @@
 #include <string.h>
 #include "str.h"
 
+/** Append 5 C strings */
 int str_cat5s(str* s, const char* a, const char* b, const char* c,
 	      const char* d, const char* e)
 {

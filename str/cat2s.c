@@ -18,6 +18,7 @@
 #include <string.h>
 #include "str.h"
 
+/** Append 2 C strings */
 int str_cat2s(str* s, const char* a, const char* b)
 {
   char* ptr;

@@ -18,6 +18,7 @@
 #include <ctype.h>
 #include "str.h"
 
+/** Strip all white space from the right (end) of the string */
 void str_rstrip(str* s)
 {
   unsigned len;

@@ -17,6 +17,8 @@
  */
 #include "str.h"
 
+/** Append a signed long long integer in decimal, optionally padded to a
+    minimum width */
 int str_catiwll(str* s, long long in, unsigned width, char pad)
 {
   long long tmp;

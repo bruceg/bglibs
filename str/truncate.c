@@ -17,6 +17,13 @@
  */
 #include "str.h"
 
+/** Truncate a string.
+ *
+ * If \c len is larger than the current size, the string is reallocated.
+ * If \c len is less than the existing length (not size), the length of
+ * the string is reduced to \c len.  A \c NUL marker is placed at \c
+ * len.
+ */
 int str_truncate(str* s, unsigned len)
 {
   if (!str_realloc(s, len)) return 0;

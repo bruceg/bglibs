@@ -18,6 +18,9 @@
 #include <stdlib.h>
 #include "str.h"
 
+/** Free a string's storage.
+ * This function also sets all the members of the structure to zero.
+ */
 void str_free(str* s)
 {
   if (s->s) free(s->s);

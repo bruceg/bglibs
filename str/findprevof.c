@@ -17,6 +17,8 @@
  */
 #include "str.h"
 
+/** Find the previous instance of the given list of characters, on or
+    before \c pos */
 int str_findprevof(const str* s, const char* list, unsigned pos)
 {
   char* p;
