@@ -1,4 +1,4 @@
-/* str/match.c - Simple pattern matching
+/* str/match.c - Simple case insensitive pattern matching
  * Copyright (C) 2003  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -15,46 +15,54 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+#include <ctype.h>
 #include <string.h>
 
 #include "str.h"
 
 /** Simple but fast (linear time) pattern matching on binary pattern. */
-int str_matchb(const str* s, const char* pptr, unsigned plen)
+int str_case_matchb(const str* s, const char* pptr, unsigned plen)
 {
   const char* sptr;
   long slen = s->len;
   if (plen == 0) return slen == 0;
   for (sptr = s->s; plen > 0; ++sptr, --slen, ++pptr, --plen) {
     char p = *pptr;
+    char c;
     if (p == '*') {
       ++pptr, --plen;
       if (plen == 0) return 1;
       p = *pptr;
+      if (isupper(p)) p = tolower(p);
       while (slen > 0) {
-	if (*sptr == p) break;
+	c = *sptr;
+	if (isupper(c)) c = tolower(c);
+	if (c == p) break;
 	++sptr, --slen;
       }
       if (slen == 0) return 0;
     }
     else {
       if (slen == 0) return 0;
-      if (*sptr != p) return 0;
+      c = *sptr;
+      if (isupper(c)) c = tolower(c);
+      if (isupper(p)) p = tolower(p);
+      if (c != p) return 0;
     }
   }
   return slen == 0;
 }
 
 /** Simple pattern match on dynamic string pattern. */
-int str_match(const str* s, const str* pattern)
+int str_case_match(const str* s, const str* pattern)
 {
-  return str_matchb(s, pattern->s, pattern->len);
+  return str_case_matchb(s, pattern->s, pattern->len);
 }
 
 /** Simple pattern match on C string pattern. */
-int str_matchs(const str* s, const char* pattern)
+int str_case_matchs(const str* s, const char* pattern)
 {
-  return str_matchb(s, pattern, strlen(pattern));
+  return str_case_matchb(s, pattern, strlen(pattern));
 }
 
 #ifdef SELFTEST_MAIN
@@ -64,7 +72,7 @@ void t(const char* pattern)
 {
   obuf_puts(&outbuf, pattern);
   obuf_putc(&outbuf, ' ');
-  debugfn(str_matchs(&s, pattern));
+  debugfn(str_case_matchs(&s, pattern));
 }
 MAIN
 {
@@ -86,6 +94,7 @@ MAIN
   t("d*");
   t("*d*");
   t("*d");
+  t("*c");
   t("*C");
 }
 #endif
@@ -94,7 +103,7 @@ MAIN
 * result=1
 ** result=0
 abc result=1
-ABC result=0
+ABC result=1
 a result=0
 a* result=1
 *a* result=1
@@ -108,5 +117,6 @@ c* result=0
 d* result=0
 *d* result=0
 *d result=0
-*C result=0
+*c result=1
+*C result=1
 #endif

@@ -1,5 +1,7 @@
 alloc.o
 buildmap.o
+case_glob.o
+case_match.o
 cat2s.o
 cat3s.o
 cat4s.o

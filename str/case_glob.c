@@ -31,6 +31,10 @@ static unsigned make_set(const char* pptr, unsigned plen, char set[256])
     if (p == ']') return orig_plen - plen - 1;
     if (p == '\\') { p = *pptr++; --plen; }
     set[p] = value;
+    if (isupper(p))
+      set[tolower(p)] = value;
+    else if (islower(p))
+      set[toupper(p)] = value;
   }
   return 0;
 }
@@ -73,8 +77,10 @@ static int glob_search(const str* s, unsigned offset,
   /* Otherwise search for a normal character. */
   else {
     ++pptr, --plen;
+    if (isupper(start)) start = tolower(start);
     do {
       char c = s->s[offset++];
+      if (isupper(c)) c = tolower(c);
       if (c == start &&
 	  (r = glob_match(s, offset, pptr, plen)) != 0)
 	return r;
@@ -89,8 +95,10 @@ static int glob_search(const str* s, unsigned offset,
   }
 #if 0
   else {
+    if (isupper(start)) start = tolower(start);
     for (; offset < s->len; ++offset) {
       char c = s->s[offset];
+      if (isupper(c)) c = tolower(c);
       if (c == start &&
 	  (r = glob_match(s, offset+1, pptr+1, plen-1)) != 0)
 	return r;
@@ -121,23 +129,28 @@ static int glob_match(const str* s, unsigned offset,
 	continue;
       }
     default:
-      if (p != s->s[offset]) return 0;
+      {
+	char c = s->s[offset];
+	if (isupper(c)) c = tolower(c);
+	if (isupper(p)) p = tolower(p);
+	if (p != c) return 0;
+      }
     }
   }
   return offset == s->len && plen == 0;
 }
 
-int str_globb(const str* s, const char* pptr, unsigned plen)
+int str_case_globb(const str* s, const char* pptr, unsigned plen)
 {
   return glob_match(s, 0, pptr, plen);
 }
 
-int str_globs(const str* s, const char* pattern)
+int str_case_globs(const str* s, const char* pattern)
 {
   return glob_match(s, 0, pattern, strlen(pattern));
 }
 
-int str_glob(const str* s, const str* pattern)
+int str_case_glob(const str* s, const str* pattern)
 {
   return glob_match(s, 0, pattern->s, pattern->len);
 }
@@ -158,7 +171,7 @@ void t(const char* string, const char* pattern)
   obuf_putc(&outbuf, ' ');
   obuf_putstr(&outbuf, &p);
   obuf_putc(&outbuf, ' ');
-  debugfn(str_glob(&s, &p));
+  debugfn(str_case_glob(&s, &p));
 }
 MAIN
 {
@@ -288,20 +301,20 @@ MAIN
  ? result=0
  [abc] result=0
 a a result=1
-a A result=0
-A a result=0
+a A result=1
+A a result=1
 A A result=1
 a [a] result=1
-a [A] result=0
-A [a] result=0
+a [A] result=1
+A [a] result=1
 A [A] result=1
 a [~a] result=0
-a [~A] result=1
-A [~a] result=1
+a [~A] result=0
+A [~a] result=0
 A [~A] result=0
 a *a result=1
-a *A result=0
-A *a result=0
+a *A result=1
+A *a result=1
 A *A result=1
 abc  result=0
 abc * result=1
