@@ -3,6 +3,7 @@
 
 #define LF ((char)10)
 #define CR ((char)13)
+#define CRLF "\015\012"
 
 struct str;
 
@@ -42,16 +43,19 @@ int iobuf_close(iobuf* io);
 #define iobuf_timedout(io) ((io)->flags & IOBUF_TIMEOUT)
 int iobuf_timeout(iobuf* io, int poll_out);
 
+typedef int (*ibuf_fn)(int, void*, unsigned long);
+
 struct ibuf
 {
   iobuf io;
   unsigned count;
+  ibuf_fn readfn;
 };
 typedef struct ibuf ibuf;
 
 extern ibuf inbuf;
 
-int ibuf_init(ibuf* in, int fd, int do_close, unsigned bufsize);
+int ibuf_init(ibuf* in, int fd, ibuf_fn fn, int do_close, unsigned bufsize);
 int ibuf_open(ibuf* in, const char* filename, unsigned bufsize);
 int ibuf_eof(ibuf* in);
 #define ibuf_close(in) iobuf_close(&((in)->io))
@@ -73,11 +77,14 @@ int ibuf_gets(ibuf* in, char* data, unsigned datalen, char boundary);
 int ibuf_getstr(ibuf* in, struct str* s, char boundary);
 int ibuf_getstr_crlf(ibuf* in, struct str* s);
 
+typedef int (*obuf_fn)(int, const void*, unsigned long);
+
 struct obuf
 {
   iobuf io;
   unsigned bufpos;
   unsigned count;
+  obuf_fn writefn;
 };
 typedef struct obuf obuf;
 
@@ -90,7 +97,7 @@ extern obuf errbuf;
 #define OBUF_TRUNCATE O_TRUNC
 #define OBUF_APPEND O_APPEND
 
-int obuf_init(obuf* out, int fd, int do_close, unsigned bufsize);
+int obuf_init(obuf* out, int fd, obuf_fn fn, int do_close, unsigned bufsize);
 int obuf_open(obuf* out, const char* filename, int flags, int mode, unsigned bufsize);
 int obuf_close(obuf* out);
 #define obuf_error(out) iobuf_error(&(out)->io)

@@ -26,7 +26,7 @@ int ibuf_refill(ibuf* in)
   oldlen = io->buflen;
   if(io->buflen < io->bufsize) {
     if (io->timeout && !iobuf_timeout(io, 0)) return 0;
-    rd = read(io->fd, io->buffer+io->buflen, io->bufsize-io->buflen);
+    rd = in->readfn(io->fd, io->buffer+io->buflen, io->bufsize-io->buflen);
     if(rd == (unsigned)-1)
       IOBUF_SET_ERROR(io);
     else if(rd == 0)
