@@ -1,3 +1,4 @@
+- ibuf_ungetc
 - ibuf_geti
 - ibuf_getstr
 - ibuf_getnetstring
