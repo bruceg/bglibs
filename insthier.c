@@ -96,6 +96,7 @@ void insthier(void)
   
   DI(unix);
   CF(unix, nonblock.h);
+  CF(unix, selfpipe.h);
   CF(unix, sig.h);
   
   DI(vmailmgr);
