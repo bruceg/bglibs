@@ -1,6 +1,7 @@
 #include <string.h>
 
 #include "ipv6.h"
+#include "ipv4.h"
 
 static char hex[16] = "0123456789ABCDEF";
 
@@ -15,18 +16,9 @@ static char* format_part(uint16 i, char* str)
 
 static char* format_ipv4(char* buf, const ipv6addr* addr)
 {
-  int i;
-  for (i = 12; i < 16; ++i) {
-    const unsigned j = addr->addr[i];
-    if (i > 12)
-      *buf++ = '.';
-    if (j >= 100)
-      *buf++ = (j / 100) + '0';
-    if (j >= 10)
-      *buf++ = ((j / 10) % 10) + '0';
-    *buf++ = (j % 10) + '0';
-  }
-  return buf;
+  ipv4addr a4;
+  memcpy(&a4.addr, &addr->addr[12], 4);
+  return ipv4_format_r(&a4, buf);
 }
 
 /** Produce a formatted C string from an IPv6 address.
@@ -36,9 +28,23 @@ function will return pointers to the same string.
 */
 const char* ipv6_format(const ipv6addr* addr)
 {
-  uint16 bits[8];
   static char buf[40];
-  char* str = buf;
+  *(ipv6_format_r(addr, buf)) = 0;
+  return buf;
+}
+
+/** Produce a formatted string from an IPv6 address.
+
+The given buffer must be at least 39 bytes long, or 40 bytes if it needs
+to contain the standard trailing \c NUL byte.
+
+\return The address of the first byte after the formatted address.
+
+\note This routine is thread and recursion safe.
+*/
+char* ipv6_format_r(const ipv6addr* addr, char* str)
+{
+  uint16 bits[8];
   int i;
   int first;
 
@@ -47,25 +53,26 @@ const char* ipv6_format(const ipv6addr* addr)
   for (first = 0; first < 8; ++first)
     if (bits[first] != 0)
       break;
-  /* A couple of special cases, to simplify IPv4 style output */
-  if (first >= 8)
-    return "::";
-  if (first == 7 && bits[7] == 1)
-    return "::1";
-  if (first >= 6) {
-    strcpy(buf, "::");
-    str = format_ipv4(buf+2, addr);
-  }
-  else if (first == 5 && bits[5] == 0xffff) {
-    strcpy(buf, "::FFFF:");
-    str = format_ipv4(buf+7, addr);
-  }
-  else if (first > 1) {
+  if (first >= 1) {
     *str++ = ':';
-    for (i = first; i < 8; ++i) {
-      *str++ = ':';
-      str = format_part(bits[i], str);
+    *str++ = ':';
+    /* A couple of special cases, to simplify IPv4 style output */
+    if (first >= 8)
+      i = 1;
+    else if (first == 7 && bits[7] == 1)
+      *str++ = '1';
+    else if (first >= 6)
+      str = format_ipv4(str, addr);
+    else if (first == 5 && bits[5] == 0xffff) {
+      memcpy(str, "FFFF:", 5);
+      str = format_ipv4(str + 5, addr);
     }
+    else
+      for (i = first; i < 8; ++i) {
+	if (i > first)
+	  *str++ = ':';
+	str = format_part(bits[i], str);
+      }
   }
   else {
     int zs = 8;
@@ -93,8 +100,7 @@ const char* ipv6_format(const ipv6addr* addr)
       }
     }
   }
-  *str = 0;
-  return buf;
+  return str;
 }
 
 #ifdef SELFTEST_MAIN

@@ -17,6 +17,7 @@ extern const ipv6addr IPV6ADDR_LOOPBACK;
 
 extern const char* ipv6_scan(const char* s, ipv6addr* addr);
 extern const char* ipv6_format(const ipv6addr* addr);
+extern char* ipv6_format_r(const ipv6addr* addr, char* buffer);
 
 /* @} */
 
