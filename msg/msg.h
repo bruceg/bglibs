@@ -15,6 +15,7 @@ void msg_debug(int, const char*, const char*, const char*, const char*, const ch
 void msg_warn(const char*, const char*, const char*, const char*, const char*, const char*, int);
 void msg_error(const char*, const char*, const char*, const char*, const char*, const char*, int);
 void msg_die(int, const char*, const char*, const char*, const char*, const char*, const char*, int);
+void msg_debug_init(void);
 
 #define msg1(a)           msg(a,0,0,0,0,0)
 #define msg2(a,b)         msg(a,b,0,0,0,0)
