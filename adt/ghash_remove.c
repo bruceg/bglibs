@@ -37,15 +37,9 @@ int ghash_remove(struct ghash* d, const void* key)
 #ifdef SELFTEST_MAIN
 #include <stdio.h>
 
-static int datacopy(char** a, char* const* b)
-{
-  *a = *b;
-  return 1;
-}
-
 static struct ghash dict;
 GHASH_DECL(test,const char*,int);
-GHASH_DEFN(test,const char*,int,adt_hashsp,adt_cmpsp,adt_copysp,datacopy,adt_freesp,0);
+GHASH_DEFN(test,const char*,int,adt_hashsp,adt_cmpsp,adt_copysp,0,adt_freesp,0);
 
 static void print(struct test_entry* entry)
 {

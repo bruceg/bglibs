@@ -77,7 +77,10 @@ int ghash_add(struct ghash* d, const void* key, const void* data)
     free(newe);
     return 0;
   }
-  if (!d->datacopy(ghash_entry_dataptr(newe, d->keysize), data)) {
+  if (d->datacopy == 0)
+    memcpy(ghash_entry_dataptr(newe, d->keysize), data,
+	   d->entrysize - d->keysize - sizeof(adt_hash_t));
+  else if (!d->datacopy(ghash_entry_dataptr(newe, d->keysize), data)) {
     d->keyfree(ghash_entry_keyptr(newe));
     free(newe);
     return 0;
@@ -89,15 +92,9 @@ int ghash_add(struct ghash* d, const void* key, const void* data)
 #ifdef SELFTEST_MAIN
 #include <stdio.h>
 
-static int datacopy(char** a, char* const* b)
-{
-  *a = *b;
-  return 1;
-}
-
 static struct ghash dict;
 GHASH_DECL(test,const char*,int);
-GHASH_DEFN(test,const char*,int,adt_hashsp,adt_cmpsp,adt_copysp,datacopy,adt_freesp,0);
+GHASH_DEFN(test,const char*,int,adt_hashsp,adt_cmpsp,adt_copysp,0,adt_freesp,0);
 
 static void print(struct test_entry* entry)
 {
