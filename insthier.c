@@ -18,7 +18,7 @@ void insthier(void)
 
   inc = d(home, "include", -1, -1, 0755);
 
-  C(inc, installer.h);
+  cf(inc, "installer.h", -1, -1, 0644, "install/installer.h");
   C(inc, sysdeps.h);
   C(inc, systime.h);
   C(inc, uint16.h);
@@ -186,8 +186,8 @@ void insthier(void)
   DL(path);
   SL(path, path);
 
-  L(pwcmp);
-  L(pwcmp-module);
+  cf(lib, "libpwcmp.a",        -1, -1, 0644, "pwcmp/client.a");
+  cf(lib, "libpwcmp-module.a", -1, -1, 0644, "pwcmp/module.a");
   DL(pwcmp);
   SL(pwcmp, client);
   SL(pwcmp, hex);
