@@ -3,9 +3,9 @@
 
 #include "ghash.h"
 
-unsigned long ghash_hashb(const unsigned char* data, unsigned long len)
+adt_hash_t ghash_hashb(const unsigned char* data, unsigned long len)
 {
-  unsigned long h = 0x1505;
+  adt_hash_t h = 0x1505;
   while (len--)
     h = (h + (h << 5)) ^ *data++;
   return h;

@@ -20,14 +20,14 @@ struct ghash
   adt_free_fn* datafree;
 };
 
-#define ghash_entry_hash(P) (*(unsigned long*)(P))
-#define ghash_entry_keyptr(P) ((P)+sizeof(unsigned long))
-#define ghash_entry_dataptr(P,L) ((P)+sizeof(unsigned long)+(L))
+#define ghash_entry_hash(P) (*(adt_hash_t*)(P))
+#define ghash_entry_keyptr(P) ((P)+sizeof(adt_hash_t))
+#define ghash_entry_dataptr(P,L) ((P)+sizeof(adt_hash_t)+(L))
 #define ghash_entry_ptr(P,O) ((P)+O)
 
-unsigned long ghash_hashb(const unsigned char*, unsigned long);
-unsigned long ghash_hashs(const unsigned char*);
-unsigned long ghash_hashsp(const char* const* p);
+adt_hash_t ghash_hashb(const unsigned char*, unsigned long);
+adt_hash_t ghash_hashs(const unsigned char*);
+adt_hash_t ghash_hashsp(const char* const* p);
 
 void ghash_insert(struct ghash* d, void* e);
 int ghash_add(struct ghash* d, const void* key, const void* data);
@@ -50,7 +50,7 @@ void* ghash_search(struct ghash* d, int (*fn)(const void* entry));
 
 #define GHASH_STRUCT_ENTRY(PREFIX,KTYPE,DTYPE) \
 struct PREFIX##_entry { \
-  unsigned long hash; \
+  adt_hash_t hash; \
   KTYPE key; \
   DTYPE data; \
 }

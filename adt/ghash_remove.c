@@ -58,14 +58,9 @@ static void keyfree(char** a)
   free(*a);
 }
 
-static unsigned long hash(char* const* a)
-{
-  return ghash_hashs(*a);
-}
-
 static struct ghash dict;
 GHASH_DECL(test,char*,int);
-GHASH_DEFN(test,char*,int,hash,keycmp,keycopy,datacopy,keyfree,0);
+GHASH_DEFN(test,char*,int,ghash_hashsp,keycmp,keycopy,datacopy,keyfree,0);
 
 static void print(struct test_entry* entry)
 {

@@ -2,7 +2,7 @@
 
 void** ghash_find(struct ghash* d, const void* key)
 {
-  const unsigned long hash = d->hashfn(key);
+  const adt_hash_t hash = d->hashfn(key);
   const unsigned size = d->size;
   unsigned start;
   unsigned i;

@@ -67,7 +67,7 @@ static int ghash_grow(struct ghash* d, unsigned count)
 
 int ghash_add(struct ghash* d, const void* key, const void* data)
 {
-  const unsigned long hash = d->hashfn(key);
+  const adt_hash_t hash = d->hashfn(key);
   void* newe;
   if (!ghash_grow(d, d->count + 1)) return 0;
   if ((newe = malloc(d->entrysize)) == 0) return 0;
@@ -110,14 +110,9 @@ static void keyfree(char** a)
   free(*a);
 }
 
-static unsigned long hash(char* const* a)
-{
-  return ghash_hashs(*a);
-}
-
 static struct ghash dict;
 GHASH_DECL(test,char*,int);
-GHASH_DEFN(test,char*,int,hash,keycmp,keycopy,datacopy,keyfree,0);
+GHASH_DEFN(test,char*,int,ghash_hashsp,keycmp,keycopy,datacopy,keyfree,0);
 
 static void print(struct test_entry* entry)
 {
