@@ -1,14 +1,11 @@
-for dep in ('flock','getpeereid','ipv6','peercred','sendfile','sgact','sgprm','spnam','userpw','waitp','zlib'):
+for dep in ('flock','getpeereid','ipv6','peercred','sendfile','setenv','sigaction','sigprocmask','spnam','sysselect','userpw','vfork','waitp','zlib'):
 	dependon(['sys/try%s.c'%dep, 'sys/has%s.h1'%dep, 'sys/has%s.h2'%dep])
 dependon([
 	'sys/tryulong32.c', 'sys/uint32.h1', 'sys/uint32.h2',
 	'sys/tryulong64.c', 'sys/uint64.h1', 'sys/uint64.h2',
 	'sys/tryendian.c', 'sys/endian.h1', 'sys/endian.h2',
 	'sys/trydirent.c', 'sys/direntry.h1', 'sys/direntry.h2',
-	'sys/tryvfork.c', 'sys/fork.h1', 'sys/fork.h2',
 	'sys/trypoll.c', 'sys/iopoll.h1', 'sys/iopoll.h2',
-	'sys/trysysel.c', 'sys/select.h1', 'sys/select.h2',
-	'sys/trysetenv.c', 'sys/setenv.h1', 'sys/setenv.h2',
 	'sys/tryunsetenv.c', 'sys/unsetenv.h1', 'sys/unsetenv.h2',
 	'sys/tryunaligned.c', 'sys/unaligned.h1', 'sys/unaligned.h2',
 	])
@@ -20,20 +17,20 @@ dependon([
   ./choose clr tryendian     endian; \
   ./choose c   trydirent     direntry; \
   ./choose c   tryipv6       hasipv6; \
-  ./choose cl  tryvfork      fork; \
+  ./choose cl  tryvfork      hasvfork; \
   ./choose cl  trygetpeereid hasgetpeereid; \
   ./choose cl  tryflock      hasflock; \
   ./choose cl  trypeercred   haspeercred; \
   ./choose cl  trysendfile   hassendfile; \
-  ./choose cl  trysgact      hassgact; \
-  ./choose cl  trysgprm      hassgprm; \
+  ./choose cl  trysigaction  hassigaction; \
+  ./choose cl  trysigprocmask hassigprocmask; \
   ./choose cl  tryspnam      hasspnam; \
   ./choose cl  tryuserpw     hasuserpw; \
   ./choose cl  trywaitp      haswaitp; \
   ./choose c   tryzlib       haszlib; \
   ./choose clr trypoll       iopoll; \
-  ./choose c   trysysel      select; \
-  ./choose cl  trysetenv     setenv; \
+  ./choose c   trysysselect  hassysselect; \
+  ./choose cl  trysetenv     hassetenv; \
   ./choose cl  tryunsetenv   unsetenv; \
   ./choose clr tryunaligned  unaligned; \
   cat sysdeps-tail.h; \
