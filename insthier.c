@@ -43,10 +43,13 @@ void insthier(void)
   CF(cli, cli.h);
 
   DI(crc);
-  CF(crc, gcrc32.h);
+  CF(crc, crc16_arc.h);
+  CF(crc, crc16_ccitt.h);
+  CF(crc, crc16_xmodem.h);
   CF(crc, crc32.h);
   CF(crc, crc32c.h);
   CF(crc, crc64.h);
+  CF(crc, gcrc.h);
 
   DI(crypto);
   CF(crypto, md5.h);
