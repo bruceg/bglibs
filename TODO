@@ -14,3 +14,5 @@
 - exec replacement?  http://cr.yp.to/lib/pathexec.html
 
 - More ADTs: bag/set, tree
+
+- Add tests to adt/queue, adt/stack
