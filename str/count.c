@@ -19,7 +19,7 @@
 
 unsigned str_count(const str* s, char ch)
 {
-  unsigned pos;
+  int pos;
   unsigned count;
   
   count = 0;
