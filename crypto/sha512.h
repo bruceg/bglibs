@@ -6,11 +6,7 @@
 #define SHA512_DIGEST_LENGTH (512/8)
 
 struct SHA512_ctx {
-#ifdef HAS_ULONG64
   uint64 H[8];
-#else
-  uint32 H[16];
-#endif
   uint64 hbits, lbits;
   uint8 M[ 256 ];
   unsigned mlen;
