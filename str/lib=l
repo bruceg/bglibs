@@ -33,6 +33,7 @@ findnextof.o
 findprev.o
 findprevof.o
 free.o
+glob.o
 init.o
 iter_advance.o
 iter_start.o

@@ -165,8 +165,11 @@ int str_findprevnot(const str* s, const char* list, unsigned pos);
 /** \name Pattern Matching Functions
  * @{ */
 int str_match(const str* s, const str* pattern);
-int str_matchs(const str* s, const char* pattern);
 int str_matchb(const str* s, const char* pattern, unsigned plen);
+int str_matchs(const str* s, const char* pattern);
+int str_glob(const str* s, const str* pattern, int ncase);
+int str_globb(const str* s, const char* pptr, unsigned plen, int ncase)
+int str_globs(const str* s, const char* pattern, int ncase)
 /* @} */
 
 /* @} */
