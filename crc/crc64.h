@@ -15,5 +15,6 @@
 
 extern const uint64 crc64_table[256];
 extern uint64 crc64_update(uint64 crc, const char* bytes, long len);
+#define crc64_block(B,L) (crc64_update(CRC64INIT,(B),(L))^CRC64POST)
 
 #endif
