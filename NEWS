@@ -12,6 +12,8 @@ Changes in version 1.005
 
 - Fixed the shadowed global variable naming conflicts.
 
+- Flattened out and simplified the installed lib files.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
