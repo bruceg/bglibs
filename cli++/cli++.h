@@ -1,5 +1,5 @@
-#ifndef VMAILMGR__CLI__CLI__H__
-#define VMAILMGR__CLI__CLI__H__
+#ifndef VMAILMGR__CLIPP__CLIPP__H__
+#define VMAILMGR__CLIPP__CLIPP__H__
 
 typedef bool (*cli_funcptr)(void*);
 
@@ -56,4 +56,4 @@ extern void cli_warning(const char*,
 		      const char* = 0,
 		      const char* = 0);
 
-#endif // VMAILMGR__CLI__CLI__H__
+#endif
