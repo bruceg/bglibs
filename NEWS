@@ -5,6 +5,8 @@ Changes in version 1.008
 
 - Added globbing function to the str library.
 
+- Changed str_match functions to add case insensitivity.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
