@@ -3,6 +3,8 @@ Changes in version 1.003
 
 - Optimized path matching to only stat intermediate entries if they
   don't contain any meta-characters.
+- Fixed a bug in str/cmp.c: it missed adding offset to the string
+  pointer.
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/

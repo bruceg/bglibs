@@ -33,7 +33,7 @@ int str_cmpb(const str* a, unsigned offset, const char* b, unsigned len)
   char* aptr;
   if (len + offset > a->len)
     return 1;
-  for (aptr = a->s; len; ++aptr, ++b, --len)
+  for (aptr = a->s+offset; len; ++aptr, ++b, --len)
     if (*b - *aptr) return *b - *aptr;
   return 0;
 }
