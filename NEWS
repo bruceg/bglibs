@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------
-Changes in version 1.012
+Changes in version 1.015
 
 - Added set of str_splice functions, to insert one string into another.
 
@@ -12,6 +12,10 @@ Changes in version 1.012
 - Added str_xlate function.
 
 - Added socket connect functions with a timeout.
+
+NOTE: The next non-bugfix version of bglibs will be rewritten to use the
+new formatting routines in the appropriate iobuf and str functions.
+This will require linking against additional libraries in the future.
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
