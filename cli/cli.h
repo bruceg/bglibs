@@ -8,6 +8,7 @@ enum cli_option_type {
   CLI_UINTEGER,
   CLI_STRING,
   CLI_STRINGLIST,
+  CLI_FUNCTION,
 };
 typedef enum cli_option_type cli_option_type;
 
@@ -30,6 +31,8 @@ struct cli_stringlist
   struct cli_stringlist* next;
 };
 typedef struct cli_stringlist cli_stringlist;
+
+typedef void cli_function(const char* string, const struct cli_option* option);
 
 /* The following are required from the CLI program */
 extern const char cli_help_prefix[];

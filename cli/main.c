@@ -69,6 +69,7 @@ static unsigned calc_max_width()
       case CLI_INTEGER:    width += 4; break;
       case CLI_UINTEGER:   width += 4; break;
       case CLI_STRINGLIST: width += 5; break;
+      case CLI_FUNCTION:   width += 6; break;
       case CLI_FLAG:       break;
       case CLI_COUNTER:    break;
       }
@@ -96,6 +97,7 @@ static void show_option(cli_option* o, unsigned maxwidth)
     case CLI_INTEGER:    extra = "=INT"; break;
     case CLI_UINTEGER:   extra = "=UNS"; break;
     case CLI_STRINGLIST: extra = "=ITEM"; break;
+    case CLI_FUNCTION:   extra = "=VALUE"; break;
     case CLI_FLAG:       break;
     case CLI_COUNTER:    break;
     }
@@ -179,6 +181,9 @@ static int cli_option_set(cli_option* o, const char* arg)
   case CLI_STRINGLIST:
     *(cli_stringlist**)o->dataptr =
       stringlist_append(*(cli_stringlist**)o->dataptr, arg, o);
+    return 1;
+  case CLI_FUNCTION:
+    ((cli_function*)o->dataptr)(arg, o);
     return 1;
   default:
     *(const char**)o->dataptr = arg;
