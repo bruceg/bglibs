@@ -12,26 +12,26 @@ dependon([
 : choose compile load sysdeps-head.h sysdeps-tail.h
 ( set -e; \
   cat sysdeps-head.h; \
-  ./choose clr tryulong32    uint32; \
-  ./choose clr tryulong64    uint64; \
-  ./choose clr tryendian     endian; \
-  ./choose c   trydirent     direntry; \
-  ./choose c   tryipv6       hasipv6; \
-  ./choose cl  tryvfork      hasvfork; \
-  ./choose cl  trygetpeereid hasgetpeereid; \
-  ./choose cl  tryflock      hasflock; \
-  ./choose cl  trypeercred   haspeercred; \
-  ./choose cl  trysendfile   hassendfile; \
-  ./choose cl  trysigaction  hassigaction; \
-  ./choose cl  trysigprocmask hassigprocmask; \
-  ./choose cl  tryspnam      hasspnam; \
-  ./choose cl  tryuserpw     hasuserpw; \
-  ./choose cl  trywaitp      haswaitp; \
-  ./choose c   tryzlib       haszlib; \
-  ./choose clr trypoll       iopoll; \
-  ./choose c   trysysselect  hassysselect; \
-  ./choose cl  trysetenv     hassetenv; \
-  ./choose cl  tryunsetenv   unsetenv; \
-  ./choose clr tryunaligned  unaligned; \
+  ./choose clr ulong32 uint32; \
+  ./choose clr ulong64 uint64; \
+  ./choose clr endian endian; \
+  ./choose c   dirent direntry; \
+  ./choose c   ipv6; \
+  ./choose cl  vfork; \
+  ./choose cl  getpeereid; \
+  ./choose cl  flock; \
+  ./choose cl  peercred; \
+  ./choose cl  sendfile; \
+  ./choose cl  sigaction; \
+  ./choose cl  sigprocmask; \
+  ./choose cl  spnam; \
+  ./choose cl  userpw; \
+  ./choose cl  waitp; \
+  ./choose c   zlib; \
+  ./choose clr poll iopoll; \
+  ./choose c   sysselect; \
+  ./choose cl  setenv; \
+  ./choose cl  unsetenv unsetenv; \
+  ./choose clr unaligned unaligned; \
   cat sysdeps-tail.h; \
 ) >sysdeps.h
