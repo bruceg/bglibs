@@ -4,7 +4,7 @@
 
 int sasl_authenticate(const char* account, const char** creds)
 {
-  switch (cvm_authenticate(sasl_mech_cvm, account, sasl_domain, creds))
+  switch (cvm_authenticate(sasl_mech_cvm, account, sasl_domain, creds, 1))
   {
   case 0: return SASL_AUTH_OK;
   case CVME_PERMFAIL: return SASL_AUTH_FAILED;
