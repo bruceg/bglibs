@@ -1,0 +1,5 @@
+: conf-inc
+head -1 conf-inc | \
+  sed -e 's/"/\\"/g' \
+      -e 's/^/const char conf_inc[] = "/' \
+      -e 's/$$/";/' >conf_inc.c

@@ -1,0 +1,3 @@
+vpwentry_import.o
+vpwentry_export.o
+vpwentry_free.o

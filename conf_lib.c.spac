@@ -1,0 +1,5 @@
+: conf-lib
+head -1 conf-lib | \
+  sed -e 's/"/\\"/g' \
+      -e 's/^/const char conf_lib[] = "/' \
+      -e 's/$$/";/' >conf_lib.c

@@ -1,0 +1,32 @@
+for dep in ('flock','peercred','sendfile','sgact','sgprm','spnam','userpw','waitp','zlib'):
+	dependon(['try%s.c'%dep, 'has%s.h1'%dep, 'has%s.h2'%dep])
+dependon([
+	'trydirent.c', 'direntry.h1', 'direntry.h2',
+	'tryvfork.c', 'fork.h1', 'fork.h2',
+	'trypoll.c', 'iopoll.h1', 'iopoll.h2',
+	'trysysel.c', 'select.h1', 'select.h2',
+	'trysetenv.c', 'setenv.h1', 'setenv.h2',
+	'tryunsetenv.c', 'unsetenv.h1', 'unsetenv.h2',
+	])
+: choose compile load uint32.h uint64.h
+( echo '#ifndef SYS_DEPS__H__'; echo '#define SYS_DEPS__H__'; echo; \
+  echo '#include <uint32.h>'; echo '#include <uint64.h>'; echo; \
+  ./choose c   trydirent   direntry.h1    direntry.h2; \
+  ./choose cl  tryvfork    fork.h1        fork.h2; \
+  ./choose cl  tryflock    hasflock.h1    hasflock.h2; \
+  ./choose cl  trypeercred haspeercred.h1 haspeercred.h2; \
+  ./choose cl  trysendfile hassendfile.h1 hassendfile.h2; \
+  ./choose cl  trysgact    hassgact.h1    hassgact.h2; \
+  ./choose cl  trysgprm    hassgprm.h1    hassgprm.h2; \
+  ./choose cl  tryspnam    hasspnam.h1    hasspnam.h2; \
+  ./choose cl  tryuserpw   hasuserpw.h1   hasuserpw.h2; \
+  ./choose cl  trywaitp    haswaitp.h1    haswaitp.h2; \
+  ./choose c   tryzlib     haszlib.h1     haszlib.h2; \
+  ./choose clr trypoll     iopoll.h1      iopoll.h2; \
+  ./choose c   trysysel    select.h1      select.h2; \
+  ./choose cl  trysetenv   setenv.h1      setenv.h2; \
+  ./choose cl  tryunsetenv unsetenv.h1    unsetenv.h2; \
+  ./choose clr tryulong32  uint32.h1      uint32.h2; \
+  ./choose clr tryulong64  uint64.h1      uint64.h2; \
+  echo; echo '#endif'; \
+) >sysdeps.h
