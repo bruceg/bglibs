@@ -39,9 +39,7 @@ static const uint64 H0[8] = {
 void SHA384_init(SHA384_ctx* ctx)
 {
   memcpy(ctx->H, H0, sizeof H0);
-  ctx->lbits = 0;
-  ctx->hbits = 0;
-  ctx->mlen = 0;
+  ctx->bytes = 0;
 }
 
 extern void SHA512_final_transform(SHA512_ctx* ctx);

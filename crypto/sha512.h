@@ -7,9 +7,8 @@
 
 struct SHA512_ctx {
   uint64 H[8];
-  uint64 hbits, lbits;
-  uint8 M[ 256 ];
-  unsigned mlen;
+  uint64 bytes;
+  uint8 M[256];
 };
 typedef struct SHA512_ctx SHA512_ctx;
 

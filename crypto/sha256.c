@@ -131,21 +131,21 @@ static void SHA256_transform(uint32* H, const uint8* M)
 void SHA256_init(SHA256_ctx* ctx)
 {
   memcpy(ctx->H, H0, sizeof H0);
-  ctx->bits = 0;
-  ctx->mlen = 0;
+  ctx->bytes = 0;
 }
 
 void SHA256_update(SHA256_ctx* ctx, const void* vdata, unsigned long data_len)
 {
   const uint8* data = vdata;
   unsigned long use;
+  unsigned mlen = ctx->bytes % 64;
 
-  ctx->bits += data_len << 3;
+  ctx->bytes += data_len;
 
-  if (ctx->mlen && data_len >= (use = 64 - ctx->mlen)) {
-    memcpy(ctx->M + ctx->mlen, data, use);
+  if (mlen && data_len >= (use = 64 - mlen)) {
+    memcpy(ctx->M + mlen, data, use);
     SHA256_transform(ctx->H, ctx->M);
-    ctx->mlen = 0;
+    mlen = 0;
     data_len -= use;
     data += use;
   }
@@ -156,21 +156,21 @@ void SHA256_update(SHA256_ctx* ctx, const void* vdata, unsigned long data_len)
     data += 64;
   }
 
-  memcpy(ctx->M + ctx->mlen, data, data_len);
-  ctx->mlen += data_len;
+  memcpy(ctx->M + mlen, data, data_len);
 }
 
 void SHA256_final(SHA256_ctx* ctx, uint8* digest)
 {
   unsigned i;
-  ctx->M[ctx->mlen++] = 0x80;
-  memset(ctx->M + ctx->mlen, 0x00, 64 - ctx->mlen);
-  if (ctx->mlen > 64-8) {
+  unsigned mlen = ctx->bytes % 64;
+  ctx->M[mlen++] = 0x80;
+  memset(ctx->M + mlen, 0x00, 64 - mlen);
+  if (mlen > 64-8) {
     SHA256_transform(ctx->H, ctx->M);
     memset(ctx->M, 0x00, 64-8);
   }
 
-  uint64_pack_msb(ctx->bits, ctx->M+64-8);
+  uint64_pack_msb(ctx->bytes << 3, ctx->M+64-8);
   SHA256_transform(ctx->H, ctx->M);
 
   for (i = 0; i < 32/4; ++i, digest += 4)

@@ -157,30 +157,20 @@ static void SHA512_transform(uint64 H[8], const uint8 M[128])
 void SHA512_init(SHA512_ctx* ctx)
 {
   memcpy(ctx->H, H0, sizeof H0);
-  ctx->lbits = 0;
-  ctx->hbits = 0;
-  ctx->mlen = 0;
+  ctx->bytes = 0;
 }
 
 void SHA512_update(SHA512_ctx* ctx, const void* vdata, unsigned long data_len)
 {
   const uint8* data = vdata;
-  unsigned long use;
-  uint64 low_bits;
+  unsigned use;
+  unsigned mlen = ctx->bytes % 128;
    
-  /* convert data_len to bits and add to the 128 bit word formed by lbits
-     and hbits */
-#ifdef HAS_ULONG64
-  ctx->hbits += data_len >> 61;
-#endif
-  low_bits = data_len << 3;
-  ctx->lbits += low_bits;
-  if (ctx->lbits < low_bits) ++ctx->hbits;
-
-  if (ctx->mlen && data_len >= (use = 128 - ctx->mlen)) {
-    memcpy(ctx->M + ctx->mlen, data, use);
+  ctx->bytes += data_len;
+  if (mlen > 0 && data_len >= (use = 128 - mlen)) {
+    memcpy(ctx->M + mlen, data, use);
     SHA512_transform(ctx->H, ctx->M);
-    ctx->mlen = 0;
+    mlen = 0;
     data_len -= use;
     data += use;
   }
@@ -191,22 +181,21 @@ void SHA512_update(SHA512_ctx* ctx, const void* vdata, unsigned long data_len)
     data += 128;
   }
   
-  memcpy(ctx->M + ctx->mlen, data, data_len);
-  ctx->mlen += data_len;
+  memcpy(ctx->M + mlen, data, data_len);
 }
 
 void SHA512_final_transform(SHA512_ctx* ctx)
 {
-  ctx->M[ctx->mlen] = 0x80;
-  ++ctx->mlen;
-  memset(ctx->M + ctx->mlen, 0x00, 128 - ctx->mlen);
-  if (ctx->mlen > 128-16) {
+  unsigned mlen = ctx->bytes % 128;
+  ctx->M[mlen++] = 0x80;
+  memset(ctx->M + mlen, 0x00, 128 - mlen);
+  if (mlen > 128-16) {
     SHA512_transform(ctx->H, ctx->M);
     memset(ctx->M, 0x00, 128-16);
   }
 
-  uint64_pack_msb(ctx->hbits, ctx->M+112);
-  uint64_pack_msb(ctx->lbits, ctx->M+120);
+  uint64_pack_msb(ctx->bytes >> 61, ctx->M+112);
+  uint64_pack_msb(ctx->bytes <<  3, ctx->M+120);
   SHA512_transform(ctx->H, ctx->M);
 }
 

@@ -7,9 +7,8 @@
 
 typedef struct {
   uint32 H[8];
-  uint64 bits;
+  uint64 bytes;
   uint8 M[64];
-  unsigned mlen;
 } SHA256_ctx;
 
 void SHA256_init(SHA256_ctx*);
