@@ -34,5 +34,6 @@ void msg_common(const char* type,
     obuf_puts(&errbuf, ": ");
     obuf_puts(&errbuf, strerror(errno));
   }
-  obuf_putsflush(&errbuf, ".\n");
+  obuf_putc(&errbuf, '\n');
+  obuf_flush(&errbuf);
 }
