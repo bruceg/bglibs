@@ -11,6 +11,8 @@ Changes in version 1.006
 
 - Major internal reorganization moving many files into subdirectories.
 
+- More portability fixes.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
