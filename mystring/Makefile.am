@@ -1,11 +1,12 @@
 noinst_LIBRARIES = libmystring.a
-EXTRA_DIST = ChangeLog
+EXTRA_DIST = ChangeLog iter.h join.h mystring.h rep.h trace.h
 
 INCLUDES = -I..
 
-libmystring_a_SOURCES = mystring.h trace.h \
+libmystring_a_SOURCES = \
 	append.cc \
 	assign.cc \
+	fdobuf.cc \
 	find_first_ch.cc \
 	find_first_of.cc \
 	find_last_ch.cc \
@@ -21,4 +22,3 @@ libmystring_a_SOURCES = mystring.h trace.h \
 	subst.cc \
 	strip.cc \
 	upper.cc
-# cons2.cc cons3.cc cons4.cc cons5.cc cons6.cc cons7.cc tmp.cc

@@ -1,3 +1,18 @@
+2000-04-06  Bruce Guenter  <bguenter@bguenter.pointsnorth.com>
+
+	* fdobuf.cc (operator<<): Moved this routine out of an inline
+	declaration.
+
+	* iter.h: Moved the mystring_iter declarations into this file.
+
+	* rep.h: Moved the mystringrep declarations into this file.
+
+	* join.h: Moved the mystringjoin declarations into this file.
+
+	* mystring.h (class mystring): Renamed the "find_first" and
+	"find_last" routines that scan for items in a set to
+	"find_first_of" and "find_last_of".
+
 1999-08-15  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
 
 	* mystring.h (class mystring_iter): Changed the default seperator

@@ -18,33 +18,7 @@
 #define MYSTRING__H__
 
 #include <sys/types.h>
-#include "fdbuf/fdbuf.h"
-
-struct mystringrep
-{
-  unsigned length;
-  unsigned references;
-  unsigned size;
-  char buf[1];
-
-  void attach();
-  void detach();
-  mystringrep* append(const char*, unsigned);
-  
-  static mystringrep* alloc(unsigned);
-  static mystringrep* dup(const char*, unsigned);
-  static mystringrep* dup(const char*, unsigned,
-			  const char*, unsigned);
-};
-
-#ifndef MYSTRING_TRACE
-inline void mystringrep::attach()
-{
-  references++;
-}
-#endif
-
-extern mystringrep nil;
+#include "mystring/rep.h"
 
 class mystringjoin;
 class mystring
@@ -103,15 +77,14 @@ public:
   mystring upper() const;
 
   int find_first(char, size_t = 0) const;
-  int find_first(const mystring&, size_t = 0) const;
-  int find_first(const char*, size_t = 0) const;
-  int find_first(const char*, size_t, size_t) const;
-  int find(char ch, size_t offset = 0) const { return find_first(ch, offset); }
+  int find_first_of(const mystring&, size_t = 0) const;
+  int find_first_of(const char*, size_t = 0) const;
+  int find_first_of(const char*, size_t, size_t) const;
 
   int find_last(char, size_t = (size_t)-1) const;
-  int find_last(const mystring&, size_t = (size_t)-1) const;
-  int find_last(const char*, size_t = 0) const;
-  int find_last(const char*, size_t, size_t) const;
+  int find_last_of(const mystring&, size_t = (size_t)-1) const;
+  int find_last_of(const char*, size_t = 0) const;
+  int find_last_of(const char*, size_t, size_t) const;
 
   mystring left(size_t) const;
   mystring right(size_t) const;
@@ -130,50 +103,8 @@ public:
     }
 };
 
-class mystringjoin
-{
-private:
-  const mystringjoin* prev;
-  mystringrep* rep;
-  const char* str;
-
-  mystringjoin();
-public:
-  mystringjoin(const mystringjoin& j)
-    : prev(j.prev), rep(j.rep), str(j.str)
-    {
-      rep->attach();
-    }
-  mystringjoin(const mystring& s)
-    : prev(0), rep(s.rep), str(s.rep->buf)
-    {
-      rep->attach();
-    }
-  mystringjoin(const char* s)
-    : prev(0), rep(0), str(s)
-    {
-    }
-  mystringjoin(const mystringjoin& p, const mystring& s)
-    : prev(&p), rep(s.rep), str(s.rep->buf)
-    {
-      rep->attach();
-    }
-  mystringjoin(const mystringjoin& p, const char* s)
-    : prev(&p), rep(0), str(s)
-    {
-    }
-  ~mystringjoin()
-    {
-      if(rep) rep->detach();
-    }
-  mystringrep* traverse() const;
-};
-
-inline mystring::mystring(const mystringjoin& j)
-  : rep(j.traverse())
-{
-  rep->attach();
-}
+#include "mystring/iter.h"
+#include "mystring/join.h"
 
 #ifndef MYSTRING_TRACE
 inline mystring::~mystring()
@@ -182,41 +113,10 @@ inline mystring::~mystring()
 }
 #endif
 
-inline mystringjoin operator+(const mystringjoin& a, const mystring& b)
-{
-  return mystringjoin(a, b);
-}
-
-inline mystringjoin operator+(const mystringjoin& a, const char* b)
-{
-  return mystringjoin(a, b);
-}
-
-inline fdobuf& operator<<(fdobuf& out, const mystring& str)
-{
-  out.write(str.c_str(), str.length());
-  return out;
-}
+class fdobuf;
+fdobuf& operator<<(fdobuf& out, const mystring& str);
 
 //istream& operator>>(istream& in, mystring& str);
-
-class mystring_iter
-{
-  const mystring str;
-  const char sep;
-  int pos;
-  mystring part;
-
-  void advance();
-public:
-  mystring_iter(const mystring&, char = '\0');
-  ~mystring_iter();
-  
-  operator bool() const { return pos >= 0; }
-  bool operator!() const { return pos < 0; }
-  mystring operator*() const { return part; }
-  void operator++() { advance(); }
-};
 
 typedef mystring string;
 
