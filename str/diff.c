@@ -34,7 +34,7 @@ int str_diffb(const str* a, const char* b, unsigned len)
   char* aptr;
   max = a->len;
   if (max > len) max = len;
-  for (aptr = a->s; len; ++aptr, ++b, --max)
+  for (aptr = a->s; max; ++aptr, ++b, --max)
     if (*b - *aptr) return *b - *aptr;
   if (a->len > len) return 1;
   if (a->len < len) return -1;
