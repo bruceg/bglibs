@@ -1,4 +1,9 @@
 -------------------------------------------------------------------------------
+Changes in version 1.020
+
+Development of this version has been sponsored by FutureQuest, Inc.
+ossi@FutureQuest.net  http://www.FutureQuest.net/
+-------------------------------------------------------------------------------
 Changes in version 1.019
 
 - Broke the iobuf includes into smaller parts.
