@@ -20,16 +20,9 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
-#include "unix/nonblock.h"
 #include "socket.h"
 
 int socket_udp(void)
 {
-  int fd;
-  if ((fd = socket(AF_INET,SOCK_DGRAM,0)) == -1) return fd;
-  if (!nonblock_on(fd)) {
-    close(fd);
-    fd = -1;
-  }
-  return fd;
+  return socket(AF_INET, SOCK_DGRAM, 0);
 }
