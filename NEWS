@@ -3,6 +3,10 @@ Changes in version 1.006
 
 - Added uint16, uint32, and uint64 pack/unpack functions.
 
+- Changed the ipv4addr typedef to make explicit when it's being passed
+  by reference.  This breaks source code compatibility with previous
+  versions.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
