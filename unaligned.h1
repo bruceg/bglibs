@@ -1,0 +1,2 @@
+/* sysdep: -unaligned */
+#undef HAS_UNALIGNED_ACCESSES

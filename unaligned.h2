@@ -1,0 +1,2 @@
+/* sysdep: +unaligned */
+#define HAS_UNALIGNED_ACCESSES 1

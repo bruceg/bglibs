@@ -7,6 +7,7 @@ dependon([
 	'trysysel.c', 'select.h1', 'select.h2',
 	'trysetenv.c', 'setenv.h1', 'setenv.h2',
 	'tryunsetenv.c', 'unsetenv.h1', 'unsetenv.h2',
+	'tryunaligned.c', 'unaligned.h1', 'unaligned.h2',
 	])
 : choose compile load uint16.h uint32.h uint64.h
 ( set -e; \
@@ -32,5 +33,6 @@ dependon([
   ./choose c   trysysel    select.h1      select.h2; \
   ./choose cl  trysetenv   setenv.h1      setenv.h2; \
   ./choose cl  tryunsetenv unsetenv.h1    unsetenv.h2; \
+  ./choose clr trununaligned unaligned.h1 unaligned.h2; \
   echo; echo '#endif'; \
 ) >sysdeps.h
