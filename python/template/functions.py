@@ -17,6 +17,7 @@
 import os
 import string
 import sys
+import time
 
 def iif(cond, true, false):
     '''A functional equivalent to C's ?: operator.
@@ -77,4 +78,6 @@ exports = {
 	'nl2br': nl2br,
 	'relink': relink,
     'url': escape_url,
+	'sys': sys,
+	'time': time,
     }
