@@ -21,6 +21,8 @@ Changes in version 1.015
 - Rewrote the CRC routines in terms of "generic" forward and reflected
   functions.
 
+- Added CRC32C (used in iSCSI) functions.
+
 NOTE: The next non-bugfix version of bglibs will be rewritten to use the
 new formatting routines in the appropriate iobuf and str functions.
 This will require linking against additional libraries in the future.

@@ -1,0 +1,2 @@
+: crc-gentab
+./crc-gentab crc32c 32 0x1EDC6F41 reflected >$@

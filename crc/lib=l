@@ -6,6 +6,7 @@ crc16_xmodem_table.o
 gcrc32fwd.o
 gcrc32rfl.o
 crc32_table.o
+crc32c_table.o
 gcrc64fwd.o
 gcrc64rfl.o
 crc64_table.o
