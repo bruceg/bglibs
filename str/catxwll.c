@@ -1,5 +1,5 @@
-/* str/catuw.c - Append an unsigned integer
- * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
+/* str/catuwll.c - Append an unsigned long long integer
+ * Copyright (C) 2003  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,15 @@
  */
 #include "str.h"
 
-/** Append an unsigned integer in decimal. */
-int str_catuw(str* s, unsigned long in, unsigned width, char pad)
+/** Append an unsigned long long integer in hexadecimal. */
+int str_catxll(str* s, unsigned long long in)
 {
-  return str_catunumw(s, in, width, pad, 10, str_lcase_digits);
+  return str_catullnumw(s, in, 0, 0, 10, str_lcase_digits);
 }
 
-/** Append an unsigned integer in decimal, padded to a minimum width. */
-int str_catu(str* s, unsigned long in)
+/** Append an unsigned long long integer in hexadecimal, padded to a
+    minimum width. */
+int str_catxwll(str* s, unsigned long long in, unsigned width, char pad)
 {
-  return str_catunumw(s, in, 0, 0, 10, str_lcase_digits);
+  return str_catullnumw(s, in, width, pad, 10, str_lcase_digits);
 }

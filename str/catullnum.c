@@ -1,4 +1,4 @@
-/* str/catiw.c - Append an signed integer
+/* str/catunumw.c - Append an unsigned long long integer
  * Copyright (C) 2003  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -17,14 +17,27 @@
  */
 #include "str.h"
 
-/** Append a signed integer in decimal. */
-int str_cati(str* s, long in)
+/** Append an unsigned long long integer, optionally padded to a minimum
+    width */
+int str_catullnumw(str* s, unsigned long long in, unsigned width, char pad,
+		   unsigned base, const char* digits)
 {
-  return str_catsnumw(s, in, 0, 0, 10, str_lcase_digits);
-}
-
-/** Append a signed integer in decimal, padded to a minimum width. */
-int str_catiw(str* s, long in, unsigned width, char pad)
-{
-  return str_catsnumw(s, in, width, pad, 10, str_lcase_digits);
+  unsigned long long tmp;
+  unsigned size;
+  unsigned padsize;
+  unsigned i;
+  
+  if (in < base)
+    size = 1;
+  else
+    for (tmp = in, size = 0; tmp; tmp /= base, ++size) ;
+  padsize = (width > size) ? width - size : 0;
+  if (!str_realloc(s, s->len + padsize+size)) return 0;
+  while (padsize--)
+    s->s[s->len++] = pad;
+  for (i = size; i-- > 0; in /= base)
+    s->s[s->len+i] = digits[in % base];
+  s->len += size;
+  s->s[s->len] = 0;
+  return 1;
 }

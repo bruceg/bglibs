@@ -1,5 +1,5 @@
-/* str/catuw.c - Append an unsigned integer
- * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
+/* str/catunumw.c - Append an unsigned integer
+ * Copyright (C) 2003  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,26 @@
  */
 #include "str.h"
 
-/** Append an unsigned integer in decimal. */
-int str_catuw(str* s, unsigned long in, unsigned width, char pad)
+/** Append an unsigned integer, optionally padded to a minimum width */
+int str_catunumw(str* s, unsigned long in, unsigned width, char pad,
+		 unsigned base, const char* digits)
 {
-  return str_catunumw(s, in, width, pad, 10, str_lcase_digits);
-}
-
-/** Append an unsigned integer in decimal, padded to a minimum width. */
-int str_catu(str* s, unsigned long in)
-{
-  return str_catunumw(s, in, 0, 0, 10, str_lcase_digits);
+  unsigned long tmp;
+  unsigned size;
+  unsigned padsize;
+  unsigned i;
+  
+  if (in < base)
+    size = 1;
+  else
+    for (tmp = in, size = 0; tmp; tmp /= base, ++size) ;
+  padsize = (width > size) ? width - size : 0;
+  if (!str_realloc(s, s->len + padsize+size)) return 0;
+  while (padsize--)
+    s->s[s->len++] = pad;
+  for (i = size; i-- > 0; in /= base)
+    s->s[s->len+i] = digits[in % base];
+  s->len += size;
+  s->s[s->len] = 0;
+  return 1;
 }

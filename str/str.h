@@ -51,6 +51,12 @@ struct str_sortentry
 };
 typedef struct str_sortentry str_sortentry;
 
+/** \name Globals
+ * @{ */
+extern const char str_lcase_digits[36];
+extern const char str_ucase_digits[36];
+/* @} */
+
 /** \name Overhead Functions
  * @{ */
 int str_init(str* s);
@@ -81,16 +87,26 @@ int str_cat(str* s, const str* in);
 int str_cats(str* s, const char* in);
 int str_catc(str* s, char in);
 int str_catb(str* s, const char* in, unsigned len);
-#define str_cati(S,I) str_catiw((S),(I),0,0)
+int str_cati(str* s, long in);
 int str_catiw(str* s, long in, unsigned width, char pad);
-#define str_catu(S,I) str_catuw((S),(I),0,0)
+int str_catu(str* s, unsigned long in);
 int str_catuw(str* s, unsigned long in, unsigned width, char pad);
-#define str_catx(S,I) str_catxw((S),(I),0,0)
+int str_catx(str* s, unsigned long in);
 int str_catxw(str* s, unsigned long in, unsigned width, char pad);
-#define str_catill(S,I) str_catiw((S),(I),0,0)
+int str_catill(str* s, long long in);
 int str_catiwll(str* s, long long in, unsigned width, char pad);
-#define str_catull(S,I) str_catuw((S),(I),0,0)
+int str_catull(str* s, unsigned long long in);
 int str_catuwll(str* s, unsigned long long in, unsigned width, char pad);
+int str_catxll(str* s, unsigned long long in);
+int str_catxwll(str* s, unsigned long long in, unsigned width, char pad);
+int str_catsnumw(str* s, long in, unsigned width, char pad,
+		 unsigned base, const char* digits);
+int str_catunumw(str* s, unsigned long in, unsigned width, char pad,
+		 unsigned base, const char* digits);
+int str_catsllnumw(str* s, long long in, unsigned width, char pad,
+		   unsigned base, const char* digits);
+int str_catullnumw(str* s, unsigned long long in, unsigned width, char pad,
+		   unsigned base, const char* digits);
 int str_cat2s(str* s, const char* a, const char* b);
 int str_cat3s(str* s, const char* a, const char* b, const char* c);
 int str_cat4s(str* s, const char* a, const char* b, const char* c, const char* d);

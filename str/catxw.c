@@ -17,28 +17,14 @@
  */
 #include "str.h"
 
-static const char bin2hex[16] = "0123456789abcdef";
-
-/** Append an unsigned integer in hexadecimal, optionally padded to a
-    minimum width */
+/** Append an unsigned integer in hexadecimal. */
 int str_catxw(str* s, unsigned long in, unsigned width, char pad)
 {
-  unsigned long tmp;
-  unsigned size;
-  unsigned padsize;
-  unsigned i;
-  
-  if (in < 16)
-    size = 1;
-  else
-    for (tmp = in, size = 0; tmp; tmp /= 16, ++size) ;
-  padsize = (width > size) ? width - size : 0;
-  if (!str_realloc(s, s->len + padsize+size)) return 0;
-  while (padsize--)
-    s->s[s->len++] = pad;
-  for (i = size; i-- > 0; in /= 16)
-    s->s[s->len+i] = bin2hex[in % 16];
-  s->len += size;
-  s->s[s->len] = 0;
-  return 1;
+  return str_catunumw(s, in, width, pad, 10, str_lcase_digits);
+}
+
+/** Append an unsigned integer in hexadecimal, padded to a minimum width. */
+int str_catx(str* s, unsigned long in)
+{
+  return str_catunumw(s, in, 0, 0, 10, str_lcase_digits);
 }

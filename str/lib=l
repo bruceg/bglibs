@@ -8,9 +8,14 @@ cat6s.o
 catiwll.o
 catiw.o
 cat.o
+catsllnum.o
+catsnum.o
+catullnum.o
+catunum.o
 catuwll.o
 catuw.o
 catxw.o
+catxwll.o
 cmp.o
 copy2s.o
 copy3s.o
@@ -22,6 +27,7 @@ count.o
 countof.o
 cut.o
 diff.o
+digits.o
 findnext.o
 findnextof.o
 findprev.o

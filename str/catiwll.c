@@ -17,37 +17,15 @@
  */
 #include "str.h"
 
-/** Append a signed long long integer in decimal, optionally padded to a
-    minimum width */
+/** Append a signed long long integer in decimal. */
+int str_catill(str* s, long long in)
+{
+  return str_catsllnumw(s, in, 0, 0, 10, str_lcase_digits);
+}
+
+/** Append a signed long long integer in decimal, padded to a minimum
+    width. */
 int str_catiwll(str* s, long long in, unsigned width, char pad)
 {
-  long long tmp;
-  unsigned size;
-  unsigned i;
-  unsigned sign;
-  unsigned padsize;
-  
-  sign = 0;
-  if (in < 0) {
-    sign = 1;
-    in = -in;
-  }
-  if (in < 10)
-    size = 1;
-  else
-    for (tmp = in, size = 0; tmp; tmp /= 10, ++size) ;
-  padsize = (width > sign+size) ? width - sign+size : 0;
-  if (!str_realloc(s, s->len + padsize+sign+size)) return 0;
-
-  /* If the padding is a zero, put it after the sign, otherwise before */
-  if (pad != '0')
-    while (padsize--) s->s[s->len++] = pad;
-  if (sign) s->s[s->len++] = pad;
-  if (pad == '0')
-    while (padsize--) s->s[s->len++] = pad;
-  for (i = size; i-- > 0; in /= 10)
-    s->s[s->len+i] = (in % 10) + '0';
-  s->len += size;
-  s->s[s->len] = 0;
-  return 1;
+  return str_catsllnumw(s, in, width, pad, 10, str_lcase_digits);
 }

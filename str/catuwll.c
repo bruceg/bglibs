@@ -1,5 +1,5 @@
 /* str/catuwll.c - Append an unsigned long long integer
- * Copyright (C) 2002  Bruce Guenter <bruceg@em.ca>
+ * Copyright (C) 2003  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,26 +17,15 @@
  */
 #include "str.h"
 
-/** Append an unsigned long long integer in decimal, optionally padded
-    to a minimum width */
+/** Append an unsigned long long integer in decimal. */
+int str_catull(str* s, unsigned long long in)
+{
+  return str_catullnumw(s, in, 0, 0, 10, str_lcase_digits);
+}
+
+/** Append an unsigned long long integer in decimal, padded to a minimum
+    width. */
 int str_catuwll(str* s, unsigned long long in, unsigned width, char pad)
 {
-  unsigned long long tmp;
-  unsigned size;
-  unsigned padsize;
-  unsigned i;
-  
-  if (in < 10)
-    size = 1;
-  else
-    for (tmp = in, size = 0; tmp; tmp /= 10, ++size) ;
-  padsize = (width > size) ? width - size : 0;
-  if (!str_realloc(s, s->len + padsize+size)) return 0;
-  while (padsize--)
-    s->s[s->len++] = pad;
-  for (i = size; i-- > 0; in /= 10)
-    s->s[s->len+i] = (in % 10) + '0';
-  s->len += size;
-  s->s[s->len] = 0;
-  return 1;
+  return str_catullnumw(s, in, width, pad, 10, str_lcase_digits);
 }
