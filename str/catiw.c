@@ -35,7 +35,7 @@ int str_catiw(str* s, long in, unsigned width, char pad)
   else
     for (tmp = in, size = 0; tmp; tmp /= 10, ++size) ;
   padsize = (width > sign+size) ? width - sign+size : 0;
-  if (!str_realloc(s, padsize+sign+size)) return 0;
+  if (!str_realloc(s, s->len + padsize+sign+size)) return 0;
 
   /* If the padding is a zero, put it after the sign, otherwise before */
   if (pad != '0')
