@@ -1,3 +1,11 @@
+2000-04-06  Bruce Guenter  <bguenter@bguenter.pointsnorth.com>
+
+	* fdobuf.h: Moved the fdobuf declarations here.
+
+	* fdibuf.h: Moved the fdibuf declarations here.
+
+	* fdbuf.h: Removed extraneous fdobuf declaration.
+
 1999-07-08  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
 
 	* fdobuf.cc (write): Optimized this routine better for the case
