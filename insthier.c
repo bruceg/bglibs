@@ -39,6 +39,10 @@ void insthier(void)
   DI(cli);
   CF(cli, cli.h);
 
+  DI(crc);
+  CF(crc, crc32.h);
+  CF(crc, crc64.h);
+
   DI(crypto);
   CF(crypto, md5.h);
   CF(crypto, sha1.h);
@@ -140,6 +144,8 @@ void insthier(void)
   L(cli);
   DL(cli);
   SL(cli, cli);
+
+  L(crc);
 
   L(crypto);
   DL(crypto);

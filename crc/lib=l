@@ -1,0 +1,4 @@
+crc32_table.o
+crc32_update.o
+crc64_table.o
+crc64_update.o
