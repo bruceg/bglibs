@@ -18,7 +18,7 @@
 #include <string.h>
 #include "str.h"
 
-int str_copy(str* s, str* in)
+int str_copy(str* s, const str* in)
 {
   return str_copyb(s, in->s, in->len);
 }

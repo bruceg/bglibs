@@ -18,7 +18,7 @@
 #include <string.h>
 #include "str.h"
 
-int str_cat(str* s, str* in)
+int str_cat(str* s, const str* in)
 {
   return str_catb(s, in->s, in->len);
 }
