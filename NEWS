@@ -7,6 +7,8 @@ Changes in version 1.006
   by reference.  This breaks source code compatibility with previous
   versions.
 
+- Major internal reorganization moving many files into subdirectories.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
