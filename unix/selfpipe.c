@@ -7,7 +7,12 @@
 
 static int fds[2] = { -1, -1 };
 
-static void catch_signal(int signal)
+/** Catch a signal and write it to the self-pipe.
+ *
+ * This routine can be used with sig_*_catch() to send other signals
+ * through the self-pipe.
+ */
+void selfpipe_catch_signal(int signal)
 {
   char c = signal;
   write(fds[1], &c, 1);
@@ -38,7 +43,7 @@ int selfpipe_init(void)
     close(fds[1]);
     return -1;
   }
-  sig_child_catch(catch_signal);
+  sig_child_catch(selfpipe_catch_signal);
   return fds[0];
 }
 
