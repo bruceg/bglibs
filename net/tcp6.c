@@ -29,7 +29,7 @@ int socket_tcp6(void)
 #if HASIPV6
   return socket(AF_INET6, SOCK_STREAM, 0);
 #else
-  errno = ENOSYS
+  errno = EPROTONOSUPPORT;
   return -1;
 #endif
 }
