@@ -18,6 +18,7 @@ EXTRAS = [
 	'NEWS',
 	'README',
 	'TODO',
+	'doc/html',
 	]
 
 # Set RPMUPLOAD to a list of additional hostname/path destinations to
