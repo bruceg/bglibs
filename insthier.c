@@ -34,6 +34,12 @@ void insthier(void)
 
   DI(cli);
   CF(cli, cli.h);
+
+  DI(crypto);
+  CF(crypto, md5.h);
+  CF(crypto, sha1.h);
+  CF(crypto, sha256.h);
+  CF(crypto, sha512a.h);
   
   DI(cvm);
   CF(cvm, client.h);
@@ -100,6 +106,12 @@ void insthier(void)
 
   DL(cli);
   CF(cli, cli.a);
+
+  DL(crypto);
+  CF(crypto, md5.a);
+  CF(crypto, sha1.a);
+  CF(crypto, sha256.a);
+  CF(crypto, sha512a.a);
   
   DL(cvm);
   CF(cvm, client.a);

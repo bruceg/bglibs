@@ -1,4 +1,11 @@
 -------------------------------------------------------------------------------
+Changes in version 1.002
+
+- Added crypto hash libraries (MD5, SHA1, SHA256, SHA512).
+
+Development of this version has been sponsored by FutureQuest, Inc.
+ossi@FutureQuest.net  http://www.FutureQuest.net/
+-------------------------------------------------------------------------------
 Changes in version 1.001
 
 - Moved the file destination to /usr/local/bglibs/*
