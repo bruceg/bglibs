@@ -1,0 +1,15 @@
+Idea: pre-parsed code
+- Add a pre-parse command
+- Write the pre-parsed code (repr(parser.parse(body))) to
+  filename.something
+- In parser.parse, look for the pre-parsed file and see if it's older
+  than the normal file.  If so, parse as usual, otherwise load the
+  pre-parsed file.
+- According to the benchmark scripts I've written, pre-parsed code is
+  3-4 times faster to load than the parsing process.  The big question
+  is if this difference would be completely "lost in the noise".
+
+Idea: convert the template into real Python code
+- Similar to above concept
+- Write out Python code to filename.py
+- Compile to filename.pyc

@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>Python Document Template System</title>
+</head>
+
+<body>
+<h1>Python Document Template System</h1>
+
+<h2>Syntax Elements</h2>
+
+<p>All of the following elements must be immediately preceded by
+<tt>&lt;?</tt> and followed by <tt>?&gt;</tt>.  All expressions, both
+listed as <tt>expression</tt> or <tt>list</tt> are evaluated as Python
+expressions.</p>
+
+<dl>
+
+<dt><tt>exit</tt> <dd>Causes execution of the template to stop
+immediately.
+
+<dt><tt>if <i>expression</i></tt> <dd>Executes the following block if
+the expression evaluates true.
+
+<dt><tt>else if <i>expression</i></tt> <dd>Executes the following
+block if the expression evaluates true and no sections of the
+enclosing <tt>if</tt>block were executed.
+
+<dt><tt>else</tt> <dd>Executes the following block if no sections of
+the enclosing <tt>if</tt> block were executed.
+
+<dt><tt>for <i>var</i> in <i>list</i></tt> <dd>For each value in
+<tt>list</tt>, sets <tt>var</tt> to that value and executes the
+following block.
+
+<dt><tt>foreach <i>list</i></tt> <dd>For each value in <tt>list</tt>,
+updates the current context with that value (the value must be a
+dictionary) and executes the following block.
+
+<dt><tt>include <i>expression</i></tt> <dd>Includes the file named by
+<tt>expression</tt>.  Note that included files are read and parsed a
+single time.  Subsequent includes of the same file result in execution
+of the cached parse tree.  The expression is not cached, and is
+evaluated each time the include statement is executed.  Includes may
+be recursively include themselves.
+
+<dt><tt>with <i>expression</i></tt> <dd>Evaluates the expression,
+updates the current context with that value (which must be a
+dictionary) and executes the following block.  This statement has the
+side-effect of introducing a local scope.  All variable assignments
+within a <tt>with</tt> block (including the assignments caused by the
+<tt>with</tt> statement itself) are not visible once the block is
+ended.  To introduce a new scope with no new variables, use "<tt>with
+{}</tt>".
+
+<dt><tt>end</tt> <dd>Marks the end of an <tt>if</tt>, </tt>for</tt>,
+<tt>foreach</tt>, or <tt>with</tt> block.
+
+<dt><tt><i>code</i></tt> <dd>All escaped statements, other than as
+listed above, are treated as raw Python code and executed as such.</p>
+
+</dl>
+
+</body>
+</html>
