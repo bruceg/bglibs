@@ -1,0 +1,5 @@
+add.o
+free.o
+get.o
+hash.o
+init.o
