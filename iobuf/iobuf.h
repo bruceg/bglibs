@@ -89,10 +89,10 @@ int obuf_endl(obuf* out);
 int obuf_putc(obuf* out, char ch);
 #define obuf_puts(out,str) obuf_write(out,str,strlen(str))
 int obuf_putsflush(obuf* out, const char* str);
-int obuf_putiw(obuf* out, long data, unsigned width);
-#define obuf_puti(out,data) obuf_putiw(out, data, 0)
-int obuf_putuw(obuf* out, unsigned long data, unsigned width);
-#define obuf_putu(out,data) obuf_putuw(out, data, 0)
+int obuf_putiw(obuf* out, long data, unsigned width, char pad);
+#define obuf_puti(out,data) obuf_putiw(out, data, 0, 0)
+int obuf_putuw(obuf* out, unsigned long data, unsigned width, char pad);
+#define obuf_putu(out,data) obuf_putuw(out, data, 0, 0)
 int obuf_putnetstring(obuf* out, const char* data, unsigned datalen);
 
 int iobuf_copy(ibuf* in, obuf* out);
