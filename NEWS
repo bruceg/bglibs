@@ -7,6 +7,11 @@ Changes in version 1.008
 
 - Changed str_match functions to add case insensitivity.
 
+- Added "function" options, and option separators to the CLI library, as
+  well as enhancing the string list type.
+
+- More portability fixes.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
