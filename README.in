@@ -1,8 +1,8 @@
-bglibs
+@PACKAGE@
 One stop library package
 Bruce Guenter <bruceg@em.ca>
-Version 1.003
-2002-09-27
+Version @VERSION@
+@TODAY@
 
 This package contains a collection of libraries written by myself and
 put in use in various packages.
@@ -12,10 +12,6 @@ To subscribe, send an email to:
 	bgware-subscribe@lists.em.ca
 A mailing list archive is available at:
 	http://lists.em.ca/?list=bgware
-
-Development versions of bglibs are available via anonymous CVS.
-Set your CVSROOT to ":pserver:cvs@bruce-guenter.dyndns.org:/CVS",
-login with an empty password, and check out the "lib" module.
 
 Note that the CVS for this package is not yet complete and may not be
 useable for reconstructing everything that went into this distribution.
