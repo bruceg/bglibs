@@ -19,7 +19,7 @@ echo gcc "%{optflags}" -g >conf-cc
 echo gcc -g -L. >conf-ld
 
 %build
-make libraries
+make
 
 %install
 rm -fr %{buildroot}
