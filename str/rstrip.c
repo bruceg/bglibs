@@ -22,8 +22,6 @@ void str_rstrip(str* s)
 {
   unsigned len;
   for (len = s->len; len > 0 && isspace(s->s[len-1]); --len) ;
-  if (len < s->len) {
-    s->len = len;
-    s->s[len] = 0;
-  }
+  s->len = len;
+  s->s[len] = 0;
 }
