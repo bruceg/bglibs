@@ -14,8 +14,6 @@ dependon([
 	])
 : choose compile load sysdeps-head.h sysdeps-tail.h
 ( set -e; \
-  echo '#ifndef SYS_DEPS__H__'; \
-  echo '#define SYS_DEPS__H__'; \
   cat sysdeps-head.h; \
   ./choose clr sys/tryulong32  sys/uint32.h1      sys/uint32.h2; \
   ./choose clr sys/tryulong64  sys/uint64.h1      sys/uint64.h2; \
@@ -37,5 +35,4 @@ dependon([
   ./choose cl  sys/tryunsetenv sys/unsetenv.h1    sys/unsetenv.h2; \
   ./choose clr sys/tryunaligned sys/unaligned.h1  sys/unaligned.h2; \
   cat sysdeps-tail.h; \
-  echo '#endif'; \
 ) >sysdeps.h

@@ -57,3 +57,4 @@
   __UINTNN_PACK_MSB_DECL(B,N) \
   __UINTNN_UNPACK_MSB_DECL(B,N)
 
+#endif
