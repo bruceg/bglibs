@@ -23,7 +23,8 @@
 
 static str tmp;
 
-static int match_first(int absolute, const str* part, str* result)
+static int match_first(int absolute, const str* part, str* result,
+		       unsigned options)
 {
   DIR* dir;
   direntry* entry;
@@ -31,8 +32,7 @@ static int match_first(int absolute, const str* part, str* result)
   if (!str_truncate(result, 0)) return -1;
   if ((dir = opendir(absolute ? "/" : ".")) == 0) return -1;
   while ((entry = readdir(dir)) != 0) {
-    if (entry->d_name[0] == '.') continue;
-    if (fnmatch(entry->d_name, part->s)) {
+    if (fnmatch(entry->d_name, part->s, options)) {
       if (absolute) if (!str_catc(result, '/')) return -1;
       if (!str_catb(result, entry->d_name, strlen(entry->d_name)+1)) return -1;
       ++count;
@@ -42,7 +42,7 @@ static int match_first(int absolute, const str* part, str* result)
   return count;
 }
 
-static int match_next(const str* part, str* result)
+static int match_next(const str* part, str* result, unsigned options)
 {
   DIR* dir;
   direntry* entry;
@@ -53,8 +53,7 @@ static int match_next(const str* part, str* result)
   striter_loop(&path, &tmp, 0) {
     if ((dir = opendir(path.startptr)) == 0) continue;
     while ((entry = readdir(dir)) != 0) {
-      if (entry->d_name[0] == '.') continue;
-      if (fnmatch(entry->d_name, part->s)) {
+      if (fnmatch(entry->d_name, part->s, options)) {
 	if (!str_cats(result, path.startptr) ||
 	    !str_catc(result, '/') ||
 	    !str_catb(result, entry->d_name, strlen(entry->d_name)+1)) {
@@ -69,7 +68,7 @@ static int match_next(const str* part, str* result)
   return count;
 }
 
-int path_match(const char* pattern, str* result)
+int path_match(const char* pattern, str* result, unsigned options)
 {
   static str part;
   
@@ -85,7 +84,7 @@ int path_match(const char* pattern, str* result)
   if ((partend = strchr(pattern, '/')) == 0) partend = patend;
 
   if (!str_copyb(&part, pattern, partend-pattern)) return -1;
-  if ((count = match_first(absolute, &part, result)) == -1) return -1;
+  if ((count = match_first(absolute, &part, result, options)) == -1) return -1;
   
   for (;;) {
     pattern = partend + 1;
@@ -93,7 +92,7 @@ int path_match(const char* pattern, str* result)
     if (pattern > patend) break;
     if ((partend = strchr(pattern, '/')) == 0) partend = patend;
     if (!str_copyb(&part, pattern, partend-pattern)) return -1;
-    if ((count = match_next(&part, result)) == -1) return -1;
+    if ((count = match_next(&part, result, options)) == -1) return -1;
   }
   if (!str_sort(result, 0, count)) return -1;
   return count;

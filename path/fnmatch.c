@@ -30,17 +30,6 @@ int has_magic(const char* str)
   return strchr(str, '*') || strchr(str, '?') || strchr(str, '[');
 }
 
-static int fnmatchr(const char* name, const char* pattern)
-{
-  char start = *pattern;
-  if (start == 0) return 1;
-  while (*name) {
-    if (*name == start && fnmatch(name+1, pattern+1)) return 1;
-    ++name;
-  }
-  return 0;
-}
-
 static int fnmatchs(char c, const char* set, unsigned long setlen)
 {
   if (*set == '~')
@@ -49,7 +38,8 @@ static int fnmatchs(char c, const char* set, unsigned long setlen)
     return memchr(set, c, setlen) != 0;
 }
 
-int fnmatch(const char* filename, const char* pattern)
+static int fnmatchr2(const char* name, const char* pattern);
+static int fnmatchr1(const char* filename, const char* pattern)
 {
   const char* end;
   const char* start;
@@ -57,7 +47,7 @@ int fnmatch(const char* filename, const char* pattern)
     switch (*pattern) {
     case '?': continue;
     case '*':
-      return fnmatchr(filename, pattern+1);
+      return fnmatchr2(filename, pattern+1);
     case '[':
       start = pattern+1;
       if ((end = strchr(start, ']')) == 0) return -1;
@@ -69,4 +59,30 @@ int fnmatch(const char* filename, const char* pattern)
     }
   }
   return *filename == 0 && *pattern == 0;
+}
+
+static int fnmatchr2(const char* name, const char* pattern)
+{
+  char start = *pattern;
+  if (start == 0) return 1;
+  while (*name) {
+    if (*name == start && fnmatchr1(name+1, pattern+1)) return 1;
+    ++name;
+  }
+  return 0;
+}
+
+int fnmatch(const char* filename, const char* pattern, unsigned options)
+{
+  /* Special handling for dotfiles: */
+  if (filename[0] == '.') {
+    /* Always skip "." and ".." */
+    if (filename[1] == 0 || (filename[1] == '.' && filename[2] == 0))
+      return 0;
+    /* If DOTFILES is not set,
+     * only match dotfiles when pattern starts with a period */
+    if (!(options & PATH_MATCH_DOTFILES) && pattern[0] != '.')
+      return 0;
+  }
+  return fnmatchr1(filename, pattern);
 }
