@@ -75,16 +75,16 @@ static void test(unsigned (*fn)(char*, unsigned long long, unsigned, char),
 
 MAIN
 {
-  test(fmt_udecw, 10, 0,   0);
-  test(fmt_udecw, 10, 1, ' ');
-  test(fmt_udecw, 10, 5, ' ');
-  test(fmt_udecw, 10, 5, '0');
-  test(fmt_uhexw, 30, 0,   0);
-  test(fmt_uhexw, 30, 5, ' ');
-  test(fmt_uhexw, 30, 5, '0');
-  test(fmt_uHexw, 30, 0,   0);
-  test(fmt_uHexw, 30, 5, ' ');
-  test(fmt_uHexw, 30, 5, '0');
+  test(fmt_ulldecw, 10, 0,   0);
+  test(fmt_ulldecw, 10, 1, ' ');
+  test(fmt_ulldecw, 10, 5, ' ');
+  test(fmt_ulldecw, 10, 5, '0');
+  test(fmt_ullhexw, 30, 0,   0);
+  test(fmt_ullhexw, 30, 5, ' ');
+  test(fmt_ullhexw, 30, 5, '0');
+  test(fmt_ullHexw, 30, 0,   0);
+  test(fmt_ullHexw, 30, 5, ' ');
+  test(fmt_ullHexw, 30, 5, '0');
 }
 #endif
 #ifdef SELFTEST_EXP
