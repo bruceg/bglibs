@@ -42,7 +42,7 @@ int str_joinb(str* s, char sep, const char* in, unsigned len)
   while (off2 < len && in[off2] == sep) ++off2;
   len2 = len - off2;
   
-  if (!str_ready(s, len1+1+len2)) return 0;
+  if (!str_realloc(s, len1+1+len2)) return 0;
   
   s->s[len1++] = sep;
   memcpy(s->s+len1, in+off2, len2);

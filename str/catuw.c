@@ -28,7 +28,7 @@ int str_catuw(str* s, unsigned long in, unsigned width, char pad)
   else
     for (tmp = in, size = 0; tmp; tmp /= 10, ++size) ;
   width = (width > size) ? width - size : 0;
-  if (!str_ready(s, width+size)) return 0;
+  if (!str_realloc(s, width+size)) return 0;
   for (i = 0; i < width; i++)
     s->s[s->len++] = pad;
   for (i = size; i > 0; --i, in /= 10)

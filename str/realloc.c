@@ -1,4 +1,4 @@
-/* str/catuw.c - Append an unsigned integer
+/* str/realloc.c - Ensure a string has a minimum size, copy the old string
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -15,37 +15,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+#include <stdlib.h>
 #include "str.h"
 
-int str_catiw(str* s, long in, unsigned width, char pad)
+/* Make sure that the string has at least size+1 bytes of available space. */
+int str_realloc(str* s, unsigned size)
 {
-  long tmp;
-  unsigned size;
-  unsigned i;
-  unsigned sign;
-  
-  sign = 0;
-  if (in < 0) {
-    sign = 1;
-    in = -in;
+  char* news;
+  ++size;
+  if (size >= s->size) {
+    size += size/8 + STR_BLOCKSIZE-1;
+    size -= size % STR_BLOCKSIZE;
+    if ((news = malloc(size)) == 0) return 0;
+    if (s->s) {
+      memcpy(news, s->s, s->len+1);
+      free(s->s);
+    }
+    s->size = size;
+    s->s = news;
   }
-  if (in < 10)
-    size = 1;
-  else
-    for (tmp = in, size = 0; tmp; tmp /= 10, ++size) ;
-  width = (width > sign+size) ? width - sign+size : 0;
-  if (!str_realloc(s, width+sign+size)) return 0;
-
-  /* If the padding is a zero, put it after the sign, otherwise before */
-  if (pad != '0')
-    for (i = 0; i < width; i++)
-      s->s[s->len++] = pad;
-  if (sign) s->s[s->len++] = pad;
-  if (pad == '0')
-    for (i = 0; i < width; i++)
-      s->s[s->len++] = pad;
-  for (i = size; i > 0; --i, in /= 10)
-    s->s[s->len++] = (in % 10) + '0';
-  s->s[s->len] = 0;
   return 1;
 }
