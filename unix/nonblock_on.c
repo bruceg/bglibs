@@ -1,5 +1,5 @@
 /* unix/nonblock_on.c - Turn on non-blocking I/O mode on a fd
- * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
+ * Copyright (C) 2004  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
  */
 #include <sys/types.h>
 #include <fcntl.h>
+#include "fcntl.h"
 #include "nonblock.h"
 
 #ifndef O_NONBLOCK
@@ -25,8 +26,5 @@
 
 int nonblock_on(int fd)
 {
-  int flags;
-  if ((flags = fcntl(fd, F_GETFL, 0)) == -1) return 0;
-  if (fcntl(fd, F_SETFL, flags | O_NONBLOCK)) return 0;
-  return 1;
+  return fcntl_fl_on(fd, O_NONBLOCK);
 }
