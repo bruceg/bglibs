@@ -1,6 +1,8 @@
 -------------------------------------------------------------------------------
 Changes in version 1.007
 
+- Fixed bug in iobuf/iobuf_init.c -- parameters to mmap happened to work
+  on Linux but were completely bogus for portability.
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
