@@ -54,9 +54,15 @@ static inline unsigned max(unsigned a, unsigned b)
   return (a>b) ? a : b;
 }
 
-static string fill(unsigned i)
+static const char* fill(unsigned i)
 {
-  char buf[i+1];
+  static unsigned lastlen = 0;
+  static char* buf = 0;
+  if(i > lastlen) {
+    delete[] buf;
+    buf = new char[i+1];
+    lastlen = i;
+  }
   memset(buf, ' ', i);
   buf[i] = 0;
   return buf;
@@ -78,6 +84,7 @@ static unsigned calc_max_width()
       switch(o->type) {
       case cli_option::string:     width += 6; break;
       case cli_option::integer:    width += 4; break;
+      case cli_option::uinteger:   width += 4; break;
       case cli_option::stringlist: width += 5; break;
       case cli_option::flag:       break;
       case cli_option::counter:    break;
@@ -102,6 +109,7 @@ static void show_option(cli_option* o, unsigned maxwidth)
     switch(o->type) {
     case cli_option::string:     extra = "=VALUE"; break;
     case cli_option::integer:    extra = "=INT"; break;
+    case cli_option::uinteger:   extra = "=UNS"; break;
     case cli_option::stringlist: extra = "=ITEM"; break;
     case cli_option::flag:       break;
     case cli_option::counter:    break;
@@ -164,6 +172,13 @@ int cli_option::set(const char* arg)
     *(int*)dataptr = strtol(arg, &endptr, 10);
     if(*endptr) {
       ferr << argv0 << ": invalid integer: " << arg << endl;
+      return -1;
+    }
+    return 1;
+  case uinteger:
+    *(unsigned*)dataptr = strtoul(arg, &endptr, 10);
+    if(*endptr) {
+      ferr << argv0 << ": invalid unsigned integer: " << arg << endl;
       return -1;
     }
     return 1;
