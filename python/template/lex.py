@@ -21,8 +21,8 @@ import syntax
 ###############################################################################
 # Lexical analysis
 
-_rx_begin_cmd = re.compile(r'<\?\s*')
-_rx_end_cmd = re.compile(r'[ \t]*\?>\s*\r?\n?')
+_rx_begin_cmd = re.compile(r'(^\s+|)<\?\s*', re.MULTILINE)
+_rx_end_cmd = re.compile(r'[ \t]*\?>[ \t]*\r?\n?')
 
 class Lexer:
     def __init__(self, content):
