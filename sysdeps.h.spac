@@ -1,12 +1,10 @@
-for dep in ('flock','peercred','sendfile','sgact','sgprm','spnam','userpw','waitp','zlib'):
+for dep in ('flock','getpeereid','ipv6','peercred','sendfile','sgact','sgprm','spnam','userpw','waitp','zlib'):
 	dependon(['sys/try%s.c'%dep, 'sys/has%s.h1'%dep, 'sys/has%s.h2'%dep])
 dependon([
 	'sys/tryulong32.c', 'sys/uint32.h1', 'sys/uint32.h2',
 	'sys/tryulong64.c', 'sys/uint64.h1', 'sys/uint64.h2',
 	'sys/tryendian.c', 'sys/endian.h1', 'sys/endian.h2',
 	'sys/trydirent.c', 'sys/direntry.h1', 'sys/direntry.h2',
-	'sys/tryipv6.c', 'sys/hasipv6.h1', 'sys/hasipv6.h2',
-	'sys/trygetpeereid.c', 'sys/hasgetpeereid.h1', 'sys/hasgetpeereid.h2',
 	'sys/tryvfork.c', 'sys/fork.h1', 'sys/fork.h2',
 	'sys/trypoll.c', 'sys/iopoll.h1', 'sys/iopoll.h2',
 	'sys/trysysel.c', 'sys/select.h1', 'sys/select.h2',
