@@ -22,9 +22,10 @@
 int str_ready(str* s, unsigned size)
 {
   char* news;
-  if (size+1 >= s->size) {
-    size += STR_ROUNDSIZE;
-    size -= size % STR_ROUNDSIZE;
+  ++size;
+  if (size >= s->size) {
+    size += size/8 + STR_BLOCKSIZE-1;
+    size -= size % STR_BLOCKSIZE;
     if ((news = malloc(size)) == 0) return 0;
     if (s->s)
       memcpy(news, s->s, s->len+1);
