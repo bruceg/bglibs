@@ -11,6 +11,10 @@ unsigned iobuf_bufsize = 8192;
 #define MAP_ANONYMOUS MAP_ANON
 #endif
 
+#ifndef MAP_FAILED
+#define MAP_FAILED ((void*)-1)
+#endif
+
 /** Initialize an \c iobuf structure. */
 int iobuf_init(iobuf* io, int fd, unsigned bufsize, char* buffer, unsigned flags)
 {
