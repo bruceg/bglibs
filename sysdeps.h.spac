@@ -1,6 +1,8 @@
 for dep in ('flock','peercred','sendfile','sgact','sgprm','spnam','userpw','waitp','zlib'):
 	dependon(['try%s.c'%dep, 'has%s.h1'%dep, 'has%s.h2'%dep])
 dependon([
+	'tryulong32.c', 'uint32.h1', 'uint32.h2',
+	'tryulong64.c', 'uint64.h1', 'uint64.h2',
 	'trydirent.c', 'direntry.h1', 'direntry.h2',
 	'tryvfork.c', 'fork.h1', 'fork.h2',
 	'trypoll.c', 'iopoll.h1', 'iopoll.h2',
@@ -9,11 +11,13 @@ dependon([
 	'tryunsetenv.c', 'unsetenv.h1', 'unsetenv.h2',
 	'tryunaligned.c', 'unaligned.h1', 'unaligned.h2',
 	])
-: choose compile load uint16.h uint32.h uint64.h
+: choose compile load sysdeps-head.h sysdeps-tail.h
 ( set -e; \
   echo '#ifndef SYS_DEPS__H__'; \
   echo '#define SYS_DEPS__H__'; \
-  echo; \
+  cat sysdeps-head.h; \
+  ./choose clr tryulong32  uint32.h1      uint32.h2; \
+  ./choose clr tryulong64  uint64.h1      uint64.h2; \
   ./choose c   trydirent   direntry.h1    direntry.h2; \
   ./choose cl  tryvfork    fork.h1        fork.h2; \
   ./choose cl  tryflock    hasflock.h1    hasflock.h2; \
@@ -30,10 +34,6 @@ dependon([
   ./choose cl  trysetenv   setenv.h1      setenv.h2; \
   ./choose cl  tryunsetenv unsetenv.h1    unsetenv.h2; \
   ./choose clr tryunaligned unaligned.h1  unaligned.h2; \
-  echo; \
-  echo '#include <uint16.h>'; \
-  echo '#include <uint32.h>'; \
-  echo '#include <uint64.h>'; \
-  echo; \
+  cat sysdeps-tail.h; \
   echo '#endif'; \
 ) >sysdeps.h
