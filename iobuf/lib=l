@@ -37,6 +37,7 @@ obuf_putsnumw.o
 obuf_putullnumw.o
 obuf_putunumw.o
 obuf_seek.o
+obuf_sign_pad.o
 obuf_stderr.o
 obuf_stdout.o
 obuf_sync.o
