@@ -23,12 +23,10 @@ int ibuf_read_large(ibuf* in, char* data, unsigned datalen)
   /* After the buffer is empty and there's still more data to read,
    * read it straight from the fd instead of copying it through the buffer. */
   while (datalen > 0) {
+    if (io->timeout && !iobuf_timeout(io, 0)) return 0;
     rd = read(io->fd, data, datalen);
-    if (rd == -1) {
-      io->errnum = errno;
-      io->flags |= IOBUF_ERROR;
-      break;
-    }
+    if (rd == -1)
+      IOBUF_SET_ERROR(io);
     else if (rd == 0) {
       io->flags |= IOBUF_EOF;
       break;

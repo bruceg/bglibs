@@ -3,6 +3,7 @@
 
 #define IOBUF_EOF 1
 #define IOBUF_ERROR 2
+#define IOBUF_TIMEOUT 4
 
 extern unsigned iobuf_bufsize;
 
@@ -14,17 +15,27 @@ struct iobuf
   unsigned buflen;		/* Length of the data in the buffer */
   unsigned bufstart;		/* Start of the data in the buffer */
   unsigned offset;		/* Current file read/write offset */
-  int errnum;			/* Saved errno flag */
+  unsigned timeout;		/* I/O timeout in ms */
   unsigned flags;		/* Status flags */
+  int errnum;			/* Saved errno flag */
   int do_free;			/* Free the buffer */
   int do_close;			/* Set if iobuf should close the FD */
 };
 typedef struct iobuf iobuf;
 
+#define IOBUF_SET_ERROR(io) \
+do{ \
+  io->flags |= IOBUF_ERROR; \
+  io->errnum = errno; \
+  return 0; \
+}while(0)
+
 int iobuf_init(iobuf* io, int fd, int do_close, unsigned bufsize, char* buffer);
 int iobuf_close(iobuf* io);
 #define iobuf_closed(io) ((io)->fd == -1)
 #define iobuf_error(io) ((io)->flags & IOBUF_ERROR)
+#define iobuf_timedout(io) ((io)->flags & IOBUF_TIMEOUT)
+int iobuf_timeout(iobuf* io, int poll_out);
 
 struct ibuf
 {
@@ -41,6 +52,7 @@ int ibuf_eof(ibuf* in);
 #define ibuf_close(in) iobuf_close(&((in)->io))
 #define ibuf_closed(in) iobuf_closed(&((in)->io))
 #define ibuf_error(in) iobuf_error(&((in)->io))
+#define ibuf_timedout(in) iobuf_timedout(&((in)->io))
 int ibuf_refill(ibuf* in);
 int ibuf_read_large(ibuf* in, char* data, unsigned datalen);
 int ibuf_read(ibuf* in, char* data, unsigned datalen);
@@ -76,6 +88,7 @@ int obuf_open(obuf* out, const char* filename, int flags, int mode, unsigned buf
 int obuf_close(obuf* out);
 #define obuf_error(out) iobuf_error(&(out)->io)
 #define obuf_closed(out) iobuf_closed(&(out)->io)
+#define obuf_timedout(out) iobuf_timedout(&((out)->io))
 int obuf_flush(obuf* out);
 int obuf_sync(obuf* out);
 int obuf_write_large(obuf* out, const char* data, unsigned datalen);

@@ -13,12 +13,8 @@ int obuf_write_large(obuf* out, const char* data, unsigned datalen)
   if (!obuf_flush(out)) return 0;
   
   while (datalen > 0) {
-    wr = write(io->fd, data, datalen);
-    if (wr == -1) {
-      io->flags |= IOBUF_ERROR;
-      io->errnum = errno;
-      return 0;
-    }
+    if (io->timeout && !iobuf_timeout(io, 1)) return 0;
+    if ((wr = write(io->fd, data, datalen)) == -1) IOBUF_SET_ERROR(io);
     datalen -= wr;
     data += wr;
     io->offset += wr;
