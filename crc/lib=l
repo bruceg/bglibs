@@ -1,10 +1,11 @@
+gcrc16fwd.o
+gcrc16rfl.o
 crc16_arc_table.o
-crc16_arc_update.o
 crc16_ccitt_table.o
-crc16_ccitt_update.o
 crc16_xmodem_table.o
-crc16_xmodem_update.o
+gcrc32fwd.o
+gcrc32rfl.o
 crc32_table.o
-crc32_update.o
+gcrc64fwd.o
+gcrc64rfl.o
 crc64_table.o
-crc64_update.o

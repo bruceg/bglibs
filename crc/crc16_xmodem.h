@@ -8,7 +8,7 @@
 #define CRC16_XMODEM_POST ((uint16)0x0000)
 
 extern const uint16 crc16_xmodem_table[256];
-extern uint16 crc16_xmodem_update(uint16 crc, const char* data, long len);
+#define crc16_xmodem_update(C,D,L) gcrc16rfl((C),(D),(L),crc16_xmodem_table)
 #define crc16_xmodem_block(B,L) crc16_xmodem_update(0,(B),(L))
 
 #endif

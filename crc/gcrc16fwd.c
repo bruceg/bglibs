@@ -1,14 +1,16 @@
-#include "crc16_ccitt.h"
+#include "gcrc.h"
 
-uint16 crc16_ccitt_update(uint16 crc, const char* data, long len)
+uint16 gcrc16fwd(uint16 crc, const char* data, long len,
+		 const uint16 table[256])
 {
   const unsigned char* ptr = data;
   while (len-- > 0)
-    crc = crc16_ccitt_table[(unsigned char)(crc>>8) ^ *ptr++] ^ (crc << 8);
+    crc = table[((crc >> 8) ^ *ptr++) & 0xff] ^ (crc << 8);
   return crc;
 }
 
 #ifdef SELFTEST_MAIN
+#include "crc16_ccitt.h"
 #include "selftest.c"
 MAIN
 {

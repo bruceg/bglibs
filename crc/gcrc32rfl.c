@@ -1,14 +1,16 @@
-#include "crc32.h"
+#include "gcrc.h"
 
-uint32 crc32_update(uint32 crc, const char* data, long len)
+uint32 gcrc32rfl(uint32 crc, const char* data, long len,
+		 const uint32 table[256])
 {
   const unsigned char* ptr = data;
   while (len-- > 0)
-    crc = crc32_table[(crc ^ *ptr++) & 0xff] ^ (crc >> 8);
+    crc = table[(crc ^ *ptr++) & 0xff] ^ (crc >> 8);
   return crc;
 }
 
 #ifdef SELFTEST_MAIN
+#include "crc32.h"
 #include "selftest.c"
 MAIN
 {

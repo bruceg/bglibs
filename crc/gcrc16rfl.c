@@ -1,14 +1,17 @@
-#include "crc16_arc.h"
+#include "gcrc.h"
 
-uint16 crc16_arc_update(uint16 crc, const char* data, long len)
+uint16 gcrc16rfl(uint16 crc, const char* data, long len,
+		 const uint16 table[256])
 {
   const unsigned char* ptr = data;
   while (len-- > 0)
-    crc = crc16_arc_table[(crc ^ *ptr++) & 0xff] ^ (crc >> 8);
+    crc = table[(crc ^ *ptr++) & 0xff] ^ (crc >> 8);
   return crc;
 }
 
 #ifdef SELFTEST_MAIN
+#include "crc16_arc.h"
+#include "crc16_xmodem.h"
 #include "selftest.c"
 MAIN
 {
@@ -22,6 +25,8 @@ MAIN
   obuf_putXw(&outbuf, crc16_arc_block("abc", 3), 4, '0'); NL();
   obuf_putXw(&outbuf, crc16_arc_block("ABC", 3), 4, '0'); NL();
   obuf_putXw(&outbuf, crc16_arc_block("This is a string", 16), 4, '0'); NL();
+
+  obuf_putXw(&outbuf, crc16_xmodem_block("123456789", 9), 4, '0'); NL();
 }
 #endif
 #ifdef SELFTEST_EXP
@@ -29,4 +34,5 @@ BB3D
 9738
 4521
 4C44
+0C73
 #endif

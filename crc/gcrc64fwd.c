@@ -1,14 +1,16 @@
-#include "crc64.h"
+#include "gcrc.h"
 
-uint64 crc64_update(uint64 crc, const char* data, long len)
+uint64 gcrc64fwd(uint64 crc, const char* data, long len,
+		 const uint64 table[256])
 {
   const unsigned char* ptr = data;
   while (len-- > 0)
-    crc = crc64_table[(unsigned char)(crc>>56) ^ *ptr++] ^ (crc << 8);
+    crc = table[((crc >> 56) ^ *ptr++) & 0xff] ^ (crc << 8);
   return crc;
 }
 
 #ifdef SELFTEST_MAIN
+#include "crc64.h"
 #include "selftest.c"
 MAIN
 {
