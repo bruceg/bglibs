@@ -1,10 +1,16 @@
 buildmap.o
 cat.o
 copy.o
+count.o
+countof.o
 findfirst.o
 findfirstof.o
+findlast.o
+findlastof.o
 findnext.o
 findnextof.o
+findprev.o
+findprevof.o
 free.o
 init.o
 ready.o
