@@ -2,7 +2,7 @@ bglibs
 Short Description
 Bruce Guenter <bruceg@em.ca>
 Version 1.000
-2002-05-30
+2002-05-31
 
 This package contains a collection of libraries written by myself and
 put in use in various packages.
@@ -17,8 +17,8 @@ Development versions of bglibs are available via anonymous CVS.
 Set your CVSROOT to ":pserver:cvs@bruce-guenter.dyndns.org:/CVS",
 login with an empty password, and check out the "lib" module.
 
-Note that the CVS for this package is not yet complete and cannot be
-used to reconstruct everything that went into this distribution.
+Note that the CVS for this package is not yet complete and may not be
+useable for reconstructing everything that went into this distribution.
 
 This package is Copyright(C) 2002 Bruce Guenter, and may be copied
 according to the GNU GENERAL PUBLIC LICENSE (GPL) Version 2 or a later

@@ -1,2 +1,6 @@
+- Add make-compile, make-load, make-makelib scripts
+
+- Add library documentation
+
 - exec replacement?
   http://cr.yp.to/lib/pathexec.html
