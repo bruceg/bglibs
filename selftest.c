@@ -21,19 +21,21 @@ void debugstr(const str* s)
   NL();
 }
 
-void debugstrfn(int result, const str* s)
+int debugstrfn(int result, const str* s)
 {
   obuf_puts(&outbuf, "result=");
   obuf_puti(&outbuf, result);
   obuf_putc(&outbuf, ' ');
   debugstr(s);
+  return result;
 }
 
-void debugfn(int result)
+int debugfn(int result)
 {
   obuf_puts(&outbuf, "result=");
   obuf_puti(&outbuf, result);
   NL();
+  return result;
 }
 
 #define MAIN void selftest(void)
@@ -43,5 +45,6 @@ int main(void)
 {
   selftest();
   obuf_flush(&outbuf);
+  obuf_flush(&errbuf);
   return 0;
 }
