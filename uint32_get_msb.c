@@ -1,5 +1,6 @@
 #include "uint32.h"
 
+#ifndef __INLINE_UINT_MSB
 uint32 uint32_get_msb(const unsigned char b[4])
 {
   uint32 r;
@@ -12,3 +13,4 @@ uint32 uint32_get_msb(const unsigned char b[4])
   r += b[3];
   return r;
 }
+#endif

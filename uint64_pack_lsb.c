@@ -1,6 +1,7 @@
 #include "uint64.h"
 #include "uint32.h"
 
+#ifndef __INLINE_UINT_LSB
 void uint64_pack_lsb(uint64 u, unsigned char b[4])
 {
 #ifdef HAS_ULONG64
@@ -39,3 +40,4 @@ void uint64_pack_lsb(uint64 u, unsigned char b[4])
   b[7] = hi;
 #endif
 }
+#endif

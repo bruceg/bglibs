@@ -1,7 +1,8 @@
 #include "uint64.h"
 #include "uint32.h"
 
-void uint64_unpack_lsb(const unsigned char b[4], uint64* u)
+#ifndef __INLINE_UINT_MSB
+void uint64_unpack_msb(const unsigned char b[4], uint64* u)
 {
 #ifdef HAS_ULONG64
   uint64 r;
@@ -41,3 +42,4 @@ void uint64_unpack_lsb(const unsigned char b[4], uint64* u)
   *u = (((uint64)hi) << 32) + lo;
 #endif
 }
+#endif

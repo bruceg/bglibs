@@ -1,6 +1,7 @@
 #include "uint64.h"
 #include "uint32.h"
 
+#ifndef __INLINE_UINT_LSB
 uint64 uint64_get_lsb(const unsigned char b[4])
 {
 #ifdef HAS_ULONG64
@@ -41,3 +42,4 @@ uint64 uint64_get_lsb(const unsigned char b[4])
   return (((uint64)hi) << 32) + lo;
 #endif
 }
+#endif

@@ -1,5 +1,6 @@
 #include "uint32.h"
 
+#ifndef __INLINE_UINT_LSB
 void uint32_unpack_lsb(const unsigned char b[4], uint32* u)
 {
   uint32 r;
@@ -12,3 +13,4 @@ void uint32_unpack_lsb(const unsigned char b[4], uint32* u)
   r += b[0];
   *u = r;
 }
+#endif

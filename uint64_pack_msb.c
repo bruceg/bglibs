@@ -1,6 +1,7 @@
 #include "uint64.h"
 #include "uint32.h"
 
+#ifndef __INLINE_UINT_MSB
 void uint64_pack_msb(uint64 u, unsigned char b[4])
 {
 #ifdef HAS_ULONG64
@@ -39,3 +40,4 @@ void uint64_pack_msb(uint64 u, unsigned char b[4])
   b[0] = hi;
 #endif
 }
+#endif
