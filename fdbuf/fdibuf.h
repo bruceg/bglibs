@@ -39,6 +39,7 @@ public:
   bool seekfwd(unsigned o);
   bool rewind() { return seek(0); }
   unsigned tell() const { return offset-buflength+bufstart; }
+  int error_number() const { return errnum; }
 protected:
   unsigned count;		// Number of bytes read by last operation
   bool refill();

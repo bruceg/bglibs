@@ -72,6 +72,8 @@ public:
   fdobuf& operator<<(signed i) { return operator<<((signed long)i); }
   fdobuf& operator<<(unsigned short i) { return operator<<((unsigned long)i); }
   fdobuf& operator<<(signed short i) { return operator<<((signed long)i); }
+
+  int error_number() const { return errnum; }
 protected:
   virtual bool nflush(bool withsync);
 

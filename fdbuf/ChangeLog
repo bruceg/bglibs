@@ -1,7 +1,7 @@
 2000-08-22  Bruce Guenter  <bruce@bruce-guenter.dyndns.org>
 
-	* fdbuf.h (class fdbuf ): Added the missing accessor for the
-	internal "errnum" data member.
+	* Added the missing accessor for the internal "errnum" data member
+	to the fdibuf and fdobuf classes.
 
 2000-08-10  Bruce Guenter  <bruce@bruce-guenter.dyndns.org>
 
