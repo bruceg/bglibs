@@ -1,0 +1,2 @@
+/* sysdep: +hasnamedpipebug */
+#define HASNAMEDPIPEBUG 1

@@ -5,6 +5,9 @@ Changes in version 1.018
 
 - Added sysdep and emulator function for mkfifo.
 
+- Added sysdep check for the "named pipe bug": polling a named pipe
+  without a writer unconditionally succeeds.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
