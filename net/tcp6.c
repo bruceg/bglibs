@@ -1,4 +1,4 @@
-/* net/tcp6 - Create a IPv6 TCP socket
+/* net/tcp6 - Create an IPv6 TCP socket
  * Copyright (C) 2004  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,7 +23,7 @@
 #include <unistd.h>
 #include "socket.h"
 
-/** Create a TCP/IP socket. */
+/** Create a TCP/IPv6 socket. */
 int socket_tcp6(void)
 {
 #if HASIPV6

@@ -1,4 +1,4 @@
-/* net/udp6 - Create a IPv6 UDP socket
+/* net/udp6 - Create an IPv6 UDP socket
  * Copyright (C) 2004  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,8 +23,8 @@
 #include <unistd.h>
 #include "socket.h"
 
-/** Create a TCP/IP socket. */
-int socket_tcp6(void)
+/** Create a UDP/IPv6 socket. */
+int socket_udp6(void)
 {
 #if HASIPV6
   return socket(AF_INET6, SOCK_DGRAM, 0);
