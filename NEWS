@@ -1,6 +1,11 @@
 -------------------------------------------------------------------------------
 Changes in version 1.018
 
+Development of this version has been sponsored by FutureQuest, Inc.
+ossi@FutureQuest.net  http://www.FutureQuest.net/
+-------------------------------------------------------------------------------
+Changes in version 1.018
+
 - Added missing crypto/surf.h and unix/selfpipe.h headers to insthier.
 
 - Added sysdep and emulator function for mkfifo.
