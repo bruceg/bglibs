@@ -1,10 +1,10 @@
 #!/bin/sh
 
-DIFF='diff -a -U 9999'
+DIFF='diff -a -u'
 $DIFF $0 $0 >/dev/null 2>&1
 if [ $? -ne 0 ]
 then
-  DIFF='diff -C 9999'
+  DIFF='diff'
 fi
 
 t=$0.tmp.$$
