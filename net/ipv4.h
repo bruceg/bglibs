@@ -1,8 +1,9 @@
 #ifndef NET__IPV4__H__
 #define NET__IPV4__H__
 
-typedef struct { unsigned char addr[4]; } ipv4addr;
-typedef unsigned short ipv4port;
+#include <sysdeps.h>
+typedef struct { uint8 addr[4]; } ipv4addr;
+typedef uint16 ipv4port;
 extern const ipv4addr IPV4ADDR_ANY;
 extern const ipv4addr IPV4ADDR_BROADCAST;
 
