@@ -68,7 +68,7 @@ static const uint64 K[] = {
   0x5fcb6fab3ad6faec, 0x6c44198c4a475817
 };
 
-static const uint64 H[8] = {
+static const uint64 H0[8] = {
   0x6a09e667f3bcc908ULL,
   0xbb67ae8584caa73bULL,
   0x3c6ef372fe94f82bULL,
@@ -93,16 +93,16 @@ static const uint64 H[8] = {
     d += T1; \
     h = T1 + T2; \
 
-static void SHA512_transform(SHA512_ctx* ctx)
+static void SHA512_transform(uint64 H[8], const uint8 M[128])
 {
-  uint64 a = ctx->H[0];
-  uint64 b = ctx->H[1];
-  uint64 c = ctx->H[2];
-  uint64 d = ctx->H[3];
-  uint64 e = ctx->H[4];
-  uint64 f = ctx->H[5];
-  uint64 g = ctx->H[6];
-  uint64 h = ctx->H[7];
+  uint64 a = H[0];
+  uint64 b = H[1];
+  uint64 c = H[2];
+  uint64 d = H[3];
+  uint64 e = H[4];
+  uint64 f = H[5];
+  uint64 g = H[6];
+  uint64 h = H[7];
   uint64 W[80];
   uint64* Wp;
   const uint64* Kp;
@@ -110,11 +110,11 @@ static void SHA512_transform(SHA512_ctx* ctx)
   uint64 T2;
   unsigned j;
 
-  for (j = 0; j < 16; ++j)
-    W[j] = uint64_get_msb(ctx->M + j*8);
-
-  for (j = 16; j < 80; ++j)
-    W[j] = s1(W[j-2]) + W[j-7] + s0(W[j-15]) + W[j-16];
+  for (Wp = W, j = 0; j < 16; ++j, ++Wp, M += 8)
+    *Wp = uint64_get_msb(M);
+  
+  for (j = 16; j < 80; ++j, ++Wp)
+    *Wp = s1(Wp[-2]) + Wp[-7] + s0(Wp[-15]) + Wp[-16];
 
 #ifdef SHA2_NO_UNROLL
   for (Wp = W, Kp = K, j = 0; j < 80; ++j) {
@@ -144,19 +144,19 @@ static void SHA512_transform(SHA512_ctx* ctx)
   }
 #endif
 
-  ctx->H[0] += a;
-  ctx->H[1] += b;
-  ctx->H[2] += c;
-  ctx->H[3] += d;
-  ctx->H[4] += e;
-  ctx->H[5] += f;
-  ctx->H[6] += g;
-  ctx->H[7] += h;
+  H[0] += a;
+  H[1] += b;
+  H[2] += c;
+  H[3] += d;
+  H[4] += e;
+  H[5] += f;
+  H[6] += g;
+  H[7] += h;
 }
 
 void SHA512_init(SHA512_ctx* ctx)
 {
-  memcpy(ctx->H, H, sizeof H);
+  memcpy(ctx->H, H0, sizeof H0);
   ctx->lbits = 0;
   ctx->hbits = 0;
   ctx->mlen = 0;
@@ -164,28 +164,35 @@ void SHA512_init(SHA512_ctx* ctx)
 
 void SHA512_update(SHA512_ctx* ctx, const void* vdata, unsigned long data_len)
 {
-   const uint8* data = vdata;
-   unsigned long use;
-   uint64 low_bits;
+  const uint8* data = vdata;
+  unsigned long use;
+  uint64 low_bits;
    
-   /* convert data_len to bits and add to the 128 bit word formed by lbits
-      and hbits */
+  /* convert data_len to bits and add to the 128 bit word formed by lbits
+     and hbits */
 #ifdef HAS_ULONG64
-   ctx->hbits += data_len >> 61;
+  ctx->hbits += data_len >> 61;
 #endif
-   low_bits = data_len << 3;
-   ctx->lbits += low_bits;
-   if (ctx->lbits < low_bits) ++ctx->hbits;
+  low_bits = data_len << 3;
+  ctx->lbits += low_bits;
+  if (ctx->lbits < low_bits) ++ctx->hbits;
 
-   while (data_len >= (use = 128 - ctx->mlen)) {
-     memcpy(ctx->M + ctx->mlen, data, use);
-     SHA512_transform(ctx);
-     ctx->mlen = 0;
-     data_len -= use;
-     data += use;
-   }
-   memcpy(ctx->M + ctx->mlen, data, data_len);
-   ctx->mlen += data_len;
+  if (ctx->mlen && data_len >= (use = 128 - ctx->mlen)) {
+    memcpy(ctx->M + ctx->mlen, data, use);
+    SHA512_transform(ctx->H, ctx->M);
+    ctx->mlen = 0;
+    data_len -= use;
+    data += use;
+  }
+
+  while (data_len >= 128) {
+    SHA512_transform(ctx->H, data);
+    data_len -= 128;
+    data += 128;
+  }
+  
+  memcpy(ctx->M + ctx->mlen, data, data_len);
+  ctx->mlen += data_len;
 }
 
 void SHA512_final(SHA512_ctx* ctx, uint8* digest)
@@ -195,13 +202,13 @@ void SHA512_final(SHA512_ctx* ctx, uint8* digest)
   ++ctx->mlen;
   memset(ctx->M + ctx->mlen, 0x00, 128 - ctx->mlen);
   if (ctx->mlen >= 128-16) {
-    SHA512_transform(ctx);
+    SHA512_transform(ctx->H, ctx->M);
     memset(ctx->M, 0x00, 128-8);
   }
 
   uint64_pack_msb(ctx->hbits, ctx->M+112);
   uint64_pack_msb(ctx->lbits, ctx->M+120);
-  SHA512_transform(ctx);
+  SHA512_transform(ctx->H, ctx->M);
 
   for (i = 0; i < 8; ++i, digest += 8)
     uint64_pack_msb(ctx->H[i], digest);

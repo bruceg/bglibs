@@ -54,7 +54,7 @@ static const uint32 K[64] = {
   0x90befffaUL, 0xa4506cebUL, 0xbef9a3f7UL, 0xc67178f2UL
 };
 
-static const uint32 H[8] = {
+static const uint32 H0[8] = {
   0x6a09e667UL,
   0xbb67ae85UL,
   0x3c6ef372UL,
@@ -65,28 +65,28 @@ static const uint32 H[8] = {
   0x5be0cd19UL
 };
 
-static void SHA256_transform(SHA256_ctx* ctx)
+static void SHA256_transform(uint32* H, const uint8* M)
 {
   unsigned j;
-  uint32 a = ctx->H[0];
-  uint32 b = ctx->H[1];
-  uint32 c = ctx->H[2];
-  uint32 d = ctx->H[3];
-  uint32 e = ctx->H[4];
-  uint32 f = ctx->H[5];
-  uint32 g = ctx->H[6];
-  uint32 h = ctx->H[7];
+  uint32 a = H[0];
+  uint32 b = H[1];
+  uint32 c = H[2];
+  uint32 d = H[3];
+  uint32 e = H[4];
+  uint32 f = H[5];
+  uint32 g = H[6];
+  uint32 h = H[7];
   uint32 T1;
   uint32 T2;
   uint32 W[64];
   uint32* Wp;
   const uint32* Kp;
 
-  for (j = 0; j < 16; ++j)
-    W[j] = uint32_get_msb(ctx->M + j*4);
+  for (Wp = W, j = 0; j < 16; ++j, ++Wp, M += 4)
+    *Wp = uint32_get_msb(M);
   
-  for (j = 16; j < 64; ++j)
-    W[j] = s1(W[j-2]) + W[j-7] + s0(W[j-15]) + W[j-16];
+  for (j = 16; j < 64; ++j, ++Wp)
+    *Wp = s1(Wp[-2]) + Wp[-7] + s0(Wp[-15]) + Wp[-16];
 
 #ifdef SHA2_NO_UNROLL
   for (Wp = W, Kp = K, j = 0; j < 64; ++j) {
@@ -116,19 +116,19 @@ static void SHA256_transform(SHA256_ctx* ctx)
   }
 #endif
   
-  ctx->H[0] += a;
-  ctx->H[1] += b;
-  ctx->H[2] += c;
-  ctx->H[3] += d;
-  ctx->H[4] += e;
-  ctx->H[5] += f;
-  ctx->H[6] += g;
-  ctx->H[7] += h;
+  H[0] += a;
+  H[1] += b;
+  H[2] += c;
+  H[3] += d;
+  H[4] += e;
+  H[5] += f;
+  H[6] += g;
+  H[7] += h;
 }
 
 void SHA256_init(SHA256_ctx* ctx)
 {
-  memcpy(ctx->H, H, sizeof H);
+  memcpy(ctx->H, H0, sizeof H0);
   ctx->bits = 0;
   ctx->mlen = 0;
 }
@@ -140,13 +140,20 @@ void SHA256_update(SHA256_ctx* ctx, const void* vdata, unsigned long data_len)
 
   ctx->bits += data_len << 3;
 
-  while (data_len >= (use = 64 - ctx->mlen)) {
+  if (ctx->mlen && data_len >= (use = 64 - ctx->mlen)) {
     memcpy(ctx->M + ctx->mlen, data, use);
-    SHA256_transform(ctx);
+    SHA256_transform(ctx->H, ctx->M);
     ctx->mlen = 0;
     data_len -= use;
     data += use;
   }
+
+  while (data_len >= 64) {
+    SHA256_transform(ctx->H, data);
+    data_len -= 64;
+    data += 64;
+  }
+
   memcpy(ctx->M + ctx->mlen, data, data_len);
   ctx->mlen += data_len;
 }
@@ -157,12 +164,12 @@ void SHA256_final(SHA256_ctx* ctx, uint8* digest)
   ctx->M[ctx->mlen++] = 0x80;
   memset(ctx->M + ctx->mlen, 0x00, 64 - ctx->mlen);
   if (ctx->mlen >= 64-8) {
-    SHA256_transform(ctx);
+    SHA256_transform(ctx->H, ctx->M);
     memset(ctx->M, 0x00, 64-8);
   }
 
   uint64_pack_msb(ctx->bits, ctx->M+64-8);
-  SHA256_transform(ctx);
+  SHA256_transform(ctx->H, ctx->M);
 
   for (i = 0; i < 32/4; ++i, digest += 4)
     uint32_pack_msb(ctx->H[i], digest);

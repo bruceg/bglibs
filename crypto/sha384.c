@@ -25,7 +25,7 @@
 
 #define min(X,Y) ((X)<(Y) ? (X) : (Y))
 
-static const uint64 H[8] = {
+static const uint64 H0[8] = {
   0xcbbb9d5dc1059ed8ULL,
   0x629a292a367cd507ULL,
   0x9159015a3070dd17ULL,
@@ -38,7 +38,7 @@ static const uint64 H[8] = {
 
 void SHA384_init(SHA384_ctx* ctx)
 {
-  memcpy(ctx->H, H, sizeof H);
+  memcpy(ctx->H, H0, sizeof H0);
   ctx->lbits = 0;
   ctx->hbits = 0;
   ctx->mlen = 0;
