@@ -100,6 +100,8 @@ void insthier(void)
   CF(str, str.h);
   
   DI(unix);
+  CF(unix, cloexec.h);
+  CF(unix, fcntl.h);
   CF(unix, nonblock.h);
   CF(unix, selfpipe.h);
   CF(unix, sig.h);
