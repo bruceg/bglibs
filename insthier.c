@@ -69,6 +69,7 @@ void insthier(void)
   
   DI(net);
   CF(net, ipv4.h);
+  CF(net, ipv6.h);
   CF(net, resolve.h);
   CF(net, socket.h);
   
