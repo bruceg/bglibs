@@ -1,4 +1,4 @@
-/* str/catuw.c - Append an unsigned integer
+/* str/catiw.c - Append an signed integer
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify
