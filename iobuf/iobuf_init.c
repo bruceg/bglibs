@@ -7,7 +7,7 @@
 /** The default iobuf buffer size, defaults to 8192. */
 unsigned iobuf_bufsize = 8192;
 
-#ifndef MAP_ANONYMOUS
+#if !defined(MAP_ANONYMOUS) && defined(MAP_ANON)
 #define MAP_ANONYMOUS MAP_ANON
 #endif
 
@@ -16,14 +16,16 @@ int iobuf_init(iobuf* io, int fd, unsigned bufsize, char* buffer, unsigned flags
 {
   memset(io, 0, sizeof *io);
   if (!bufsize) bufsize = iobuf_bufsize;
+#ifdef MAP_ANONYMOUS
   if (!buffer) {
     if ((buffer = mmap(0, bufsize, PROT_READ|PROT_WRITE,
 		       MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)) != MAP_FAILED)
       flags |= IOBUF_NEEDSMUNMAP;
-    else {
-      if ((buffer = malloc(bufsize)) == 0) return 0;
-      flags |= IOBUF_NEEDSFREE;
-    }
+  }
+#endif
+  if (!buffer) {
+    if ((buffer = malloc(bufsize)) == 0) return 0;
+    flags |= IOBUF_NEEDSFREE;
   }
   io->fd = fd;
   io->buffer = buffer;
