@@ -1,3 +1,5 @@
+- Fix I/O timeout routines to allow poll to be interrupted and retried
+
 - ibuf_ungetc
 - ibuf_geti
 - ibuf_getstr

@@ -4,3 +4,5 @@
 - Add flags to path_match to make skipping dotfiles optional.
 
 - Add tests for the other path functions.
+
+- Make sure no twoftpd-specific behavior is left.
