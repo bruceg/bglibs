@@ -1,36 +1,36 @@
-#ifndef VMAILMGR__CLI__CLI__H__
-#define VMAILMGR__CLI__CLI__H__
-
-typedef bool (*cli_funcptr)(void*);
+#ifndef CLI__H__
+#define CLI__H__
 
 struct cli_stringlist
 {
   const char* string;
-  cli_stringlist* next;
-
-  cli_stringlist(const char* s)
-    : string(s), next(0)
-    {
-    }
+  struct cli_stringlist* next;
 };
+typedef struct cli_stringlist cli_stringlist;
+
+enum cli_option_type {
+  CLI_FLAG,
+  CLI_COUNTER,
+  CLI_INTEGER,
+  CLI_UINTEGER,
+  CLI_STRING,
+  CLI_STRINGLIST,
+};
+typedef enum cli_option_type cli_option_type;
 
 struct cli_option
 {
   char ch;
   const char* name;
-  enum { flag, counter, integer, string, stringlist, uinteger } type;
+  cli_option_type type;
   int flag_value;
   void* dataptr;
   const char* helpstr;
   const char* defaultstr;
-
-  int set(const char* arg);
-  int parse_long_eq(const char* arg);
-  int parse_long_noeq(const char* arg);
 };
+typedef struct cli_option cli_option;
 
 /* The following are required from the CLI program */
-extern const char* cli_program;
 extern const char* cli_help_prefix;
 extern const char* cli_help_suffix;
 extern const char* cli_args_usage;
@@ -43,17 +43,6 @@ extern int cli_main(int argc, char* argv[]);
 extern const char* argv0;
 extern const char* argv0base;
 extern const char* argv0dir;
-extern void usage(int exit_value, const char* errorstr = 0);
+extern void usage(int exit_value, const char* errorstr);
 
-extern void cli_error(int exit_value,
-		      const char*,
-		      const char* = 0,
-		      const char* = 0,
-		      const char* = 0);
-
-extern void cli_warning(const char*,
-		      const char* = 0,
-		      const char* = 0,
-		      const char* = 0);
-
-#endif // VMAILMGR__CLI__CLI__H__
+#endif
