@@ -133,11 +133,13 @@ void usage(int exit_value, const char* errorstr)
 }
 
 static cli_stringlist* stringlist_append(cli_stringlist* node,
-					 const char* newstr)
+					 const char* newstr,
+					 const cli_option* option)
 {
   cli_stringlist* newnode;
   newnode = malloc(sizeof *newnode);
   newnode->string = newstr;
+  newnode->option = option;
   newnode->next = 0;
   if(node) {
     cli_stringlist* head = node;
@@ -176,7 +178,7 @@ static int cli_option_set(cli_option* o, const char* arg)
     return 1;
   case CLI_STRINGLIST:
     *(cli_stringlist**)o->dataptr =
-      stringlist_append(*(cli_stringlist**)o->dataptr, arg);
+      stringlist_append(*(cli_stringlist**)o->dataptr, arg, o);
     return 1;
   default:
     *(const char**)o->dataptr = arg;

@@ -1,13 +1,6 @@
 #ifndef CLI__H__
 #define CLI__H__
 
-struct cli_stringlist
-{
-  const char* string;
-  struct cli_stringlist* next;
-};
-typedef struct cli_stringlist cli_stringlist;
-
 enum cli_option_type {
   CLI_FLAG,
   CLI_COUNTER,
@@ -29,6 +22,14 @@ struct cli_option
   const char* defaultstr;
 };
 typedef struct cli_option cli_option;
+
+struct cli_stringlist
+{
+  const char* string;
+  const struct cli_option* option;
+  struct cli_stringlist* next;
+};
+typedef struct cli_stringlist cli_stringlist;
 
 /* The following are required from the CLI program */
 extern const char cli_help_prefix[];
