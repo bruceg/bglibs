@@ -1,3 +1,4 @@
+#include <string.h>
 #include "mystring.h"
 #include "trace.h"
 
