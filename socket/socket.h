@@ -16,6 +16,8 @@ int socket_recv4(int sock, char* buffer, unsigned buflen,
 int socket_send4(int sock, const char* buffer, unsigned buflen,
 		 const ipv4addr ip, unsigned short port);
 int socket_getaddr4(int sock, ipv4addr ip, unsigned short* port);
+int socket_cork(int sock);
+int socket_uncork(int sock);
 
 /* UNIX local-domain socket functions */
 int socket_unixdgm(void);

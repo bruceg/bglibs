@@ -6,6 +6,7 @@ broadcast.o
 connect4.o
 connected.o
 connectu.o
+cork.o
 getaddr4.o
 ipv4addr.o
 listen.o
@@ -17,5 +18,6 @@ sendu.o
 shutdown.o
 tcp.o
 udp.o
+uncork.o
 unixdgm.o
 unixstr.o
