@@ -23,6 +23,8 @@ findprev.o
 findprevof.o
 free.o
 init.o
+lstrip.o
 ready.o
 realloc.o
+rstrip.o
 truncate.o
