@@ -1,3 +1,7 @@
+2000-10-25  Bruce Guenter  <bruce@bruce-guenter.dyndns.org>
+
+	* cli2pod.pl (parse_options): Ignore {0,} as well as {0}.
+
 2000-08-15  Bruce Guenter  <bruce@bruce-guenter.dyndns.org>
 
 	* cli2pod.pl: Replaced the CLI documentation programs with this

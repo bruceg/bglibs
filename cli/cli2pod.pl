@@ -117,6 +117,7 @@ sub parse_options {
 	    $line = "";
 	}
 	next if /^\{\s*0\s*\},?/o;
+	next if /^\{\s*0\s*,\s*\},?/o;
 	last if /^\s*\};/o;
 	$line =~ s/$/ $_/;
     }
