@@ -5,6 +5,8 @@ Changes in version 1.019
 
 - Added low-level fcntl wrapper functions: fcntl_{fd,fl}_{off,on}
 
+- Added cloexec_{off,on} functions to manipulate the close-on-exec flag.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

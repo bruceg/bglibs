@@ -1,3 +1,5 @@
+cloexec_off.o
+cloexec_on.o
 fcntl_fd_off.o
 fcntl_fd_on.o
 fcntl_fl_off.o
