@@ -13,8 +13,8 @@ To subscribe, send an email to:
 A mailing list archive is available at:
 	http://lists.em.ca/?list=bgware
 
-Note that the CVS for this package is not yet complete and may not be
-useable for reconstructing everything that went into this distribution.
+Development versions of @PACKAGE@ are available via Subversion at:
+	svn://bruce-guenter.dyndns.org/@PACKAGE@/trunk
 
 This package is Copyright(C) 2002-2003 Bruce Guenter, and may be copied
 according to the GNU GENERAL PUBLIC LICENSE (GPL) Version 2 or a later
