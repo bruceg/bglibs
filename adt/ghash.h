@@ -27,6 +27,8 @@ int ghash_add(struct ghash* d, unsigned keysize, unsigned totalsize,
 void ghash_free(struct ghash* d,
 		adt_free_fn* keyfree, unsigned keysize,
 		adt_free_fn* datafree);
+void** ghash_find(struct ghash* d, const void* key, unsigned long hash,
+		  adt_cmp_fn* keycmp);
 void* ghash_get(struct ghash* d, const void* key, unsigned long hash,
 		adt_cmp_fn* keycmp);
 void ghash_init(struct ghash* d);
