@@ -1,0 +1,6 @@
+- Optimize path_match to skip doing listdirs for parts that have no
+  magic characters.
+
+- Add flags to path_match to make skipping dotfiles optional.
+
+- Add tests for the other path functions.
