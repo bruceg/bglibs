@@ -9,6 +9,8 @@ Changes in version 1.007
 
 - Added (count 'em) three 16-bit CRC functions -- ARC, CCITT, and XMODEM.
 
+- Added generic number output routines to iobuf.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

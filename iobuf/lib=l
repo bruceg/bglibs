@@ -29,13 +29,12 @@ obuf_put5s.o
 obuf_put6s.o
 obuf_put7s.o
 obuf_putc.o
-obuf_putiwll.o
-obuf_putiw.o
 obuf_putnetstring.o
 obuf_putsflush.o
-obuf_putuwll.o
-obuf_putuw.o
-obuf_putxw.o
+obuf_putsllnumw.o
+obuf_putsnumw.o
+obuf_putullnumw.o
+obuf_putunumw.o
 obuf_seek.o
 obuf_stderr.o
 obuf_stdout.o

@@ -207,16 +207,30 @@ int obuf_put7s(obuf* out, const char* s1, const char* s2, const char* s3,
 /** Write a dynamic string to the \c iobuf */
 #define obuf_putstr(out,str) obuf_write(out,(str)->s,(str)->len)
 int obuf_putsflush(obuf* out, const char* s);
+int obuf_puti(obuf* out, long data);
 int obuf_putiw(obuf* out, long data, unsigned width, char pad);
-#define obuf_puti(out,data) obuf_putiw(out, data, 0, 0)
+int obuf_putu(obuf* out, unsigned long data);
 int obuf_putuw(obuf* out, unsigned long data, unsigned width, char pad);
-#define obuf_putu(out,data) obuf_putuw(out, data, 0, 0)
+int obuf_putill(obuf* out, long long data);
 int obuf_putiwll(obuf* out, long long data, unsigned width, char pad);
-#define obuf_putill(out,data) obuf_putiw(out, data, 0, 0)
+int obuf_putull(obuf* out, unsigned long long data);
 int obuf_putuwll(obuf* out, unsigned long long data, unsigned width, char pad);
-#define obuf_putull(out,data) obuf_putuw(out, data, 0, 0)
+int obuf_putx(obuf* out, unsigned long data);
 int obuf_putxw(obuf* out, unsigned long data, unsigned width, char pad);
-#define obuf_putx(out,data) obuf_putxw(out, data, 0, 0)
+int obuf_putX(obuf* out, unsigned long data);
+int obuf_putXw(obuf* out, unsigned long data, unsigned width, char pad);
+int obuf_putxll(obuf* out, unsigned long long data);
+int obuf_putxwll(obuf* out, unsigned long long data, unsigned width, char pad);
+int obuf_putXll(obuf* out, unsigned long long data);
+int obuf_putXwll(obuf* out, unsigned long long data, unsigned width, char pad);
+int obuf_putsnumw(obuf* out, long num, unsigned width, char pad,
+		  unsigned base, const char* digits);
+int obuf_putunumw(obuf* out, unsigned long num, unsigned width, char pad,
+		  unsigned base, const char* digits);
+int obuf_putsllnumw(obuf* out, long long num, unsigned width, char pad,
+		    unsigned base, const char* digits);
+int obuf_putullnumw(obuf* out, unsigned long long num, unsigned width, char pad,
+		    unsigned base, const char* digits);
 int obuf_putnetstring(obuf* out, const char* data, unsigned datalen);
 /* @} */
 
