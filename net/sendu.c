@@ -1,4 +1,4 @@
-/* socket/sendu.c - Send a datagram on a UNIX domain socket
+/* net/sendu.c - Send a datagram on a UNIX domain socket
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify

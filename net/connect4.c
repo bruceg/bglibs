@@ -1,4 +1,4 @@
-/* socket/connect4.c - Make an IPv4 connection
+/* net/connect4.c - Make an IPv4 connection
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify

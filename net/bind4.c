@@ -1,4 +1,4 @@
-/* socket/bind4.c - Bind an IPv4 address to a socket
+/* net/bind4.c - Bind an IPv4 address to a socket
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify

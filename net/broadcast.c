@@ -1,4 +1,4 @@
-/* socket/broadcast.c - Mark a socket for broadcast transmission.
+/* net/broadcast.c - Mark a socket for broadcast transmission.
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify

@@ -1,4 +1,4 @@
-/* socket/accept4.c - Accept an UNIX domain connection
+/* net/accept4.c - Accept an UNIX domain connection
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify

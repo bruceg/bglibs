@@ -1,4 +1,4 @@
-/* socket/tcp - Create a TCP socket
+/* net/tcp - Create a TCP socket
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify

@@ -1,4 +1,4 @@
-/* socket/recv4.c - Receive a datagram from a UDP socket
+/* net/recv4.c - Receive a datagram from a UDP socket
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify

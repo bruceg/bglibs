@@ -1,4 +1,4 @@
-/* socket/uncork.c - Unstop a TCP socket from sending short writes.
+/* net/uncork.c - Unstop a TCP socket from sending short writes.
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify

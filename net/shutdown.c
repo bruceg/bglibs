@@ -1,4 +1,4 @@
-/* socket/shutdown.c - Shutdown part of a socket.
+/* net/shutdown.c - Shutdown part of a socket.
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify

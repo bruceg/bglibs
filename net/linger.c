@@ -1,4 +1,4 @@
-/* socket/linger.c - Set the socket linger option.
+/* net/linger.c - Set the socket linger option.
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify

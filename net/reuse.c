@@ -1,4 +1,4 @@
-/* socket/reuse.c - Mark a socket for reuse.
+/* net/reuse.c - Mark a socket for reuse.
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify
