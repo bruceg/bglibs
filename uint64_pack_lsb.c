@@ -4,38 +4,38 @@
 void uint64_pack_lsb(uint64 u, unsigned char b[4])
 {
 #ifdef HAS_ULONG64
-  b[7] = u & 0xff;
-  u >>= 8;
-  b[6] = u & 0xff;
-  u >>= 8;
-  b[5] = u & 0xff;
-  u >>= 8;
-  b[4] = u & 0xff;
-  u >>= 8;
-  b[3] = u & 0xff;
-  u >>= 8;
-  b[2] = u & 0xff;
+  b[0] = u & 0xff;
   u >>= 8;
   b[1] = u & 0xff;
   u >>= 8;
-  b[0] = u;
+  b[2] = u & 0xff;
+  u >>= 8;
+  b[3] = u & 0xff;
+  u >>= 8;
+  b[4] = u & 0xff;
+  u >>= 8;
+  b[5] = u & 0xff;
+  u >>= 8;
+  b[6] = u & 0xff;
+  u >>= 8;
+  b[7] = u;
 #else
-  uint32 half;
-  half = u;
-  b[7] = half & 0xff;
-  half >>= 8;
-  b[6] = half & 0xff;
-  half >>= 8;
-  b[5] = half & 0xff;
-  half >>= 8;
-  b[4] = half;
-  half = u >> 32;
-  b[3] = half & 0xff;
-  half >>= 8;
-  b[2] = half & 0xff;
-  half >>= 8;
-  b[1] = half & 0xff;
-  half >>= 8;
-  b[0] = half;
+  uint32 hi, lo;
+  lo = u;
+  b[0] = lo & 0xff;
+  lo >>= 8;
+  b[1] = lo & 0xff;
+  lo >>= 8;
+  b[2] = lo & 0xff;
+  lo >>= 8;
+  b[3] = lo;
+  hi = u >> 32;
+  b[4] = hi & 0xff;
+  hi >>= 8;
+  b[5] = hi & 0xff;
+  hi >>= 8;
+  b[6] = hi & 0xff;
+  hi >>= 8;
+  b[7] = hi;
 #endif
 }
