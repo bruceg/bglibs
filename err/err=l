@@ -1,0 +1,4 @@
+die.o
+error.o
+message.o
+warn.o

@@ -1,0 +1,10 @@
+buildmap.o
+cat.o
+copy.o
+findfirst.o
+findfirstof.o
+findnext.o
+findnextof.o
+free.o
+init.o
+ready.o

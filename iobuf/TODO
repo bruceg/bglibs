@@ -1,0 +1,7 @@
+- ibuf_geti
+- ibuf_getstr
+- ibuf_getnetstring
+
+- add flushchar to obuf
+- set flushchar to \n on stdout, stderr
+- make obuf_putc (easy), obuf_write (harder) handle flushchar

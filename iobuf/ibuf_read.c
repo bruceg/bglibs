@@ -1,0 +1,63 @@
+#include <errno.h>
+#include <unistd.h>
+#include "iobuf.h"
+
+int ibuf_read_large(ibuf* in, char* data, unsigned datalen)
+{
+  iobuf* io;
+  unsigned len;
+  unsigned rd;
+  
+  in->count = 0;
+  io = &(in->io);
+  
+  /* If there's any content in the buffer, memcpy it out first */
+  len = io->buflen - io->bufstart;
+  if (len > datalen) len = datalen;
+  memcpy(data, io->buffer+io->bufstart, len);
+  data += len;
+  datalen -= len;
+  io->bufstart += len;
+  in->count += len;
+  
+  /* After the buffer is empty and there's still more data to read,
+   * read it straight from the fd instead of copying it through the buffer. */
+  while (datalen > 0) {
+    rd = read(io->fd, data, datalen);
+    if (rd == -1) {
+      io->errnum = errno;
+      io->flags |= IOBUF_ERROR;
+      break;
+    }
+    else if (rd == 0) {
+      io->flags |= IOBUF_EOF;
+      break;
+    }
+    data += rd;
+    datalen -= rd;
+    io->offset += rd;
+    in->count += rd;
+  }
+  return datalen == 0;
+}
+
+int ibuf_read(ibuf* in, char* data, unsigned datalen)
+{
+  iobuf* io;
+  unsigned len;
+  
+  io = &(in->io);
+  if (datalen >= io->bufsize) return ibuf_read_large(in, data, datalen);
+  in->count = 0;
+  while (datalen && !ibuf_eof(in)) {
+    if (io->bufstart >= io->buflen) ibuf_refill(in);
+    len = io->buflen - io->bufstart;
+    if (len > datalen) len = datalen;
+    memcpy(data, io->buffer+io->bufstart, len);
+    data += len;
+    datalen -= len;
+    io->bufstart += len;
+    in->count += len;
+  }
+  return datalen == 0;
+}

@@ -1,0 +1,11 @@
+a.len=0 a.size=16 a.s=
+b.len=0 b.size=32 b.s=
+a.len=3 a.size=16 a.s=666f6f
+b.len=3 b.size=32 b.s=666f6f
+a.len=17 a.size=32 a.s=3031323334353637383930313233343536
+b.len=20 b.size=32 b.s=666f6f3031323334353637383930313233343536
+b.len=21 b.size=32 b.s=666f6f303132333435363738393031323334353600
+findfirst=7
+findfirstof=7
+findnext=14
+findnextof=14
