@@ -1,6 +1,7 @@
 -------------------------------------------------------------------------------
 Changes in version 1.018
 
+- Added missing crypto/surf.h header to insthier.
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/

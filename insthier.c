@@ -57,6 +57,7 @@ void insthier(void)
   CF(crypto, sha256.h);
   CF(crypto, sha384.h);
   CF(crypto, sha512.h);
+  CF(crypto, surf.h);
   
   DI(dict);
   CF(dict, dict.h);
