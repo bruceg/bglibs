@@ -2,5 +2,6 @@
 
 - Add library documentation
 
-- exec replacement?
-  http://cr.yp.to/lib/pathexec.html
+- Add some way of dealing with dependancies like "socket.lib" etc.
+
+- exec replacement?  http://cr.yp.to/lib/pathexec.html

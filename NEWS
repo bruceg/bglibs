@@ -1,0 +1,10 @@
+-------------------------------------------------------------------------------
+Changes in version 1.001
+
+- Moved the file destination to /usr/local/bglibs/*.
+- Added missing pwcmp/client bits.
+- Added missing uint32.h and uint64.h targets.
+
+Development of this version has been sponsored by FutureQuest, Inc.
+ossi@FutureQuest.net  http://www.FutureQuest.net/
+-------------------------------------------------------------------------------
