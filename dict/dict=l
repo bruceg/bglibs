@@ -1,4 +1,5 @@
 add.o
+foreach.o
 free.o
 get.o
 hash.o
