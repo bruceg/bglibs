@@ -40,7 +40,7 @@ int fnmatch(const char* filename, const char* pattern, unsigned options)
   t.s = (char*)filename;
   t.len = strlen(filename);
   t.size = 0;
-  return str_globs(&t, pattern, 0);
+  return str_globs(&t, pattern);
 }
 
 #ifdef SELFTEST_MAIN
