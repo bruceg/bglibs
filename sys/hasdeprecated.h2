@@ -1,0 +1,2 @@
+/* sysdep: +hasdeprecated */
+#define __DEPRECATED__ __attribute__((__deprecated__))

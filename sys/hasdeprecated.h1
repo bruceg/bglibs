@@ -1,0 +1,2 @@
+/* sysdep: -hasdeprecated */
+#define __DEPRECATED__
