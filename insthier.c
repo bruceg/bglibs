@@ -163,6 +163,10 @@ void insthier(void)
   SL(cvm-command, command);
   SL(cvm-local,   local);
   SL(cvm-udp,     udp);
+  s(lib, "cvm-client",  "libcvm-client.a");
+  s(lib, "cvm-command", "libcvm-command.a");
+  s(lib, "cvm-local",   "libcvm-local.a");
+  s(lib, "cvm-udp",     "libcvm-udp.a");
 
   L(cvm-sasl);
   DL(cvm-sasl);
@@ -203,6 +207,8 @@ void insthier(void)
   SL(pwcmp, client);
   SL(pwcmp, hex);
   SL(pwcmp-module, module);
+  s(lib, "pwcmp",        "libpwcmp.a");
+  s(lib, "pwcmp-module", "libpwcmp-module.a");
   
   L(str);
   DL(str);
