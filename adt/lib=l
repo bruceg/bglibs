@@ -5,6 +5,7 @@ ghash_free.o
 ghash_get.o
 ghash_init.o
 ghash_insert.o
+ghash_iter.o
 ghash_rebuild.o
 ghash_rehash.o
 ghash_remove.o
