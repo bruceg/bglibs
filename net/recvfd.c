@@ -24,7 +24,7 @@
 #define MSG_NOSIGNAL 0
 #endif
 
-int socket_recvfd(int socket)
+int socket_recvfd(int sock)
 {
   char cbuf[CMSG_SPACE(sizeof(int))];
   struct msghdr msg;
@@ -38,6 +38,6 @@ int socket_recvfd(int socket)
   cm->cmsg_level = SOL_SOCKET;
   cm->cmsg_type = SCM_RIGHTS;
   
-  if (recvmsg(socket, &msg, MSG_NOSIGNAL) == -1) return -1;
+  if (recvmsg(sock, &msg, MSG_NOSIGNAL) == -1) return -1;
   return *(int*)CMSG_DATA(cm);
 }

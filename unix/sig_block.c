@@ -19,26 +19,26 @@
 #include "sig.h"
 #include "sysdeps.h"
 
-void sig_block(int signal)
+void sig_block(int s)
 {
 #ifdef HASSIGPROCMASK
   sigset_t set;
   sigemptyset(&set);
-  sigaddset(&set, signal);
+  sigaddset(&set, s);
   sigprocmask(SIG_BLOCK, &set, 0);
 #else
-  sigblock(1 << (signal - 1));
+  sigblock(1 << (s - 1));
 #endif
 }
 
-void sig_unblock(int signal)
+void sig_unblock(int s)
 {
 #ifdef HASSIGPROCMASK
   sigset_t set;
   sigemptyset(&set);
-  sigaddset(&set, signal);
+  sigaddset(&set, s);
   sigprocmask(SIG_UNBLOCK, &set, 0);
 #else
-  sigsetmask(sigsetmask(~0) & ~(1 << (signal - 1)));
+  sigsetmask(sigsetmask(~0) & ~(1 << (s - 1)));
 #endif
 }

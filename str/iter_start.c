@@ -1,12 +1,12 @@
 #include "iter.h"
 
-void striter_start(striter* iter, const str* str, char sep)
+void striter_start(striter* iter, const str* s, char sep)
 {
-  iter->str = str;
+  iter->str = s;
   iter->start = 0;
-  iter->startptr = str->s;
-  iter->len = str_findfirst(str, sep);
+  iter->startptr = s->s;
+  iter->len = str_findfirst(s, sep);
   iter->sep = sep;
   if (iter->len == (unsigned)-1)
-    iter->len = str->len;
+    iter->len = s->len;
 }

@@ -12,7 +12,7 @@ typedef struct
   char sep;
 } striter;
 
-void striter_start(striter* iter, const str* str, char sep);
+void striter_start(striter* iter, const str* s, char sep);
 int striter_valid(striter*);
 int striter_advance(striter*);
 #define str_copyiter(STR,ITER) str_copyb(STR,(ITER)->startptr,(ITER)->len)

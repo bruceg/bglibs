@@ -25,9 +25,9 @@
  * [~seq] matches any single character not in seq
  */
 
-int has_magic(const char* str)
+int has_magic(const char* s)
 {
-  return strchr(str, '*') || strchr(str, '?') || strchr(str, '[');
+  return strchr(s, '*') || strchr(s, '?') || strchr(s, '[');
 }
 
 static int fnmatchs(char c, const char* set, unsigned long setlen)
