@@ -36,4 +36,7 @@ int socket_listen(int sock, int backlog);
 int socket_reuse(int sock);
 int socket_shutdown(int sock, int shut_rd, int shut_wr);
 
+int socket_sendfd(int sock, int fd);
+int socket_recvfd(int sock);
+
 #endif

@@ -12,9 +12,11 @@ linger.o
 listen.o
 pair.o
 recv4.o
+recvfd.o
 recvu.o
 reuse.o
 send4.o
+sendfd.o
 sendu.o
 shutdown.o
 tcp.o
