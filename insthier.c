@@ -25,8 +25,11 @@ void insthier(void)
   C(inc, uint64.h);
   
   DI(adt);
+  CF(adt, common.h);
   CF(adt, ghash.h);
-  
+  CF(adt, gqueue.h);
+  CF(adt, gstack.h);
+
   DI(base64);
   CF(base64, base64.h);
 
