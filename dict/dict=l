@@ -1,7 +1,0 @@
-add.o
-foreach.o
-free.o
-get.o
-hash.o
-init.o
-str_free.o

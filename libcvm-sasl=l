@@ -1,0 +1,6 @@
+cvm-sasl/authenticate.o
+cvm-sasl/cram_md5.o
+cvm-sasl/init.o
+cvm-sasl/login.o
+cvm-sasl/plain.o
+cvm-sasl/start.o

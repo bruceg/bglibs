@@ -96,6 +96,8 @@ void insthier(void)
   s(lib, #BASE, "lib" #BASE ".a"); \
 }while(0)
 
+#define SL(BASE,LIB) s(dir, #LIB ".a", "../lib" #BASE ".a")
+
 #define CL(SUB,BASE,LINK) do{ \
   cf(dir, #BASE ".a", -1, -1, 0644, #SUB "/" #BASE ".a"); \
   s(lib, #LINK, "lib" #SUB "/" #BASE ".a"); \
@@ -106,69 +108,89 @@ void insthier(void)
   L(instcheck);
   L(instshow);
 
+  L(base64);
   DL(base64);
-  CL(base64, base64, base64);
+  SL(base64, base64);
  
+  L(cdb);
   DL(cdb);
-  CL(cdb, cdb,  cdb);
-  CL(cdb, make, cdb-make);
-  CL(cdb, str,  cdb-str);
+  SL(cdb, cdb);
+  SL(cdb, make);
+  SL(cdb, str);
 
+  L(cli);
   DL(cli);
-  CL(cli, cli, cli);
+  SL(cli, cli);
 
+  L(crypto);
   DL(crypto);
-  CL(crypto, md5,     md5);
-  CL(crypto, sha1,    sha1);
-  CL(crypto, sha256,  sha256);
-  CL(crypto, sha512a, sha512a);
+  SL(crypto, md5);
+  SL(crypto, sha1);
+  SL(crypto, sha256);
+  SL(crypto, sha512a);
   
+  L(cvm-client);
+  L(cvm-command);
+  L(cvm-local);
+  L(cvm-udp);
   DL(cvm);
-  CL(cvm, client,  cvm-client);
-  CL(cvm, command, cvm-command);
-  CL(cvm, local,   cvm-local);
-  CL(cvm, udp,     cvm-udp);
+  SL(cvm-client,  client);
+  SL(cvm-command, command);
+  SL(cvm-local,   local);
+  SL(cvm-udp,     udp);
 
+  L(cvm-sasl);
   DL(cvm-sasl);
-  CL(cvm-sasl, cvm-sasl, cvm-sasl);
+  SL(cvm-sasl, cvm-sasl);
 
+  L(dict);
   DL(dict);
-  CL(dict, dict, dict);
-  CL(dict, load, dict-load);
+  SL(dict, dict);
+  SL(dict, load);
   
+  L(iobuf);
   DL(iobuf);
-  CL(iobuf, iobuf, iobuf);
-  CL(iobuf, str,   iobuf-str);
+  SL(iobuf, iobuf);
+  SL(iobuf, str);
   
+  L(misc);
   DL(misc);
-  CL(misc, misc, misc);
+  SL(misc, misc);
   
+  L(msg);
   DL(msg);
-  CL(msg, msg,  msg);
-  CL(msg, wrap, msg-wrap);
+  SL(msg, msg);
+  SL(msg, wrap);
   
+  L(net);
   DL(net);
-  CL(net, ipv4,    net-ipv4);
-  CL(net, resolve, net-resolve);
-  CL(net, socket,  net-socket);
+  SL(net, ipv4);
+  SL(net, resolve);
+  SL(net, socket);
   
+  L(path);
   DL(path);
-  CL(path, path,   path);
-  
+  SL(path, path);
+
+  L(pwcmp);
+  L(pwcmp-module);
   DL(pwcmp);
-  CL(pwcmp, client, pwcmp-client);
-  CL(pwcmp, hex,    pwcmp-hex);
-  CL(pwcmp, module, pwcmp-module);
+  SL(pwcmp, client);
+  SL(pwcmp, hex);
+  SL(pwcmp-module, module);
   
+  L(str);
   DL(str);
-  CL(str, iter, str-iter);
-  CL(str, str,  str);
+  SL(str, iter);
+  SL(str, str);
   
+  L(unix);
   DL(unix);
-  CL(unix, nonblock, unix-nonblock);
-  CL(unix, sig,      unix-sig);
+  SL(unix, nonblock);
+  SL(unix, sig);
   
+  L(vmailmgr);
   DL(vmailmgr);
-  CL(vmailmgr, client,   vmailmgr-client);
-  CL(vmailmgr, vpwentry, vmailmgr-vpwentry);
+  SL(vmailmgr, client);
+  SL(vmailmgr, vpwentry);
 }

@@ -1,0 +1,6 @@
+msg/common.o
+msg/debug.o
+msg/die.o
+msg/error.o
+msg/warn.o
+msg/wrap.o

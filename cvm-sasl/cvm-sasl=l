@@ -1,6 +1,0 @@
-authenticate.o
-cram_md5.o
-init.o
-login.o
-plain.o
-start.o

@@ -1,0 +1,5 @@
+cvm/client.o
+cvm/client_domain.o
+cvm/client_setugid.o
+cvm/client_setenv.o
+cvm/facts.o

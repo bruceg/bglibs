@@ -1,4 +1,0 @@
-req_arg.o
-req_init.o
-req_write.o
-resp_read.o

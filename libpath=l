@@ -1,0 +1,5 @@
+path/contains.o
+path/fnmatch.o
+path/match.o
+path/merge.o
+path/mktemp.o

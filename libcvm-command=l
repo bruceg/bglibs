@@ -1,0 +1,4 @@
+cvm/module_command.o
+cvm/module_request.o
+cvm/module_output.o
+cvm/facts.o
