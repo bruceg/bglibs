@@ -1,3 +1,6 @@
+- Finish DNS library!
+  - Implement TCP queries
+
 - Add make-compile, make-load, make-makelib scripts
 
 - Add library documentation
@@ -5,3 +8,5 @@
 - Add some way of dealing with dependancies like "socket.lib" etc.
 
 - exec replacement?  http://cr.yp.to/lib/pathexec.html
+
+- More ADTs: stack, queue, bag/set/dictionary, tree
