@@ -42,6 +42,7 @@ static void gentab(int bits, uint64 poly, int reflected)
 {
   int i;
   uint64 topbit = 1ULL << (bits-1);
+  uint64 mask = ~0ULL >> (64-bits);
   for (i = 0; i < 256; ++i) {
     uint64 crc = i;
     int j;
@@ -50,7 +51,7 @@ static void gentab(int bits, uint64 poly, int reflected)
     for (j = 0; j < 8; ++j)
       crc = (crc << 1) ^ ((crc & topbit) ? poly : 0);
     if (reflected) crc = reflect(crc, bits);
-    crctab[i] = crc;
+    crctab[i] = crc & mask;
   }
 }
 
@@ -61,7 +62,6 @@ int main(int argc, char* argv[])
   int bits;
   int digits;
   uint64 poly;
-  uint64 mask;
   const char* suffix;
   int columns;
   char* end;
@@ -70,7 +70,7 @@ int main(int argc, char* argv[])
   int reflected;
 
   if (argc != 5) {
-    msg3("usage: ", program, "NAME BITS POLY [normal|reflected]");
+    msg3("usage: ", program, " NAME BITS POLY [normal|reflected]");
     return 1;
   }
 
@@ -81,7 +81,6 @@ int main(int argc, char* argv[])
   if (*end != 0) die2(1, "Invalid bits value: ", bitstr);
   if (bits <= 0 || bits > 64) die1(1, "bits must be between 1 and 64");
   digits = (bits + 3) / 4;
-  mask = ~0ULL >> (64-bits);
   if (bits > 32) suffix = "ULL,";
   else if (bits > 16) suffix = "UL,";
   else suffix = "U,";
