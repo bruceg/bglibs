@@ -11,9 +11,10 @@ dependon(objs)
 tmpdir = target + '.tmp'
 command('rm -rf ' + tmpdir)
 command('mkdir ' + tmpdir)
+command('@echo ... linking objects into %s ...' % tmpdir)
 for obj in objs:
 	dirobj = obj.replace('/', '_')
-	command('ln %s %s/%s' % (obj, tmpdir, dirobj))
+	command('@ln %s %s/%s' % (obj, tmpdir, dirobj))
 
 : makelib
 ./makelib %(target)s %(target)s.tmp/*
