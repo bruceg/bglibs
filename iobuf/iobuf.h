@@ -130,7 +130,7 @@ int obuf_put6s(obuf* out, const char* s1, const char* s2, const char* s3,
 int obuf_put7s(obuf* out, const char* s1, const char* s2, const char* s3,
 	       const char* s4, const char* s5, const char* s6, const char* s7);
 #define obuf_putstr(out,str) obuf_write(out,(str)->s,(str)->len)
-int obuf_putsflush(obuf* out, const char* str);
+int obuf_putsflush(obuf* out, const char* s);
 int obuf_putiw(obuf* out, long data, unsigned width, char pad);
 #define obuf_puti(out,data) obuf_putiw(out, data, 0, 0)
 int obuf_putuw(obuf* out, unsigned long data, unsigned width, char pad);
