@@ -49,6 +49,10 @@ int str_catb(str* s, const char* in, unsigned len);
 int str_catiw(str* s, long in, unsigned width, char pad);
 #define str_catu(S,I) str_catuw((S),(I),0,0)
 int str_catuw(str* s, unsigned long in, unsigned width, char pad);
+#define str_catill(S,I) str_catiw((S),(I),0,0)
+int str_catiwll(str* s, long long in, unsigned width, char pad);
+#define str_catull(S,I) str_catuw((S),(I),0,0)
+int str_catuwll(str* s, unsigned long long in, unsigned width, char pad);
 int str_cat2s(str* s, const char* a, const char* b);
 int str_cat3s(str* s, const char* a, const char* b, const char* c);
 int str_cat4s(str* s, const char* a, const char* b, const char* c, const char* d);
