@@ -1,4 +1,4 @@
-for dep in ('flock','getpeereid','ipv6','mkfifo','namedpipebug','peercred','sendfile','setenv','sigaction','sigprocmask','spnam','sysselect','userpw','vfork','waitp','zlib'):
+for dep in ('flock','getpeereid','inline','ipv6','mkfifo','namedpipebug','peercred','sendfile','setenv','sigaction','sigprocmask','spnam','sysselect','userpw','vfork','waitp','zlib'):
 	dependon(['sys/try%s.c'%dep, 'sys/has%s.h1'%dep, 'sys/has%s.h2'%dep])
 dependon([
 	'sys/tryulong32.c', 'sys/uint32.h1', 'sys/uint32.h2',
@@ -35,5 +35,6 @@ dependon([
   ./choose clr unaligned unaligned; \
   ./choose cl  mkfifo; \
   ./choose clr namedpipebug; \
+  ./choose c   inline; \
   cat sysdeps-tail.h; \
 ) >sysdeps.h
