@@ -1,6 +1,9 @@
 #ifndef IO_BUF__H__
 #define IO_BUF__H__
 
+#define LF ((char)10)
+#define CR ((char)13)
+
 struct str;
 
 #define IOBUF_EOF 1
@@ -68,6 +71,7 @@ int ibuf_getc(ibuf* in, char* ch);
 int ibuf_getu(ibuf* in, unsigned long* data);
 int ibuf_gets(ibuf* in, char* data, unsigned datalen, char boundary);
 int ibuf_getstr(ibuf* in, struct str* s, char boundary);
+int ibuf_getstr_crlf(ibuf* in, struct str* s);
 
 struct obuf
 {
