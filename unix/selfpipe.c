@@ -4,6 +4,7 @@
 #include "sysdeps.h"
 #include "unix/nonblock.h"
 #include "unix/sig.h"
+#include "unix/selfpipe.h"
 
 static int fds[2] = { -1, -1 };
 
