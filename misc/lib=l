@@ -1,4 +1,5 @@
 random.o
 strtou.o
+ucspi.o
 utoa2.o
 utoa.o

@@ -6,6 +6,8 @@ Changes in version 1.016
 - Added back the definition of socket_tcp and socket_udp, the omission
   of which broke linking with libraries compiled against older bglibs.
 
+- Added functions for querying UCSPI environment variables.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
