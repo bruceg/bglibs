@@ -33,7 +33,7 @@ void str_lcut(str* s, unsigned count)
     newlen = 0;
   else {
     newlen = s->len - count;
-    memmove(s->s+count, s->s, newlen);
+    memmove(s->s, s->s+count, newlen);
   }
   str_truncate(s, newlen);
 }
