@@ -1,3 +1,7 @@
+fcntl_fd_off.o
+fcntl_fd_on.o
+fcntl_fl_off.o
+fcntl_fl_on.o
 nonblock_off.o
 nonblock_on.o
 selfpipe.o
