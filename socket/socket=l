@@ -4,6 +4,7 @@ bind4.o
 bindu.o
 broadcast.o
 connect4.o
+connected.o
 connectu.o
 getaddr4.o
 ipv4addr.o

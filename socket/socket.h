@@ -28,6 +28,7 @@ int socket_sendu(int sock, const char* buffer, unsigned buflen);
 
 /* Functions for any type of socket */
 int socket_broadcast(int sock);
+int socket_connected(int sock);
 int socket_listen(int sock, int backlog);
 int socket_reuse(int sock);
 int socket_shutdown(int sock, int shut_rd, int shut_wr);
