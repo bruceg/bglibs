@@ -26,6 +26,12 @@ static void diefsys(const char* msg, const char* filename)
   exit(1);
 }
 
+static void xchdir(int fd)
+{
+  if (((fd == 0) ? chdir("/") : fchdir(fd)) == -1)
+    diesys("Could not change base directory");
+}
+
 static void setmodes(const char* filename,
 		     unsigned uid, unsigned gid, unsigned mode)
 {
@@ -45,13 +51,11 @@ void cf(int dir, const char* filename,
   size_t wr;
   size_t offset;
   
-  if (fchdir(sourcedir) == -1)
-    diesys("Could not change base directory");
+  xchdir(sourcedir);
   if ((fdin = open(srcfile, O_RDONLY)) == -1)
     diefsys("Could not open input file", srcfile);
 
-  if (fchdir(dir) == -1)
-    diesys("Could not change base directory");
+  xchdir(dir);
   if ((fdout = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0600)) == -1)
     diefsys("Could not create output file", filename);
 
@@ -76,8 +80,7 @@ void c(int dir, const char* filename,
 int d(int dir, const char* subdir,
       unsigned uid, unsigned gid, unsigned mode)
 {
-  if (fchdir(dir) == -1)
-    diesys("Could not change base directory");
+  xchdir(dir);
   if (mkdir(subdir, 0700) == -1 && errno != EEXIST)
     diefsys("Could not create directory", subdir);
   if ((dir = open(subdir, O_RDONLY)) == -1)
@@ -88,8 +91,7 @@ int d(int dir, const char* subdir,
 
 void s(int dir, const char* name, const char* target)
 {
-  if (fchdir(dir) == -1)
-    diesys("Could not change base directory");
+  xchdir(dir);
   unlink(name);
   if (symlink(target, name) == -1)
     diefsys("Could not create symlink", name);
@@ -107,16 +109,12 @@ int opendir(const char* dir)
 
 int opensubdir(int dir, const char* subdir)
 {
-  if (fchdir(dir) == -1)
-    diesys("Could not change base directory in opensubdir");
+  xchdir(dir);
   return opendir(subdir);
 }
 
 int main(void)
 {
-  close(0);
-  if (open(".", O_RDONLY) != 0)
-    diefsys("Could not open directory", "/");
   sourcedir = opendir(".");
   umask(077);
   insthier();

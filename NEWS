@@ -10,6 +10,9 @@ Changes in version 1.011
 
 - Fixed ipv4 address parsing number validation.
 
+- Internal changes to installer scripts to make it work on systems where
+  the root directory is non-readable.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

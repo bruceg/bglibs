@@ -32,11 +32,16 @@ static void warn(const char* filename, const char* msg)
   printf("instcheck warning: File '%s' %s.\n", filename, msg);
 }
 
+static void xchdir(int fd)
+{
+  if (((fd == 0) ? chdir("/") : fchdir(fd)) == -1)
+    diesys("Could not change base directory");
+}
+
 static void testmode(int dir, const char* filename,
 		     unsigned uid, unsigned gid, unsigned mode, unsigned type)
 {
-  if (fchdir(dir) == -1)
-    diesys("Could not change base directory");
+  xchdir(dir);
   if (lstat(filename, &statbuf) == -1) {
     if (errno == ENOENT)
       warn(filename, "is missing");
@@ -79,8 +84,7 @@ void s(int dir, const char* name, const char* target)
   char linkbuf[4096];
   int linklen;
   int targetlen;
-  if (fchdir(dir) == -1)
-    diesys("Could not change base directory");
+  xchdir(dir);
   testmode(dir, name, -1, -1, -1, S_IFLNK);
   if ((linklen = readlink(name, linkbuf, sizeof linkbuf)) == -1)
     diefsys("Could not read symlink", name);
@@ -102,16 +106,12 @@ int opendir(const char* dir)
 
 int opensubdir(int dir, const char* subdir)
 {
-  if (fchdir(dir) == -1)
-    diesys("Could not change base directory in opensubdir");
+  xchdir(dir);
   return opendir(subdir);
 }
 
 int main(void)
 {
-  close(0);
-  if (opendir("/") != 0)
-    diesys("Opening root directory resulted in non-zero file descriptor");
   insthier();
   return 0;
 }
