@@ -5,6 +5,7 @@ ghash_get.o
 ghash_hash.o
 ghash_init.o
 ghash_insert.o
+ghash_rebuild.o
 ghash_rehash.o
 ghash_search.o
 gqueue_pop.o

@@ -32,6 +32,7 @@ void** ghash_find(struct ghash* d, const void* key, unsigned long hash,
 void* ghash_get(struct ghash* d, const void* key, unsigned long hash,
 		adt_cmp_fn* keycmp);
 void ghash_init(struct ghash* d);
+int ghash_rebuild(struct ghash* d);
 int ghash_rehash(struct ghash* d, adt_hash_fn* hash);
 void ghash_foreach(struct ghash* d, void (*fn)(void* entry));
 void* ghash_search(struct ghash* d, int (*fn)(const void* entry));
@@ -57,6 +58,7 @@ extern int PREFIX##_add(struct ghash* d, \
                         KTYPE const* key, DTYPE const* data); \
 extern struct PREFIX##_entry* PREFIX##_get(struct ghash* d, \
                                            KTYPE const* key); \
+extern int PREFIX##_rebuild(struct ghash* d); \
 extern int PREFIX##_rehash(struct ghash* d); \
 extern void PREFIX##_foreach(struct ghash* d, \
                              void (*fn)(struct PREFIX##_entry*)); \
@@ -85,6 +87,11 @@ int PREFIX##_add(struct ghash* d, KTYPE const* key, DTYPE const* data) { \
 #define GHASH_GET_DEFN(PREFIX,KTYPE,HASHFN,CMPFN) \
 struct PREFIX##_entry* PREFIX##_get(struct ghash* d, KTYPE const* key) { \
   return ghash_get(d, key, HASHFN(key), (adt_cmp_fn*)CMPFN); \
+}
+
+#define GHASH_REBUILD_DEFN(PREFIX) \
+int PREFIX##_rebuild(struct ghash* d) { \
+  return ghash_rebuild(d); \
 }
 
 #define GHASH_REHASH_DEFN(PREFIX,HASHFN) \
