@@ -195,9 +195,8 @@ void SHA512_update(SHA512_ctx* ctx, const void* vdata, unsigned long data_len)
   ctx->mlen += data_len;
 }
 
-void SHA512_final(SHA512_ctx* ctx, uint8* digest)
+void SHA512_final_transform(SHA512_ctx* ctx)
 {
-  unsigned i;
   ctx->M[ctx->mlen] = 0x80;
   ++ctx->mlen;
   memset(ctx->M + ctx->mlen, 0x00, 128 - ctx->mlen);
@@ -209,7 +208,12 @@ void SHA512_final(SHA512_ctx* ctx, uint8* digest)
   uint64_pack_msb(ctx->hbits, ctx->M+112);
   uint64_pack_msb(ctx->lbits, ctx->M+120);
   SHA512_transform(ctx->H, ctx->M);
+}
 
+void SHA512_final(SHA512_ctx* ctx, uint8* digest)
+{
+  unsigned i;
+  SHA512_final_transform(ctx);
   for (i = 0; i < 8; ++i, digest += 8)
     uint64_pack_msb(ctx->H[i], digest);
   memset(ctx, 0, sizeof *ctx);

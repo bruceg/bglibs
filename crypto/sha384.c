@@ -44,11 +44,15 @@ void SHA384_init(SHA384_ctx* ctx)
   ctx->mlen = 0;
 }
 
+extern void SHA512_final_transform(SHA512_ctx* ctx);
+
 void SHA384_final(SHA384_ctx* ctx, uint8* digest)
 {
-  uint8 tmp[SHA512_DIGEST_LENGTH];
-  SHA512_final(ctx, tmp);
-  memcpy(digest, tmp, SHA384_DIGEST_LENGTH);
+  unsigned i;
+  SHA512_final_transform(ctx);
+  for (i = 0; i < 6; ++i, digest += 8)
+    uint64_pack_msb(ctx->H[i], digest);
+  memset(ctx, 0, sizeof *ctx);
 }
 
 #ifdef SELFTEST_MAIN
