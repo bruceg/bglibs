@@ -1,4 +1,11 @@
 -------------------------------------------------------------------------------
+Changes in version 1.004
+
+- Portability fixes for *BSD (possibly others).
+
+Development of this version has been sponsored by FutureQuest, Inc.
+ossi@FutureQuest.net  http://www.FutureQuest.net/
+-------------------------------------------------------------------------------
 Changes in version 1.003
 
 - Optimized path matching to only stat intermediate entries if they
