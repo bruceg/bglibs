@@ -17,12 +17,8 @@
  */
 #include <sys/types.h>
 #include <string.h>
-#include <sys/socket.h>
+#include "cmsg.h"
 #include "socket.h"
-
-#ifndef MSG_NOSIGNAL
-#define MSG_NOSIGNAL 0
-#endif
 
 /** Send a file descriptor over a socket. */
 int socket_sendfd(int sock, int fd)
