@@ -6,10 +6,10 @@
 
 typedef unsigned long uint64;
 
-void uint64_pack_lsb(uint64 u, unsigned char b[4]);
-void uint64_pack_msb(uint64 u, unsigned char b[4]);
-void uint64_unpack_lsb(const unsigned char b[4], uint64* u);
-void uint64_unpack_msb(const unsigned char b[4], uint64* u);
+void uint64_pack_lsb(uint64 u, unsigned char b[8]);
+void uint64_pack_msb(uint64 u, unsigned char b[8]);
+void uint64_unpack_lsb(const unsigned char b[8], uint64* u);
+void uint64_unpack_msb(const unsigned char b[8], uint64* u);
 #define uint64_pack uint64_pack_lsb
 #define uint64_unpack uint64_unpack_lsb
 
