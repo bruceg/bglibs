@@ -11,5 +11,6 @@ extern int fnmatch(const char* filename, const char* pattern,
 extern int has_magic(const char* str);
 extern int path_match(const char* pattern, str* result, unsigned options);
 extern int path_contains(const char* path, const char* part);
+extern int path_mktemp(const char* prefix, str* filename);
 
 #endif

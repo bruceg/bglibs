@@ -2,3 +2,4 @@ contains.o
 fnmatch.o
 match.o
 merge.o
+mktemp.o
