@@ -29,5 +29,6 @@ extern int dict_init(dict*);
 extern void dict_free(dict*, void (*free_data)(void*));
 extern int dict_add(dict*, const str*, void*);
 extern dict_entry* dict_get(dict*, const str*);
+extern void dict_str_free(void*);
 
 #endif
