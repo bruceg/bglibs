@@ -5,6 +5,8 @@
 
 #define word32 unsigned long
 
+#define SHA512_DIGEST_LENGTH (512/8)
+
 typedef struct {
       word32 H[ 16 ];
       word32 hbits, lbits;
