@@ -1,5 +1,5 @@
 noinst_LIBRARIES = libcli.a
-EXTRA_DIST = clitest.cc
+EXTRA_DIST = clitest.cc cli2pod.pl
 
 INCLUDES = -I..
 #LIBS = @LIBS@ -L. -lcli -L../lib -lvmailmgr
