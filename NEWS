@@ -3,7 +3,7 @@ Changes in version 1.012
 
 - Added set of str_splice functions, to insert one string into another.
 
-- Added IPv6 address parsing/formatting functions.
+- Added IPv6 address parsing/formatting and network functions.
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/

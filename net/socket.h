@@ -2,6 +2,7 @@
 #define NET__SOCKET__H__
 
 #include "ipv4.h"
+#include "ipv6.h"
 
 /** \defgroup socket socket: General socket manipulations
 
@@ -25,13 +26,21 @@ int socket_udp4(void);
 int socket_udp6(void);
 #define socket_udp socket_udp4
 int socket_connect4(int sock, const ipv4addr* ip, ipv4port port);
+int socket_connect6(int sock, const ipv6addr* ip, ipv6port port);
 int socket_bind4(int sock, const ipv4addr* ip, ipv4port port);
+int socket_bind6(int sock, const ipv6addr* ip, ipv6port port);
 int socket_accept4(int sock, ipv4addr* ip, ipv4port* port);
+int socket_accept6(int sock, ipv6addr* ip, ipv6port* port);
 int socket_recv4(int sock, char* buffer, unsigned buflen,
 		 ipv4addr* ip, ipv4port* port);
+int socket_recv6(int sock, char* buffer, unsigned buflen,
+		 ipv6addr* ip, ipv6port* port);
 int socket_send4(int sock, const char* buffer, unsigned buflen,
 		 const ipv4addr* ip, ipv4port port);
+int socket_send6(int sock, const char* buffer, unsigned buflen,
+		 const ipv6addr* ip, ipv6port port);
 int socket_getaddr4(int sock, ipv4addr* ip, ipv4port* port);
+int socket_getaddr6(int sock, ipv6addr* ip, ipv6port* port);
 int socket_cork(int sock);
 int socket_uncork(int sock);
 int socket_notcpdelay(int sock, int enable);
