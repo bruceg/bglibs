@@ -31,6 +31,7 @@ obuf_putiw.o
 obuf_putnetstring.o
 obuf_putsflush.o
 obuf_putuw.o
+obuf_seek.o
 obuf_stderr.o
 obuf_stdout.o
 obuf_sync.o
