@@ -21,6 +21,13 @@
 #include <netinet/tcp.h>
 #include "socket.h"
 
+/** Turn on or off TCP NODELAY flag.
+ 
+Enabling NODELAY disables the standard Nagle algorithm, which tries to
+coalesce multiple short writes into one larger packet for better network
+efficiency.  With NODELAY enabled, each write will immediately be sent
+out onto the network as a seperate packet.
+*/
 int socket_notcpdelay(int fd, int on)
 {
   return setsockopt(fd, SOL_TCP, TCP_NODELAY, &on, sizeof on) == 0;
