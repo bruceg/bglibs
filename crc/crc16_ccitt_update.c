@@ -12,6 +12,10 @@ uint16 crc16_ccitt_update(uint16 crc, const char* data, long len)
 #include "selftest.c"
 MAIN
 {
+  /* Test vectors gleaned from:
+   * http://www.netrino.com/Connecting/2000-01/
+   * http://home.t-online.de/home/uwe.mnich/Wissen/Delphi/Utilities/Utilities.html
+   */
   obuf_putXw(&outbuf, crc16_ccitt_block("123456789", 9), 4, '0'); NL();
   obuf_putXw(&outbuf, crc16_ccitt_update(0, "1234567890", 1), 4, '0'); NL();
   obuf_putXw(&outbuf, crc16_ccitt_update(0, "1234567890", 2), 4, '0'); NL();

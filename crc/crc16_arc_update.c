@@ -12,6 +12,12 @@ uint16 crc16_arc_update(uint16 crc, const char* data, long len)
 #include "selftest.c"
 MAIN
 {
+  /* Test vectors gleaned from:
+   * ftp://ftp.adelaide.edu.au/pub/rocksoft/crc_v3.txt
+   * http://www.netrino.com/Connecting/2000-01/
+   * http://www.efg2.com/Lab/Mathematics/FelipeRochaMachado.TXT
+   * http://www.efg2.com/Lab/Mathematics/CRC.htm
+   */
   obuf_putXw(&outbuf, crc16_arc_block("123456789", 9), 4, '0'); NL();
   obuf_putXw(&outbuf, crc16_arc_block("abc", 3), 4, '0'); NL();
   obuf_putXw(&outbuf, crc16_arc_block("ABC", 3), 4, '0'); NL();
