@@ -69,9 +69,10 @@ MAIN
 {
   int buf;
   int fd = selfpipe_init();
-  puti("FD[0]", fds[0]);
-  puti("FD[1]", fds[1]);
-  puti("Returned FD", fd);
+  puti("FD[0] >= 0", fds[0] >= 0);
+  puti("FD[1] >= 0", fds[1] >= 0);
+  puti("FD[0] != FD[1]", fds[0] != fds[1]);
+  puti("Returned FD == FD[0]", fd == fds[0]);
   puti("read before SIGCHLD", read(fd, &buf, sizeof buf));
   puti("errno is EAGAIN", errno == EAGAIN);
   kill(0, SIGCHLD);
@@ -87,9 +88,10 @@ MAIN
 }
 #endif
 #ifdef SELFTEST_EXP
-FD[0]: 3
-FD[1]: 4
-Returned FD: 3
+FD[0] >= 0: 1
+FD[1] >= 0: 1
+FD[0] != FD[1]: 1
+Returned FD == FD[0]: 1
 read before SIGCHLD: -1
 errno is EAGAIN: 1
 read after SIGCHLD: 1
