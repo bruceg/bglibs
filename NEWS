@@ -11,6 +11,8 @@ Changes in version 1.012
 
 - Added str_xlate function.
 
+- Added socket connect functions with a timeout.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

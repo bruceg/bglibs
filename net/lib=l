@@ -6,9 +6,12 @@ bind6.o
 bindu.o
 broadcast.o
 connect4.o
+connect4_timeout.o
 connect6.o
+connect6_timeout.o
 connected.o
 connectu.o
+connectu_timeout.o
 cork.o
 getaddr4.o
 getaddr6.o
