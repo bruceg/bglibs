@@ -30,6 +30,5 @@ int socket_connect4(int sock, const ipv4addr ip, unsigned short port)
   sa.sin_family = AF_INET;
   memcpy((char*)&sa.sin_addr, ip, 4);
   sa.sin_port = htons(port);
-  return connect(sock, (struct sockaddr*)&sa, sizeof sa) != -1 ||
-    errno == EINPROGRESS;
+  return connect(sock, (struct sockaddr*)&sa, sizeof sa) != -1;
 }
