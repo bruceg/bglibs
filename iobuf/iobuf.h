@@ -88,6 +88,14 @@ int obuf_pad(obuf* out, unsigned width, char ch);
 int obuf_endl(obuf* out);
 int obuf_putc(obuf* out, char ch);
 #define obuf_puts(out,str) obuf_write(out,str,strlen(str))
+int obuf_put2s(obuf* out, const char* s1, const char* s2);
+int obuf_put3s(obuf* out, const char* s1, const char* s2, const char* s3);
+int obuf_put4s(obuf* out, const char* s1, const char* s2, const char* s3,
+	       const char* s4);
+int obuf_put5s(obuf* out, const char* s1, const char* s2, const char* s3,
+	       const char* s4, const char* s5);
+int obuf_put6s(obuf* out, const char* s1, const char* s2, const char* s3,
+	       const char* s4, const char* s5, const char* s6);
 int obuf_putsflush(obuf* out, const char* str);
 int obuf_putiw(obuf* out, long data, unsigned width, char pad);
 #define obuf_puti(out,data) obuf_putiw(out, data, 0, 0)
