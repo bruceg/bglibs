@@ -1,0 +1,9 @@
+add.o
+foreach.o
+free.o
+get.o
+hash.o
+init.o
+load_list.o
+load_map.o
+str_free.o

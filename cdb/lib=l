@@ -1,0 +1,8 @@
+cdb.o
+find.o
+getnext.o
+get.o
+hash.o
+hash.o
+make.o
+read.o

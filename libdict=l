@@ -1,9 +1,0 @@
-dict/add.o
-dict/foreach.o
-dict/free.o
-dict/get.o
-dict/hash.o
-dict/init.o
-dict/load_list.o
-dict/load_map.o
-dict/str_free.o

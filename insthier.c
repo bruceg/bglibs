@@ -1,5 +1,5 @@
 #include "conf_home.c"
-#include "installer.h"
+#include "install/installer.h"
 
 #define C(SUB,FILE) c(SUB,#FILE,-1,-1,0644)
 #define CF(SUB,FILE) cf(dir,#FILE,-1,-1,0644, #SUB "/" #FILE)
@@ -105,14 +105,27 @@ void insthier(void)
 }while(0)
 
   L(sysdeps);
+
+#undef L
+#define L(BASE) do{ \
+  cf(lib, "lib" #BASE ".a", -1, -1, 0644, "install/" #BASE ".a"); \
+  s(lib, #BASE, "lib" #BASE ".a"); \
+}while(0)
+
   L(installer);
   L(instcheck);
   L(instshow);
 
+#undef L
+#define L(BASE) do{ \
+  cf(lib, "lib" #BASE ".a", -1, -1, 0644, #BASE "/lib.a"); \
+  s(lib, #BASE, "lib" #BASE ".a"); \
+}while(0)
+
   L(base64);
   DL(base64);
   SL(base64, base64);
- 
+
   L(cdb);
   DL(cdb);
   SL(cdb, cdb);
@@ -129,11 +142,11 @@ void insthier(void)
   SL(crypto, sha1);
   SL(crypto, sha256);
   SL(crypto, sha512a);
-  
-  L(cvm-client);
-  L(cvm-command);
-  L(cvm-local);
-  L(cvm-udp);
+
+  cf(lib, "libcvm-client.a",  -1, -1, 0644, "cvm/client.a");
+  cf(lib, "libcvm-command.a", -1, -1, 0644, "cvm/command.a");
+  cf(lib, "libcvm-local.a",   -1, -1, 0644, "cvm/local.a");
+  cf(lib, "libcvm-udp.a",     -1, -1, 0644, "cvm/udp.a");
   DL(cvm);
   SL(cvm-client,  client);
   SL(cvm-command, command);

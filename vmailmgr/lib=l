@@ -1,0 +1,7 @@
+req_arg.o
+req_init.o
+req_write.o
+resp_read.o
+vpwentry_export.o
+vpwentry_free.o
+vpwentry_import.o
