@@ -1,1 +1,2 @@
 ibuf_getstr.o
+ibuf_getstr_crlf.o
