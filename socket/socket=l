@@ -5,6 +5,7 @@ bindu.o
 broadcast.o
 connect4.o
 connectu.o
+getaddr4.o
 ipv4addr.o
 listen.o
 recv4.o
