@@ -39,6 +39,7 @@ public:
   fdbuf(int fdesc, bool dc, unsigned bufsz = FDBUF_SIZE);
   ~fdbuf();
   bool error() const;
+  int error_number() const { return errnum; }
   bool closed() const;
   bool close();
 #ifdef _REENTRANT
