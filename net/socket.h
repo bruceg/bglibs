@@ -21,10 +21,10 @@ error.  All functions set errno on error.
 @{ */
 int socket_tcp4(void);
 int socket_tcp6(void);
-#define socket_tcp socket_tcp4
+int socket_tcp(void);
 int socket_udp4(void);
 int socket_udp6(void);
-#define socket_udp socket_udp4
+int socket_udp(void);
 int socket_connect4(int sock, const ipv4addr* ip, ipv4port port);
 int socket_connect4_timeout(int sock, const ipv4addr* ip, ipv4port port,
 			    int timeout);

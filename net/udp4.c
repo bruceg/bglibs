@@ -27,3 +27,9 @@ int socket_udp4(void)
 {
   return socket(AF_INET, SOCK_DGRAM, 0);
 }
+
+/** Create a UDP/IP socket. */
+int socket_udp(void)
+{
+  return socket_udp4();
+}

@@ -27,3 +27,9 @@ int socket_tcp4(void)
 {
   return socket(AF_INET, SOCK_STREAM, 0);
 }
+
+/** Create a TCP/IP socket. */
+int socket_tcp(void)
+{
+  return socket_tcp4();
+}
