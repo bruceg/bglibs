@@ -25,6 +25,9 @@ void insthier(void)
   C(inc, uint32.h);
   C(inc, uint64.h);
   
+  DI(adt);
+  CF(adt, ghash.h);
+  
   DI(base64);
   CF(base64, base64.h);
 
@@ -121,6 +124,8 @@ void insthier(void)
   cf(lib, "lib" #BASE ".a", -1, -1, 0644, #BASE "/lib.a"); \
   s(lib, #BASE, "lib" #BASE ".a"); \
 }while(0)
+
+  L(adt);
 
   L(base64);
   DL(base64);
