@@ -152,5 +152,6 @@ int cdb_make_finish(struct cdb_make *c)
 
   if (!obuf_seek(&c->b,0)) return -1;
   if (!obuf_write(&c->b,c->final,sizeof c->final)) return -1;
+  if (!obuf_close(&c->b)) return -1;
   return 0;
 }
