@@ -12,8 +12,7 @@ uint64 crc64_update(uint64 crc, const char* data, long len)
 #include "selftest.c"
 MAIN
 {
-  uint64 crc = crc64_block("123456789", 9);
-  obuf_putullnumw(&outbuf, crc, 16, '0', 16, obuf_hex_ucase_digits); NL();
+  obuf_putXwll(&outbuf, crc64_block("123456789", 9), 16, '0'); NL();
 }
 #endif
 #ifdef SELFTEST_EXP

@@ -12,8 +12,7 @@ uint16 crc16_xmodem_update(uint16 crc, const char* data, long len)
 #include "selftest.c"
 MAIN
 {
-  uint16 crc = crc16_xmodem_block("123456789", 9);
-  obuf_putXw(&outbuf, crc, 4, '0'); NL();
+  obuf_putXw(&outbuf, crc16_xmodem_block("123456789", 9), 4, '0'); NL();
 }
 #endif
 #ifdef SELFTEST_EXP
