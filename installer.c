@@ -90,6 +90,7 @@ void s(int dir, const char* name, const char* target)
 {
   if (fchdir(dir) == -1)
     diesys("Could not change base directory");
+  unlink(name);
   if (symlink(target, name) == -1)
     diefsys("Could not create symlink", name);
 }
