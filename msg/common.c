@@ -41,7 +41,7 @@ void msg_common(const char* type,
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
 const char program[] = "testprog";
-int msg_show_pid = 0;
+const int msg_show_pid = 0;
 void selftest(void)
 {
   warn2("a", "b");
