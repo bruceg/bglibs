@@ -1,5 +1,7 @@
 #include "iobuf.h"
 
+/** Retrieve the next character in the \c ibuf without advancing the
+    current read position. */
 int ibuf_peek(ibuf* in, char* ch)
 {
   iobuf* io;

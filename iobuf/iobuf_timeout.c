@@ -2,6 +2,7 @@
 #include "sysdeps.h"
 #include "iobuf.h"
 
+/** Wait for a file descriptor to be ready for reading or writing. */
 int iobuf_timeout(iobuf* io, int poll_out)
 {
   iopoll_fd pfd;

@@ -1,5 +1,6 @@
 #include "iobuf.h"
 
+/** Initialize an \c obuf by opening a file for writing. */
 int obuf_open(obuf* out, const char* filename, int oflags, int mode,
 	      unsigned bufsize)
 {

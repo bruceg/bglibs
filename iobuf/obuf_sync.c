@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include "iobuf.h"
 
+/** Flush the \c obuf and then \c fsync the file descriptor. */
 int obuf_sync(obuf* out)
 {
   iobuf* io;

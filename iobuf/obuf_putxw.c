@@ -15,6 +15,8 @@ static int obuf_putxw_rec(obuf* out, unsigned long data,
   return obuf_putc(out, bin2hex[data % 16]);
 }
 
+/** Write an unsigned integer to the \c obuf as hexadecimal with
+    optional padding. */
 int obuf_putxw(obuf* out, unsigned long data, unsigned width, char pad)
 {
   if (data < 16) {

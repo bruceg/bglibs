@@ -1,6 +1,7 @@
 #include <string.h>
 #include "iobuf.h"
 
+/** Write 5 C strings to the \c obuf */
 int obuf_put5s(obuf* out, const char* s1, const char* s2, const char* s3,
 	       const char* s4, const char* s5)
 {

@@ -4,12 +4,14 @@
 #include <sys/mman.h>
 #include "iobuf.h"
 
+/** The default iobuf buffer size, defaults to 8192. */
 unsigned iobuf_bufsize = 8192;
 
 #ifndef MAP_ANONYMOUS
 #define MAP_ANONYMOUS MAP_ANON
 #endif
 
+/** Initialize an \c iobuf structure. */
 int iobuf_init(iobuf* io, int fd, unsigned bufsize, char* buffer, unsigned flags)
 {
   memset(io, 0, sizeof *io);

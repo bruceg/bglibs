@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include "iobuf.h"
 
+/** Set the effective read position. */
 int ibuf_seek(ibuf* in, unsigned offset)
 {
   iobuf* io;

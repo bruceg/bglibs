@@ -1,5 +1,6 @@
 #include "iobuf.h"
 
+/** Flush and close the \c obuf */
 int obuf_close(obuf* out)
 {
   int result;

@@ -1,5 +1,6 @@
 #include "iobuf.h"
 
+/** Read an unsigned long from the \c ibuf */
 int ibuf_getu(ibuf* in, unsigned long* data)
 {
   char ch;

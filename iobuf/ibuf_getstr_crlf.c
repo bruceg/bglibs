@@ -1,7 +1,8 @@
 #include "iobuf.h"
 #include "str/str.h"
 
-int ibuf_getstr_crlf(ibuf* in, str* s)
+/** Read a line from the \c ibuf into a dynamic string, terminated by a CR+LF pair. */
+int ibuf_getstr_crlf(ibuf* in, struct str* s)
 {
   unsigned len;
   if (!ibuf_getstr(in, s, LF)) return 0;

@@ -1,7 +1,8 @@
 #include "iobuf.h"
 #include "str/str.h"
 
-int ibuf_getstr(ibuf* in, str* s, char boundary)
+/** Read a line from the \c ibuf into a dynamic string. */
+int ibuf_getstr(ibuf* in, struct str* s, char boundary)
 {
   iobuf* io;
   int ch;

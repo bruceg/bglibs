@@ -3,6 +3,13 @@
 #include <unistd.h>
 #include "iobuf.h"
 
+/** Read a block of data from the \c ibuf.
+
+This routine differs from \c ibuf_read in that the data is, as much as
+is possible, read directly into the given buffer, rather than first
+being read into the \c iobuf buffer and then into the given buffer.  \c
+ibuf_read automatically calls this routine if the requested \c datalen
+is larger than or equal to the \c iobuf buffer size. */
 int ibuf_read_large(ibuf* in, char* data, unsigned datalen)
 {
   iobuf* io;
@@ -40,6 +47,11 @@ int ibuf_read_large(ibuf* in, char* data, unsigned datalen)
   return 1;
 }
 
+/** Read a block of data from the \c ibuf
+
+Returns true only if the entire block was read.  If the return value is
+false, the caller will need to check if a partial block was read.
+*/
 int ibuf_read(ibuf* in, char* data, unsigned datalen)
 {
   iobuf* io;

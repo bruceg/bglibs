@@ -1,6 +1,7 @@
 #include <string.h>
 #include "iobuf.h"
 
+/** Write 7 C strings to the \c obuf */
 int obuf_put7s(obuf* out, const char* s1, const char* s2, const char* s3,
 	       const char* s4, const char* s5, const char* s6, const char* s7)
 {

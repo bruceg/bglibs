@@ -22,6 +22,8 @@ static int obuf_putiwll_rec(obuf* out, unsigned long long data, int sign,
   return obuf_putc(out, (data % 10) + '0');
 }
 
+/** Write a signed long long integer to the \c obuf with optional
+    padding. */
 int obuf_putiwll(obuf* out, long long data, unsigned width, char pad)
 {
   int sign;

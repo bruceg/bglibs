@@ -4,6 +4,10 @@
 
 static const char errmsg[] = "ibuf_refill called with non-empty buffer!\n";
 
+/** (Re)fill the buffer from the file descriptor.
+
+\note This function may only be called when the buffer is completely empty.
+*/
 int ibuf_refill(ibuf* in)
 {
   iobuf* io;

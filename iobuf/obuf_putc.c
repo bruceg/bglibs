@@ -1,5 +1,6 @@
 #include "iobuf.h"
 
+/** Write a single character to the \c obuf */
 int obuf_putc(obuf* out, char ch)
 {
   iobuf* io;

@@ -13,6 +13,7 @@ static int obuf_putuw_rec(obuf* out, unsigned long data,
   return obuf_putc(out, (data % 10) + '0');
 }
 
+/** Write an unsigned integer to the \c obuf with optional padding. */
 int obuf_putuw(obuf* out, unsigned long data, unsigned width, char pad)
 {
   if (data < 10) {

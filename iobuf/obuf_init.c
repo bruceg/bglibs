@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include "iobuf.h"
 
+/** Initialize an \c obuf from an already-opened file descriptor. */
 int obuf_init(obuf* out, int fd, obuf_fn fn, unsigned flags, unsigned bufsize)
 {
   if (fn == 0) fn = (obuf_fn)write;

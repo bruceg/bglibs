@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include "iobuf.h"
 
+/** Set the effective write position. */
 int obuf_seek(obuf* out, unsigned offset)
 {
   iobuf* io;

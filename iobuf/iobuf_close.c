@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include "iobuf.h"
 
+/** Close an \c iobuf and deallocate the buffer. */
 int iobuf_close(iobuf* io)
 {
   int status;

@@ -22,6 +22,7 @@ static int obuf_putiw_rec(obuf* out, unsigned long data, int sign,
   return obuf_putc(out, (data % 10) + '0');
 }
 
+/** Write a signed integer to the \c obuf with optional padding. */
 int obuf_putiw(obuf* out, long data, unsigned width, char pad)
 {
   int sign;

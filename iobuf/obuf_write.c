@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include "iobuf.h"
 
+/** Write a large block of data to the \c obuf, avoiding copying. */
 int obuf_write_large(obuf* out, const char* data, unsigned datalen)
 {
   iobuf* io;
@@ -25,6 +26,7 @@ int obuf_write_large(obuf* out, const char* data, unsigned datalen)
   return 1;
 }
 
+/** Write a block of data to the \c obuf */
 int obuf_write(obuf* out, const char* data, unsigned datalen)
 {
   iobuf* io;
