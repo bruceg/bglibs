@@ -31,13 +31,13 @@ struct cli_option
 typedef struct cli_option cli_option;
 
 /* The following are required from the CLI program */
-extern const char* cli_help_prefix;
-extern const char* cli_help_suffix;
-extern const char* cli_args_usage;
+extern const char cli_help_prefix[];
+extern const char cli_help_suffix[];
+extern const char cli_args_usage[];
 extern const int cli_args_min;
 extern const int cli_args_max;
 extern cli_option cli_options[];
-extern int cli_main(int argc, char* argv[]);
+extern int cli_main(int argc, char** argv);
 
 /* The following are provided to the CLI program */
 extern const char* argv0;

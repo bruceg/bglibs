@@ -85,8 +85,7 @@ static unsigned calc_max_width()
 
 static void show_option(cli_option* o, unsigned maxwidth)
 {
-  if(o == &help_option)
-    obuf_putc(&outbuf, '\n');
+  if(o == &help_option) obuf_putc(&outbuf, '\n');
   if(o->ch) {
     obuf_puts(&outbuf, "  -");
     obuf_putc(&outbuf, o->ch);
@@ -110,7 +109,6 @@ static void show_option(cli_option* o, unsigned maxwidth)
   else
     obuf_pad(&outbuf, maxwidth+4, ' ');
   obuf_put2s(&outbuf, o->helpstr, "\n");
-  obuf_putc(&outbuf, '\n');
   if(o->defaultstr) {
     obuf_pad(&outbuf, maxwidth+10, ' ');
     obuf_put3s(&outbuf, "(Defaults to ", o->defaultstr, ")\n");
@@ -121,13 +119,11 @@ static void show_help()
 {
   unsigned maxwidth;
   unsigned i;
-  if(cli_help_prefix)
-    obuf_puts(&outbuf, cli_help_prefix);
+  obuf_puts(&outbuf, cli_help_prefix);
   maxwidth = calc_max_width();
   for(i = 0; i < optionc; i++)
     show_option(options[i], maxwidth);
-  if(cli_help_suffix)
-    obuf_puts(&outbuf, cli_help_suffix);
+  obuf_puts(&outbuf, cli_help_suffix);
 }
 
 void usage(int exit_value, const char* errorstr)
