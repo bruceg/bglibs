@@ -21,6 +21,7 @@ void insthier(void)
   C(inc, installer.h);
   C(inc, sysdeps.h);
   C(inc, systime.h);
+  C(inc, uint16.h);
   C(inc, uint32.h);
   C(inc, uint64.h);
   
