@@ -21,6 +21,10 @@
 #include <netinet/tcp.h>
 #include "socket.h"
 
+#ifndef SOL_TCP
+#define SOL_TCP SOL_SOCKET
+#endif
+
 /** Turn on or off TCP NODELAY flag.
  
 Enabling NODELAY disables the standard Nagle algorithm, which tries to
