@@ -91,6 +91,7 @@ void insthier(void)
   CF(pwcmp, module.h);
   
   DI(str);
+  CF(str, env.h);
   CF(str, iter.h);
   CF(str, str.h);
   
@@ -98,6 +99,7 @@ void insthier(void)
   CF(unix, nonblock.h);
   CF(unix, selfpipe.h);
   CF(unix, sig.h);
+  CF(unix, trigger.h);
   
   DI(vmailmgr);
   CF(vmailmgr, client.h);
