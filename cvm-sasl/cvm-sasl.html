@@ -26,13 +26,15 @@ Challenge, Response</td> </tr>
 <tr> <td>CVM_SASL_LOGIN</td> <td>LOGIN</td> <td>1: Plain text
 password</td> </tr>
 
-<tr> <td>CVM_SASL_PLAIN</td> <td>PLAIN (RFC 2595)</td> <td>1: Plain
-text password</td> </tr>
+<tr> <td>CVM_SASL_PLAIN</td> <td>PLAIN (RFC 2595) and LOGIN</td>
+<td>1: Plain text password</td> </tr>
 
 </table>
 
 Note: as of this writing, there are no CRAM-MD5 CVMs, so that
-functionality is completely untested.</p>
+functionality is completely untested.  If <tt>$CVM_SASL_LOGIN</tt> is
+set, it is overrides <tt>$CVM_SASL_PLAIN</tt> for LOGIN
+authenticaiton.</p>
 
 </body>
 </html>
