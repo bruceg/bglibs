@@ -22,8 +22,12 @@ extern void sig_##NAME##_default(void)
 SIG_FUNCTION_DECL(alarm);
 SIG_FUNCTION_DECL(child);
 SIG_FUNCTION_DECL(hup);
+SIG_FUNCTION_DECL(int);
 SIG_FUNCTION_DECL(pipe);
+SIG_FUNCTION_DECL(quit);
 SIG_FUNCTION_DECL(term);
+
+SIG_FUNCTION_DECL(all);
 
 #undef SIG_FUNCTION_DECL
 
