@@ -1,11 +1,8 @@
 #!/bin/sh
+set -e || exit "$?"
 
 DIFF='diff -a -u'
-$DIFF $0 $0 >/dev/null 2>&1
-if [ $? -ne 0 ]
-then
-  DIFF='diff'
-fi
+$DIFF $0 $0 >/dev/null 2>&1 || DIFF='diff'
 
 t=$0.tmp.$$
 echo "Creating temporary directory $t"
@@ -13,56 +10,41 @@ mkdir $t
 trap 'echo "Cleaning up $t"; rm -r $t' EXIT
 
 do_test() {
-  local c="$1"
-  echo "Testing $c"
+  echo "Testing $1"
   rm -f $t/*
-  sed -e '1,/^#ifdef SELFTEST_EXP$/d' -e '/^#endif/,$d' $c >$t/test.exp
+  sed -e '1,/^#ifdef SELFTEST_EXP$/d' -e '/^#endif/,$d' $1 >$t/test.exp
 
-  ./compile $c -DSELFTEST_MAIN -o $t/test.o
-  if [ $? -ne 0 ]
-  then
+  ./compile $1 -DSELFTEST_MAIN -o $t/test.o || {
     echo "=====> Compile failed! <====="
     return 1
-  fi
+  }
 
-  ./load $t/test */lib.a libbg-sysdeps.a
-  if [ $? -ne 0 ]
-  then
+  ./load $t/test */lib.a libbg-sysdeps.a || {
     echo "=====> Load failed! <====="
     return 1
-  fi
+  }
 
-  ( cd $t && ./test >./test.out 2>&1; )
-  if [ $? -ne 0 ]
-  then
+  ( cd $t && ./test >./test.out 2>&1; ) || {
     echo "=====> Test failed! <====="
     return 1
-  fi
+  }
 
-  $DIFF $t/test.exp $t/test.out
-  if [ $? -ne 0 ]
-  then
+  $DIFF $t/test.exp $t/test.out || {
     echo "=====> Output failed! <====="
     return 1
-  fi
+  }
   return 0
 }
 
 exitcode=true
 if [ $# -gt 0 ]; then
   for c in "$@"; do
-    do_test $c
-    if [ $? -ne 0 ]; then
-      exitcode=false;
-    fi
+    do_test $c || exitcode=false
   done
 else
   for c in `fgrep -l '#ifdef SELFTEST_MAIN' */*.c`
   do
-    do_test $c
-    if [ $? -ne 0 ]; then
-      exitcode=false;
-    fi
+    do_test $c || exitcode=false
   done
 fi
 $exitcode
