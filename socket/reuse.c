@@ -18,7 +18,6 @@
 #include <sys/types.h>
 #include <sys/param.h>
 #include <sys/socket.h>
-#include <netinet/in.h>
 #include "socket.h"
 
 int socket_reuse(int fd)
