@@ -1,5 +1,4 @@
-#include "conf_inc.c"
-#include "conf_lib.c"
+#include "conf_home.c"
 #include "installer.h"
 
 #define C(SUB,FILE) c(SUB,#FILE,-1,-1,0644)
@@ -9,9 +8,15 @@
 
 void insthier(void)
 {
-  int inc = opendir(conf_inc);
-  int lib = opendir(conf_lib);
+  int home = opendir(conf_home);
+  int bin;
+  int inc;
+  int lib;
   int dir;
+
+  bin = d(home, "bin", -1, -1, 0755);
+
+  inc = d(home, "include", -1, -1, 0755);
 
   C(inc, installer.h);
   C(inc, sysdeps.h);
@@ -62,6 +67,8 @@ void insthier(void)
   CF(path, path.h);
 
   DI(pwcmp);
+  CF(pwcmp, client.h);
+  CF(pwcmp, hex.h);
   CF(pwcmp, module.h);
   
   DI(str);
@@ -76,6 +83,8 @@ void insthier(void)
   CF(vmailmgr, client.h);
   CF(vmailmgr, vpwentry.h);
   
+  lib = d(home, "lib", -1, -1, 0755);
+
   C(lib, libinstaller.a);
   C(lib, libinstcheck.a);
   C(lib, libinstshow.a);
@@ -125,6 +134,8 @@ void insthier(void)
   CF(path, path.a);
   
   DL(pwcmp);
+  CF(pwcmp, client.a);
+  CF(pwcmp, hex.a);
   CF(pwcmp, module.a);
   
   DL(str);
