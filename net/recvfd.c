@@ -20,6 +20,10 @@
 #include <sys/socket.h>
 #include "socket.h"
 
+#ifndef MSG_NOSIGNAL
+#define MSG_NOSIGNAL 0
+#endif
+
 int socket_recvfd(int socket)
 {
   char cbuf[CMSG_SPACE(sizeof(int))];
