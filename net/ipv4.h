@@ -18,7 +18,7 @@ extern const ipv4addr IPV4ADDR_BROADCAST;
 extern int ipv4_parse(const char* s, ipv4addr* addr, const char** end);
 extern const char* ipv4_scan(const char* s, ipv4addr* addr);
 extern const char* ipv4_format(const ipv4addr* addr);
-extern char* ipv4_format_r(const ipv4addr* addr, char* buffer);
+extern unsigned ipv4_format_r(const ipv4addr* addr, char* buffer);
 
 /* @} */
 

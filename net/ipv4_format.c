@@ -18,7 +18,7 @@ function will return pointers to the same string.
 const char* ipv4_format(const ipv4addr* addr)
 {
   static char buf[16];
-  *(ipv4_format_r(addr, buf)) = 0;
+  buf[ipv4_format_r(addr, buf)] = 0;
   return buf;
 }
 
@@ -27,15 +27,16 @@ const char* ipv4_format(const ipv4addr* addr)
 The given buffer must be at least 15 bytes long, or 16 bytes if it needs
 to contain the standard trailing \c NUL byte.
 
-\return The address of the first byte after the formatted address.
+\return The number of bytes written to the buffer.
 
 \note This routine is thread and recursion safe.
 */
-char* ipv4_format_r(const ipv4addr* addr, char* str)
+unsigned ipv4_format_r(const ipv4addr* addr, char* buffer)
 {
+  char* str = buffer;
   str = format_part(addr->addr[0], str); *str++ = '.';
   str = format_part(addr->addr[1], str); *str++ = '.';
   str = format_part(addr->addr[2], str); *str++ = '.';
   str = format_part(addr->addr[3], str);
-  return str;
+  return str - buffer;
 }

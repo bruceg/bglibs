@@ -14,7 +14,7 @@ static char* format_part(uint16 i, char* str)
   return str;
 }
 
-static char* format_ipv4(char* buf, const ipv6addr* addr)
+static unsigned format_ipv4(char* buf, const ipv6addr* addr)
 {
   ipv4addr a4;
   memcpy(&a4.addr, &addr->addr[12], 4);
@@ -29,7 +29,7 @@ function will return pointers to the same string.
 const char* ipv6_format(const ipv6addr* addr)
 {
   static char buf[40];
-  *(ipv6_format_r(addr, buf)) = 0;
+  buf[ipv6_format_r(addr, buf)] = 0;
   return buf;
 }
 
@@ -38,16 +38,18 @@ const char* ipv6_format(const ipv6addr* addr)
 The given buffer must be at least 39 bytes long, or 40 bytes if it needs
 to contain the standard trailing \c NUL byte.
 
-\return The address of the first byte after the formatted address.
+\return The number of bytes written to the buffer.
 
 \note This routine is thread and recursion safe.
 */
-char* ipv6_format_r(const ipv6addr* addr, char* str)
+unsigned ipv6_format_r(const ipv6addr* addr, char* buffer)
 {
   uint16 bits[8];
   int i;
   int first;
+  char* str = buffer;
 
+  /* Convert raw address to array of 16-bit parts */
   for (i = 0; i < 8; ++i)
     bits[i] = addr->addr[i*2] << 8 | addr->addr[i*2+1];
   for (first = 0; first < 8; ++first)
@@ -62,10 +64,11 @@ char* ipv6_format_r(const ipv6addr* addr, char* str)
     else if (first == 7 && bits[7] == 1)
       *str++ = '1';
     else if (first >= 6)
-      str = format_ipv4(str, addr);
+      str += format_ipv4(str, addr);
     else if (first == 5 && bits[5] == 0xffff) {
       memcpy(str, "FFFF:", 5);
-      str = format_ipv4(str + 5, addr);
+      str += 5;
+      str += format_ipv4(str, addr);
     }
     else
       for (i = first; i < 8; ++i) {
@@ -100,7 +103,7 @@ char* ipv6_format_r(const ipv6addr* addr, char* str)
       }
     }
   }
-  return str;
+  return str - buffer;
 }
 
 #ifdef SELFTEST_MAIN
