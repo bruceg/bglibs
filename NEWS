@@ -1,10 +1,10 @@
 -------------------------------------------------------------------------------
 Changes in version 1.017
 
-- Added SURF (Simple Unpredictable Random Function) from algorithm
+- Added SURF (Simple Unpredictable Random Function) from the algorithm
   described in http://cr.yp.to/papers/surf.ps
 
-- Added str_catns, str_copyns, and obuv_putns functions that take a
+- Added str_catns, str_copyns, and obuf_putns functions that take a
   variable number of char* parameters.
 
 - Fixed utoa to write into its buffer instead of before it.
