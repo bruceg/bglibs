@@ -10,6 +10,7 @@ cork.o
 getaddr4.o
 linger.o
 listen.o
+pair.o
 recv4.o
 recvu.o
 reuse.o

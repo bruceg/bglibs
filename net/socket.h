@@ -26,6 +26,8 @@ int socket_acceptu(int sock);
 int socket_recvu(int sock, char* buffer, unsigned buflen);
 int socket_sendu(int sock, const char* buffer, unsigned buflen);
 
+int socket_pair(int fd[2]);
+
 /* Functions for any type of socket */
 int socket_broadcast(int sock);
 int socket_connected(int sock);
