@@ -10,8 +10,3 @@ unsigned long ghash_hashb(const unsigned char* data, unsigned long len)
     h = (h + (h << 5)) ^ *data++;
   return h;
 }
-
-unsigned long ghash_hashs(const unsigned char* s)
-{
-  return ghash_hashb(s, strlen(s));
-}

@@ -27,6 +27,7 @@ struct ghash
 
 unsigned long ghash_hashb(const unsigned char*, unsigned long);
 unsigned long ghash_hashs(const unsigned char*);
+unsigned long ghash_hashsp(const char* const* p);
 
 void ghash_insert(struct ghash* d, void* e);
 int ghash_add(struct ghash* d, const void* key, const void* data);
