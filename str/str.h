@@ -74,6 +74,7 @@ int str_truncate(str* s, unsigned len);
 int str_copy(str* s, const str* in);
 int str_copys(str* s, const char* in);
 int str_copyb(str* s, const char* in, unsigned len);
+int str_copyns(str* s, unsigned int count, ...);
 int str_copy2s(str* s, const char* a, const char* b);
 int str_copy3s(str* s, const char* a, const char* b, const char* c);
 int str_copy4s(str* s, const char* a, const char* b, const char* c, const char* d);
@@ -107,6 +108,7 @@ int str_catsllnumw(str* s, long long in, unsigned width, char pad,
 		   unsigned base, const char* digits);
 int str_catullnumw(str* s, unsigned long long in, unsigned width, char pad,
 		   unsigned base, const char* digits);
+int str_catns(str* s, unsigned int count, ...);
 int str_cat2s(str* s, const char* a, const char* b);
 int str_cat3s(str* s, const char* a, const char* b, const char* c);
 int str_cat4s(str* s, const char* a, const char* b, const char* c, const char* d);
