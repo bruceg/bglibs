@@ -21,6 +21,7 @@ int str_init(str* s);
 int str_ready(str* s, unsigned size);
 int str_realloc(str* s, unsigned size);
 void str_free(str* s);
+int str_truncate(str* s, unsigned len);
 
 /* Assignment */
 int str_copy(str* s, const str* in);
@@ -58,6 +59,15 @@ void str_subst(str* s, char from, char to);
 void str_lstrip(str* s);
 void str_rstrip(str* s);
 #define str_strip(S) (str_rstrip(S), str_lstrip(S))
+
+/* Comparison */
+int str_cmp(const str* a, unsigned aoffset, const str* b, unsigned boffset);
+int str_cmps(const str* a, unsigned offset, const char* b);
+int str_cmpb(const str* a, unsigned offset, const char* b, unsigned len);
+
+int str_diff(const str* a, const str* b);
+int str_diffs(const str* a, const char* b);
+int str_diffb(const str* a, const char* b, unsigned len);
 
 /* Searching */
 void str_buildmap(int map[256], const char* list);

@@ -7,6 +7,7 @@ cat5s.o
 cat6s.o
 catiw.o
 catuw.o
+cmp.o
 copy.o
 copy2s.o
 copy3s.o
@@ -15,6 +16,7 @@ copy5s.o
 copy6s.o
 count.o
 countof.o
+diff.o
 findnext.o
 findnextof.o
 findprev.o
@@ -23,3 +25,4 @@ free.o
 init.o
 ready.o
 realloc.o
+truncate.o
