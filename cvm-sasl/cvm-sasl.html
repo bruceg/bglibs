@@ -1,0 +1,38 @@
+<html>
+<body>
+
+<h1>cvm-sasl</h1>
+
+<hr>
+
+<h2>Overview</h2>
+
+<p>cvm-sasl is a library for programs that need to do authentication
+via SASL (RFC 2222).  It provides a generic interface for doing the
+authentication using CV modules.</p>
+
+<h2>Configuration</h2>
+
+<p>To configuration an application that uses cvm-sasl, set one or more
+of the following environment variables to the name of a CVM that can
+accept the indicated type of credentials: <table border=1>
+
+<tr> <th>Name</th> <th>SASL Mechanism</th> <th>CVM Credentials</th>
+</tr>
+
+<tr> <td>CVM_SASL_CRAM_MD5</td> <td>CRAM-MD5 (RFC 2195)</td> <td>2:
+Challenge, Response</td> </tr>
+
+<tr> <td>CVM_SASL_LOGIN</td> <td>LOGIN</td> <td>1: Plain text
+password</td> </tr>
+
+<tr> <td>CVM_SASL_PLAIN</td> <td>PLAIN (RFC 2595)</td> <td>1: Plain
+text password</td> </tr>
+
+</table>
+
+Note: as of this writing, there are no CRAM-MD5 CVMs, so that
+functionality is completely untested.</p>
+
+</body>
+</html>
