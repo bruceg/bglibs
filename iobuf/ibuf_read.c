@@ -25,7 +25,8 @@ int ibuf_read_large(ibuf* in, char* data, unsigned datalen)
    * read it straight from the fd instead of copying it through the buffer. */
   while (datalen) {
     if (io->timeout && !iobuf_timeout(io, 0)) return 0;
-    if ((rd = read(io->fd, data, datalen)) == -1) IOBUF_SET_ERROR(io);
+    if ((rd = read(io->fd, data, datalen)) == (unsigned)-1)
+      IOBUF_SET_ERROR(io);
     if (rd == 0) {
       io->flags |= IOBUF_EOF;
       return 0;
