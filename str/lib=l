@@ -52,3 +52,4 @@ start.o
 subst.o
 truncate.o
 upper.o
+xlate.o

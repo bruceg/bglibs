@@ -9,6 +9,8 @@ Changes in version 1.012
 
 - Modifed str_subst to return a count of substitutions.
 
+- Added str_xlate function.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

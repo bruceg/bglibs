@@ -134,6 +134,7 @@ int str_splice(str* s, unsigned start, unsigned len, const str* r);
 int str_splices(str* s, unsigned start, unsigned len, const char* r);
 int str_spliceb(str* s, unsigned start, unsigned len,
 		const char* r, unsigned rlen);
+long str_xlate(str* s, const char* from, const char* to, unsigned nchars);
 /* @} */
 
 /** \name Comparison Functions
