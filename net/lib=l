@@ -11,6 +11,9 @@ getaddr4.o
 ipv4_addr.o
 ipv4_format.o
 ipv4_scan.o
+ipv6_addr.o
+ipv6_format.o
+ipv6_scan.o
 linger.o
 listen.o
 pairdgm.o
