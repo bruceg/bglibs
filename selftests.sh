@@ -2,8 +2,9 @@
 set -e
 exitcode=true
 t=$0.tmp.$$
-mkdir -v $t
-trap 'rm -r $t' EXIT
+echo "Creating temporary directory $t"
+mkdir $t
+trap 'echo "Cleaning up $t"; rm -r $t' EXIT
 for c in `fgrep -l '#ifdef SELFTEST_MAIN' */*.c`
 do
   echo "Testing $c"
@@ -16,7 +17,7 @@ do
   then
     echo "=====> Load failed! <====="
     exitcode=false
-  elif ! $t/test >$t/test.out 2>&1
+  elif ! ( cd $t && ./test >./test.out 2>&1; )
   then
     echo "=====> Test failed! <====="
     exitcode=false
@@ -25,5 +26,6 @@ do
     echo "=====> Output failed! <====="
     exitcode=false
   fi
+  rm -f $t/*
 done
 $exitcode
