@@ -1,3 +1,18 @@
+2000-08-15  Bruce Guenter  <bruce@bruce-guenter.dyndns.org>
+
+	* cli2pod.pl: Replaced the CLI documentation programs with this
+	script which outputs POD, which can be translated to man pages or
+	HTML (or LaTeX, or text, or FM).
+
+2000-08-14  Bruce Guenter  <bruce@bruce-guenter.dyndns.org>
+
+	* cli_parse.pl (parse_header_line): Rewrote the parsing to deal
+	with multi-line strings.
+
+	* cli2man.pl (synopsis): Add usage string.
+
+	* cli2html.pl (synopsis): Add usage string.
+
 2000-08-12  Bruce Guenter  <bruce@bruce-guenter.dyndns.org>
 
 	* cli_parse.pl, cli2html.pl, cli2man.pl: Created these programs.
