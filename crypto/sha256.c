@@ -230,7 +230,7 @@ static void test(const char* str, long len)
       printf( "%02x", digest[ i ] );
    printf( "\n" );
    for ( i = 0; i < 8; i++ )
-      printf( "%08lx", ctx.H[ i ] );
+      printf( "%08lx", (unsigned long)ctx.H[ i ] );
    printf( "\n" );
 }
 

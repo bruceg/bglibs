@@ -7,6 +7,7 @@
  */
 
 #include <string.h>
+#include "uint32.h"
 #include "sha512a.h"
 
 #define min( x, y ) ( ( x ) < ( y ) ? ( x ) : ( y ) )
@@ -37,7 +38,7 @@
 #define ADDC(xh,xl,yh,yl) ( xl+=(yl), xh+=(yh)+(xl<(yl)) )
 
 /* Stored as high, then low words */
-static const word32 K[] = {
+static const uint32 K[] = {
         0x428a2f98, 0xd728ae22, 0x71374491, 0x23ef65cd,
         0xb5c0fbcf, 0xec4d3b2f, 0xe9b5dba5, 0x8189dbbc,
         0x3956c25b, 0xf348b538, 0x59f111f1, 0xb605d019,
@@ -80,63 +81,45 @@ static const word32 K[] = {
         0x5fcb6fab, 0x3ad6faec, 0x6c44198c, 0x4a475817
 };
 
-#define H1h	0x6a09e667
-#define H1l	0xf3bcc908
-#define H2h	0xbb67ae85
-#define H2l	0x84caa73b
-#define H3h	0x3c6ef372
-#define H3l	0xfe94f82b
-#define H4h	0xa54ff53a
-#define H4l	0x5f1d36f1
-#define H5h	0x510e527f
-#define H5l	0xade682d1
-#define H6h	0x9b05688c
-#define H6l	0x2b3e6c1f
-#define H7h	0x1f83d9ab
-#define H7l	0xfb41bd6b
-#define H8h	0x5be0cd19
-#define H8l	0x137e2179
-
-word32 H[ 16 ] = { H1h,H1l, H2h,H2l, H3h,H3l, H4h,H4l,
-                                   H5h,H5l, H6h,H6l, H7h,H7l, H8h,H8l };
+static const uint32 H[16] = {
+  0x6a09e667UL, 0xf3bcc908UL,
+  0xbb67ae85UL, 0x84caa73bUL,
+  0x3c6ef372UL, 0xfe94f82bUL,
+  0xa54ff53aUL, 0x5f1d36f1UL,
+  0x510e527fUL, 0xade682d1UL,
+  0x9b05688cUL, 0x2b3e6c1fUL,
+  0x1f83d9abUL, 0xfb41bd6bUL,
+  0x5be0cd19UL, 0x137e2179UL
+};
 
 /* convert to big endian where needed */
 
-static void convert_to_bigendian( void* data, int len )
+#ifdef ENDIAN_LSB
+static void convert_to_bigendian(void* data, unsigned len)
 {
-/* test endianness */
-   word32 test_value = 0x01;
-   byte* test_as_bytes = (byte*) &test_value;
-   int little_endian = test_as_bytes[ 0 ];
+   uint32 temp;
+   uint8* temp_as_bytes = (uint8*) &temp;
+   uint32* data_as_words = (uint32*) data;
+   uint8* data_as_bytes;
 
-   word32 temp;
-   byte* temp_as_bytes = (byte*) &temp;
-   word32* data_as_words = (word32*) data;
-   byte* data_as_bytes;
-   int i;
-
-   if ( little_endian )
+   for ( len /= 4; len > 0; --len, ++data_as_words )
    {
-      len /= 4;
-      for ( i = 0; i < len; i++ )
-      {
-         temp = data_as_words[ i ];
-         data_as_bytes = (byte*) &( data_as_words[ i ] );
+      temp = *data_as_words;
+      data_as_bytes = (uint8*)data_as_words;
          
-         data_as_bytes[ 0 ] = temp_as_bytes[ 3 ];
-         data_as_bytes[ 1 ] = temp_as_bytes[ 2 ];
-         data_as_bytes[ 2 ] = temp_as_bytes[ 1 ];
-         data_as_bytes[ 3 ] = temp_as_bytes[ 0 ];
-      }
+      data_as_bytes[ 0 ] = temp_as_bytes[ 3 ];
+      data_as_bytes[ 1 ] = temp_as_bytes[ 2 ];
+      data_as_bytes[ 2 ] = temp_as_bytes[ 1 ];
+      data_as_bytes[ 3 ] = temp_as_bytes[ 0 ];
    }
-
-/* on big endian machines do nothing as the CPU representation
-   automatically does the right thing for SHA1 */
 }
+#else
+#define convert_to_bigendian(A,B) do{}while(0)
+#endif
 
 void SHA512_init( SHA512_ctx* ctx )
 {
-   memcpy( ctx->H, H, 16 * sizeof( word32 ) );
+   memcpy( ctx->H, H, 16 * sizeof( uint32 ) );
    ctx->lbits = 0;
    ctx->hbits = 0;
    ctx->mlen = 0;
@@ -145,26 +128,27 @@ void SHA512_init( SHA512_ctx* ctx )
 static void SHA512_transform( SHA512_ctx* ctx )
 {
    int t;
-   word32 Ah = ctx->H[ 0 ];
-   word32 Al = ctx->H[ 1 ];
-   word32 Bh = ctx->H[ 2 ];
-   word32 Bl = ctx->H[ 3 ];
-   word32 Ch = ctx->H[ 4 ];
-   word32 Cl = ctx->H[ 5 ];
-   word32 Dh = ctx->H[ 6 ];
-   word32 Dl = ctx->H[ 7 ];
-   word32 Eh = ctx->H[ 8 ];
-   word32 El = ctx->H[ 9 ];
-   word32 Fh = ctx->H[ 10 ];
-   word32 Fl = ctx->H[ 11 ];
-   word32 Gh = ctx->H[ 12 ];
-   word32 Gl = ctx->H[ 13 ];
-   word32 Hh = ctx->H[ 14 ];
-   word32 Hl = ctx->H[ 15 ];
-   word32 T1h, T1l, T2h, T2l;
-   word32 W[ 160 ];		/* Stored as hi, lo */
+   uint32 Ah = ctx->H[ 0 ];
+   uint32 Al = ctx->H[ 1 ];
+   uint32 Bh = ctx->H[ 2 ];
+   uint32 Bl = ctx->H[ 3 ];
+   uint32 Ch = ctx->H[ 4 ];
+   uint32 Cl = ctx->H[ 5 ];
+   uint32 Dh = ctx->H[ 6 ];
+   uint32 Dl = ctx->H[ 7 ];
+   uint32 Eh = ctx->H[ 8 ];
+   uint32 El = ctx->H[ 9 ];
+   uint32 Fh = ctx->H[ 10 ];
+   uint32 Fl = ctx->H[ 11 ];
+   uint32 Gh = ctx->H[ 12 ];
+   uint32 Gl = ctx->H[ 13 ];
+   uint32 Hh = ctx->H[ 14 ];
+   uint32 Hl = ctx->H[ 15 ];
+   uint32 T1h, T1l, T2h, T2l;
+   uint32 W[ 160 ];		/* Stored as hi, lo */
 
-   memcpy( W, ctx->M, 32*sizeof(word32) );
+   convert_to_bigendian( (uint32*)ctx->M, 128 );
+   memcpy( W, ctx->M, 32*sizeof(uint32) );
 
    for ( t = 16; t < 80; t++ )
    {
@@ -211,11 +195,11 @@ static void SHA512_transform( SHA512_ctx* ctx )
    ADDC( ctx->H[14], ctx->H[15], Hh, Hl );
 }
 
-void SHA512_update( SHA512_ctx* ctx, const void* vdata, word32 data_len )
+void SHA512_update(SHA512_ctx* ctx, const void* vdata, unsigned long data_len)
 {
-   const byte* data = vdata;
-   word32 use;
-   word32 low_bits;
+   const uint8* data = vdata;
+   uint32 use;
+   uint32 low_bits;
    
 /* convert data_len to bits and add to the 128 bit word formed by lbits
    and hbits */
@@ -235,7 +219,6 @@ void SHA512_update( SHA512_ctx* ctx, const void* vdata, word32 data_len )
 
    while ( ctx->mlen == 128 )
    {
-      convert_to_bigendian( (word32*)ctx->M, 128 );
       SHA512_transform( ctx );
       use = min( 128, data_len );
       memcpy( ctx->M, data, use );
@@ -251,59 +234,55 @@ void SHA512_final( SHA512_ctx* ctx )
    {
       ctx->M[ ctx->mlen ] = 0x80; ctx->mlen++;
       memset( ctx->M + ctx->mlen, 0x00, 128-8 - ctx->mlen );
-      convert_to_bigendian( ctx->M, 128-8 );
    }
    else
    {
       ctx->M[ ctx->mlen ] = 0x80; 
       ctx->mlen++;
       memset( ctx->M + ctx->mlen, 0x00, 128 - ctx->mlen );
-      convert_to_bigendian( ctx->M, 128 );
       SHA512_transform( ctx );
       memset( ctx->M, 0x00, 128-8 );
    }
 
-   memcpy( ctx->M + 128-8, (void*)(&(ctx->hbits)), 8 );
+   uint32_pack_msb(ctx->hbits, ctx->M+120);
+   uint32_pack_msb(ctx->lbits, ctx->M+124);
    SHA512_transform( ctx );
 }
 
-void SHA512_digest( SHA512_ctx* ctx, byte* digest )
+void SHA512_digest( SHA512_ctx* ctx, uint8* digest )
 {
    if ( digest )
    {
-      memcpy( digest, ctx->H, 16 * sizeof( word32 ) );
-      convert_to_bigendian( digest, 16 * sizeof( word32 ) );
+      memcpy( digest, ctx->H, 16 * sizeof( uint32 ) );
+      convert_to_bigendian( digest, 16 * sizeof( uint32 ) );
    }
 }
 
 #ifdef SELFTEST_MAIN
 #include <stdio.h>
 
-static void test(const char* str, long len)
+static void test(const char* str)
 {
    SHA512_ctx ctx;
    unsigned i;
    unsigned char digest[ SHA512_DIGEST_LENGTH ];
    SHA512_init( &ctx );
-   SHA512_update( &ctx, str, len );
+   SHA512_update( &ctx, str, strlen(str) );
    SHA512_final( &ctx );
    SHA512_digest( &ctx, digest );
    for ( i = 0; i < sizeof(digest) ; i++ )
       printf( "%02x", digest[ i ] );
    printf( "\n" );
    for ( i = 0; i < 16; i++ )
-      printf( "%08lx", ctx.H[ i ] );
+      printf( "%08lx", (unsigned long)ctx.H[ i ] );
    printf( "\n" );
 }
 
 int main( void )
 {
-   const byte* test1 = "abc";
-   const byte* test2 = 
-           "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu";
-   test( test1, strlen( test1 ) );
-   test( test2, strlen( test2 ) );
-   return 0;
+  test("abc");
+  test("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu");
+  return 0;
 }
 #endif
 #ifdef SELFTEST_EXP
