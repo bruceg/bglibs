@@ -19,7 +19,7 @@
 #include "fdbuf/fdbuf.h"
 #include <stdlib.h>
 #include <string.h>
-#include "cli.h"
+#include "cli++.h"
 
 #ifndef HAVE_SRANDOM
 void srandom(unsigned int seed);

@@ -17,7 +17,7 @@
 #include <config.h>
 #include "fdbuf/fdbuf.h"
 #include <stdlib.h>
-#include "cli.h"
+#include "cli++.h"
 
 extern const char* argv0;
 

@@ -15,7 +15,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include <config.h>
-#include "cli.h"
+#include "cli++.h"
 #include "fdbuf/fdbuf.h"
 
 const char* cli_program = "clitest";
