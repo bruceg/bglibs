@@ -3,7 +3,9 @@
 
 /* STR_BLOCKSIZE should be set to the at least size at which the
  * allocator (ie malloc) will align the data it returns.  String data
- * will be allocated in steps of this number. */
+ * will be allocated in steps of this number.  Values smaller than the
+ * alignment will only cause a small amount of space to be wasted, and
+ * will not trigger bugs. */
 #define STR_BLOCKSIZE 16
 
 struct str
