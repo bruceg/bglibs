@@ -5,8 +5,6 @@
 #include <unistd.h>
 #include "cdb.h"
 
-extern void uint32_unpack(const char s[4],uint32 *u);
-
 int cdb_read(struct cdb *c,char *buf,unsigned int len,uint32 pos)
 {
   if (c->map) {

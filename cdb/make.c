@@ -5,8 +5,6 @@
 #include "cdb.h"
 #include "make.h"
 
-extern void uint32_pack(char s[4],uint32 u);
-
 int cdb_make_start(struct cdb_make *c,int fd)
 {
   c->head = 0;
@@ -60,8 +58,8 @@ int cdb_make_addbegin(struct cdb_make *c,unsigned int keylen,unsigned int datale
   if (keylen > 0xffffffff) { errno = ENOMEM; return -1; }
   if (datalen > 0xffffffff) { errno = ENOMEM; return -1; }
 
-  uint32_pack(buf,keylen);
-  uint32_pack(buf + 4,datalen);
+  uint32_pack(keylen,buf);
+  uint32_pack(datalen,buf + 4);
   if (!obuf_write(&c->b,buf,8)) return -1;
   return 0;
 }
@@ -128,8 +126,8 @@ int cdb_make_finish(struct cdb_make *c)
     count = c->count[i];
 
     len = count + count; /* no overflow possible */
-    uint32_pack(c->final + 8 * i,c->pos);
-    uint32_pack(c->final + 8 * i + 4,len);
+    uint32_pack(c->pos,c->final + 8 * i);
+    uint32_pack(len,c->final + 8 * i + 4);
 
     for (u = 0;u < len;++u)
       c->hash[u].h = c->hash[u].p = 0;
@@ -144,8 +142,8 @@ int cdb_make_finish(struct cdb_make *c)
     }
 
     for (u = 0;u < len;++u) {
-      uint32_pack(buf,c->hash[u].h);
-      uint32_pack(buf + 4,c->hash[u].p);
+      uint32_pack(c->hash[u].h,buf);
+      uint32_pack(c->hash[u].p,buf + 4);
       if (!obuf_write(&c->b,buf,8)) return -1;
       if (posplus(c,8) == -1) return -1;
     }

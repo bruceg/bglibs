@@ -6,5 +6,3 @@ cdb/hash.o
 cdb/hash.o
 cdb/make.o
 cdb/read.o
-cdb/uint32_pack.o
-cdb/uint32_unpack.o
