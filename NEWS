@@ -8,6 +8,8 @@ Changes in version 1.011
 
 - Fixed up crc64 table generation on 64-bit platforms.
 
+- Fixed ipv4 address parsing number validation.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

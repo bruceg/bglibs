@@ -7,7 +7,7 @@ static const char* parse_part(const char* str, uint8* num)
   if (*str < '0' || *str > '9')
     return 0;
   do {
-    uint8 newi;
+    unsigned newi;
     newi = i * 10 + *str - '0';
     if (newi < i || newi > 255) return 0;
     ++str;
