@@ -8,6 +8,8 @@ Changes in version 1.004
 
 - Added long long str_cat*ll functions.
 
+- Added str_match simple pattern-matching function.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

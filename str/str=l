@@ -29,6 +29,7 @@ init.o
 join.o
 lower.o
 lstrip.o
+match.o
 ready.o
 realloc.o
 rstrip.o

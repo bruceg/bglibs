@@ -101,4 +101,7 @@ int str_findprev(const str* s, char ch, unsigned pos);
 int str_findprevof(const str* s, const char* list, unsigned pos);
 int str_findprevnot(const str* s, const char* list, unsigned pos);
 
+/* Pattern match */
+int str_match(const str* s, const char* pattern);
+
 #endif
