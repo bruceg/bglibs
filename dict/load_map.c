@@ -4,7 +4,8 @@
 #include "str/str.h"
 #include "dict.h"
 
-int dict_load_map(dict* d, const char* filename, int mustexist, char sep)
+int dict_load_map(dict* d, const char* filename, int mustexist, char sep,
+		  int (*keyxform)(str*), int (*valxform)(str*))
 {
   ibuf in;
   unsigned i;
@@ -21,7 +22,9 @@ int dict_load_map(dict* d, const char* filename, int mustexist, char sep)
       if ((val = malloc(sizeof *val)) == 0) { result = 0; break; }
       memset(val, 0, sizeof *val);
       if (!str_copyb(val, tmp.s+i+1, tmp.len-i-1) ||
+	  (valxform != 0 && !valxform(val)) ||
 	  !str_truncate(&tmp, i) ||
+	  (keyxform != 0 && !keyxform(&tmp)) ||
 	  !dict_add(d, &tmp, val)) {
 	str_free(val);
 	free(val);
