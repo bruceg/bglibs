@@ -28,6 +28,7 @@ int str_cat4s(str* s, const char* a, const char* b, const char* c,
   unsigned dlen = strlen(d);
   if (!str_realloc(s, s->len+alen+blen+clen+dlen)) return 0;
   ptr = s->s + s->len;
+  s->len += alen+blen+clen+dlen;
   memcpy(ptr, a, alen); ptr += alen;
   memcpy(ptr, b, blen); ptr += blen;
   memcpy(ptr, c, clen); ptr += clen;

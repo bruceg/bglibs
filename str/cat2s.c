@@ -25,6 +25,7 @@ int str_cat2s(str* s, const char* a, const char* b)
   unsigned blen = strlen(b);
   if (!str_realloc(s, s->len+alen+blen)) return 0;
   ptr = s->s + s->len;
+  s->len += alen+blen;
   memcpy(ptr, a, alen); ptr += alen;
   memcpy(ptr, b, blen); ptr += blen;
   *ptr = 0;

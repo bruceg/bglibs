@@ -1,6 +1,9 @@
 -------------------------------------------------------------------------------
 Changes in version 1.002
 
+- Fixed bug in str_cat#s routines: they didn't increase the string
+  length.
+
 - Added crypto hash libraries (MD5, SHA1, SHA256, SHA512).
 
 - Added a dict_foreach routine for iterating over the contents of a

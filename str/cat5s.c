@@ -29,6 +29,7 @@ int str_cat5s(str* s, const char* a, const char* b, const char* c,
   unsigned elen = strlen(e);
   if (!str_realloc(s, s->len+alen+blen+clen+dlen+elen)) return 0;
   ptr = s->s + s->len;
+  s->len += alen+blen+clen+dlen+elen;
   memcpy(ptr, a, alen); ptr += alen;
   memcpy(ptr, b, blen); ptr += blen;
   memcpy(ptr, c, clen); ptr += clen;

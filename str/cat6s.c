@@ -30,6 +30,7 @@ int str_cat6s(str* s, const char* a, const char* b, const char* c,
   unsigned flen = strlen(f);
   if (!str_realloc(s, s->len+alen+blen+clen+dlen+elen+flen)) return 0;
   ptr = s->s + s->len;
+  s->len += alen+blen+clen+dlen+elen+flen;
   memcpy(ptr, a, alen); ptr += alen;
   memcpy(ptr, b, blen); ptr += blen;
   memcpy(ptr, c, clen); ptr += clen;

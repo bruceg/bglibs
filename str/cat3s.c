@@ -26,6 +26,7 @@ int str_cat3s(str* s, const char* a, const char* b, const char* c)
   unsigned clen = strlen(c);
   if (!str_realloc(s, s->len+alen+blen+clen)) return 0;
   ptr = s->s + s->len;
+  s->len += alen+blen+clen;
   memcpy(ptr, a, alen); ptr += alen;
   memcpy(ptr, b, blen); ptr += blen;
   memcpy(ptr, c, clen); ptr += clen;
