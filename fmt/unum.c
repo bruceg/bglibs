@@ -41,7 +41,7 @@ unsigned fmt_unumw(char* buffer, unsigned long num, unsigned width, char pad,
   char* s = buffer;
   if (buffer == 0) {
     unsigned len;
-    for (len = 0; num > 0; ++len)
+    for (len = 1; num >= base; ++len)
       num /= base;
     return len + ((width > len) ? width - len : 0);
   }
@@ -71,28 +71,42 @@ static void test(unsigned (*fn)(char*, unsigned long, unsigned, char),
   NL();
 }
 
+static void testall(unsigned (*fn)(char*, unsigned long, unsigned, char),
+		    unsigned long num)
+{
+  test(fn, num, 0, 0);
+  test(fn, num, 1, ' ');
+  test(fn, num, 5, ' ');
+  test(fn, num, 5, '0');
+}
+
 MAIN
 {
-  test(fmt_udecw, 10, 0,   0);
-  test(fmt_udecw, 10, 1, ' ');
-  test(fmt_udecw, 10, 5, ' ');
-  test(fmt_udecw, 10, 5, '0');
-  test(fmt_uhexw, 30, 0,   0);
-  test(fmt_uhexw, 30, 5, ' ');
-  test(fmt_uhexw, 30, 5, '0');
-  test(fmt_uHexw, 30, 0,   0);
-  test(fmt_uHexw, 30, 5, ' ');
-  test(fmt_uHexw, 30, 5, '0');
+  testall(fmt_udecw, 0);
+  testall(fmt_udecw, 1);
+  testall(fmt_udecw, 10);
+  testall(fmt_uhexw, 30);
+  testall(fmt_uHexw, 30);
 }
 #endif
 #ifdef SELFTEST_EXP
+1:0
+1:0
+5:    0
+5:00000
+1:1
+1:1
+5:    1
+5:00001
 2:10
 2:10
 5:   10
 5:00010
 2:1e
+2:1e
 5:   1e
 5:0001e
+2:1E
 2:1E
 5:   1E
 5:0001E

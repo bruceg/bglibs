@@ -46,12 +46,13 @@ unsigned fmt_snumw(char* buffer, long num, unsigned width, char pad,
   }
   if (buffer == 0) {
     unsigned len;
-    for (len = 0; num > 0; ++len)
+    for (len = 1; num >= (long)base; ++len)
       num /= base;
     return len + ((width > len) ? width - len : 0) + sign;
   }
   if (num < (long)base) {
-    s += fmt_sign_pad(s, sign, width-1, pad);
+    if (width) --width;
+    s += fmt_sign_pad(s, sign, width, pad);
     *s++ = digits[num];
   }
   else
@@ -71,25 +72,42 @@ void test(long num, unsigned width, char pad)
   NL();
 }
 
+void testall(long num)
+{
+  test(num, 0, 0);
+  test(num, 1, '0');
+  test(num, 5, ' ');
+  test(num, 5, '0');
+}
+
 MAIN
 {
-  test( 10, 0,   0);
-  test(-10, 0,   0);
-  test( 10, 1, '0');
-  test(-10, 1, '0');
-  test( 10, 5, ' ');
-  test( 10, 5, '0');
-  test(-10, 5, ' ');
-  test(-10, 5, '0');
+  testall(0);
+  testall(1);
+  testall(-1);
+  testall(10);
+  testall(-10);
 }
 #endif
 #ifdef SELFTEST_EXP
+1:0
+1:0
+5:    0
+5:00000
+1:1
+1:1
+5:    1
+5:00001
+2:-1
+2:-1
+5:   -1
+5:-0001
 2:10
-3:-10
 2:10
-3:-10
 5:   10
 5:00010
+3:-10
+3:-10
 5:  -10
 5:-0010
 #endif

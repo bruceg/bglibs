@@ -1,6 +1,8 @@
 -------------------------------------------------------------------------------
 Changes in version 1.020
 
+- Fixed a couple of length counting bugs in the fmt number code.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
