@@ -4,7 +4,7 @@
 #define C(SUB,FILE) c(SUB,#FILE,-1,-1,0644)
 #define CF(SUB,FILE) cf(dir,#FILE,-1,-1,0644, #SUB "/" #FILE)
 #define DI(SUB) dir = d(inc,#SUB,-1,-1,0755)
-#define DL(SUB) dir = d(lib,"lib" #SUB,-1,-1,0755)
+#define DL(SUB) dir = d(lib, "lib" #SUB,-1,-1,0755);
 
 void insthier(void)
 {
@@ -91,74 +91,84 @@ void insthier(void)
   
   lib = d(home, "lib", -1, -1, 0755);
 
-  C(lib, libinstaller.a);
-  C(lib, libinstcheck.a);
-  C(lib, libinstshow.a);
-  C(lib, libsysdeps.a);
-  
+#define L(BASE) do{ \
+  c(lib, "lib" #BASE ".a", -1, -1, 0644); \
+  s(lib, #BASE, "lib" #BASE ".a"); \
+}while(0)
+
+#define CL(SUB,BASE,LINK) do{ \
+  cf(dir, #BASE ".a", -1, -1, 0644, #SUB "/" #BASE ".a"); \
+  s(lib, #LINK, "lib" #SUB "/" #BASE ".a"); \
+}while(0)
+
+  L(sysdeps);
+  L(installer);
+  L(instcheck);
+  L(instshow);
+
   DL(base64);
-  CF(base64, base64.a);
+  CL(base64, base64, base64);
  
   DL(cdb);
-  CF(cdb, cdb.a);
-  CF(cdb, make.a);
-  CF(cdb, str.a);
+  CL(cdb, cdb,  cdb);
+  CL(cdb, make, cdb-make);
+  CL(cdb, str,  cdb-str);
 
   DL(cli);
-  CF(cli, cli.a);
+  CL(cli, cli, cli);
 
   DL(crypto);
-  CF(crypto, md5.a);
-  CF(crypto, sha1.a);
-  CF(crypto, sha256.a);
-  CF(crypto, sha512a.a);
+  CL(crypto, md5,     md5);
+  CL(crypto, sha1,    sha1);
+  CL(crypto, sha256,  sha256);
+  CL(crypto, sha512a, sha512a);
   
   DL(cvm);
-  CF(cvm, client.a);
-  CF(cvm, command.a);
-  CF(cvm, local.a);
-  CF(cvm, udp.a);
+  CL(cvm, client,  cvm-client);
+  CL(cvm, command, cvm-command);
+  CL(cvm, local,   cvm-local);
+  CL(cvm, udp,     cvm-udp);
 
   DL(cvm-sasl);
-  CF(cvm-sasl,cvm-sasl.a);
+  CL(cvm-sasl, cvm-sasl, cvm-sasl);
 
   DL(dict);
-  CF(dict, dict.a);
-  CF(dict, load.a);
+  CL(dict, dict, dict);
+  CL(dict, load, dict-load);
   
   DL(iobuf);
-  CF(iobuf, iobuf.a);
-  CF(iobuf, str.a);
+  CL(iobuf, iobuf, iobuf);
+  CL(iobuf, str,   iobuf-str);
   
   DL(misc);
-  CF(misc, misc.a);
+  CL(misc, misc, misc);
   
   DL(msg);
-  CF(msg, msg.a);
-  CF(msg, wrap.a);
+  CL(msg, msg,  msg);
+  CL(msg, wrap, msg-wrap);
   
   DL(net);
-  CF(net, ipv4.a);
-  CF(net, resolve.a);
-  CF(net, socket.a);
+  CL(net, ipv4,    net-ipv4);
+  CL(net, resolve, net-resolve);
+  CL(net, socket,  net-socket);
   
   DL(path);
-  CF(path, path.a);
+  CL(path, path,   path);
   
   DL(pwcmp);
-  CF(pwcmp, client.a);
-  CF(pwcmp, hex.a);
-  CF(pwcmp, module.a);
+  CL(pwcmp, client, pwcmp-client);
+  CL(pwcmp, hex,    pwcmp-hex);
+  CL(pwcmp, module, pwcmp-module);
   
   DL(str);
-  CF(str, iter.a);
-  CF(str, str.a);
+  CL(str, iter, str-iter);
+  CL(str, str,  str);
   
   DL(unix);
-  CF(unix, nonblock.a);
-  CF(unix, sig.a);
+  CL(unix, nonblock, unix-nonblock);
+  CL(unix, sig,      unix-sig);
   
   DL(vmailmgr);
-  CF(vmailmgr, client.a);
-  CF(vmailmgr, vpwentry.a);
+  CL(vmailmgr, client,   vmailmgr-client);
+  CL(vmailmgr, vpwentry, vmailmgr-vpwentry);
 }
