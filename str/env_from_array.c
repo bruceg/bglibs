@@ -6,7 +6,7 @@
  * string.
  * The array must be terminated by a \c NULL pointer, just the same as
  * the standard \c environ array. */
-int envstr_from_array(str* env, char** array, int overwrite)
+int envstr_from_array(struct str* env, char** array, int overwrite)
 {
   while (*array) {
     if (!envstr_put(env, *array, overwrite))

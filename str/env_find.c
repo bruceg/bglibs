@@ -6,7 +6,7 @@
 /** Find the named variable in the environment string.
  * \returns a pointer to the \b start of the assignment.
  */
-const char* envstr_find(const str* env, const char* var, long len)
+const char* envstr_find(const struct str* env, const char* var, long len)
 {
   striter i;
   striter_loop(&i, env, 0) {

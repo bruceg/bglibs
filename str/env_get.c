@@ -4,7 +4,7 @@
 #include "env.h"
 
 /** Get the value of an assignment from an environment string. */
-const char* envstr_get(const str* env, const char* var)
+const char* envstr_get(const struct str* env, const char* var)
 {
   long varlen = strlen(var);
   if ((var = envstr_find(env, var, varlen)) != 0)

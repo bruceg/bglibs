@@ -2,7 +2,7 @@
 #include "str.h"
 
 /** Start (initialize) a striter. */
-void striter_start(striter* iter, const str* s, char sep)
+void striter_start(striter* iter, const struct str* s, char sep)
 {
   iter->str = s;
   iter->start = 0;

@@ -5,7 +5,7 @@
 /** Adds the string-based list of assignments to the environment string.
  * Each individual assignment in the list must be ASCII NUL terminated,
  * and the final assignment must be followed by two ASCII NULs. */
-int envstr_from_string(str* env, const char* s, int overwrite)
+int envstr_from_string(struct str* env, const char* s, int overwrite)
 {
   long len;
   while ((len = strlen(s)) > 0) {

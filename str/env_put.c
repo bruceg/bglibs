@@ -6,7 +6,7 @@
  * string.
  * \note Unlike putenv, a copy of the assignment is made instead of
  * keeping a copy of the given pointer. */
-int envstr_put(str* env, const char* asgn, int overwrite)
+int envstr_put(struct str* env, const char* asgn, int overwrite)
 {
   long varlen;
   const char* found;

@@ -3,7 +3,7 @@
 #include "env.h"
 
 /** Set the named variable to the given value in the environment string. */
-int envstr_set(str* env, const char* var, const char* val, int overwrite)
+int envstr_set(struct str* env, const char* var, const char* val, int overwrite)
 {
   const char* found;
   if ((found = envstr_find(env, var, strlen(var))) != 0) {

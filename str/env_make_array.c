@@ -8,7 +8,7 @@
  * string.
  * \note The returned pointer is dynamically allocated, and must be
  * freed. */
-char** envstr_make_array(const str* env)
+char** envstr_make_array(const struct str* env)
 {
   striter i;
   int count;
