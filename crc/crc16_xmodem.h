@@ -3,7 +3,7 @@
 
 #include <uint16.h>
 
-#define CRC16_XMODEM_POLY ((uint16)0x1021)
+#define CRC16_XMODEM_POLY ((uint16)0x8408)
 #define CRC16_XMODEM_INIT ((uint16)0x0000)
 #define CRC16_XMODEM_POST ((uint16)0x0000)
 
