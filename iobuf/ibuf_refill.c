@@ -15,7 +15,7 @@ int ibuf_refill(ibuf* in)
   if (io->bufstart != 0) {
     if (io->bufstart < io->buflen) {
       write(1, errmsg, sizeof errmsg);
-      exit(1);
+      _exit(1);
       /* io->buflen -= io->bufstart; */
       /* memcpy(io->buffer, io->buffer+io->bufstart, io->buflen); */
     }
