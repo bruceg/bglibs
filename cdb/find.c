@@ -4,6 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "cdb.h"
+#include "uint32.h"
 
 int cdb_read(struct cdb *c,char *buf,unsigned int len,uint32 pos)
 {

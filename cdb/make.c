@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "cdb.h"
 #include "make.h"
+#include "uint32.h"
 
 int cdb_make_start(struct cdb_make *c,int fd)
 {

@@ -3,7 +3,7 @@
 #ifndef CDB_H
 #define CDB_H
 
-#include "sysdeps.h"
+#include <sysdeps.h>
 
 #define CDB_HASHSTART 5381
 extern uint32 cdb_hashadd(uint32,unsigned char);
