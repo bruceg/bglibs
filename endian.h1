@@ -1,0 +1,3 @@
+/* sysdep: endian=lsb */
+#define ENDIAN_LSB 1
+#undef ENDIAN_MSB

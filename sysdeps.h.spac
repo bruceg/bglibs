@@ -3,6 +3,7 @@ for dep in ('flock','peercred','sendfile','sgact','sgprm','spnam','userpw','wait
 dependon([
 	'tryulong32.c', 'uint32.h1', 'uint32.h2',
 	'tryulong64.c', 'uint64.h1', 'uint64.h2',
+	'tryendian.c', 'endian.h1', 'endian.h2',
 	'trydirent.c', 'direntry.h1', 'direntry.h2',
 	'tryvfork.c', 'fork.h1', 'fork.h2',
 	'trypoll.c', 'iopoll.h1', 'iopoll.h2',
@@ -18,6 +19,7 @@ dependon([
   cat sysdeps-head.h; \
   ./choose clr tryulong32  uint32.h1      uint32.h2; \
   ./choose clr tryulong64  uint64.h1      uint64.h2; \
+  ./choose clr tryendian   endian.h1      endian.h2; \
   ./choose c   trydirent   direntry.h1    direntry.h2; \
   ./choose cl  tryvfork    fork.h1        fork.h2; \
   ./choose cl  tryflock    hasflock.h1    hasflock.h2; \
