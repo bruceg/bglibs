@@ -4,7 +4,6 @@
 /* sysdep: +poll */
 #define IOPOLL_POLL
 
-#include <sys/types.h>
 #include <poll.h>
 
 typedef struct pollfd iopoll_fd;
