@@ -2,7 +2,15 @@
 #include "sig.h"
 #include "sysdeps.h"
 
+#ifdef _SIG_MAXSIG
+#define SIGMAX _SIG_MAXSIG
+#else
+#ifdef _NSIG
 #define SIGMAX _NSIG
+#else
+#define SIGMAX 32
+#endif
+#endif
 
 void sig_all_catch(signalfn fn)
 {
