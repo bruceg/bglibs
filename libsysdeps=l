@@ -1,3 +1,7 @@
 iopoll.o
 setenv.o
+uint32_pack_lsb.o
+uint32_pack_msb.o
+uint32_unpack_lsb.o
+uint32_unpack_msb.o
 unsetenv.o
