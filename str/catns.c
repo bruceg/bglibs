@@ -30,6 +30,7 @@ int str_catns(str* s, unsigned int count, ...)
       if (!str_cats(s, ptr))
 	return 0;
   }
+  va_end(ap);
   return 1;
 }
 

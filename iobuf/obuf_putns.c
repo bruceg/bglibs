@@ -13,6 +13,7 @@ int obuf_putns(obuf* out, unsigned int count, ...)
       if (!obuf_puts(out, ptr))
 	return 0;
   }
+  va_end(ap);
   return 1;
 }
 
