@@ -22,13 +22,15 @@
 int str_ready(str* s, unsigned size)
 {
   char* news;
-  ++size;
-  if (size >= s->size) {
-    size += size/8 + STR_BLOCKSIZE-1;
-    size -= size % STR_BLOCKSIZE;
-    if ((news = malloc(size)) == 0) return 0;
+  unsigned long asize;
+  if ((asize = size + 1) < size) return 0;
+  if (asize >= s->size) {
+    asize += asize/8 + STR_BLOCKSIZE-1;
+    asize -= asize % STR_BLOCKSIZE;
+    if (asize <= size) return 0;
+    if ((news = malloc(asize)) == 0) return 0;
     if (s->s) free(s->s);
-    s->size = size;
+    s->size = asize;
     s->s = news;
   }
   return 1;
