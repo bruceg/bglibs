@@ -94,6 +94,8 @@ public:
   mystring rstrip() const;
   mystring strip() const;
 
+  unsigned count(char ch) const;
+  
   void operator+=(const mystring& str) {append(str.rep->buf, str.rep->length);}
   void operator+=(const char* str) { append(str); }
   void operator+=(char ch)

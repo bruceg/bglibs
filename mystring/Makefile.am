@@ -6,6 +6,7 @@ INCLUDES = -I..
 libmystring_a_SOURCES = \
 	append.cc \
 	assign.cc \
+	count.cc \
 	fdobuf.cc \
 	find_first_ch.cc \
 	find_first_of.cc \

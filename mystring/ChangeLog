@@ -1,3 +1,8 @@
+2000-04-09  Bruce Guenter  <bguenter@bguenter.pointsnorth.com>
+
+	* count.cc (count): Added this routine to count the number of
+	instances of a single character in a string.
+
 2000-04-06  Bruce Guenter  <bguenter@bguenter.pointsnorth.com>
 
 	* fdobuf.cc (operator<<): Moved this routine out of an inline
