@@ -33,5 +33,6 @@ int str_catuw(str* s, unsigned long in, unsigned width, char pad)
     s->s[s->len++] = pad;
   for (i = size; i > 0; --i, in /= 10)
     s->s[s->len++] = (in % 10) + '0';
+  s->s[s->len] = 0;
   return 1;
 }

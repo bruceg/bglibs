@@ -33,5 +33,6 @@ int str_copyb(str* s, const char* in, unsigned len)
   if (!str_ready(s, len)) return 0;
   memcpy(s->s, in, len);
   s->len = len;
+  s->s[len] = 0;
   return 1;
 }

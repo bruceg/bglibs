@@ -18,14 +18,13 @@
 #include <stdlib.h>
 #include "str.h"
 
-unsigned str_minsize = 16;
-
 int str_init(str* s)
 {
   char* p;
-  if ((p = malloc(str_minsize)) == 0) return 0;
+  if ((p = malloc(STR_MINSIZE)) == 0) return 0;
+  p[0] = 0;
   s->s = p;
   s->len = 0;
-  s->size = str_minsize;
+  s->size = STR_MINSIZE;
   return 1;
 }

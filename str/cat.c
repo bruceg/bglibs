@@ -32,6 +32,7 @@ int str_catc(str* s, char in)
 {
   if (!str_ready(s, s->len+1)) return 0;
   s->s[s->len++] = in;
+  s->s[s->len] = 0;
   return 1;
 }
 
@@ -40,5 +41,6 @@ int str_catb(str* s, const char* in, unsigned len)
   if (!str_ready(s, s->len + len)) return 0;
   memcpy(s->s+s->len, in, len);
   s->len += len;
+  s->s[s->len] = 0;
   return 1;
 }
