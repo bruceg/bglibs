@@ -49,7 +49,7 @@ int ibuf_read(ibuf* in, char* data, unsigned datalen)
   in->count = 0;
   while (datalen) {
     if (io->bufstart >= io->buflen) ibuf_refill(in);
-    if (ibuf_eof(in) || ibuf_error(in) || ibuf_timeout(in)) return 0;
+    if (ibuf_eof(in) || ibuf_error(in) || ibuf_timedout(in)) return 0;
     len = io->buflen - io->bufstart;
     if (len > datalen) len = datalen;
     memcpy(data, io->buffer+io->bufstart, len);
