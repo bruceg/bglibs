@@ -1,0 +1,10 @@
+sig_alarm.o
+sig_block.o
+sig_bug.o
+sig_catch.o
+sig_child.o
+sig_hup.o
+sig_misc.o
+sig_pipe.o
+sig_suspend.o
+sig_term.o
