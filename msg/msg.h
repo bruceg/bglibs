@@ -80,4 +80,6 @@ void msg_debug_init(void);
 #define die5sys(x,a,b,c,d,e)   msg_die(x,a,b,c,d,e,0,1)
 #define die6sys(x,a,b,c,d,e,f) msg_die(x,a,b,c,d,e,f,1)
 
+extern void die_oom(int);
+
 #endif

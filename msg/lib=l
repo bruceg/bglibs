@@ -4,3 +4,4 @@ die.o
 error.o
 warn.o
 wrap.o
+oom.o
