@@ -16,6 +16,8 @@ Changes in version 1.018
 
 - Added str_getnetstring function.
 
+- Added ghash_remove function.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
