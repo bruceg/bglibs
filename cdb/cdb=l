@@ -1,3 +1,5 @@
 cdb.o
+find.o
 hash.o
+read.o
 uint32_unpack.o
