@@ -45,6 +45,7 @@ void ghash_init(struct ghash* d,
 		adt_free_fn* datafree);
 int ghash_rebuild(struct ghash* d);
 int ghash_rehash(struct ghash* d);
+int ghash_remove(struct ghash* d, const void* key);
 void ghash_foreach(struct ghash* d, void (*fn)(void* entry));
 void* ghash_search(struct ghash* d, int (*fn)(const void* entry));
 
@@ -71,6 +72,7 @@ extern struct PREFIX##_entry* PREFIX##_get(struct ghash* d, \
                                            KTYPE const* key); \
 extern int PREFIX##_rebuild(struct ghash* d); \
 extern int PREFIX##_rehash(struct ghash* d); \
+extern int PREFIX##_remove(struct ghash* d, KTYPE const* key); \
 extern void PREFIX##_foreach(struct ghash* d, \
                              void (*fn)(struct PREFIX##_entry*)); \
 extern struct PREFIX##_entry* PREFIX##_search(struct ghash* d, \
@@ -114,6 +116,11 @@ int PREFIX##_rehash(struct ghash* d) { \
   return ghash_rehash(d); \
 }
 
+#define GHASH_REMOVE_DEFN(PREFIX,KTYPE) \
+extern int PREFIX##_remove(struct ghash* d, KTYPE const* key) { \
+  return ghash_remove(d, (void*)key); \
+}
+
 #define GHASH_FOREACH_DEFN(PREFIX) \
 void PREFIX##_foreach(struct ghash* d, void (*fn)(struct PREFIX##_entry*)) { \
   ghash_foreach(d, (void (*)(void*))fn); \
@@ -129,7 +136,9 @@ GHASH_INIT_DEFN(PREFIX,KTYPE,DTYPE,HASHFN,CMPFN,KCOPY,DCOPY,KFREE,DFREE) \
 GHASH_FREE_DEFN(PREFIX) \
 GHASH_ADD_DEFN(PREFIX,KTYPE,DTYPE) \
 GHASH_GET_DEFN(PREFIX,KTYPE) \
+GHASH_REBUILD_DEFN(PREFIX) \
 GHASH_REHASH_DEFN(PREFIX) \
+GHASH_REMOVE_DEFN(PREFIX,KTYPE) \
 GHASH_FOREACH_DEFN(PREFIX) \
 GHASH_SEARCH_DEFN(PREFIX)
 
