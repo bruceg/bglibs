@@ -32,7 +32,7 @@ const char* argv0dir;
 
 static cli_option help_option = { 'h', "help", cli_option::flag,
 				  true, &do_show_usage,
-				  "display this help and exit", 0 };
+				  "Display this help and exit", 0 };
 
 static cli_option** options;
 static unsigned optionc;
@@ -75,9 +75,10 @@ static void show_usage()
 
 static unsigned calc_max_width()
 {
+  // maxwidth is the maximum width of the long argument
   unsigned maxwidth = 0;
   for(unsigned i = 0; i < optionc; i++) {
-    int width = 0;
+    unsigned width = 0;
     cli_option* o = options[i];
     if(o->name) {
       width += strlen(o->name);
@@ -90,7 +91,8 @@ static unsigned calc_max_width()
       case cli_option::counter:    break;
       }
     }
-    maxwidth = max(maxwidth, width);
+    if(width > maxwidth)
+      maxwidth = width;
   }
   return maxwidth;
 }
@@ -115,13 +117,13 @@ static void show_option(cli_option* o, unsigned maxwidth)
     case cli_option::counter:    break;
     }
     fout << "--" << o->name << extra
-	 << fill(maxwidth - strlen(o->name) - strlen(extra) + 1);
+	 << fill(maxwidth - strlen(o->name) - strlen(extra) + 2);
   }
   else
-    fout << fill(maxwidth+9);
+    fout << fill(maxwidth+4);
   fout << o->helpstr << '\n';
   if(o->defaultstr)
-    fout << fill(maxwidth+15) << "(Defaults to " << o->defaultstr << ")\n";
+    fout << fill(maxwidth+10) << "(Defaults to " << o->defaultstr << ")\n";
 }
 
 static void show_help()
