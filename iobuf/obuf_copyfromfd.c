@@ -14,9 +14,12 @@ int obuf_copyfromfd(int in, obuf* out)
       return 0;
     if (rd == 0)
       break;
-    out->count += rd;
+    out->bufpos += rd;
+    if (out->io.buflen < out->bufpos)
+      out->io.buflen = out->bufpos;
     if (!obuf_flush(out))
       return 0;
+    out->count += rd;
   }
   return 1;
 }
