@@ -1,6 +1,6 @@
 #include <errno.h>
 #include "iobuf.h"
-#include "iopoll.h"
+#include <sysdeps.h>
 
 int iobuf_timeout(iobuf* io, int poll_out)
 {
@@ -11,10 +11,8 @@ int iobuf_timeout(iobuf* io, int poll_out)
 
   pfd.fd = io->fd;
   pfd.events = poll_out ? IOPOLL_WRITE : IOPOLL_READ;
-  while ((result = iopoll(&pfd, 1, io->timeout)) == -1) {
-    if (errno == EAGAIN) continue;
+  if ((result = iopoll_restart(&pfd, 1, io->timeout)) == -1)
     IOBUF_SET_ERROR(io);
-  }
   if (result) return 1;
   io->flags |= IOBUF_TIMEOUT;
   return 0;
