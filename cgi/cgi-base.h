@@ -1,8 +1,8 @@
 #ifndef CHECKVPW__CGI_BASE__H__
 #define CHECKVPW__CGI_BASE__H__
 
-#include "mystring.h"
-#include "cgi-args.h"
+#include "mystring/mystring.h"
+#include "cgi/cgi-args.h"
 
 extern void content_type(mystring ct);
 

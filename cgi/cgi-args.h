@@ -1,7 +1,7 @@
 #ifndef CHECKVPW__CGI_ARGS__H__
 #define CHECKVPW__CGI_ARGS__H__
 
-#include "mystring.h"
+#include "mystring/mystring.h"
 
 class CGIArgs 
 {

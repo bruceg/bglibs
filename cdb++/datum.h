@@ -1,8 +1,8 @@
 #ifndef DATUM__H__
 #define DATUM__H__
 
-#include "fdbuf.h"
-#include "mystring.h"
+#include "fdbuf/fdbuf.h"
+#include "mystring/mystring.h"
 
 struct datum 
 {

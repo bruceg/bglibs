@@ -17,9 +17,9 @@
 #ifndef CDBXX__CDBXX__H__
 #define CDBXX__CDBXX__H__
 
-#include "mystring.h"
-#include "datum.h"
-#include "fdbuf.h"
+#include "mystring/mystring.h"
+#include "cdb++/datum.h"
+#include "fdbuf/fdbuf.h"
 
 typedef unsigned long uint32;
 

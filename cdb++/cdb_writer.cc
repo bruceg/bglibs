@@ -16,7 +16,6 @@
 
 #include <stdio.h>
 #include <unistd.h>
-#include "mystring.h"
 #include "cdb++.h"
 #include "internal.h"
 

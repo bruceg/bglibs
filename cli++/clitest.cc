@@ -16,7 +16,7 @@
 
 #include <config.h>
 #include "cli.h"
-#include "fdbuf.h"
+#include "fdbuf/fdbuf.h"
 
 const char* cli_program = "clitest";
 const char* cli_help_prefix = "Does nothing but set flags\n";

@@ -15,20 +15,11 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include <config.h>
-#if TIME_WITH_SYS_TIME
-# include <sys/time.h>
-# include <time.h>
-#else
-# if HAVE_SYS_TIME_H
-#  include <sys/time.h>
-# else
-#  include <time.h>
-# endif
-#endif
-#include "fdbuf.h"
+#include "ac/time.h"
+#include "fdbuf/fdbuf.h"
 #include <stdlib.h>
 #include <string.h>
-#include "mystring.h"
+#include "mystring/mystring.h"
 #include "cli.h"
 
 #ifndef HAVE_SRANDOM

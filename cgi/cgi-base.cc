@@ -18,9 +18,8 @@
 #include <stdlib.h>
 #include "ac/time.h"
 #include <unistd.h>
-#include "mystring.h"
 #include "cgi-base.h"
-#include "fdbuf.h"
+#include "fdbuf/fdbuf.h"
 
 #ifndef HAVE_SRANDOM
 void srandom(unsigned int seed);

@@ -1,6 +1,6 @@
 noinst_LIBRARIES = libcgi.a
 
-INCLUDES = -I.. -I../fdbuf -I../mystring
+INCLUDES = -I..
 
 libcgi_a_SOURCES = \
 	cgi-args.h cgi-args.cc \

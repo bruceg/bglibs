@@ -1,7 +1,7 @@
 noinst_LIBRARIES = libcli.a
 EXTRA_DIST = clitest.cc
 
-INCLUDES = -I../fdbuf -I../mystring
+INCLUDES = -I..
 #LIBS = @LIBS@ -L. -lcli -L../lib -lvmailmgr
 
 libcli_a_SOURCES = cli.h main.cc messages.cc

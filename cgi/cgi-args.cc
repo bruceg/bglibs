@@ -17,9 +17,8 @@
 #include <config.h>
 #include <stdlib.h>
 #include <sys/types.h>
-#include "mystring.h"
 #include "cgi-args.h"
-#include "fdbuf.h"
+#include "fdbuf/fdbuf.h"
 
 // These routines are optimized for the common case:
 // - few variables (less than ten)
