@@ -31,7 +31,7 @@ int obuf_write(obuf* out, const char* data, unsigned datalen)
   unsigned avail;
   
   io = &out->io;
-  if (io->flags) return 0;
+  if (iobuf_bad(io)) return 0;
   if (datalen >= io->bufsize) return obuf_write_large(out, data, datalen);
 
   out->count = 0;
