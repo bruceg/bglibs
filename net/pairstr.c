@@ -1,4 +1,4 @@
-/* net/pair.c - Create a pair of stream sockets
+/* net/pairstr.c - Create a pair of stream sockets
  * Copyright (C) 2002  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 #include <unistd.h>
 #include "socket.h"
 
-int socket_pair(int fd[2])
+int socket_pairstr(int fd[2])
 {
   return socketpair(AF_UNIX, SOCK_STREAM, 0, fd) == 0;
 }
