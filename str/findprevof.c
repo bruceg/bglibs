@@ -23,7 +23,8 @@ int str_findprevof(const str* s, const char* list, unsigned pos)
   int map[256];
   str_buildmap(map, list);
   if (pos >= s->len) pos = s->len - 1;
-  for (p = s->s + pos; p >= s->s; --p)
-    if (map[*(unsigned char*)p] >= 0) return p - s->s;
+  for (p = s->s + pos; p >= s->s; --p, --pos)
+    if (map[*(unsigned char*)p] >= 0)
+      return pos;
   return -1;
 }

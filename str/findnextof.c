@@ -19,13 +19,12 @@
 
 int str_findnextof(const str* s, const char* list, unsigned pos)
 {
-  int map[256];
-  unsigned i;
   char* p;
+  int map[256];
   if (pos >= s->len) return -1;
   str_buildmap(map, list);
-  for (i = pos, p = s->s+pos; i < s->len; i++, p++)
+  for (p = s->s + pos; pos < s->len; pos++, p++)
     if (map[*(unsigned char*)p] >= 0)
-      return i;
+      return pos;
   return -1;
 }
