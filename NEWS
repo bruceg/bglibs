@@ -11,6 +11,8 @@ Changes in version 1.002
 
 - Removed the silly trailing "." from the common message output code.
 
+- Portability fixes for FreeBSD (and possibly others).
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
