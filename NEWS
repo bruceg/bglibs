@@ -10,6 +10,9 @@ Changes in version 1.019
 - Selfpipes now close-on-exec to prevent the pipe from being exported to
   child processes.
 
+- Changed the error in ibuf_getnetstring from EPROTO to EPROTOTYPE to
+  fix compile errors on *BSD systems.  Thanks Ville Walveranta.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
