@@ -18,7 +18,7 @@ static unsigned format_ipv4(char* buf, const ipv6addr* addr)
 {
   ipv4addr a4;
   memcpy(&a4.addr, &addr->addr[12], 4);
-  return ipv4_format_r(&a4, buf);
+  return fmt_ipv4addr(buf, &a4);
 }
 
 /** Produce a formatted C string from an IPv6 address.
@@ -29,7 +29,7 @@ function will return pointers to the same string.
 const char* ipv6_format(const ipv6addr* addr)
 {
   static char buf[40];
-  buf[ipv6_format_r(addr, buf)] = 0;
+  buf[fmt_ipv6addr(buf, addr)] = 0;
   return buf;
 }
 
@@ -42,7 +42,7 @@ to contain the standard trailing \c NUL byte.
 
 \note This routine is thread and recursion safe.
 */
-unsigned ipv6_format_r(const ipv6addr* addr, char* buffer)
+unsigned fmt_ipv6addr(char* buffer, const ipv6addr* addr)
 {
   uint16 bits[8];
   int i;

@@ -18,7 +18,7 @@ function will return pointers to the same string.
 const char* ipv4_format(const ipv4addr* addr)
 {
   static char buf[16];
-  buf[ipv4_format_r(addr, buf)] = 0;
+  buf[fmt_ipv4addr(buf, addr)] = 0;
   return buf;
 }
 
@@ -31,7 +31,7 @@ to contain the standard trailing \c NUL byte.
 
 \note This routine is thread and recursion safe.
 */
-unsigned ipv4_format_r(const ipv4addr* addr, char* buffer)
+unsigned fmt_ipv4addr(char* buffer, const ipv4addr* addr)
 {
   char* str = buffer;
   str = format_part(addr->addr[0], str); *str++ = '.';
