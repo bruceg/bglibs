@@ -18,17 +18,16 @@
 #include <stdlib.h>
 #include "str.h"
 
-unsigned str_roundsize = 16;
-
+/* Make sure that the string has at least size+1 bytes of available space. */
 int str_ready(str* s, unsigned size)
 {
   char* news;
-  size += str_roundsize - 1;
-  size -= size % str_roundsize;
-  if (size >= s->size) {
+  if (size+1 >= s->size) {
+    size += STR_ROUNDSIZE;
+    size -= size % STR_ROUNDSIZE;
     if ((news = malloc(size)) == 0) return 0;
     if (s->s)
-      memcpy(news, s->s, s->len);
+      memcpy(news, s->s, s->len+1);
     s->size = size;
     s->s = news;
   }
