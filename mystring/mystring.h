@@ -18,7 +18,7 @@
 #define MYSTRING__H__
 
 #include <sys/types.h>
-#include "fdbuf.h"
+#include "fdbuf/fdbuf.h"
 
 struct mystringrep
 {

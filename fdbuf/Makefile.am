@@ -1,5 +1,5 @@
 noinst_LIBRARIES = libfdbuf.a
-INCLUDES = -I../mystring
+INCLUDES = -I..
 
 libfdbuf_a_SOURCES = \
 	fdbuf.h \

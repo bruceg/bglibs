@@ -1,7 +1,7 @@
 noinst_LIBRARIES = libmystring.a
 EXTRA_DIST = ChangeLog
 
-INCLUDES = -I../fdbuf
+INCLUDES = -I..
 
 libmystring_a_SOURCES = mystring.h trace.h \
 	append.cc \

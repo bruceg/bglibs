@@ -16,7 +16,7 @@
 
 #include <string.h>
 #include "fdbuf.h"
-#include "mystring.h"
+#include "mystring/mystring.h"
 
 bool fdibuf::getline(mystring& out, char terminator)
 {
