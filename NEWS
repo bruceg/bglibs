@@ -1,6 +1,8 @@
 -------------------------------------------------------------------------------
 Changes in version 1.017
 
+- Added SURF (Simple Unpredictable Random Function) from algorithm
+  described in http://cr.yp.to/papers/surf.ps
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
