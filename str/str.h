@@ -16,6 +16,13 @@ struct str
 };
 typedef struct str str;
 
+struct str_sortentry
+{
+  const char* str;
+  unsigned long len;
+};
+typedef struct str_sortentry str_sortentry;
+
 /* Overhead */
 int str_init(str* s);
 int str_ready(str* s, unsigned size);
@@ -61,7 +68,8 @@ void str_rstrip(str* s);
 #define str_strip(S) (str_rstrip(S), str_lstrip(S))
 void str_lcut(str* s, unsigned count);
 void str_rcut(str* s, unsigned count);
-int str_sort(str* s, char sep, long count);
+int str_sort(str* s, char sep, long count,
+	     int (*fn)(const str_sortentry* a, const str_sortentry* b));
 
 /* Comparison */
 int str_cmp(const str* a, unsigned aoffset, const str* b, unsigned boffset);

@@ -19,16 +19,9 @@
 #include <string.h>
 #include "str.h"
 
-typedef struct
+static int default_cmp(const str_sortentry* a,
+		       const str_sortentry* b)
 {
-  const char* str;
-  unsigned long len;
-} sortentry;
-
-static int str_sort_cmp(const void* aa, const void* bb)
-{
-  const sortentry* a = (const sortentry*)aa;
-  const sortentry* b = (const sortentry*)bb;
   int i;
   unsigned long alen = a->len;
   unsigned long blen = b->len;
@@ -44,9 +37,10 @@ static int str_sort_cmp(const void* aa, const void* bb)
     return memcmp(a->str, b->str, blen);
 }
 
-int str_sort(str* s, char sep, long count)
+int str_sort(str* s, char sep, long count,
+	     int (*fn)(const str_sortentry* a, const str_sortentry* b))
 {
-  sortentry* ptrs;
+  str_sortentry* ptrs;
   const char* ptr;
   const char* end;
   long i;
@@ -60,6 +54,7 @@ int str_sort(str* s, char sep, long count)
   }
   if ((ptrs = alloca(count * sizeof *ptrs)) == 0) return 0;
   if (!str_copy(&tmp, s)) { str_free(&tmp); return 0; }
+  if (fn == 0) fn = default_cmp;
   for (i = 0, ptr = tmp.s, end = tmp.s+tmp.len; i < count; ++i) {
     const char* ptrend = memchr(ptr, sep, end-ptr);
     if (ptrend == 0) ptrend = end;
@@ -67,7 +62,7 @@ int str_sort(str* s, char sep, long count)
     ptrs[i].len = ptrend - ptr;
     ptr = ptrend + 1;
   }
-  qsort(ptrs, count, sizeof(*ptrs), str_sort_cmp);
+  qsort(ptrs, count, sizeof(*ptrs), (int (*)(const void*,const void*))fn);
   str_truncate(s, 0);
   for (i = 0; i < count; i++) {
     str_catb(s, ptrs[i].str, ptrs[i].len);
