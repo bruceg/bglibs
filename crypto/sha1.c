@@ -17,13 +17,14 @@
 
 #include <string.h>
 
+#include "sysdeps.h"
 #include "sha1.h"
 
 #define rol(value, bits) (((value) << (bits)) | ((value) >> (32 - (bits))))
 
 /* blk0() and blk() perform the initial expand. */
 /* I got the idea of expanding during the round function from SSLeay */
-#ifdef WORDS_BIGENDIAN
+#ifdef ENDIAN_MSB
 #  define blk0(i) block->l[i]
 #else
 #  define blk0(i) (block->l[i] = (rol(block->l[i],24)&0xFF00FF00) \
