@@ -13,4 +13,4 @@
 
 - exec replacement?  http://cr.yp.to/lib/pathexec.html
 
-- More ADTs: stack, queue, bag/set/dictionary, tree
+- More ADTs: bag/set, tree

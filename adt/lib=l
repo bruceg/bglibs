@@ -7,3 +7,9 @@ ghash_init.o
 ghash_insert.o
 ghash_rehash.o
 ghash_search.o
+gqueue_pop.o
+gqueue_push.o
+gqueue_top.o
+gstack_pop.o
+gstack_push.o
+gstack_top.o
