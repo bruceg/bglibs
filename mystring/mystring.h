@@ -105,15 +105,15 @@ public:
     }
 };
 
-#include "mystring/iter.h"
-#include "mystring/join.h"
-
 #ifndef MYSTRING_TRACE
 inline mystring::~mystring()
 {
   rep->detach();
 }
 #endif
+
+#include "mystring/iter.h"
+#include "mystring/join.h"
 
 class fdobuf;
 fdobuf& operator<<(fdobuf& out, const mystring& str);
