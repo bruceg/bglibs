@@ -200,9 +200,9 @@ void SHA512_final_transform(SHA512_ctx* ctx)
   ctx->M[ctx->mlen] = 0x80;
   ++ctx->mlen;
   memset(ctx->M + ctx->mlen, 0x00, 128 - ctx->mlen);
-  if (ctx->mlen >= 128-16) {
+  if (ctx->mlen > 128-16) {
     SHA512_transform(ctx->H, ctx->M);
-    memset(ctx->M, 0x00, 128-8);
+    memset(ctx->M, 0x00, 128-16);
   }
 
   uint64_pack_msb(ctx->hbits, ctx->M+112);

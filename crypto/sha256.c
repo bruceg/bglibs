@@ -165,7 +165,7 @@ void SHA256_final(SHA256_ctx* ctx, uint8* digest)
   unsigned i;
   ctx->M[ctx->mlen++] = 0x80;
   memset(ctx->M + ctx->mlen, 0x00, 64 - ctx->mlen);
-  if (ctx->mlen >= 64-8) {
+  if (ctx->mlen > 64-8) {
     SHA256_transform(ctx->H, ctx->M);
     memset(ctx->M, 0x00, 64-8);
   }
