@@ -43,7 +43,7 @@ sub type2word {
 sub add_option {
     my($short, $long, $type, $desc) = @_;
 
-    my $s = '[ B<';
+    my $s = '[B<';
     my $o = '=item B<';
     if($short) {
 	$s .= "-$short";
@@ -52,7 +52,7 @@ sub add_option {
 	$o .= " $type" if $type;
     }
     if($short && $long) {
-	$s .= "> ]\n[ B<";
+	$s .= ">]\n[B<";
 	$o .= ">, B<";
     }
     if($long) {
@@ -61,7 +61,7 @@ sub add_option {
 	$o .= "--$long";
 	$o .= "=$type" if $type;
     }
-    $s .= "> ]\n";
+    $s .= ">]\n";
     $o .= ">\n\n$desc\n\n";
 
     $synopsis .= $s;
