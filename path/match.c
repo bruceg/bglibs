@@ -15,13 +15,25 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+#include <errno.h>
 #include <string.h>
+#include <sys/stat.h>
+
 #include "sysdeps.h"
 #include "str/str.h"
 #include "str/iter.h"
 #include "path.h"
 
-static str tmp;
+static str tmplist;
+static str tmpitem;
+
+static int exists(const char* path)
+{
+  struct stat st;
+  if (stat(path, &st) == 0) return 1;
+  if (errno == ENOENT || errno == EACCES || errno == ENOTDIR) return 0;
+  return -1;
+}
 
 static int match_first(int absolute, const str* part, str* result,
 		       unsigned options)
@@ -30,27 +42,40 @@ static int match_first(int absolute, const str* part, str* result,
   direntry* entry;
   int count = 0;
   if (!str_truncate(result, 0)) return -1;
-  if ((dir = opendir(absolute ? "/" : ".")) == 0) return -1;
-  while ((entry = readdir(dir)) != 0) {
-    if (fnmatch(entry->d_name, part->s, options)) {
-      if (absolute) if (!str_catc(result, '/')) return -1;
-      if (!str_catb(result, entry->d_name, strlen(entry->d_name)+1)) return -1;
-      ++count;
+  if (has_magic(part->s)) {
+    if ((dir = opendir(absolute ? "/" : ".")) == 0) return -1;
+    while ((entry = readdir(dir)) != 0) {
+      if (fnmatch(entry->d_name, part->s, options)) {
+	if (absolute) if (!str_catc(result, '/')) return -1;
+	if (!str_catb(result, entry->d_name, strlen(entry->d_name)+1))
+	  return -1;
+	++count;
+      }
+    }
+    closedir(dir);
+    return count;
+  }
+  else {
+    switch (exists(part->s)) {
+    case 1: str_copyb(result, part->s, part->len + 1); return 1;
+    case 0: return 0;
+    default: return -1;
     }
   }
-  closedir(dir);
-  return count;
 }
 
-static int match_next(const str* part, str* result, unsigned options)
+static int match_next_magic(const str* part, str* result, unsigned options)
 {
   DIR* dir;
   direntry* entry;
   striter path;
-  int count = 0;
-  if (!str_copy(&tmp, result)) return -1;
+  int magic;
+  int count;
+  count = 0;
+  magic = has_magic(part->s);
+  if (!str_copy(&tmplist, result)) return -1;
   if (!str_truncate(result, 0)) return -1;
-  striter_loop(&path, &tmp, 0) {
+  striter_loop(&path, &tmplist, 0) {
     if ((dir = opendir(path.startptr)) == 0) continue;
     while ((entry = readdir(dir)) != 0) {
       if (fnmatch(entry->d_name, part->s, options)) {
@@ -66,6 +91,33 @@ static int match_next(const str* part, str* result, unsigned options)
     closedir(dir);
   }
   return count;
+}
+
+static int match_next_nomagic(const str* part, str* result, unsigned options)
+{
+  striter path;
+  int count = 0;
+  if (!fnmatch(part->s, part->s, options)) return 0;
+  if (!str_copy(&tmplist, result)) return -1;
+  if (!str_truncate(result, 0)) return -1;
+  striter_loop(&path, &tmplist, 0) {
+    if (!str_copyiter(&tmpitem, &path) ||
+	!str_catc(&tmpitem, '/') ||
+	!str_cat(&tmpitem, part)) return -1;
+    switch (exists(tmpitem.s)) {
+    case 1: str_catb(result, tmpitem.s, tmpitem.len+1); ++count; continue;
+    case 0: continue;
+    default: return -1;
+    }
+  }
+  return count;
+}
+
+static int match_next(const str* part, str* result, unsigned options)
+{
+  return has_magic(part->s) ?
+    match_next_magic(part, result, options) :
+    match_next_nomagic(part, result, options);
 }
 
 int path_match(const char* pattern, str* result, unsigned options)
@@ -86,7 +138,7 @@ int path_match(const char* pattern, str* result, unsigned options)
   if (!str_copyb(&part, pattern, partend-pattern)) return -1;
   if ((count = match_first(absolute, &part, result, options)) == -1) return -1;
   
-  for (;;) {
+  while (result->len > 0) {
     pattern = partend + 1;
     while (pattern < patend && *pattern == '/') ++pattern;
     if (pattern > patend) break;
@@ -95,5 +147,6 @@ int path_match(const char* pattern, str* result, unsigned options)
     if ((count = match_next(&part, result, options)) == -1) return -1;
   }
   if (!str_sort(result, 0, count, 0)) return -1;
+  str_free(&tmplist);
   return count;
 }

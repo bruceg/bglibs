@@ -1,4 +1,12 @@
 -------------------------------------------------------------------------------
+Changes in version 1.003
+
+- Optimized path matching to only stat intermediate entries if they
+  don't contain any meta-characters.
+
+Development of this version has been sponsored by FutureQuest, Inc.
+ossi@FutureQuest.net  http://www.FutureQuest.net/
+-------------------------------------------------------------------------------
 Changes in version 1.002
 
 - Fixed bug in str_cat#s routines: they didn't increase the string
