@@ -29,9 +29,11 @@ sub parse_option {
 
     my $desc = cstr2doc($1) if s/^"([^,]+)",\s*//o;
     die "Invalid cli_option" unless $desc;
+    $desc =~ s/\.?$/./o if $desc;
 
     my $default = $1 if s/^"([^\"]+)"\s+//o;
     die "Invalid cli_option" unless $default || s/^0\s+//o;
+    $desc .= " Defaults to $default." if $default;
 
     s/\s*\/\/\s*/ /go;
     s/^\s*//o;
@@ -94,14 +96,18 @@ while(<>) {
 	$prefix = $1;
     } elsif(/ cli_args_usage\s*=\s*"([^\"]+)"/o) {
 	$usage = $1;
-    } elsif(/ cli_options\[\]\s*=\s*\{/o) {
-	last;
-    } elsif($program && $prefix && !$options &&
-	    s/^\/\/\s*//o) {
-	$description =~ s/$/$_\n/;
     } elsif(s/^.*Copyright\s*\(C\)\s*[\d,]+\s*//o) {
 	$author = $_;
     }
+    last if $program && $prefix;
+}
+
+while(<>) {
+    s/^\s+//o;
+    s/\s+$//o;
+    last if / cli_options\[\]\s*=\s*\{/o;
+    next unless s/^\/\/\s*//o;
+    $description .= "$_\n";
 }
 
 &parse_options();
