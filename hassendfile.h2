@@ -1,0 +1,2 @@
+/* sysdep: +linux_sendfile */
+#define HASLINUXSENDFILE 1

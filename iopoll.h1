@@ -1,0 +1,19 @@
+#ifndef IOPOLL__H__
+#define IOPOLL__H__
+
+/* sysdep: -poll */
+#define IOPOLL_SELECT
+
+typedef struct {
+  int fd;
+  short events;
+  short revents;
+} iopoll_fd;
+
+#define IOPOLL_READ 1
+#define IOPOLL_WRITE 4
+
+extern int iopoll(iopoll_fd* fds, unsigned nfds, unsigned long timeout);
+extern int iopoll_restart(iopoll_fd* fds, unsigned nfds, unsigned long timeout);
+
+#endif

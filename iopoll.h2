@@ -1,0 +1,17 @@
+#ifndef IOPOLL_H
+#define IOPOLL_H
+
+/* sysdep: +poll */
+#define IOPOLL_POLL
+
+#include <sys/types.h>
+#include <poll.h>
+
+typedef struct pollfd iopoll_fd;
+#define IOPOLL_READ POLLIN
+#define IOPOLL_WRITE POLLOUT
+#define iopoll poll
+
+extern int iopoll_restart(iopoll_fd* fds, unsigned nfds, unsigned long timeout);
+
+#endif

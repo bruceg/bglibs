@@ -1,0 +1,3 @@
+/* sysdep: +setenv */
+#define HASSETENV 1
+#include <stdlib.h>

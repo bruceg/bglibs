@@ -1,0 +1,2 @@
+/* sysdep: +hasspnam */
+#define HASSPNAM 1

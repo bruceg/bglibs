@@ -1,0 +1,2 @@
+/* sysdep: +haszlib */
+#define HASZLIB 1

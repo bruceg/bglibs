@@ -1,0 +1,2 @@
+/* sysdep: +hasuserpw */
+#define HASUSERPW 1

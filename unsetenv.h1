@@ -1,0 +1,4 @@
+/* sysdep: -unsetenv */
+#undef HASUNSETENV
+
+void unsetenv(const char* name);
