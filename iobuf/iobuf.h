@@ -241,10 +241,12 @@ int obuf_putnetstring(obuf* out, const char* data, unsigned datalen);
 int obuf_sign_pad(obuf* out, int sign, unsigned width, char pad);
 /* @} */
 
-/** \name */
+/** \name Mass copying functions. */
 
 int iobuf_copy(ibuf* in, obuf* out);
 int iobuf_copyflush(ibuf* in, obuf* out);
+int ibuf_copytofd(ibuf* in, int out);
+int obuf_copyfromfd(int in, obuf* out);
 
 /* @} */
 

@@ -1,3 +1,4 @@
+ibuf_copytofd.o
 ibuf_getc.o
 ibuf_gets.o
 ibuf_getstr_crlf.o
@@ -19,6 +20,7 @@ iobuf_copy.o
 iobuf_init.o
 iobuf_timeout.o
 obuf_close.o
+obuf_copyfromfd.o
 obuf_digits.o
 obuf_endl.o
 obuf_flush.o
