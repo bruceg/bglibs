@@ -1,0 +1,2 @@
+/* sysdep: -getpeereid */
+extern int getpeereid(int s, uid_t* u, gid_t* g);

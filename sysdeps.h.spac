@@ -5,6 +5,7 @@ dependon([
 	'sys/tryulong64.c', 'sys/uint64.h1', 'sys/uint64.h2',
 	'sys/tryendian.c', 'sys/endian.h1', 'sys/endian.h2',
 	'sys/trydirent.c', 'sys/direntry.h1', 'sys/direntry.h2',
+	'sys/trygetpeereid.c', 'sys/hasgetpeereid.h1', 'sys/hasgetpeereid.h2',
 	'sys/tryvfork.c', 'sys/fork.h1', 'sys/fork.h2',
 	'sys/trypoll.c', 'sys/iopoll.h1', 'sys/iopoll.h2',
 	'sys/trysysel.c', 'sys/select.h1', 'sys/select.h2',
@@ -15,24 +16,25 @@ dependon([
 : choose compile load sysdeps-head.h sysdeps-tail.h
 ( set -e; \
   cat sysdeps-head.h; \
-  ./choose clr sys/tryulong32  sys/uint32.h1      sys/uint32.h2; \
-  ./choose clr sys/tryulong64  sys/uint64.h1      sys/uint64.h2; \
-  ./choose clr sys/tryendian   sys/endian.h1      sys/endian.h2; \
-  ./choose c   sys/trydirent   sys/direntry.h1    sys/direntry.h2; \
-  ./choose cl  sys/tryvfork    sys/fork.h1        sys/fork.h2; \
-  ./choose cl  sys/tryflock    sys/hasflock.h1    sys/hasflock.h2; \
-  ./choose cl  sys/trypeercred sys/haspeercred.h1 sys/haspeercred.h2; \
-  ./choose cl  sys/trysendfile sys/hassendfile.h1 sys/hassendfile.h2; \
-  ./choose cl  sys/trysgact    sys/hassgact.h1    sys/hassgact.h2; \
-  ./choose cl  sys/trysgprm    sys/hassgprm.h1    sys/hassgprm.h2; \
-  ./choose cl  sys/tryspnam    sys/hasspnam.h1    sys/hasspnam.h2; \
-  ./choose cl  sys/tryuserpw   sys/hasuserpw.h1   sys/hasuserpw.h2; \
-  ./choose cl  sys/trywaitp    sys/haswaitp.h1    sys/haswaitp.h2; \
-  ./choose c   sys/tryzlib     sys/haszlib.h1     sys/haszlib.h2; \
-  ./choose clr sys/trypoll     sys/iopoll.h1      sys/iopoll.h2; \
-  ./choose c   sys/trysysel    sys/select.h1      sys/select.h2; \
-  ./choose cl  sys/trysetenv   sys/setenv.h1      sys/setenv.h2; \
-  ./choose cl  sys/tryunsetenv sys/unsetenv.h1    sys/unsetenv.h2; \
-  ./choose clr sys/tryunaligned sys/unaligned.h1  sys/unaligned.h2; \
+  ./choose clr sys/tryulong32    sys/uint32.h1        sys/uint32.h2; \
+  ./choose clr sys/tryulong64    sys/uint64.h1        sys/uint64.h2; \
+  ./choose clr sys/tryendian     sys/endian.h1        sys/endian.h2; \
+  ./choose c   sys/trydirent     sys/direntry.h1      sys/direntry.h2; \
+  ./choose cl  sys/tryvfork      sys/fork.h1          sys/fork.h2; \
+  ./choose cl  sys/trygetpeereid sys/hasgetpeereid.h1 sys/hasgetpeereid.h2; \
+  ./choose cl  sys/tryflock      sys/hasflock.h1      sys/hasflock.h2; \
+  ./choose cl  sys/trypeercred   sys/haspeercred.h1   sys/haspeercred.h2; \
+  ./choose cl  sys/trysendfile   sys/hassendfile.h1   sys/hassendfile.h2; \
+  ./choose cl  sys/trysgact      sys/hassgact.h1      sys/hassgact.h2; \
+  ./choose cl  sys/trysgprm      sys/hassgprm.h1      sys/hassgprm.h2; \
+  ./choose cl  sys/tryspnam      sys/hasspnam.h1      sys/hasspnam.h2; \
+  ./choose cl  sys/tryuserpw     sys/hasuserpw.h1     sys/hasuserpw.h2; \
+  ./choose cl  sys/trywaitp      sys/haswaitp.h1      sys/haswaitp.h2; \
+  ./choose c   sys/tryzlib       sys/haszlib.h1       sys/haszlib.h2; \
+  ./choose clr sys/trypoll       sys/iopoll.h1        sys/iopoll.h2; \
+  ./choose c   sys/trysysel      sys/select.h1        sys/select.h2; \
+  ./choose cl  sys/trysetenv     sys/setenv.h1        sys/setenv.h2; \
+  ./choose cl  sys/tryunsetenv   sys/unsetenv.h1      sys/unsetenv.h2; \
+  ./choose clr sys/tryunaligned  sys/unaligned.h1     sys/unaligned.h2; \
   cat sysdeps-tail.h; \
 ) >sysdeps.h

@@ -1,3 +1,4 @@
+sys/getpeereid.o
 sys/iopoll.o
 sys/setenv.o
 uint16/get.o
