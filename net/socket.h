@@ -6,14 +6,14 @@
 /* IP socket functions */
 int socket_tcp(void);
 int socket_udp(void);
-int socket_connect4(int sock, const ipv4addr ip, ipv4port port);
-int socket_bind4(int sock, const ipv4addr ip, ipv4port port);
-int socket_accept4(int sock, ipv4addr ip, ipv4port* port);
+int socket_connect4(int sock, const ipv4addr* ip, ipv4port port);
+int socket_bind4(int sock, const ipv4addr* ip, ipv4port port);
+int socket_accept4(int sock, ipv4addr* ip, ipv4port* port);
 int socket_recv4(int sock, char* buffer, unsigned buflen,
-		 ipv4addr ip, ipv4port* port);
+		 ipv4addr* ip, ipv4port* port);
 int socket_send4(int sock, const char* buffer, unsigned buflen,
-		 const ipv4addr ip, ipv4port port);
-int socket_getaddr4(int sock, ipv4addr ip, ipv4port* port);
+		 const ipv4addr* ip, ipv4port port);
+int socket_getaddr4(int sock, ipv4addr* ip, ipv4port* port);
 int socket_cork(int sock);
 int socket_uncork(int sock);
 

@@ -23,7 +23,7 @@
 #include "socket.h"
 
 int socket_recv4(int sock, char* buffer, unsigned buflen,
-		 ipv4addr ip, unsigned short* port)
+		 ipv4addr* ip, unsigned short* port)
 {
   struct sockaddr_in sa;
   int dummy = sizeof sa;
@@ -31,7 +31,7 @@ int socket_recv4(int sock, char* buffer, unsigned buflen,
 
   r = recvfrom(sock, buffer, buflen, 0, (struct sockaddr*)&sa, &dummy);
   if (r != -1) {
-    memcpy(ip, &sa.sin_addr, 4);
+    memcpy(&ip->addr, &sa.sin_addr, 4);
     *port = ntohs(sa.sin_port);
   }
   return r;

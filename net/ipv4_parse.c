@@ -18,18 +18,18 @@ static unsigned char parse_part(const char* str, const char** end)
   return i;
 }
 
-int ipv4_parse(const char* str, ipv4addr addr, const char** end)
+int ipv4_parse(const char* str, ipv4addr* addr, const char** end)
 {
-  addr[0] = parse_part(str, end); if (*end == str) return 0;
-  if (**end != '.' && addr[0] == 0) {
-    addr[1] = addr[2] = addr[3] = 0;
+  addr->addr[0] = parse_part(str, end); if (*end == str) return 0;
+  if (**end != '.' && addr->addr[0] == 0) {
+    addr->addr[1] = addr->addr[2] = addr->addr[3] = 0;
     return 1;
   }
-  str = *end + 1; addr[1] = parse_part(str, end);
+  str = *end + 1; addr->addr[1] = parse_part(str, end);
   if (*end == str || **end != '.') return 0;
-  str = *end + 1; addr[2] = parse_part(str, end);
+  str = *end + 1; addr->addr[2] = parse_part(str, end);
   if (*end == str || **end != '.') return 0;
-  str = *end + 1; addr[3] = parse_part(str, end);
+  str = *end + 1; addr->addr[3] = parse_part(str, end);
   if (*end == str) return 0;
   return 1;
 }

@@ -23,12 +23,12 @@
 #include "socket.h"
 
 int socket_send4(int sock, const char* buffer, unsigned buflen,
-		 const ipv4addr ip, unsigned short port)
+		 const ipv4addr* ip, unsigned short port)
 {
   struct sockaddr_in sa;
   memset(&sa, 0, sizeof sa);
   sa.sin_family = AF_INET;
-  memcpy((char*)&sa.sin_addr, ip, 4);
+  memcpy((char*)&sa.sin_addr, &ip->addr, 4);
   sa.sin_port = htons(port);
   return sendto(sock, buffer, buflen, 0, (struct sockaddr*)&sa, sizeof sa);
 }

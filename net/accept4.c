@@ -22,7 +22,7 @@
 #include <netinet/in.h>
 #include "socket.h"
 
-int socket_accept4(int sock, ipv4addr ip, unsigned short *port)
+int socket_accept4(int sock, ipv4addr* ip, unsigned short *port)
 {
   struct sockaddr_in sa;
   int dummy;
@@ -30,7 +30,7 @@ int socket_accept4(int sock, ipv4addr ip, unsigned short *port)
 
   dummy = sizeof sa;
   if ((fd = accept(sock, (struct sockaddr*)&sa, &dummy)) != -1) {
-    memcpy(ip, (char*)&sa.sin_addr, 4);
+    memcpy(&ip->addr, (char*)&sa.sin_addr, 4);
     *port = ntohs(sa.sin_port);
   }
   return fd;

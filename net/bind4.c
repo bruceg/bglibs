@@ -22,12 +22,12 @@
 #include <netinet/in.h>
 #include "socket.h"
 
-int socket_bind4(int sock, const ipv4addr ip, unsigned short port)
+int socket_bind4(int sock, const ipv4addr* ip, unsigned short port)
 {
   struct sockaddr_in sa;
   memset(&sa, 0, sizeof sa);
   sa.sin_family = AF_INET;
   sa.sin_port = htons(port);
-  memcpy(&sa.sin_addr, ip, 4);
+  memcpy(&sa.sin_addr, &ip->addr, 4);
   return bind(sock, (struct sockaddr*)&sa, sizeof sa) == 0;
 }
