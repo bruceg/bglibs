@@ -1,6 +1,7 @@
 #include "iobuf/iobuf.h"
 #include "str/str.h"
 #include "dict.h"
+#include "load.h"
 
 int dict_load_list(dict* d, const char* filename, int mustexist,
 		   int (*xform)(str*))
