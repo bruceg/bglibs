@@ -1,16 +1,1 @@
-#ifndef UINT32_H
-#define UINT32_H
-
 typedef unsigned long uint32;
-
-uint32 uint32_get_lsb(const unsigned char b[4]);
-uint32 uint32_get_msb(const unsigned char b[4]);
-void uint32_pack_lsb(uint32 u, unsigned char b[4]);
-void uint32_pack_msb(uint32 u, unsigned char b[4]);
-void uint32_unpack_lsb(const unsigned char b[4], uint32* u);
-void uint32_unpack_msb(const unsigned char b[4], uint32* u);
-#define uint32_get uint32_get_lsb
-#define uint32_pack uint32_pack_lsb
-#define uint32_unpack uint32_unpack_lsb
-
-#endif
