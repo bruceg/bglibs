@@ -3,8 +3,8 @@
 #ifndef CDB_MAKE_H
 #define CDB_MAKE_H
 
-#include "buffer.h"
-#include "uint32.h"
+#include "iobuf/iobuf.h"
+#include "sysdeps.h"
 
 #define CDB_HPLIST 1000
 
@@ -17,7 +17,6 @@ struct cdb_hplist {
 } ;
 
 struct cdb_make {
-  char bspace[8192];
   char final[2048];
   uint32 count[256];
   uint32 start[256];
@@ -25,7 +24,7 @@ struct cdb_make {
   struct cdb_hp *split; /* includes space for hash */
   struct cdb_hp *hash;
   uint32 numentries;
-  buffer b;
+  obuf b;
   uint32 pos;
   int fd;
 } ;
