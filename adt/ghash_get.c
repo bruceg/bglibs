@@ -1,8 +1,8 @@
 #include "ghash.h"
 
-void** ghash_find(struct ghash* d, const void* key, unsigned long hash,
-		  adt_cmp_fn* keycmp)
+void** ghash_find(struct ghash* d, const void* key)
 {
+  const unsigned long hash = d->hashfn(key);
   const unsigned size = d->size;
   unsigned start;
   unsigned i;
@@ -18,7 +18,7 @@ void** ghash_find(struct ghash* d, const void* key, unsigned long hash,
     void* entry = *p;
     if (entry == 0) return 0;
     if (ghash_entry_hash(entry) == hash &&
-	keycmp(key, ghash_entry_keyptr(entry)) == 0)
+	d->keycmp(key, ghash_entry_keyptr(entry)) == 0)
       return p;
     ++p;
     if (++i >= size) i = 0, p = d->table;
@@ -26,11 +26,10 @@ void** ghash_find(struct ghash* d, const void* key, unsigned long hash,
   return 0;
 }
 
-void* ghash_get(struct ghash* d, const void* key, unsigned long hash,
-		adt_cmp_fn* keycmp)
+void* ghash_get(struct ghash* d, const void* key)
 {
   void** entry;
-  if ((entry = ghash_find(d, key, hash, keycmp)) == 0)
+  if ((entry = ghash_find(d, key)) == 0)
     return 0;
   return *entry;
 }

@@ -65,23 +65,20 @@ static int ghash_grow(struct ghash* d, unsigned count)
   return 1;
 }
 
-int ghash_add(struct ghash* d, unsigned keysize, unsigned totalsize,
-	      unsigned long hash, const void* key, const void* data,
-	      adt_copy_fn* keycopy,
-	      adt_copy_fn* datacopy,
-	      adt_free_fn* keyfree)
+int ghash_add(struct ghash* d, const void* key, const void* data)
 {
+  const unsigned long hash = d->hashfn(key);
   void* newe;
   if (!ghash_grow(d, d->count + 1)) return 0;
-  if ((newe = malloc(totalsize)) == 0) return 0;
-  memset(newe, 0, totalsize);
+  if ((newe = malloc(d->entrysize)) == 0) return 0;
+  memset(newe, 0, d->entrysize);
   ghash_entry_hash(newe) = hash;
-  if (!keycopy(ghash_entry_keyptr(newe), key)) {
+  if (!d->keycopy(ghash_entry_keyptr(newe), key)) {
     free(newe);
     return 0;
   }
-  if (!datacopy(ghash_entry_dataptr(newe, keysize), data)) {
-    keyfree(ghash_entry_keyptr(newe));
+  if (!d->datacopy(ghash_entry_dataptr(newe, d->keysize), data)) {
+    d->keyfree(ghash_entry_keyptr(newe));
     free(newe);
     return 0;
   }

@@ -3,20 +3,20 @@
 
 #include "ghash.h"
 
-void ghash_free(struct ghash* d,
-		adt_free_fn* keyfree, unsigned keysize,
-		adt_free_fn* datafree)
+void ghash_free(struct ghash* d)
 {
   unsigned long i;
   void** p;
   if (d->table != 0) {
-    if (keyfree != 0) {
+    if (d->keyfree != 0) {
       for (i = 0, p = d->table; i < d->size; ++i, ++p)
-	if (*p != 0) keyfree(ghash_entry_keyptr(*p));
+	if (*p != 0)
+	  d->keyfree(ghash_entry_keyptr(*p));
     }
-    if (datafree != 0) {
+    if (d->datafree != 0) {
       for (i = 0, p = d->table; i < d->size; ++i, ++p)
-	if (*p != 0) datafree(ghash_entry_dataptr(*p, keysize));
+	if (*p != 0)
+	  d->datafree(ghash_entry_dataptr(*p, d->keysize));
     }
     for (i = 0, p = d->table; i < d->size; ++i, ++p)
       if (*p != 0)
