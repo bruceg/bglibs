@@ -17,7 +17,7 @@
  */
 #include "str.h"
 
-int str_findprevof(str* s, const char* list, unsigned pos)
+int str_findprevof(const str* s, const char* list, unsigned pos)
 {
   char* p;
   int map[256];

@@ -17,7 +17,7 @@
  */
 #include "str.h"
 
-int str_findlast(str* s, char ch)
+int str_findlast(const str* s, char ch)
 {
   char* p;
   for (p = s->s + s->len - 1; p >= s->s; --p)

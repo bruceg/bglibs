@@ -17,7 +17,7 @@
  */
 #include "str.h"
 
-int str_findprev(str* s, char ch, unsigned pos)
+int str_findprev(const str* s, char ch, unsigned pos)
 {
   char* p;
   if (pos >= s->len) pos = s->len - 1;

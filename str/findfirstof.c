@@ -17,7 +17,7 @@
  */
 #include "str.h"
 
-int str_findfirstof(str* s, const char* list)
+int str_findfirstof(const str* s, const char* list)
 {
   int map[256];
   unsigned i;

@@ -17,7 +17,7 @@
  */
 #include "str.h"
 
-int str_findlastof(str* s, const char* list)
+int str_findlastof(const str* s, const char* list)
 {
   char* p;
   int map[256];

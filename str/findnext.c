@@ -18,7 +18,7 @@
 #include <string.h>
 #include "str.h"
 
-int str_findnext(str* s, char ch, unsigned pos)
+int str_findnext(const str* s, char ch, unsigned pos)
 {
   char* p;
   if (pos >= s->len) return -1;

@@ -17,7 +17,7 @@
  */
 #include "str.h"
 
-int str_findnextof(str* s, const char* list, unsigned pos)
+int str_findnextof(const str* s, const char* list, unsigned pos)
 {
   int map[256];
   unsigned i;

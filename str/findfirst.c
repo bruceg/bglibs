@@ -18,7 +18,7 @@
 #include <string.h>
 #include "str.h"
 
-int str_findfirst(str* s, char ch)
+int str_findfirst(const str* s, char ch)
 {
   char* p;
   p = memchr(s->s, ch, s->len);
