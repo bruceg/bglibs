@@ -1,3 +1,9 @@
+crc16_arc_table.o
+crc16_arc_update.o
+crc16_ccitt_table.o
+crc16_ccitt_update.o
+crc16_xmodem_table.o
+crc16_xmodem_update.o
 crc32_table.o
 crc32_update.o
 crc64_table.o
