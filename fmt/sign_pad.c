@@ -31,6 +31,8 @@ unsigned fmt_sign_pad(char* buffer, int sign, unsigned width, char pad)
 void test(int sign, unsigned width, char pad)
 {
   char buf[10];
+  obuf_putu(&outbuf, fmt_sign_pad(0, sign, width, pad));
+  obuf_putc(&outbuf, ':');
   buf[fmt_sign_pad(buf, sign, width, pad)] = 0;
   obuf_puts(&outbuf, buf);
   NL();
@@ -47,10 +49,10 @@ MAIN
 }
 #endif
 #ifdef SELFTEST_EXP
-
--
-xxxx
-xxxx-
-0000
--0000
+0:
+1:-
+4:xxxx
+5:xxxx-
+4:0000
+5:-0000
 #endif
