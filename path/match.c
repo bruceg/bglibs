@@ -150,3 +150,54 @@ int path_match(const char* pattern, str* result, unsigned options)
   str_free(&tmplist);
   return count;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+static void match(const char* pattern, unsigned options)
+{
+  static str s;
+  striter i;
+  obuf_puts(&outbuf, pattern);
+  obuf_putc(&outbuf, ' ');
+  obuf_putu(&outbuf, options);
+  obuf_puts(&outbuf, " => ");
+  obuf_puti(&outbuf, path_match(pattern, &s, options));
+  NL();
+  for (striter_start(&i, &s, 0);
+       striter_valid(&i);
+       striter_advance(&i)) {
+    obuf_putiter(&outbuf, &i);
+    NL();
+  }
+}
+MAIN
+{
+  match("*", 0);
+  match("*.o", 0);
+  match("*.o*", 0);
+  match("*.[eo]", 0);
+  match("t*", 0);
+  match("*.[~o]*", 0);
+}
+#endif
+#ifdef SELFTEST_EXP
+* 0 => 4
+test
+test.exp
+test.o
+test.out
+*.o 0 => 1
+test.o
+*.o* 0 => 2
+test.o
+test.out
+*.[eo] 0 => 1
+test.o
+t* 0 => 4
+test
+test.exp
+test.o
+test.out
+*.[~o]* 0 => 1
+test.exp
+#endif

@@ -36,3 +36,49 @@ int str_match(const str* s, const char* pattern)
   }
   return slen == 0;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+static const str s = { "abc", 3, 0 };
+void t(const char* pattern)
+{
+  obuf_puts(&outbuf, pattern);
+  obuf_putc(&outbuf, ' ');
+  debugfn(str_match(&s, pattern));
+}
+MAIN
+{
+  t("*");
+  t("**");
+  t("a");
+  t("a*");
+  t("*a*");
+  t("*a");
+  t("b*");
+  t("*b*");
+  t("*b");
+  t("c*");
+  t("*c*");
+  t("*c");
+  t("d*");
+  t("*d*");
+  t("*d");
+}
+#endif
+#ifdef SELFTEST_EXP
+* result=1
+** result=0
+a result=0
+a* result=1
+*a* result=1
+*a result=0
+b* result=0
+*b* result=1
+*b result=0
+c* result=0
+*c* result=1
+*c result=1
+d* result=0
+*d* result=0
+*d result=0
+#endif
