@@ -1,6 +1,12 @@
 -------------------------------------------------------------------------------
 Changes in version 1.009
 
+
+Development of this version has been sponsored by FutureQuest, Inc.
+ossi@FutureQuest.net  http://www.FutureQuest.net/
+-------------------------------------------------------------------------------
+Changes in version 1.009
+
 - Rewrite the SHA-256 and SHA-512 algorithms to make them work on both
   64-bit and MSB platforms, and added the SHA-384 algorithm.
 
