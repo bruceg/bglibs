@@ -2,10 +2,12 @@
 
 static void next(struct ghashiter* iter, unsigned i)
 {
-  while (i < iter->ghashp->size && iter->ghashp->table[i] == 0)
-    ++i;
-  iter->index = i;
-  iter->entry = iter->ghashp->table[i];
+  if (iter->ghashp->table != 0) {
+    while (i < iter->ghashp->size && iter->ghashp->table[i] == 0)
+      ++i;
+    iter->index = i;
+    iter->entry = iter->ghashp->table[i];
+  }
 }
 
 void ghashiter_first(struct ghashiter* iter, const struct ghash* h)
@@ -16,7 +18,8 @@ void ghashiter_first(struct ghashiter* iter, const struct ghash* h)
 
 int ghashiter_valid(const struct ghashiter* iter)
 {
-  return iter->index < iter->ghashp->size
+  return iter->ghashp->table != 0
+    && iter->index < iter->ghashp->size
     && iter->ghashp->table[iter->index] != 0;
 }
 
@@ -46,6 +49,10 @@ int main(void)
   struct test_entry* p;
   struct ghashiter iter;
   test_init(&dict);
+  ghashiter_loop(&iter,&dict) {
+    p = iter.entry;
+    printf("[%s] = %i\n", p->key, p->data);
+  }
   for (i = 0; keys[i] != 0; ++i)
     test_add(&dict, &keys[i], &i);
   ghashiter_loop(&iter,&dict) {
