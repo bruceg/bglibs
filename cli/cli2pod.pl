@@ -47,9 +47,11 @@ sub add_option {
     my $o = '=item B<';
     if($short) {
 	$s .= "-$short";
-	$s .= " $type" if $type;
 	$o .= "-$short";
-	$o .= " $type" if $type;
+	if($type) {
+	    $s .= " $type";
+	    $o .= " $type";
+	}
     }
     if($short && $long) {
 	$s .= ">]\n[B<";
@@ -57,9 +59,11 @@ sub add_option {
     }
     if($long) {
 	$s .= "--$long";
-	$s .= "=type" if type;
 	$o .= "--$long";
-	$o .= "=$type" if $type;
+	if($type) {
+	    $s .= "=$type";
+	    $o .= "=$type";
+	}
     }
     $s .= ">]\n";
     $o .= ">\n\n$desc\n\n";
