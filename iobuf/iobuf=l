@@ -1,6 +1,7 @@
 iobuf_close.o
 iobuf_copy.o
 iobuf_init.o
+iobuf_timeout.o
 ibuf_getc.o
 ibuf_gets.o
 ibuf_getu.o
@@ -19,6 +20,11 @@ obuf_flush.o
 obuf_init.o
 obuf_open.o
 obuf_pad.o
+obuf_put2s.o
+obuf_put3s.o
+obuf_put4s.o
+obuf_put5s.o
+obuf_put6s.o
 obuf_putc.o
 obuf_putiw.o
 obuf_putnetstring.o
