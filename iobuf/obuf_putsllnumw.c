@@ -24,7 +24,7 @@ static int obuf_putsnumw_rec(obuf* out, long long data, int sign,
   return obuf_putc(out, (data % base) + '0');
 }
 
-/** Write a signed integer to the \c obuf with optional padding. */
+/** Write a signed long long integer to the \c obuf with optional padding. */
 int obuf_putsllnumw(obuf* out, long long data, unsigned width, char pad,
 		    unsigned base, const char* digits)
 {
@@ -47,14 +47,14 @@ int obuf_putsllnumw(obuf* out, long long data, unsigned width, char pad,
   return obuf_putsnumw_rec(out, data, sign, width, pad, base, digits);
 }
 
-static char dec_digits[10] = "0123456789";
-
+/** Write a signed long long integer as decimal to the \c obuf with padding. */
 int obuf_putiwll(obuf* out, long long data, unsigned width, char pad)
 {
-  return obuf_putsnumw(out, data, width, pad, 10, dec_digits);
+  return obuf_putsnumw(out, data, width, pad, 10, obuf_dec_digits);
 }
 
+/** Write a signed long long integer as decimal to the \c obuf. */
 int obuf_putill(obuf* out, long long data)
 {
-  return obuf_putsnumw(out, data, 0, 0, 10, dec_digits);
+  return obuf_putsnumw(out, data, 0, 0, 10, obuf_dec_digits);
 }

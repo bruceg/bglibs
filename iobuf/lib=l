@@ -17,6 +17,7 @@ iobuf_copy.o
 iobuf_init.o
 iobuf_timeout.o
 obuf_close.o
+obuf_digits.o
 obuf_endl.o
 obuf_flush.o
 obuf_init.o

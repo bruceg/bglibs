@@ -47,14 +47,14 @@ int obuf_putsnumw(obuf* out, long data, unsigned width, char pad,
   return obuf_putsnumw_rec(out, data, sign, width, pad, base, digits);
 }
 
-static char dec_digits[10] = "0123456789";
-
+/** Write a signed integer as decimal to the \c obuf with padding. */
 int obuf_putiw(obuf* out, long data, unsigned width, char pad)
 {
-  return obuf_putsnumw(out, data, width, pad, 10, dec_digits);
+  return obuf_putsnumw(out, data, width, pad, 10, obuf_dec_digits);
 }
 
+/** Write a signed integer as decimal to the \c obuf. */
 int obuf_puti(obuf* out, long data)
 {
-  return obuf_putsnumw(out, data, 0, 0, 10, dec_digits);
+  return obuf_putsnumw(out, data, 0, 0, 10, obuf_dec_digits);
 }

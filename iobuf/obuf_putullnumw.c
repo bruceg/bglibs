@@ -15,7 +15,8 @@ static int obuf_putullnumw_rec(obuf* out, unsigned long long data,
   return obuf_putc(out, digits[data % base]);
 }
 
-/** Write an unsigned integer to the \c obuf with optional padding. */
+/** Write an unsigned long long integer to the \c obuf with optional
+    padding. */
 int obuf_putullnumw(obuf* out, unsigned long long data,
 		    unsigned width, char pad,
 		    unsigned base, const char* digits)
@@ -27,38 +28,43 @@ int obuf_putullnumw(obuf* out, unsigned long long data,
   return obuf_putullnumw_rec(out, data, width, pad, base, digits);
 }
 
-static char dec_digits[10] = "0123456789";
-
+/** Write an unsigned long long integer as decimal to the \c obuf with
+    padding. */
 int obuf_putuwll(obuf* out, unsigned long long data, unsigned width, char pad)
 {
-  return obuf_putunumw(out, data, width, pad, 10, dec_digits);
+  return obuf_putunumw(out, data, width, pad, 10, obuf_dec_digits);
 }
 
+/** Write an unsigned long long integer as decimal to the \c obuf. */
 int obuf_putull(obuf* out, unsigned long long data)
 {
-  return obuf_putunumw(out, data, 0, 0, 10, dec_digits);
+  return obuf_putunumw(out, data, 0, 0, 10, obuf_dec_digits);
 }
 
-static char hex_digits[16] = "0123456789abcdef";
-
+/** Write an unsigned long long integer as (lower-case) hexadecimal to
+    the \c obuf with padding. */
 int obuf_putxwll(obuf* out, unsigned long long data, unsigned width, char pad)
 {
-  return obuf_putunumw(out, data, width, pad, 10, hex_digits);
+  return obuf_putunumw(out, data, width, pad, 10, obuf_hex_lcase_digits);
 }
 
+/** Write an unsigned long long integer as (lower-case) hexadecimal to
+    the \c obuf. */
 int obuf_putxll(obuf* out, unsigned long long data)
 {
-  return obuf_putunumw(out, data, 0, 0, 10, hex_digits);
+  return obuf_putunumw(out, data, 0, 0, 10, obuf_hex_lcase_digits);
 }
 
-static char hex_udigits[16] = "0123456789ABCDEF";
-
+/** Write an unsigned long long integer as (upper-case) hexadecimal to
+    the \c obuf with padding. */
 int obuf_putXwll(obuf* out, unsigned long long data, unsigned width, char pad)
 {
-  return obuf_putunumw(out, data, width, pad, 10, hex_udigits);
+  return obuf_putunumw(out, data, width, pad, 10, obuf_hex_ucase_digits);
 }
 
+/** Write an unsigned long long integer as (upper-case) hexadecimal to
+    the \c obuf. */
 int obuf_putXll(obuf* out, unsigned long long data)
 {
-  return obuf_putunumw(out, data, 0, 0, 10, hex_udigits);
+  return obuf_putunumw(out, data, 0, 0, 10, obuf_hex_ucase_digits);
 }

@@ -160,6 +160,10 @@ typedef struct obuf obuf;
 extern obuf outbuf;
 extern obuf errbuf;
 
+extern const char obuf_dec_digits[10];
+extern const char obuf_hex_lcase_digits[16];
+extern const char obuf_hex_ucase_digits[16];
+
 #include <fcntl.h>
 /** Create the file if it does not already exist. */
 #define OBUF_CREATE O_CREAT
