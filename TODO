@@ -1,10 +1,6 @@
 - Finish DNS library!
   - Implement TCP queries
 
-- Make the CRC tables (and code even) generated at build time.
-  - This will likely require that no external =x targets exist in
-    subdirs, which in turn means separating the cvm library out.
-
 - Add make-compile, make-load, make-makelib scripts
 
 - Add library documentation
