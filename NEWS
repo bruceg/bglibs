@@ -1,4 +1,10 @@
 -------------------------------------------------------------------------------
+Changes in version 1.007
+
+
+Development of this version has been sponsored by FutureQuest, Inc.
+ossi@FutureQuest.net  http://www.FutureQuest.net/
+-------------------------------------------------------------------------------
 Changes in version 1.006
 
 - Added uint16, uint32, and uint64 pack/unpack functions.
