@@ -10,6 +10,9 @@ Changes in version 1.011
 
 - Fixed ipv4 address parsing number validation.
 
+- Fixed crc table generation on Solaris caused by missing
+  #include <stdlib.h>
+
 - Internal changes to installer scripts to make it work on systems where
   the root directory is non-readable.
 
