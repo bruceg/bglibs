@@ -1,3 +1,3 @@
 cdb.o
-cdb_hash.o
+hash.o
 uint32_unpack.o
