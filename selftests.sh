@@ -13,7 +13,7 @@ do
   then
     echo "=====> Compile failed! <====="
     exitcode=false
-  elif ! ./load $t/test */lib.a
+  elif ! ./load $t/test */lib.a libbg-sysdeps.a
   then
     echo "=====> Load failed! <====="
     exitcode=false
