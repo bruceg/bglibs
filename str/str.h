@@ -130,6 +130,10 @@ void str_lcut(str* s, unsigned count);
 void str_rcut(str* s, unsigned count);
 int str_sort(str* s, char sep, long count,
 	     int (*fn)(const str_sortentry* a, const str_sortentry* b));
+int str_splice(str* s, unsigned start, unsigned len, const str* r);
+int str_splices(str* s, unsigned start, unsigned len, const char* r);
+int str_spliceb(str* s, unsigned start, unsigned len,
+		const char* r, unsigned rlen);
 /* @} */
 
 /** \name Comparison Functions

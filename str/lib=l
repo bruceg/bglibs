@@ -47,6 +47,7 @@ lstrip.o
 match.o
 rstrip.o
 sort.o
+splice.o
 start.o
 subst.o
 truncate.o

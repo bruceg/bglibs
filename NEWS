@@ -1,6 +1,7 @@
 -------------------------------------------------------------------------------
 Changes in version 1.012
 
+- Added set of str_splice functions, to insert one string into another.
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
