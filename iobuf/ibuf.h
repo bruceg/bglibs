@@ -3,8 +3,14 @@
 
 #include <iobuf/common.h>
 
-/** \name ibuf: Input
- * @{ */
+/** \defgroup ibuf ibuf: Input Buffer Managemenet
+
+\par Calling Convention
+
+Unless otherwise specified, the return value is non-zero (true) if the
+entire requested operation completed, and \c 0 (false) otherwise.
+
+@{ */
 
 /** \c ibuf read function pointer prototype. */
 typedef int (*ibuf_fn)(int, void*, unsigned long);

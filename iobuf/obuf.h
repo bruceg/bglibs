@@ -3,8 +3,14 @@
 
 #include <iobuf/common.h>
 
-/** \name obuf: Output
- * @{ */
+/** \defgroup obuf obuf: Output Buffer Management
+
+\par Calling Convention
+
+Unless otherwise specified, the return value is non-zero (true) if the
+entire requested operation completed, and \c 0 (false) otherwise.
+
+@{ */
 
 /** \c obuf write function pointer prototype. */
 typedef int (*obuf_fn)(int, const void*, unsigned long);
