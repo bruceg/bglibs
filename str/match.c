@@ -15,19 +15,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+#include <string.h>
+
 #include "str.h"
 
-/** Simple but fast (linear time) pattern matching. */
-int str_match(const str* s, const char* pattern)
+/** Simple but fast (linear time) pattern matching on binary pattern. */
+int str_matchb(const str* s, const char* pptr, unsigned plen)
 {
   const char* sptr;
-  long slen;
-  char p;
-  slen = s->len;
-  if (*pattern == 0) return slen == 0;
-  for (sptr = s->s; (p = *pattern) != 0; ++pattern, ++sptr, --slen) {
+  long slen = s->len;
+  if (plen == 0) return slen == 0;
+  for (sptr = s->s; plen > 0; ++sptr, --slen, ++pptr, --plen) {
+    char p = *pptr;
     if (p == '*') {
-      if ((p = *++pattern) == 0) return 1;
+      ++pptr, --plen;
+      if (plen == 0) return 1;
+      p = *pptr;
       while (slen > 0 && *sptr != p) ++sptr, --slen;
       if (slen == 0) return 0;
     }
@@ -37,6 +40,18 @@ int str_match(const str* s, const char* pattern)
   return slen == 0;
 }
 
+/** Simple pattern match on dynamic string pattern. */
+int str_match(const str* s, const str* pattern)
+{
+  return str_matchb(s, pattern->s, pattern->len);
+}
+
+/** Simple pattern match on C string pattern. */
+int str_matchs(const str* s, const char* pattern)
+{
+  return str_matchb(s, pattern, strlen(pattern));
+}
+
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
 static const str s = { "abc", 3, 0 };
@@ -44,7 +59,7 @@ void t(const char* pattern)
 {
   obuf_puts(&outbuf, pattern);
   obuf_putc(&outbuf, ' ');
-  debugfn(str_match(&s, pattern));
+  debugfn(str_matchs(&s, pattern));
 }
 MAIN
 {
