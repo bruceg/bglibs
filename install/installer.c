@@ -48,7 +48,7 @@ void cf(int dir, const char* filename,
   if (fchdir(sourcedir) == -1)
     diesys("Could not change base directory");
   if ((fdin = open(srcfile, O_RDONLY)) == -1)
-    diefsys("Could not open input file", filename);
+    diefsys("Could not open input file", srcfile);
 
   if (fchdir(dir) == -1)
     diesys("Could not change base directory");
