@@ -5,14 +5,14 @@
 #include "misc/misc.h"
 #include "vpwentry.h"
 
-static const char* from_uint(const char* ptr, unsigned* uint)
+static const char* from_uint(const char* ptr, unsigned* u)
 {
   const char* tmp;
   if (ptr[0] == '-' && ptr[1] == 0) {
-    *uint = UINT_MAX;
+    *u = UINT_MAX;
     return ptr + 2;
   }
-  *uint = strtou(ptr, &tmp);
+  *u = strtou(ptr, &tmp);
   return (*tmp == 0) ? ++tmp : 0;
 }
 
