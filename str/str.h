@@ -79,7 +79,7 @@ unsigned str_countof(const str* s, const char* list);
 #define str_findfirst(S,C) str_findnext(S,C,0)
 #define str_findfirstof(S,L) str_findnextof(S,L,0)
 #define str_findlast(S,C) str_findprev(S,C,-1)
-#define str_findlastof(S,C) str_findprevof(S,L,-1)
+#define str_findlastof(S,L) str_findprevof(S,L,-1)
 int str_findnext(const str* s, char ch, unsigned pos);
 int str_findnextof(const str* s, const char* list, unsigned pos);
 int str_findprev(const str* s, char ch, unsigned pos);
