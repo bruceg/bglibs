@@ -4,9 +4,15 @@ void* ghash_get(struct ghash* d, const void* key, unsigned long hash,
 		adt_cmp_fn* keycmp)
 {
   const unsigned size = d->size;
-  const unsigned start = hash % size;
-  unsigned i = start;
-  void** p = d->table + start;
+  unsigned start;
+  unsigned i;
+  void** p;
+  
+  if (size == 0)
+    return 0;
+  start = hash % size;
+  i = start;
+  p = d->table + start;
 
   do {
     void* entry = *p;
