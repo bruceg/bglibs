@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 #include <sys/types.h>
+#include <errno.h>
 #include <string.h>
 #include "cmsg.h"
 #include "socket.h"
@@ -23,6 +24,7 @@
 /** Receive a file descriptor over a socket. */
 int socket_recvfd(int sock)
 {
+#if defined(CMSG_FIRSTHDR) && defined(MSG_NOSIGNAL) && defined(SCM_RIGHTS)
   char cbuf[CMSG_SPACE(sizeof(int))];
   struct msghdr msg;
   struct cmsghdr* cm;
@@ -37,4 +39,8 @@ int socket_recvfd(int sock)
   
   if (recvmsg(sock, &msg, MSG_NOSIGNAL) == -1) return -1;
   return *(int*)CMSG_DATA(cm);
+#else
+  errno = ENOSYS;
+  return -1;
+#endif
 }

@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 #include <sys/types.h>
+#include <errno.h>
 #include <string.h>
 #include "cmsg.h"
 #include "socket.h"
@@ -23,6 +24,7 @@
 /** Send a file descriptor over a socket. */
 int socket_sendfd(int sock, int fd)
 {
+#if defined(CMSG_FIRSTHDR) && defined(MSG_NOSIGNAL) && defined(SCM_RIGHTS)
   struct msghdr msg;
   struct cmsghdr *cmsg;
   char buf[CMSG_SPACE(sizeof(int))];  /* ancillary data buffer */
@@ -40,4 +42,8 @@ int socket_sendfd(int sock, int fd)
   msg.msg_controllen = cmsg->cmsg_len;
 
   return sendmsg(sock, &msg, MSG_NOSIGNAL);
+#else
+  errno = ENOSYS;
+  return -1;
+#endif
 }

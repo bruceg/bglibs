@@ -6,6 +6,8 @@ Changes in version 1.009
 
 - Fixed iobuf/iobuf_init.c for systems that lack anonymous mmap.
 
+- Turn off recv/sendfd if the appropriate defines are missing.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
