@@ -20,7 +20,7 @@
 #include <sys/socket.h>
 #include "socket.h"
 
-int sendfd(int sock, int fd)
+int socket_sendfd(int sock, int fd)
 {
   struct msghdr msg;
   struct cmsghdr *cmsg;
