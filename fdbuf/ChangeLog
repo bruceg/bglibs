@@ -1,0 +1,115 @@
+1999-07-08  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* fdobuf.cc (write): Optimized this routine better for the case
+	where the amount of data to be written will fit inside the buffer.
+
+1999-07-05  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* fdbuf.h (fdobuf,fdibuf): Made some of the routines here virtual
+	in order to extend it properly.
+	Added "tell()" operations to both fdibuf and fdobuf to indicate
+	the current logical read/write point.
+
+1999-07-04  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* fdobuf_chownmod.cc: Added two new routines chown and chmod,
+	which operate directly on the open fd.
+
+1999-06-30  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* fdibuf_mystring.cc (getline): Make this routine return the
+	number of bytes actually read, including the delimiter, even
+	though the delimiter is not added to the returned string.
+
+1999-06-29  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* fdibuf.cc (fdibuf): Added a 'seekfwd' function to seek forwards
+	"o" bytes.
+
+	* fdibuf_mystring.cc (getline): Added locking and set the count
+	properly.
+
+1999-06-28  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* fdibuf.cc (get): Make sure count is set for get.
+
+1999-06-06  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* fdbuf.cc (fdbuf): Fixed long-standing bug -- I forgot to delete
+	the buffer in the destructor.
+	(close): Modified the code to ensure that the fd is not closed
+	twice (as would happen when destructing the fdbuf).
+
+1999-05-31  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* fdobuf.cc: Redefined flush as nflush; added sync code to nflush;
+	made flush and sync call nflush; added mutex lock calls to all
+	public methods.
+
+	* fdibuf.cc: Added mutex lock calls to all public methods.
+
+	* fdbuf.cc: Added debugging implementations of lock() and unlock()
+	mutex operators (to be removed before real use).
+
+1999-05-28  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* fdobuf.cc (fdobuf): Fixed missing initialization of bufpos in
+	one of the two constructors.
+
+1999-05-01  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* fdobuf.cc (fdobuf): Added an optional "mode" parameter which
+	defaults to 0666, which is the permissions for the new file.
+	(sync): Wrote this function to fsync the file descriptor.
+
+1999-04-27  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* fdbuf.h (fdobuf): Removed definition for sync and nonblock mode,
+	as they won't be handled correctly in the writing code.
+
+1999-04-03  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* fdobuf.cc (operator<<): Wrote an operator for signed and
+	unsigned longs, with overloaded functions for ints and shorts that
+	promote the parameters to longs.
+	(write): Wrote a write routine specifically for a single
+	character.
+
+1999-04-01  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* fdobuf.cc: Fixed handling of seek by adding a "bufpos" indicator
+	that points to the current position in the buffer at which writes
+	should go.  buflength is effectively the maximum value of bufpos
+	between flushes.
+
+	* fdibuf.cc (get): Renamed getchar to get (to be potentially
+	overloaded with other types).
+
+	* fdbuf.h (fdbuf): Removed a bunch of write methods and replaced
+	them with "operator<<", with similar capability to iostreams
+	methods of the same names.
+
+	* fdobuf.cc (endl): Wrote this manipulator to write an end-of-line
+	and flush the buffer.
+
+1999-03-31  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* fdobuf_mystring.cc: Moved all the mystring-specific code from
+	fdobuf.cc into this module to lessen link problems.
+
+	* fdibuf_mystring.cc: Moved all the mystring-specific code from
+	fdibuf.cc into this module to lessen link problems.
+
+	* fdobuf.cc (seek): Wrote this seek routine to allow movement in
+	an output file buffer.
+
+	* fdibuf.cc (seek): Generalized the rewind routine to allow
+	arbitrary seeks.  It also checks to see if the seek point is
+	within the current buffer and if so just repositions its
+	pointers.
+
+	* fdbuf.h: If BUFSIZE is not defined, set it here to 4096.
+	(class fdbuf ): Rename length, start, and size to buflength,
+	bufstart, and bufsize.  Add a new field "offset" to indicate the
+	current file seek offset.
+

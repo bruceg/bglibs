@@ -1,0 +1,96 @@
+1999-08-15  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* mystring.h (class mystring_iter): Changed the default seperator
+	for strings to '\0'
+	(class mystring): Added a NUL constant (single 0 byte string).
+
+1999-07-26  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* mystring.h (class mystring_iter): Added this new iterator class,
+	taken from code used in vmailmgr.  It is used to iterate over
+	essentially a token-delimited string.
+
+1999-07-14  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* Removed all vestiges of mystringtmp support from this library.
+
+1999-07-13  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* append.cc: Fixed same bug as below in append.
+
+	* assign.cc: Fixed bug in assign and dup where NULL pointers
+	caused a crash.
+
+	* append.cc, assign.cc: removed the mystringtmp versions of the
+	append, assign, and dup operations.  mystringtmp now only exists
+	in the cons[2-7].cc files and tmp.cc
+
+	* find.cc: Split this file into find_first, find_first_of,
+	find_last, and find_last_of.
+
+1999-07-12  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* join.cc (traverse): This routine traverses the linked list and
+	builds a mystringrep out of it.
+
+	* mystring.h: Renamed TRACE to MYSTRING_TRACE.
+	Added a new mystringjoin class.  This class is used to turn a list
+	of calls to "operator+" into a single constructor by building a
+	linked list on the stack.  This will replace mystringtmp.
+
+	* rep.cc (struct _rep_stats): Fixed the percentage function to not
+	do divide-by-zero; modified the "slack" reporting to report a
+	percentage of the requested length.
+
+	* assign.cc: Re-added dup and assign functions for "char*" type,
+	moving the constructors and assignment operators inline.
+
+	* append.cc: Re-added append functions for "char*" type.
+
+1999-07-08  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* mystring.h (class mystring): Eliminated the "mystring" return
+	value for the assign and append operators, since this return value
+	is never used and causes extra operations.
+
+	* operator_plus.cc: Created this new file containing the
+	"operator+" routine.
+
+	* operator_pleq.cc: Created this new file containing all the
+	"operator+=" routines.
+
+	* assign.cc: Created this new file containing all the assign and
+	dup primitives.
+
+	* mystring.h (class mystring): Removed the += operator taking
+	"mystringtmp" parameter, and replaced it with two routines, one
+	for "const mystring&", and one for "const char*".  This results in
+	a net code shrinkage.
+
+	* rep.cc (struct _rep_stats): Added this optional statistics
+	gathering class to determine the effectiveness of the slack space
+	and string appending.
+
+	* append.cc (append): Use the new rep->append routine.
+
+	* rep.cc (alloc): Allocate an amount of "slack" space when
+	allocating a string, to allow for later appends.
+	(append): This new routine appends a string to the current rep if
+	and only if the current rep has a single reference and the new
+	length of the string will fit within the current size.  If not, it
+	makes a dup of this+str and returns a pointer to it.
+
+1999-06-07  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* tmp.cc: Removed the contents of checkstr, and moved the
+	necessary parts into the constructors.  This makes the code more
+	efficient, as the constructors are adequately specific to omit
+	some of the branches in the comparisons.  It also ensures that len
+	is always initialized, allowing many of the simple functions to be
+	moved inline to the header file.
+
+1999-04-01  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* cons7.cc (mystring): Wrote this constructor to build a string
+	from 7 inputs.
+

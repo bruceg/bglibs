@@ -1,0 +1,8 @@
+1999-09-22  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* cgi-args.cc (get): Rewrote the "operator[]" method into a method
+	that could return a default value, and make "operator[]" call get.
+	(get_parts): Modified the code to handle '=' within a part, and
+	parts without any '='.
+	(init): Changed the loop slightly.
+

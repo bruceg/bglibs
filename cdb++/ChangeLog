@@ -1,0 +1,48 @@
+1999-05-01  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* cdb_writer.cc (cdb_writer): Added "mode" parameter, passed to
+	the fdobuf constructor, to set the file permissions.
+
+1999-04-01  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* cdb_reader.cc: Converted to using fdbuf routines.
+
+	* cdb_get.cc: Converted to using fdbuf routines.
+
+	* cdb_writer.cc: Converted to using fdbuf routines.
+
+1999-03-19  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* internal.h: Renamed cdb_internal.h to this.
+
+1999-03-18  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* cdb_internal.h: Moved several internal functions into here
+	instead of in the main header file; fixed some signed char
+	conversion bugs.
+
+	* cdb_get.cc (seek): Typo: & should have been *.
+	(seek): Don't reassign value of "pos" until after its used to set
+	lenhash.
+
+1999-03-16  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* cdb_writer.cc (abort): Protect the close and unlink calls
+	against repeated or extraneous calls, to prevent unlinking an
+	existing temporary file.
+
+	* cdb_writer.cc: These routines now call the new C++ cdbmake
+	routines.
+
+	* cdb_make.cc: Copied the contents of cdb-0.55/cdbmake_*.c into
+	here and converted into C++ style code.
+
+1999-03-15  Bruce Guenter  <bguenter@mikhail.qcc.sk.ca>
+
+	* cdb_getrec.cc (cdb_getrec): Simply call cdb_reader::get in this
+	function.
+
+	* cdb_get.cc (get): Moved all of cdb_getrec into cdb_reader::get
+	and cdb_reader::seek, and optimized it for multiple reads (only
+	read the header once and store it).
+
