@@ -9,8 +9,8 @@
 #include "installer.h"
 
 #define DENTRY_SLOTS 250
-static const char* dentries[DENTRY_SLOTS] = {0};
-static int last_dentry = 0;
+static const char* dentries[DENTRY_SLOTS] = { "", 0 };
+static int last_dentry = 1;
 
 static void showmode(char type, unsigned mode)
 {
@@ -46,8 +46,10 @@ static void show(char type, int dir, const char* filename,
   else printf(" %8d", gid);
 
   putchar(' ');
-  fputs(dentries[dir], stdout);
-  putchar('/');
+  if (filename[0] != '/') {
+    fputs(dentries[dir], stdout);
+    putchar('/');
+  }
   fputs(filename, stdout);
   fputs(endline, stdout);
 }
@@ -102,7 +104,8 @@ int opensubdir(int dir, const char* subdir)
   }
   str = malloc(strlen(dentries[dir])+1+strlen(subdir)+1);
   strcpy(str, dentries[dir]);
-  strcat(str, "/");
+  if (dir > 0)
+    strcat(str, "/");
   strcat(str, subdir);
   dentries[last_dentry] = str;
   return last_dentry++;

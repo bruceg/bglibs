@@ -7,7 +7,7 @@
 
 void insthier(void)
 {
-  const int home = d("/", conf_home, -1, -1, 0755);
+  const int home = d(0, conf_home, -1, -1, 0755);
   int bin;
   int inc;
   int lib;

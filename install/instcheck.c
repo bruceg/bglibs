@@ -109,6 +109,9 @@ int opensubdir(int dir, const char* subdir)
 
 int main(void)
 {
+  close(0);
+  if (opendir("/") != 0)
+    diesys("Opening root directory resulted in non-zero file descriptor");
   insthier();
   return 0;
 }
