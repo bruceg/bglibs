@@ -22,6 +22,10 @@ int str_cat(str* s, str* in);
 int str_cats(str* s, const char* in);
 int str_catc(str* s, char in);
 int str_catb(str* s, const char* in, unsigned len);
+#define str_cati(S,I) str_catiw((S),(I),0,0)
+int str_catiw(str* s, long in, unsigned width, char pad);
+#define str_catu(S,I) str_catuw((S),(I),0,0)
+int str_catuw(str* s, unsigned long in, unsigned width, char pad);
 void str_buildmap(int map[256], const char* list);
 int str_findfirst(str* s, char ch);
 int str_findfirstof(str* s, const char* list);
