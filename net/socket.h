@@ -26,7 +26,11 @@ int socket_udp4(void);
 int socket_udp6(void);
 #define socket_udp socket_udp4
 int socket_connect4(int sock, const ipv4addr* ip, ipv4port port);
+int socket_connect4_timeout(int sock, const ipv4addr* ip, ipv4port port,
+			    int timeout);
 int socket_connect6(int sock, const ipv6addr* ip, ipv6port port);
+int socket_connect6_timeout(int sock, const ipv6addr* ip, ipv6port port,
+			    int timeout);
 int socket_bind4(int sock, const ipv4addr* ip, ipv4port port);
 int socket_bind6(int sock, const ipv6addr* ip, ipv6port port);
 int socket_accept4(int sock, ipv4addr* ip, ipv4port* port);
@@ -51,6 +55,7 @@ int socket_notcpdelay(int sock, int enable);
 int socket_unixdgm(void);
 int socket_unixstr(void);
 int socket_connectu(int sock, const char* path);
+int socket_connectu_timeout(int sock, const char* path, int timeout);
 int socket_bindu(int sock, const char* path);
 int socket_acceptu(int sock);
 int socket_recvu(int sock, char* buffer, unsigned buflen);
