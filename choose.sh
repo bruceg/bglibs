@@ -1,18 +1,20 @@
-
-result="$4"
+try="sys/$2"
+h1="sys/$3.h1"
+h2="sys/$3.h2"
+result="$h2"
 
 case "$1" in
-  *c*) ./compile $2.c >/dev/null 2>&1 || result="$3" ;;
+  *c*) ./compile "$try".c >/dev/null 2>&1 || result="$h1" ;;
 esac
 
 case "$1" in
-  *l*) ./load $2 >/dev/null 2>&1 || result="$3" ;;
+  *l*) ./load "$try" >/dev/null 2>&1 || result="$h1" ;;
 esac
 
 case "$1" in
-  *r*) ./$2 >/dev/null 2>&1 || result="$3" ;;
+  *r*) ./"$try" >/dev/null 2>&1 || result="$h1" ;;
 esac
 
-rm -f $2.o $2
+rm -f "$try".o "$try"
 
 exec cat "$result"
