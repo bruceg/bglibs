@@ -19,12 +19,18 @@ typedef struct str str;
 /* Overhead */
 int str_init(str* s);
 int str_ready(str* s, unsigned size);
+int str_realloc(str* s, unsigned size);
 void str_free(str* s);
 
 /* Assignment */
 int str_copy(str* s, const str* in);
 int str_copys(str* s, const char* in);
 int str_copyb(str* s, const char* in, unsigned len);
+int str_copy2s(str* s, const char* a, const char* b);
+int str_copy3s(str* s, const char* a, const char* b, const char* c);
+int str_copy4s(str* s, const char* a, const char* b, const char* c, const char* d);
+int str_copy5s(str* s, const char* a, const char* b, const char* c, const char* d, const char* e);
+int str_copy6s(str* s, const char* a, const char* b, const char* c, const char* d, const char* e, const char* f);
 
 /* Appending */
 int str_cat(str* s, const str* in);
@@ -35,6 +41,11 @@ int str_catb(str* s, const char* in, unsigned len);
 int str_catiw(str* s, long in, unsigned width, char pad);
 #define str_catu(S,I) str_catuw((S),(I),0,0)
 int str_catuw(str* s, unsigned long in, unsigned width, char pad);
+int str_cat2s(str* s, const char* a, const char* b);
+int str_cat3s(str* s, const char* a, const char* b, const char* c);
+int str_cat4s(str* s, const char* a, const char* b, const char* c, const char* d);
+int str_cat5s(str* s, const char* a, const char* b, const char* c, const char* d, const char* e);
+int str_cat6s(str* s, const char* a, const char* b, const char* c, const char* d, const char* e, const char* f);
 
 int str_join(str* s, char sep, const str* t);
 int str_joins(str* s, char sep, const char* in);
