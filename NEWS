@@ -3,7 +3,8 @@ Changes in version 1.006
 
 - Added uint16, uint32, and uint64 pack/unpack functions.
 
-- Added 32 and 64 bit CRC functions.
+- Added 32 and 64 bit CRC functions, and the Mersenne Twister random
+  number generator.
 
 - Changed the ipv4addr typedef to make explicit when it's being passed
   by reference.  This breaks source code compatibility with previous
