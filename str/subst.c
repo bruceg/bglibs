@@ -1,5 +1,5 @@
 /* str/subst.c - Substitute one character for another
- * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
+ * Copyright (C) 2004  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,11 +18,18 @@
 #include <ctype.h>
 #include "str.h"
 
-/** Substitute one character for another throughout the string */
-void str_subst(str* s, char from, char to)
+/** Substitute one character for another throughout the string.
+    \returns the number of substitutions made.
+ */
+long str_subst(str* s, char from, char to)
 {
   char* ptr;
   unsigned i;
-  for (i = 0, ptr = s->s; i < s->len; ++i, ++ptr)
-    if (*ptr == from) *ptr = to;
+  long count;
+  for (count = 0, i = 0, ptr = s->s; i < s->len; ++i, ++ptr)
+    if (*ptr == from) {
+      *ptr = to;
+      ++count;
+    }
+  return count;
 }

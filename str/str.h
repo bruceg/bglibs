@@ -122,7 +122,7 @@ int str_joinb(str* s, char sep, const char* in, unsigned len);
 /* @{ */
 void str_lower(str* s);
 void str_upper(str* s);
-void str_subst(str* s, char from, char to);
+long str_subst(str* s, char from, char to);
 void str_lstrip(str* s);
 void str_rstrip(str* s);
 #define str_strip(S) (str_rstrip(S), str_lstrip(S))
