@@ -5,6 +5,7 @@ dependon([
 	'sys/tryulong64.c', 'sys/uint64.h1', 'sys/uint64.h2',
 	'sys/tryendian.c', 'sys/endian.h1', 'sys/endian.h2',
 	'sys/trydirent.c', 'sys/direntry.h1', 'sys/direntry.h2',
+	'sys/tryipv6.c', 'sys/hasipv6.h1', 'sys/hasipv6.h2',
 	'sys/trygetpeereid.c', 'sys/hasgetpeereid.h1', 'sys/hasgetpeereid.h2',
 	'sys/tryvfork.c', 'sys/fork.h1', 'sys/fork.h2',
 	'sys/trypoll.c', 'sys/iopoll.h1', 'sys/iopoll.h2',
@@ -20,6 +21,7 @@ dependon([
   ./choose clr sys/tryulong64    sys/uint64.h1        sys/uint64.h2; \
   ./choose clr sys/tryendian     sys/endian.h1        sys/endian.h2; \
   ./choose c   sys/trydirent     sys/direntry.h1      sys/direntry.h2; \
+  ./choose c   sys/tryipv6       sys/hasipv6.h1       sys/hasipv6.h2; \
   ./choose cl  sys/tryvfork      sys/fork.h1          sys/fork.h2; \
   ./choose cl  sys/trygetpeereid sys/hasgetpeereid.h1 sys/hasgetpeereid.h2; \
   ./choose cl  sys/tryflock      sys/hasflock.h1      sys/hasflock.h2; \
