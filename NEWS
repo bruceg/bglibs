@@ -1,7 +1,10 @@
 -------------------------------------------------------------------------------
-Changes in version 1.009
+Changes in version 1.010
 
-- Added a small optimization to the SHA-256/512 code.
+- Added some small optimizations to the SHA-256/512 code and fixed a
+  one-off bug.
+
+- Added some major optimizations to the SHA-1 update/final code.
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
