@@ -23,7 +23,9 @@ int str_copy2s(str* s, const char* a, const char* b)
   char* ptr;
   unsigned alen = strlen(a);
   unsigned blen = strlen(b);
-  if (!str_ready(s, alen+blen)) return 0;
+  unsigned total = alen + blen;
+  if (!str_ready(s, total)) return 0;
+  s->len = total;
   ptr = s->s;
   memcpy(ptr, a, alen); ptr += alen;
   memcpy(ptr, b, blen); ptr += blen;

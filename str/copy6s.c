@@ -28,7 +28,9 @@ int str_copy6s(str* s, const char* a, const char* b, const char* c,
   unsigned dlen = strlen(d);
   unsigned elen = strlen(e);
   unsigned flen = strlen(f);
-  if (!str_ready(s, alen+blen+clen+dlen+elen+flen)) return 0;
+  unsigned total = alen + blen + clen + dlen + elen + flen;
+  if (!str_ready(s, total)) return 0;
+  s->len = total;
   ptr = s->s;
   memcpy(ptr, a, alen); ptr += alen;
   memcpy(ptr, b, blen); ptr += blen;

@@ -24,7 +24,9 @@ int str_copy3s(str* s, const char* a, const char* b, const char* c)
   unsigned alen = strlen(a);
   unsigned blen = strlen(b);
   unsigned clen = strlen(c);
-  if (!str_ready(s, alen+blen+clen)) return 0;
+  unsigned total = alen + blen + clen;
+  if (!str_ready(s, total)) return 0;
+  s->len = total;
   ptr = s->s;
   memcpy(ptr, a, alen); ptr += alen;
   memcpy(ptr, b, blen); ptr += blen;
