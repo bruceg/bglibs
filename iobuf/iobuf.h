@@ -1,6 +1,8 @@
 #ifndef IO_BUF__H__
 #define IO_BUF__H__
 
+struct str;
+
 #define IOBUF_EOF 1
 #define IOBUF_ERROR 2
 #define IOBUF_TIMEOUT 4
@@ -65,6 +67,7 @@ int ibuf_peek(ibuf* in, char* ch);
 int ibuf_getc(ibuf* in, char* ch);
 int ibuf_getu(ibuf* in, unsigned long* data);
 int ibuf_gets(ibuf* in, char* data, unsigned datalen, char boundary);
+int ibuf_getstr(ibuf* in, struct str* s, char boundary);
 
 struct obuf
 {
@@ -109,6 +112,9 @@ int obuf_put5s(obuf* out, const char* s1, const char* s2, const char* s3,
 	       const char* s4, const char* s5);
 int obuf_put6s(obuf* out, const char* s1, const char* s2, const char* s3,
 	       const char* s4, const char* s5, const char* s6);
+int obuf_put7s(obuf* out, const char* s1, const char* s2, const char* s3,
+	       const char* s4, const char* s5, const char* s6, const char* s7);
+#define obuf_putstr(out,str) obuf_write(out,(str)->s,(str)->len)
 int obuf_putsflush(obuf* out, const char* str);
 int obuf_putiw(obuf* out, long data, unsigned width, char pad);
 #define obuf_puti(out,data) obuf_putiw(out, data, 0, 0)
