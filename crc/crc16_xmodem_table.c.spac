@@ -1,0 +1,2 @@
+: crc-gentab
+./crc-gentab crc16_xmodem 16 0x8408 reflected >$@

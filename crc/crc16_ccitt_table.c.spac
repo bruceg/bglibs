@@ -1,0 +1,2 @@
+: crc-gentab
+./crc-gentab crc16_ccitt 16 0x1021 normal >$@

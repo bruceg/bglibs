@@ -1,0 +1,2 @@
+: crc-gentab
+./crc-gentab crc64 64 0x42F0E1EBA9EA3693 normal >$@

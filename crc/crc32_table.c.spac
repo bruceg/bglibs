@@ -1,0 +1,2 @@
+: crc-gentab
+./crc-gentab crc32 32 0x04C11DB7 reflected >$@

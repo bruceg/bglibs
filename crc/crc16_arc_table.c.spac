@@ -1,0 +1,2 @@
+: crc-gentab
+./crc-gentab crc16_arc 16 0x8005 reflected >$@

@@ -10,7 +10,7 @@
  * to date of CRC theory, math, algorithms, and code.
  */
 
-const char program[] = "crc/gentab";
+const char program[] = "crc-gentab";
 const int msg_show_pid = 0;
 
 static int calc_columns(int bits, const char* suffix)
