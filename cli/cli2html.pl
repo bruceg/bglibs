@@ -19,58 +19,66 @@ sub cstr2doc {
     &pod2doc($_);
 }
 
-sub section_head { "<h2>@_</h2>\n" }
+sub body_head {
+    "<html>
+<head>
+<title>Man page for $program($section)</title>
+</head>
+<body>
+<center><h1>Man page for $program($section)</h1></center><hr>
+<h2>NAME</h2><ul>
+<p>$program - $prefix</p>
+</ul>
+";
+}
+sub body_tail {
+    "</body>\n</html>\n";
+}
+
+sub synopsis {
+    my $s = "<p><b>$program</b>\n";
+    if(@options) {
+	my $first = 1;
+	foreach $option (@options) {
+	    if($option->{short}) {
+		$s .= "[<b>-$option->{short}";
+		$s .= "=$option->{type}" if $option->{type};
+		$s .= "</b>]\n";
+	    }
+	    if($option->{long}) {
+		$s .= "[<b>--$option->{long}";
+		$s .= "=$option->{type}" if $option->{type};
+		$s .= "</b>]\n";
+	    }
+	}
+    }
+    $s . "</p>\n";
+}
+
+sub options {
+    my $s = "<dl>\n";
+    foreach $option (@options) {
+	$s .= '<dt><b>';
+	if($option->{short}) {
+	    $s .= "-$option->{short}";
+	    $s .= " $option->{type}" if $option->{type};
+	}
+	$s .= "</b>, <b>" if $option->{short} && $option->{long};
+	if($option->{long}) {
+	    $s .= "--$option->{long}";
+	    $s .= "=$option->{type}" if $option->{type};
+	}
+	$s .= "</b>\n<dd>$option->{desc}";
+    }
+    $s . "</dl>\n";
+}
+
+sub section_head { "<h2>@_</h2><ul>\n" }
+sub section_tail { "</ul>\n" }
+
 sub paragraph {
     local($p,$first) = @_;
     "<p>$p<p>\n";
 }
 
 require 'cli_parse.pl';
-
-print "<html>
-<head>
-<title>Man page for $program($section)</title>
-</head>
-<body>
-<center><h1>Man page for $program($section)</h1></center><hr>
-<h2>NAME</h2>
-$program - $prefix
-<h2>SYNOPSIS</h2>
-<b>$program</b>
-";
-if(@options) {
-    $first = 1;
-    foreach $option (@options) {
-	if($option->{short}) {
-	    print "[<b>-$option->{short}";
-	    print "=$option->{type}" if $option->{type};
-	    print "</b>]\n";
-	}
-	if($option->{long}) {
-	    print "[<b>--$option->{long}";
-	    print "=$option->{type}" if $option->{type};
-	    print "</b>]\n";
-	}
-    }
-}
-print "<h2>DESCRIPTION</h2>\n", pod2doc($description);
-if(@options) {
-    print "<h2>OPTIONS</h2>\n<dl>\n";
-    foreach $option (@options) {
-	print '<dt><b>';
-	if($option->{short}) {
-	    print "-$option->{short}";
-	    print " $option->{type}" if $option->{type};
-	}
-	print "</b>, <b>" if $option->{short} && $option->{long};
-	if($option->{long}) {
-	    print "--$option->{long}";
-	    print "=$option->{type}" if $option->{type};
-	}
-	print "</b>\n";
-	print "<dd>", $option->{desc};
-    }
-    print "</dl>\n";
-}
-print $notes;
-print "<h2>AUTHOR</h2>\n", pod2doc($author), "\n" if $author;

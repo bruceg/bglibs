@@ -62,10 +62,12 @@ sub parse_options {
 }
 
 sub parse_notes {
+    my $first;
     while(<>) {
 	chomp;
 	last unless /^$/o || s/^\/\/\s*//o;
 	if(/^[\sA-Z]+$/o) {
+	    $notes .= &section_tail if $notes;
 	    $notes .= &section_head($_);
 	    undef $pgph;
 	    $first = 1;
@@ -79,9 +81,8 @@ sub parse_notes {
 	    $pgph .= "$_\n";
 	}
     }
-    if($pgph) {
-	$notes .= &paragraph(pod2doc($pgph), $first);
-    }
+    $notes .= &paragraph(pod2doc($pgph), $first) if $pgph;
+    $notes .= &section_tail if $notes;
 }
 
 while(<>) {
@@ -108,5 +109,31 @@ while(<>) {
 &parse_notes();
 
 $synopses =~ s/^\s+//o;
+
+print &body_head;
+
+print &section_head('SYNOPSIS');
+print &synopsis;
+print &section_tail;
+
+print &section_head('DESCRIPTION');
+print &pod2doc($description);
+print &section_tail;
+
+if(@options) {
+    print &section_head('OPTIONS');
+    print &options;
+    print &section_tail;
+}
+
+print $notes;
+
+if($author) {
+    print &section_head('AUTHOR');
+    print pod2doc($author);
+    print &section_tail;
+}
+
+print &body_tail;
 
 1;
