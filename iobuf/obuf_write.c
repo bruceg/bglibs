@@ -9,7 +9,7 @@ int obuf_write_large(obuf* out, const char* data, unsigned datalen)
   unsigned wr;
   
   io = &out->io;
-  if (io->flags) return 0;
+  if (iobuf_bad(io)) return 0;
   out->count = 0;
   if (!obuf_flush(out)) return 0;
   

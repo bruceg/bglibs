@@ -5,12 +5,12 @@
 int iobuf_close(iobuf* io)
 {
   int status;
-  if (io->do_free) {
+  if (io->flags & IOBUF_NEEDSFREE) {
     free(io->buffer);
     io->buffer = 0;
   }
   status = 1;
-  if (io->do_close && io->fd != -1)
+  if ((io->flags & IOBUF_NEEDSCLOSE) && io->fd != -1)
     status = close(io->fd) != -1;
   io->fd = -1;
   return status;

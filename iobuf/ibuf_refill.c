@@ -11,7 +11,7 @@ int ibuf_refill(ibuf* in)
   unsigned rd;
 
   io = &(in->io);
-  if (io->flags) return 0;
+  if (iobuf_bad(io)) return 0;
   if (io->bufstart != 0) {
     if (io->bufstart < io->buflen) {
       write(1, errmsg, sizeof errmsg);

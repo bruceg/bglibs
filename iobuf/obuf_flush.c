@@ -8,7 +8,7 @@ int obuf_flush(obuf* out)
   unsigned wr;
   
   io = &out->io;
-  if (io->flags) return 0;
+  if (iobuf_bad(io)) return 0;
   while (io->bufstart < io->buflen) {
     if (io->timeout && !iobuf_timeout(io, 1)) return 0;
     wr = out->writefn(io->fd, io->buffer+io->bufstart,

@@ -1,9 +1,9 @@
 #include "iobuf.h"
 
-int obuf_open(obuf* out, const char* filename, int flags, int mode,
+int obuf_open(obuf* out, const char* filename, int oflags, int mode,
 	      unsigned bufsize)
 {
   int fd;
-  if ((fd = open(filename, O_WRONLY | flags, mode)) == -1) return 0;
-  return obuf_init(out, fd, 1, bufsize);
+  if ((fd = open(filename, O_WRONLY | oflags, mode)) == -1) return 0;
+  return obuf_init(out, fd, 0, IOBUF_NEEDSCLOSE|IOBUF_SEEKABLE, bufsize);
 }

@@ -7,7 +7,7 @@ int main(void)
 {
   obuf buf;
   /* Create an artifically tiny buffer size */
-  obuf_init(&buf, 1, 0, 8);
+  obuf_init(&buf, 1, 0, 0, 8);
   /* Test proper merging of short writes */
   obuf_puts(&buf, "0123"); BREAK;
   obuf_puts(&buf, "456789\n"); BREAK;

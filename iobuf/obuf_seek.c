@@ -10,7 +10,7 @@ int obuf_seek(obuf* out, unsigned offset)
   unsigned buf_end;
   
   io = &out->io;
-  if (io->flags) return 0;
+  if (iobuf_bad(io)) return 0;
   
   buf_start = io->offset;
   buf_end = io->offset + io->buflen;

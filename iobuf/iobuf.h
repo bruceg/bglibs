@@ -10,6 +10,10 @@ struct str;
 #define IOBUF_EOF 1
 #define IOBUF_ERROR 2
 #define IOBUF_TIMEOUT 4
+#define IOBUF_BADFLAGS 0xf
+#define IOBUF_SEEKABLE 0x10	/* The fd can be lseek'ed */
+#define IOBUF_NEEDSCLOSE 0x20	/* The fd needs to be closed */
+#define IOBUF_NEEDSFREE 0x40	/* The buffer needs to be freed */
 
 extern unsigned iobuf_bufsize;
 
@@ -24,8 +28,6 @@ struct iobuf
   unsigned timeout;		/* I/O timeout in ms */
   unsigned flags;		/* Status flags */
   int errnum;			/* Saved errno flag */
-  int do_free;			/* Free the buffer */
-  int do_close;			/* Set if iobuf should close the FD */
 };
 typedef struct iobuf iobuf;
 
@@ -36,11 +38,13 @@ do{ \
   return 0; \
 }while(0)
 
-int iobuf_init(iobuf* io, int fd, int do_close, unsigned bufsize, char* buffer);
+int iobuf_init(iobuf* io, int fd, unsigned bufsize, char* buffer,
+	       unsigned flags);
 int iobuf_close(iobuf* io);
 #define iobuf_closed(io) ((io)->fd == -1)
 #define iobuf_error(io) ((io)->flags & IOBUF_ERROR)
 #define iobuf_timedout(io) ((io)->flags & IOBUF_TIMEOUT)
+#define iobuf_bad(io) ((io)->flags & IOBUF_BADFLAGS)
 int iobuf_timeout(iobuf* io, int poll_out);
 
 typedef int (*ibuf_fn)(int, void*, unsigned long);
@@ -55,7 +59,7 @@ typedef struct ibuf ibuf;
 
 extern ibuf inbuf;
 
-int ibuf_init(ibuf* in, int fd, ibuf_fn fn, int do_close, unsigned bufsize);
+int ibuf_init(ibuf* in, int fd, ibuf_fn fn, unsigned flags, unsigned bufsize);
 int ibuf_open(ibuf* in, const char* filename, unsigned bufsize);
 int ibuf_eof(ibuf* in);
 #define ibuf_close(in) iobuf_close(&((in)->io))
@@ -97,8 +101,8 @@ extern obuf errbuf;
 #define OBUF_TRUNCATE O_TRUNC
 #define OBUF_APPEND O_APPEND
 
-int obuf_init(obuf* out, int fd, obuf_fn fn, int do_close, unsigned bufsize);
-int obuf_open(obuf* out, const char* filename, int flags, int mode, unsigned bufsize);
+int obuf_init(obuf* out, int fd, obuf_fn fn, unsigned flags, unsigned bufsize);
+int obuf_open(obuf* out, const char* filename, int oflags, int mode, unsigned bufsize);
 int obuf_close(obuf* out);
 #define obuf_error(out) iobuf_error(&(out)->io)
 #define obuf_closed(out) iobuf_closed(&(out)->io)
