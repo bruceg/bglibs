@@ -6,6 +6,8 @@ Changes in version 1.010
 
 - Added some major optimizations to the SHA-1 update/final code.
 
+- Removed the cvm libraries.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

@@ -53,15 +53,6 @@ void insthier(void)
   CF(crypto, sha384.h);
   CF(crypto, sha512.h);
   
-  DI(cvm);
-  CF(cvm, client.h);
-  CF(cvm, errors.h);
-  CF(cvm, facts.h);
-  CF(cvm, module.h);
-  
-  DI(cvm-sasl);
-  CF(cvm-sasl, cvm-sasl.h);
-  
   DI(dict);
   CF(dict, dict.h);
   CF(dict, load.h);
@@ -120,11 +111,6 @@ void insthier(void)
   L(cli);
   L(crc);
   L(crypto);
-  cf(lib, "libcvm-client.a",  -1, -1, 0644, "cvm/client.a");
-  cf(lib, "libcvm-command.a", -1, -1, 0644, "cvm/command.a");
-  cf(lib, "libcvm-local.a",   -1, -1, 0644, "cvm/local.a");
-  cf(lib, "libcvm-udp.a",     -1, -1, 0644, "cvm/udp.a");
-  cf(lib, "libcvm-sasl.a",    -1, -1, 0644, "cvm-sasl/lib.a");
   L(dict);
   L(iobuf);
   L(misc);
@@ -163,15 +149,6 @@ void insthier(void)
   SL(crypto, sha1);
   SL(crypto, sha256);
   SL(crypto, sha512a);
-
-  DL(cvm);
-  s(dir, "client.a",  "../libcvm-client.a");
-  s(dir, "command.a", "../libcvm-command.a");
-  s(dir, "local.a",   "../libcvm-local.a");
-  s(dir, "udp.a",     "../libcvm-udp.a");
-
-  DL(cvm-sasl);
-  s(dir, "cvm-sasl.a", "../libcvm-sasl.a");
 
   DL(dict);
   SL(dict, dict);
