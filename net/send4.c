@@ -22,8 +22,9 @@
 #include <netinet/in.h>
 #include "socket.h"
 
+/** Send a datagram on a UDP socket. */
 int socket_send4(int sock, const char* buffer, unsigned buflen,
-		 const ipv4addr* ip, unsigned short port)
+		 const ipv4addr* ip, ipv4port port)
 {
   struct sockaddr_in sa;
   memset(&sa, 0, sizeof sa);

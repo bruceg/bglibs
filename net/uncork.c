@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "socket.h"
 
+/** Unstop a TCP socket from sending short writes. */
 int socket_uncork(int sock)
 {
 #if defined(TCP_CORK)

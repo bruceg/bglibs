@@ -20,6 +20,7 @@
 #include <unistd.h>
 #include "socket.h"
 
+/** Test if a socket is connected. */
 int socket_connected(int sock)
 {
   struct sockaddr sa;

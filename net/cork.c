@@ -21,6 +21,17 @@
 #include <sys/socket.h>
 #include "socket.h"
 
+/** Stop a TCP socket from sending short writes.
+
+Several UNIX OS's have a facility which can prevent packets from being
+sent across the wire until they are completely full, even if short
+writes are sent to the socket that would normally result in output
+packets.  This routine attempts to enable that facility to optimize
+throughput for bulk data transfers.  It is known to work on Linux (with
+the \c TCP_CORK option) and to at least compile on BSD (with the \c
+TCP_NOPUSH option).  On OS's which lack either of these two options,
+this function is essentially a no-op.
+*/
 int socket_cork(int sock)
 {
 #if defined(TCP_CORK)

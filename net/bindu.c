@@ -23,6 +23,7 @@
 #include <unistd.h>
 #include "socket.h"
 
+/** Bind a UNIX domain address (path) to a socket. */
 int socket_bindu(int sock, const char* path)
 {
   struct sockaddr_un sa;

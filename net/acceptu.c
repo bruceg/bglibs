@@ -21,6 +21,7 @@
 #include <sys/un.h>
 #include "socket.h"
 
+/** Accept a UNIX domain connection. */
 int socket_acceptu(int sock)
 {
   struct sockaddr_un sa;

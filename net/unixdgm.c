@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "socket.h"
 
+/** Create UNIX domain datagram socket. */
 int socket_unixdgm(void)
 {
   return socket(AF_UNIX, SOCK_DGRAM, 0);

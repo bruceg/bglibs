@@ -23,6 +23,7 @@
 #include <unistd.h>
 #include "socket.h"
 
+/** Make an UNIX domain connection. */
 int socket_connectu(int sock, const char* path)
 {
   struct sockaddr_un sa;

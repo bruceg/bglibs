@@ -24,6 +24,7 @@
 #define MSG_NOSIGNAL 0
 #endif
 
+/** Receive a file descriptor over a socket. */
 int socket_recvfd(int sock)
 {
   char cbuf[CMSG_SPACE(sizeof(int))];

@@ -20,6 +20,7 @@
 #include <sys/socket.h>
 #include "socket.h"
 
+/** Mark a socket for address reuse. */
 int socket_reuse(int fd)
 {
   int opt = 1;

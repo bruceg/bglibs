@@ -17,6 +17,11 @@ static const char* parse_part(const char* str, uint8* num)
   return str;
 }
 
+/** Scan a C string for an IPv4 address.
+
+\return \c NULL if parsing failed, otherwise a pointer to the
+first character after the end of the address.
+*/
 const char* ipv4_scan(const char* start, ipv4addr* addr)
 {
   const char* s;
@@ -32,6 +37,13 @@ const char* ipv4_scan(const char* start, ipv4addr* addr)
   return s;
 }
 
+/** Parse an IPv4 address.
+
+\deprecated This function is a wrapper for \c ipv4_scan.
+
+\return Non-zero (true) if parsing succeeded, and sets \c *end to the
+first character past the end of the address.
+*/
 int ipv4_parse(const char* start, ipv4addr* addr, const char** end)
 {
   return (*end = ipv4_scan(start, addr)) != 0;

@@ -22,7 +22,8 @@
 #include <netinet/in.h>
 #include "socket.h"
 
-int socket_bind4(int sock, const ipv4addr* ip, unsigned short port)
+/** Bind a socket to an IPv4 address. */
+int socket_bind4(int sock, const ipv4addr* ip, ipv4port port)
 {
   struct sockaddr_in sa;
   memset(&sa, 0, sizeof sa);

@@ -24,7 +24,8 @@
 #include <unistd.h>
 #include "socket.h"
 
-int socket_connect4(int sock, const ipv4addr* ip, unsigned short port)
+/** Connect a socket to an IPv4 address. */
+int socket_connect4(int sock, const ipv4addr* ip, ipv4port port)
 {
   struct sockaddr_in sa;
   memset(&sa, 0, sizeof sa);

@@ -24,6 +24,7 @@
 #define MSG_NOSIGNAL 0
 #endif
 
+/** Send a file descriptor over a socket. */
 int socket_sendfd(int sock, int fd)
 {
   struct msghdr msg;

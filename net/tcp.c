@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "socket.h"
 
+/** Create a TCP/IP socket. */
 int socket_tcp(void)
 {
   return socket(AF_INET, SOCK_STREAM, 0);

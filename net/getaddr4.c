@@ -22,7 +22,8 @@
 #include <netinet/in.h>
 #include "socket.h"
 
-int socket_getaddr4(int sock, ipv4addr* addr, unsigned short* port)
+/** Determine the IPv4 address of a socket. */
+int socket_getaddr4(int sock, ipv4addr* addr, ipv4port* port)
 {
   struct sockaddr_in sa;
   int size;

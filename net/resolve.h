@@ -3,14 +3,24 @@
 
 #include "ipv4.h"
 
+/** \defgroup resolve resolve: Domain name resolution functions
+@{ */
+
+/** No error. */
 #define RESOLVE_OK 0
+/** Domain name not found. */
 #define RESOLVE_NOTFOUND 1
+/** Domain name exists, but has no address. */
 #define RESOLVE_NOADDR 2
+/** Non-recoverable name server error. */
 #define RESOLVE_NSERROR 3
+/** Temporary failure. */
 #define RESOLVE_TEMPFAIL 4
 
 extern const char* resolve_ipv4addr(const ipv4addr* addr);
 extern int resolve_ipv4name(const char* name, ipv4addr* addr);
 extern int resolve_error(void);
+
+/* @} */
 
 #endif

@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "socket.h"
 
+/** Create a pair of stream sockets. */
 int socket_pairstr(int fd[2])
 {
   return socketpair(AF_UNIX, SOCK_STREAM, 0, fd) == 0;

@@ -32,6 +32,7 @@
 #define SHUT_RDWR 2
 #endif
 
+/** Shut down part or all of a socket. */
 int socket_shutdown(int sock, int shut_rd, int shut_wr)
 {
   int how;

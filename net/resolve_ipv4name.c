@@ -4,6 +4,7 @@
 #include <sys/socket.h>
 #include "resolve.h"
 
+/** Look up the IPv4 address corresponding to a domain name. */
 int resolve_ipv4name(const char* name, ipv4addr* addr)
 {
   struct hostent* ent;

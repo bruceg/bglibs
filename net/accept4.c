@@ -22,7 +22,8 @@
 #include <netinet/in.h>
 #include "socket.h"
 
-int socket_accept4(int sock, ipv4addr* ip, unsigned short *port)
+/** Accept a connection on a socket from an IPv4 address. */
+int socket_accept4(int sock, ipv4addr* ip, ipv4port *port)
 {
   struct sockaddr_in sa;
   int dummy;

@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "socket.h"
 
+/** Create a UDP/IP socket. */
 int socket_udp(void)
 {
   return socket(AF_INET, SOCK_DGRAM, 0);

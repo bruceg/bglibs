@@ -20,6 +20,7 @@
 #include <sys/socket.h>
 #include "socket.h"
 
+/** Receive a datagram from a UNIX domain socket. */
 int socket_recvu(int sock, char* buffer, unsigned buflen)
 {
   return recvfrom(sock, buffer, buflen, 0, 0, 0);

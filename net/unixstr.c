@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "socket.h"
 
+/** Create UNIX domain stream socket. */
 int socket_unixstr(void)
 {
   return socket(AF_UNIX, SOCK_STREAM, 0);

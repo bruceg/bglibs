@@ -22,8 +22,9 @@
 #include <netinet/in.h>
 #include "socket.h"
 
+/** Receive a datagram from a UDP socket. */
 int socket_recv4(int sock, char* buffer, unsigned buflen,
-		 ipv4addr* ip, unsigned short* port)
+		 ipv4addr* ip, ipv4port* port)
 {
   struct sockaddr_in sa;
   int dummy = sizeof sa;

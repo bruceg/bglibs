@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "socket.h"
 
+/** Create a pair of datagram sockets. */
 int socket_pairdgm(int fd[2])
 {
   return socketpair(AF_UNIX, SOCK_DGRAM, 0, fd) == 0;

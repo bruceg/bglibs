@@ -20,6 +20,7 @@
 #include <sys/socket.h>
 #include "socket.h"
 
+/** Send a datagram on a UNIX domain socket. */
 int socket_sendu(int sock, const char* buffer, unsigned buflen)
 {
   return sendto(sock, buffer, buflen, 0, 0, 0);

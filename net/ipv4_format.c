@@ -10,6 +10,11 @@ static char* format_part(unsigned char i, char* str)
   return str;
 }
 
+/** Produce a formatted C string from an IPv4 address.
+
+\note The return value is statically allocated.  Multiple calls to this
+function will return pointers to the same string.
+*/
 const char* ipv4_format(const ipv4addr* addr)
 {
   static char buf[16];

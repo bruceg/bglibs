@@ -21,6 +21,7 @@
 #include <netinet/in.h>
 #include "socket.h"
 
+/** Listen to a socket. */
 int socket_listen(int sock, int backlog)
 {
   return listen(sock, backlog) == 0;

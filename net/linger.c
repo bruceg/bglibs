@@ -20,6 +20,7 @@
 #include <sys/socket.h>
 #include "socket.h"
 
+/** Set the socket "linger" option. */
 int socket_linger(int fd, int onoff, int seconds)
 {
   struct linger opt;

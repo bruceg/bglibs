@@ -20,6 +20,7 @@
 #include <sys/socket.h>
 #include "socket.h"
 
+/** Mark a socket for broadcast transmission. */
 int socket_broadcast(int fd)
 {
   int opt = 1;
