@@ -7,7 +7,7 @@
 
 void insthier(void)
 {
-  int home = opendir(conf_home);
+  const int home = d("/", conf_home, -1, -1, 0755);
   int bin;
   int inc;
   int lib;
@@ -97,7 +97,7 @@ void insthier(void)
   c(lib, "libbg-sysdeps.a", -1, -1, 0644);
 
   cf(lib, "libbg-installer.a", -1, -1, 0644, "install/installer.a");
-  cf(lib, "libbg-instcheck.a", -1, -1, 0644, "install/installer.a");
+  cf(lib, "libbg-instcheck.a", -1, -1, 0644, "install/instcheck.a");
   cf(lib, "libbg-instshow.a", -1, -1, 0644,  "install/instshow.a");
 
 #undef L

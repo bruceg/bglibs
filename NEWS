@@ -21,6 +21,9 @@ Changes in version 1.010
 
 - Added str_start functions.
 
+- Fixed another installer bug, which caused the "installer.a" library to
+  get installed as "instcheck.a"
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
