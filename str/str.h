@@ -1,6 +1,9 @@
 #ifndef STR__H__
 #define STR__H__
 
+#define STR_MINSIZE 16
+#define STR_ROUNDSIZE 16
+
 struct str
 {
   char* s;
@@ -9,15 +12,17 @@ struct str
 };
 typedef struct str str;
 
-extern unsigned str_minsize;
-extern unsigned str_roundsize;
-
+/* Overhead */
 int str_init(str* s);
 int str_ready(str* s, unsigned size);
 void str_free(str* s);
+
+/* Assignment */
 int str_copy(str* s, str* in);
 int str_copys(str* s, const char* in);
 int str_copyb(str* s, const char* in, unsigned len);
+
+/* Appending */
 int str_cat(str* s, str* in);
 int str_cats(str* s, const char* in);
 int str_catc(str* s, char in);
@@ -26,6 +31,8 @@ int str_catb(str* s, const char* in, unsigned len);
 int str_catiw(str* s, long in, unsigned width, char pad);
 #define str_catu(S,I) str_catuw((S),(I),0,0)
 int str_catuw(str* s, unsigned long in, unsigned width, char pad);
+
+/* Searching */
 void str_buildmap(int map[256], const char* list);
 int str_findfirst(str* s, char ch);
 int str_findfirstof(str* s, const char* list);
