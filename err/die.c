@@ -3,8 +3,8 @@
 
 void die(int code,
 	 const char* a, const char* b, const char* c, const char* d,
-	 int showsys)
+	 const char* e, const char* f, int showsys)
 {
-  err_message("Fatal", a, b, c, d, showsys);
+  err_message("Fatal", a, b, c, d, e, f, showsys);
   exit(code);
 }
