@@ -12,6 +12,8 @@ Changes in version 1.018
 
 - Added environment string manipulation functions.
 
+- Added named pipe trigger functions.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

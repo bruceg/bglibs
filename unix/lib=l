@@ -14,3 +14,5 @@ sig_pipe.o
 sig_quit.o
 sig_suspend.o
 sig_term.o
+trigger_set.o
+trigger_pull.o
