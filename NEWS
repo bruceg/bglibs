@@ -3,6 +3,8 @@ Changes in version 1.010
 
 - Added a getpeereid sysdep function.
 
+- Added self-pipe SIGCHLD handling functions.
+
 - Added some small optimizations to the SHA-256/512 code and fixed a
   one-off bug.
 

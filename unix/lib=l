@@ -1,5 +1,6 @@
 nonblock_off.o
 nonblock_on.o
+selfpipe.o
 sig_alarm.o
 sig_all.o
 sig_block.o
