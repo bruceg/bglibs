@@ -2,7 +2,8 @@
 Changes in version 1.003
 
 - Optimized path matching to only stat intermediate entries if they
-  don't contain any meta-characters.
+  don't contain any meta-characters, instead of reading the entire
+  directory and matching.
 - Fixed a bug in str/cmp.c: it missed adding offset to the string
   pointer.
 - Fixed bug in iobuf/[io]buf_seek.c -- seeks to the current read/write
