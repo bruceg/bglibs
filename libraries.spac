@@ -1,1 +1,2 @@
 dependon(map(lambda fn:fn[:-2]+'.a', recglob('*=l')))
+: libbg.a

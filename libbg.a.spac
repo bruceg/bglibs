@@ -1,0 +1,20 @@
+objs = { }
+for dir in ('adt','base64','cdb','crc','crypto','dict','fmt','iobuf',
+            'misc','msg','net','path','str','unix','vmailmgr'):
+	for obj in readlist(dir+'/lib=l', dir):
+		objs[obj] = 1
+objs = objs.keys()
+objs.sort()
+
+dependon(objs)
+
+tmpdir = target + '.tmp'
+command('rm -rf ' + tmpdir)
+command('mkdir ' + tmpdir)
+for obj in objs:
+	dirobj = obj.replace('/', '_')
+	command('ln %s %s/%s' % (obj, tmpdir, dirobj))
+
+: makelib
+./makelib %(target)s %(target)s.tmp/*
+rm -rf %(tmpdir)s

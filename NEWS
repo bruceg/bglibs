@@ -1,6 +1,9 @@
 -------------------------------------------------------------------------------
 Changes in version 1.015
 
+- Added a "libbg.a" build target, including all the other libraries that
+  don't define a main routine (like cli).
+
 - Added set of str_splice functions, to insert one string into another.
 
 - Added IPv6 address parsing/formatting and network functions.

@@ -43,7 +43,9 @@ void insthier(void)
   CF(cli, cli.h);
 
   DI(crc);
+  CF(crc, gcrc32.h);
   CF(crc, crc32.h);
+  CF(crc, crc32c.h);
   CF(crc, crc64.h);
 
   DI(crypto);
@@ -97,6 +99,8 @@ void insthier(void)
   CF(vmailmgr, vpwentry.h);
   
   lib = d(home, "lib", -1, -1, 0755);
+
+  c(lib, "libbg.a", -1, -1, 0644);
 
   c(lib, "libbg-sysdeps.a", -1, -1, 0644);
 
