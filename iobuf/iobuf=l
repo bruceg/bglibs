@@ -25,6 +25,7 @@ obuf_put3s.o
 obuf_put4s.o
 obuf_put5s.o
 obuf_put6s.o
+obuf_put7s.o
 obuf_putc.o
 obuf_putiw.o
 obuf_putnetstring.o
