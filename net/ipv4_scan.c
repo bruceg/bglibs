@@ -31,8 +31,8 @@ const char* ipv4_scan(const char* start, ipv4addr* addr)
     memset(addr, 0, sizeof *addr);
     return s;
   }
-  if ((s = parse_part(s+1, &addr->addr[1])) == 0 && *s != '.') return 0;
-  if ((s = parse_part(s+1, &addr->addr[2])) == 0 && *s != '.') return 0;
+  if ((s = parse_part(s+1, &addr->addr[1])) == 0 || *s != '.') return 0;
+  if ((s = parse_part(s+1, &addr->addr[2])) == 0 || *s != '.') return 0;
   if ((s = parse_part(s+1, &addr->addr[3])) == 0) return 0;
   return s;
 }
@@ -48,3 +48,49 @@ int ipv4_parse(const char* start, ipv4addr* addr, const char** end)
 {
   return (*end = ipv4_scan(start, addr)) != 0;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+static void test(const char* start)
+{
+  ipv4addr ip;
+  int i;
+  const char* end;
+  obuf_put2s(&outbuf, start, ": ");
+  end = ipv4_scan(start, &ip);
+  if (end == 0)
+    obuf_puts(&outbuf, "NULL");
+  else {
+    for (i = 0; i < 4; ++i) {
+      if (i > 0) obuf_putc(&outbuf, '.');
+      obuf_puti(&outbuf, ip.addr[i]);
+    }
+    if (*end != 0)
+      obuf_put2s(&outbuf, " + ", end);
+  }
+  NL();
+  obuf_flush(&outbuf);
+}
+
+void selftest(void)
+{
+  test("0");
+  test("0.");
+  test("0a");
+  test("0.0.0.0");
+  test("1.2.3.4");
+  test("111.222.333.444");
+  test("1.2.3.4a");
+  test("1,2,3,4");
+}
+#endif
+#ifdef SELFTEST_EXP
+0: 0.0.0.0
+0.: NULL
+0a: 0.0.0.0 + a
+0.0.0.0: 0.0.0.0
+1.2.3.4: 1.2.3.4
+111.222.333.444: NULL
+1.2.3.4a: 1.2.3.4 + a
+1,2,3,4: NULL
+#endif
