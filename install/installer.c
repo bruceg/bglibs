@@ -115,8 +115,8 @@ int opensubdir(int dir, const char* subdir)
 int main(void)
 {
   close(0);
-  if (opendir("/") != 0)
-    diesys("Opening root directory resulted in non-zero file descriptor");
+  if (open(".", O_RDONLY) != 0)
+    diefsys("Could not open directory", "/");
   sourcedir = opendir(".");
   umask(077);
   insthier();
