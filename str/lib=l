@@ -2,6 +2,7 @@ alloc.o
 buildmap.o
 case_glob.o
 case_match.o
+case_start.o
 cat2s.o
 cat3s.o
 cat4s.o
@@ -46,6 +47,7 @@ lstrip.o
 match.o
 rstrip.o
 sort.o
+start.o
 subst.o
 truncate.o
 upper.o

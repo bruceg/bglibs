@@ -141,6 +141,14 @@ int str_cmpb(const str* a, unsigned offset, const char* b, unsigned len);
 int str_diff(const str* a, const str* b);
 int str_diffs(const str* a, const char* b);
 int str_diffb(const str* a, const char* b, unsigned len);
+
+int str_start(const str* a, const str* b);
+int str_starts(const str* a, const char* b);
+int str_startb(const str* a, const char* b, unsigned len);
+
+int str_case_start(const str* a, const str* b);
+int str_case_starts(const str* a, const char* b);
+int str_case_startb(const str* a, const char* b, unsigned len);
 /* @} */
 
 /** \name Searching Functions
