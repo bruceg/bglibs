@@ -29,7 +29,7 @@ static unsigned long hash(char* const* a)
   return ghash_hashs(*a);
 }
 
-static struct ghash d;
+static struct ghash dict;
 GHASH_DECL(test,char*,int);
 GHASH_DEFN(test,char*,int,hash,keycmp,keycopy,datacopy,keyfree,0);
 
@@ -41,13 +41,13 @@ static void print(struct test_entry* entry)
 int main(int argc, char* argv[])
 {
   int i;
-  test_init(&d);
+  test_init(&dict);
   for (i = 0; i < argc; ++i)
-    test_add(&d, &argv[i], &i);
+    test_add(&dict, &argv[i], &i);
   for (i = 0; i < argc; ++i)
-    if (test_get(&d, &argv[i]) == 0)
+    if (test_get(&dict, &argv[i]) == 0)
       printf("Could not locate key [%s]\n", argv[i]);
-  test_foreach(&d, print);
-  test_free(&d);
+  test_foreach(&dict, print);
+  test_free(&dict);
   return 0;
 }
