@@ -30,32 +30,17 @@ void ghashiter_next(struct ghashiter* iter)
 #include <stdlib.h>
 #include <string.h>
 
-static int keycmp(char* const* a, char* const* b)
-{
-  return strcmp(*a, *b);
-}
-
-static int keycopy(char** a, char* const* b)
-{
-  return (*a = strdup(*b)) != 0;
-}
-
 static int datacopy(char** a, char* const* b)
 {
   *a = *b;
   return 1;
 }
 
-static void keyfree(char** a)
-{
-  free(*a);
-}
-
 static struct ghash dict;
-GHASH_DECL(test,char*,int);
-GHASH_DEFN(test,char*,int,ghash_hashsp,keycmp,keycopy,datacopy,keyfree,0);
+GHASH_DECL(test,const char*,int);
+GHASH_DEFN(test,const char*,int,adt_hashsp,adt_cmpsp,adt_copysp,datacopy,adt_freesp,0);
 
-char* keys[] = {
+const char* keys[] = {
   "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
   "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
   0

@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "ghash.h"
+#include "common.h"
 
-adt_hash_t ghash_hashb(const unsigned char* data, unsigned long len)
+adt_hash_t adt_hashb(const unsigned char* data, unsigned long len)
 {
   adt_hash_t h = 0x1505;
   while (len--)

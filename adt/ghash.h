@@ -25,9 +25,9 @@ struct ghash
 #define ghash_entry_dataptr(P,L) ((P)+sizeof(adt_hash_t)+(L))
 #define ghash_entry_ptr(P,O) ((P)+O)
 
-adt_hash_t ghash_hashb(const unsigned char*, unsigned long);
-adt_hash_t ghash_hashs(const unsigned char*);
-adt_hash_t ghash_hashsp(const char* const* p);
+#define ghash_hashb adt_hashb
+#define ghash_hashs adt_hashs
+#define ghash_hashsp adt_hashsp
 
 void ghash_insert(struct ghash* d, void* e);
 int ghash_add(struct ghash* d, const void* key, const void* data);

@@ -1,9 +1,8 @@
+adt_sp.o
 ghash_add.o
 ghash_foreach.o
 ghash_free.o
 ghash_get.o
-ghash_hashb.o
-ghash_hashs.o
 ghash_init.o
 ghash_insert.o
 ghash_rebuild.o
@@ -16,3 +15,5 @@ gqueue_top.o
 gstack_pop.o
 gstack_push.o
 gstack_top.o
+hashb.o
+hashs.o
