@@ -30,3 +30,21 @@ int str_findnextof(const str* s, const char* list, unsigned pos)
       return pos;
   return -1;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+void selftest(void)
+{
+  str s = { "01234567890123456", 16, 0 };
+  obuf_puti(&outbuf, str_findnextof(&s, "654", 0)); NL();
+  obuf_puti(&outbuf, str_findnextof(&s, "654", 4)); NL();
+  obuf_puti(&outbuf, str_findnextof(&s, "654", 5)); NL();
+  obuf_puti(&outbuf, str_findnextof(&s, "678", 9)); NL();
+}
+#endif
+#ifdef SELFTEST_EXP
+4
+4
+5
+-1
+#endif

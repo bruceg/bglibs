@@ -37,3 +37,16 @@ void msg_common(const char* type,
   obuf_putc(&errbuf, '\n');
   obuf_flush(&errbuf);
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+const char program[] = "testprog";
+int msg_show_pid = 0;
+void selftest(void)
+{
+  warn2("a", "b");
+}
+#endif
+#ifdef SELFTEST_EXP
+testprog: Warning: ab
+#endif

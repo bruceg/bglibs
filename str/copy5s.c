@@ -40,3 +40,15 @@ int str_copy5s(str* s, const char* a, const char* b, const char* c,
   *ptr = 0;
   return 1;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+MAIN
+{
+  static str s;
+  debugstrfn(str_copy5s(&s, "1", "2", "3", "4", "5"), &s);
+}
+#endif
+#ifdef SELFTEST_EXP
+result=1 len=5 size=16 s=12345
+#endif

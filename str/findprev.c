@@ -26,3 +26,23 @@ int str_findprev(const str* s, char ch, unsigned pos)
     if (*p == ch) return p - s->s;
   return -1;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+void selftest(void)
+{
+  str s = { "01234567890123456", 16, 0 };
+  obuf_puti(&outbuf, str_findprev(&s, '6', 10)); NL();
+  obuf_puti(&outbuf, str_findprev(&s, '6', 6)); NL();
+  obuf_puti(&outbuf, str_findprev(&s, '6', 5)); NL();
+  obuf_puti(&outbuf, str_findprev(&s, '4', -1)); NL();
+  obuf_puti(&outbuf, str_findprev(&s, '6', -1)); NL();
+}
+#endif
+#ifdef SELFTEST_EXP
+6
+6
+-1
+14
+6
+#endif

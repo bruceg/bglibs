@@ -1,20 +1,11 @@
 #include "iobuf.h"
 
-int obuf_sign_pad(obuf* out, int sign, unsigned width, char pad)
-{
-  if (!width) return !sign || obuf_putc(out, '-');
-  if (pad != '0' && !obuf_pad(out, width, pad)) return 0;
-  if (sign && !obuf_putc(out, '-')) return 0;
-  if (pad == '0' && !obuf_pad(out, width, pad)) return 0;
-  return 1;
-}
-
 static int obuf_putsnumw_rec(obuf* out, long data, int sign,
 			     unsigned width, char pad,
 			     unsigned base, const char* digits)
 {
   if (width) --width;
-  if (data >= base) {
+  if (data >= (long)base) {
     if (!obuf_putsnumw_rec(out, data/base, sign, width, pad, base, digits))
       return 0;
   }
@@ -36,7 +27,7 @@ int obuf_putsnumw(obuf* out, long data, unsigned width, char pad,
     data = -data;
     if (width) -- width;
   }
-  if (data < base) {
+  if (data < (long)base) {
     if (width) {
       if (!obuf_sign_pad(out, sign, width-1, pad)) return 0;
     }
@@ -58,3 +49,24 @@ int obuf_puti(obuf* out, long data)
 {
   return obuf_putsnumw(out, data, 0, 0, 10, obuf_dec_digits);
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+MAIN
+{
+  obuf_putiw(&outbuf,  10, 0,   0); NL();
+  obuf_putiw(&outbuf, -10, 0,   0); NL();
+  obuf_putiw(&outbuf,  10, 5, ' '); NL();
+  obuf_putiw(&outbuf,  10, 5, '0'); NL();
+  obuf_putiw(&outbuf, -10, 5, ' '); NL();
+  obuf_putiw(&outbuf, -10, 5, '0'); NL();
+}
+#endif
+#ifdef SELFTEST_EXP
+10
+-10
+   10
+00010
+  -10
+-0010
+#endif

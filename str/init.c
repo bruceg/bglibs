@@ -29,3 +29,15 @@ int str_init(str* s)
   s->size = STR_BLOCKSIZE;
   return 1;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+void selftest(void)
+{
+  static str s;
+  debugstrfn(str_init(&s), &s);
+}
+#endif
+#ifdef SELFTEST_EXP
+result=1 len=0 size=16 s=
+#endif

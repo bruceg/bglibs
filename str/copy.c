@@ -39,3 +39,19 @@ int str_copyb(str* s, const char* in, unsigned len)
   s->s[len] = 0;
   return 1;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+void selftest(void)
+{
+  static str s;
+  debugstrfn(str_copys(&s, "foo"), &s);
+  debugstrfn(str_copyb(&s, "012345678901234567", 17), &s);
+  debugstrfn(str_copys(&s, "foo"), &s);
+}
+#endif
+#ifdef SELFTEST_EXP
+result=1 len=3 size=16 s=foo
+result=1 len=17 size=32 s=01234567890123456
+result=1 len=3 size=32 s=foo
+#endif

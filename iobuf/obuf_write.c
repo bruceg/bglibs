@@ -55,3 +55,24 @@ int obuf_write(obuf* out, const char* data, unsigned datalen)
   if (out->bufpos > io->buflen) io->buflen = out->bufpos;
   return 1;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+MAIN
+{
+  obuf buf;
+  obuf_init(&buf, 1, 0, 0, 8);
+  /* Test proper merging of short writes */
+  obuf_puts(&buf, "0123"); write(1,"brk\n",4);
+  obuf_puts(&buf, "456789\n"); write(1,"brk\n",4);
+  /* Test pass-through of large writes */
+  obuf_write(&buf, "01234567\n", 9); write(1,"brk\n",4);
+}
+#endif
+#ifdef SELFTEST_EXP
+brk
+01234567brk
+89
+01234567
+brk
+#endif

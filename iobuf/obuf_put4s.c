@@ -11,3 +11,22 @@ int obuf_put4s(obuf* out, const char* s1, const char* s2, const char* s3,
   if (s4 && !obuf_puts(out, s4)) return 0;
   return 1;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+MAIN
+{
+  obuf_put4s(&outbuf, "1", "2", "3", "4"); NL();
+  obuf_put4s(&outbuf,   0, "2", "3", "4"); NL();
+  obuf_put4s(&outbuf, "1",   0, "3", "4"); NL();
+  obuf_put4s(&outbuf, "1", "2",   0, "4"); NL();
+  obuf_put4s(&outbuf, "1", "2", "3",   0); NL();
+}
+#endif
+#ifdef SELFTEST_EXP
+1234
+234
+134
+124
+123
+#endif

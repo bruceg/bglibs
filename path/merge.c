@@ -60,3 +60,34 @@ int path_merge(str* path, const char* start)
   }
   return 1;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+#include "path.h"
+static str path;
+void showpath(void) { obuf_putstr(&outbuf, &path); NL(); }
+void selftest(void)
+{
+  str_copys(&path, "/");
+  path_merge(&path, "a"); showpath();
+  path_merge(&path, "b"); showpath();
+  path_merge(&path, "../c"); showpath();
+  path_merge(&path, "/d"); showpath();
+  str_copys(&path, "");
+  path_merge(&path, "a"); showpath();
+  path_merge(&path, "b"); showpath();
+  path_merge(&path, "../c"); showpath();
+  path_merge(&path, "/d"); showpath();
+}
+
+#endif
+#ifdef SELFTEST_EXP
+/a
+/a/b
+/a/c
+/d
+a
+a/b
+a/c
+/d
+#endif

@@ -14,3 +14,28 @@ int obuf_put7s(obuf* out, const char* s1, const char* s2, const char* s3,
   if (s7 && !obuf_puts(out, s7)) return 0;
   return 1;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+MAIN
+{
+  obuf_put7s(&outbuf, "1", "2", "3", "4", "5", "6", "7"); NL();
+  obuf_put7s(&outbuf,   0, "2", "3", "4", "5", "6", "7"); NL();
+  obuf_put7s(&outbuf, "1",   0, "3", "4", "5", "6", "7"); NL();
+  obuf_put7s(&outbuf, "1", "2",   0, "4", "5", "6", "7"); NL();
+  obuf_put7s(&outbuf, "1", "2", "3",   0, "5", "6", "7"); NL();
+  obuf_put7s(&outbuf, "1", "2", "3", "4",   0, "6", "7"); NL();
+  obuf_put7s(&outbuf, "1", "2", "3", "4", "5",   0, "7"); NL();
+  obuf_put7s(&outbuf, "1", "2", "3", "4", "5", "6",   0); NL();
+}
+#endif
+#ifdef SELFTEST_EXP
+1234567
+234567
+134567
+124567
+123567
+123467
+123457
+123456
+#endif

@@ -38,3 +38,15 @@ int str_copy4s(str* s, const char* a, const char* b, const char* c,
   *ptr = 0;
   return 1;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+MAIN
+{
+  static str s;
+  debugstrfn(str_copy4s(&s, "1", "2", "3", "4"), &s);
+}
+#endif
+#ifdef SELFTEST_EXP
+result=1 len=4 size=16 s=1234
+#endif

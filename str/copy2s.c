@@ -33,3 +33,15 @@ int str_copy2s(str* s, const char* a, const char* b)
   *ptr = 0;
   return 1;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+MAIN
+{
+  static str s;
+  debugstrfn(str_copy2s(&s, "1", "2"), &s);
+}
+#endif
+#ifdef SELFTEST_EXP
+result=1 len=2 size=16 s=12
+#endif

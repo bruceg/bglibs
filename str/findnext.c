@@ -27,3 +27,21 @@ int str_findnext(const str* s, char ch, unsigned pos)
   if (!p) return -1;
   return p - s->s;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+void selftest(void)
+{
+  str s = { "01234567890123456", 16, 0 };
+  obuf_puti(&outbuf, str_findnext(&s, '4', 0)); NL();
+  obuf_puti(&outbuf, str_findnext(&s, '4', 4)); NL();
+  obuf_puti(&outbuf, str_findnext(&s, '4', 5)); NL();
+  obuf_puti(&outbuf, str_findnext(&s, '6', 7)); NL();
+}
+#endif
+#ifdef SELFTEST_EXP
+4
+4
+14
+-1
+#endif

@@ -34,3 +34,16 @@ int str_cat3s(str* s, const char* a, const char* b, const char* c)
   *ptr = 0;
   return 1;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+MAIN
+{
+  static str s;
+  str_copyb(&s, "abc", 3);
+  debugstrfn(str_cat3s(&s, "1", "2", "3"), &s);
+}
+#endif
+#ifdef SELFTEST_EXP
+result=1 len=6 size=16 s=abc123
+#endif

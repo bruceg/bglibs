@@ -48,3 +48,27 @@ int str_alloc(str* s, unsigned size, int copy)
   }
   return 1;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+void test(str* s, unsigned size)
+{
+  debugstrfn(str_alloc(s, size, 0), s);
+}
+void selftest(void)
+{
+  static str s;
+  test(&s, 0);
+  test(&s, 1);
+  test(&s, 14);
+  test(&s, 15);
+  test(&s, 16);
+}
+#endif
+#ifdef SELFTEST_EXP
+result=1 len=0 size=16 s=
+result=1 len=0 size=16 s=
+result=1 len=0 size=16 s=
+result=1 len=0 size=32 s=
+result=1 len=0 size=32 s=
+#endif

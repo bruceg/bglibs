@@ -32,3 +32,16 @@ int str_cat2s(str* s, const char* a, const char* b)
   *ptr = 0;
   return 1;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+MAIN
+{
+  static str s;
+  str_copyb(&s, "abc", 3);
+  debugstrfn(str_cat2s(&s, "1", "2"), &s);
+}
+#endif
+#ifdef SELFTEST_EXP
+result=1 len=5 size=16 s=abc12
+#endif

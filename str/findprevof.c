@@ -30,3 +30,24 @@ int str_findprevof(const str* s, const char* list, unsigned pos)
       return pos;
   return -1;
 }
+
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+void selftest(void)
+{
+  str s = { "01234567890123456", 16, 0 };
+  obuf_puti(&outbuf, str_findprevof(&s, "654", 10)); NL();
+  obuf_puti(&outbuf, str_findprevof(&s, "654", 5)); NL();
+  obuf_puti(&outbuf, str_findprevof(&s, "654", 3)); NL();
+  obuf_puti(&outbuf, str_findprevof(&s, "456", -1)); NL();
+  obuf_puti(&outbuf, str_findprevof(&s, "678", -1)); NL();
+}
+#endif
+#ifdef SELFTEST_EXP
+6
+5
+-1
+15
+8
+#endif

@@ -28,3 +28,19 @@ void str_free(str* s)
   s->len = 0;
   s->size = 0;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+void selftest(void)
+{
+  static str s;
+  str_alloc(&s, 1, 0);
+  debugstr(&s);
+  str_free(&s);
+  debugstr(&s);
+}
+#endif
+#ifdef SELFTEST_EXP
+len=0 size=16 s=
+len=0 size=0 s is NULL
+#endif
