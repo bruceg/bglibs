@@ -31,3 +31,23 @@ int iobuf_init(iobuf* io, int fd, unsigned bufsize, char* buffer, unsigned flags
   io->flags = flags;
   return 1;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+MAIN
+{
+  static iobuf io;
+  debugfn(iobuf_init(&io, 1, 0, 0, 0x100));
+  if (io.buffer == 0) obuf_puts(&outbuf, "buffer is NULL!\n");
+  if (io.buffer == MAP_FAILED) obuf_puts(&outbuf, "mmap failed!\n");
+  obuf_puts(&outbuf, "bufsize="); obuf_putu(&outbuf, io.bufsize); NL();
+  obuf_puts(&outbuf, "flags="); obuf_putx(&outbuf, io.flags); NL();
+  obuf_puts(&outbuf, "fd="); obuf_puti(&outbuf, io.fd); NL();
+}
+#endif
+#ifdef SELFTEST_EXP
+result=1
+bufsize=8192
+flags=180
+fd=1
+#endif

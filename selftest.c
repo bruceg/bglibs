@@ -29,6 +29,13 @@ void debugstrfn(int result, const str* s)
   debugstr(s);
 }
 
+void debugfn(int result)
+{
+  obuf_puts(&outbuf, "result=");
+  obuf_puti(&outbuf, result);
+  NL();
+}
+
 #define MAIN void selftest(void)
 MAIN;
 
