@@ -23,6 +23,7 @@ int str_catiw(str* s, long in, unsigned width, char pad)
   unsigned size;
   unsigned i;
   unsigned sign;
+  unsigned padsize;
   
   sign = 0;
   if (in < 0) {
@@ -33,19 +34,18 @@ int str_catiw(str* s, long in, unsigned width, char pad)
     size = 1;
   else
     for (tmp = in, size = 0; tmp; tmp /= 10, ++size) ;
-  width = (width > sign+size) ? width - sign+size : 0;
-  if (!str_realloc(s, width+sign+size)) return 0;
+  padsize = (width > sign+size) ? width - sign+size : 0;
+  if (!str_realloc(s, padsize+sign+size)) return 0;
 
   /* If the padding is a zero, put it after the sign, otherwise before */
   if (pad != '0')
-    for (i = 0; i < width; i++)
-      s->s[s->len++] = pad;
+    while (padsize--) s->s[s->len++] = pad;
   if (sign) s->s[s->len++] = pad;
   if (pad == '0')
-    for (i = 0; i < width; i++)
-      s->s[s->len++] = pad;
-  for (i = size; i > 0; --i, in /= 10)
-    s->s[s->len++] = (in % 10) + '0';
+    while (padsize--) s->s[s->len++] = pad;
+  for (i = size; i-- > 0; in /= 10)
+    s->s[s->len+i] = (in % 10) + '0';
+  s->len += size;
   s->s[s->len] = 0;
   return 1;
 }

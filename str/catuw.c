@@ -21,18 +21,20 @@ int str_catuw(str* s, unsigned long in, unsigned width, char pad)
 {
   unsigned long tmp;
   unsigned size;
+  unsigned padsize;
   unsigned i;
-
+  
   if (in < 10)
     size = 1;
   else
     for (tmp = in, size = 0; tmp; tmp /= 10, ++size) ;
-  width = (width > size) ? width - size : 0;
-  if (!str_realloc(s, width+size)) return 0;
-  for (i = 0; i < width; i++)
+  padsize = (width > size) ? width - size : 0;
+  if (!str_realloc(s, padsize+size)) return 0;
+  while (padsize--)
     s->s[s->len++] = pad;
-  for (i = size; i > 0; --i, in /= 10)
-    s->s[s->len++] = (in % 10) + '0';
+  for (i = size; i-- > 0; in /= 10)
+    s->s[s->len+i] = (in % 10) + '0';
+  s->len += size;
   s->s[s->len] = 0;
   return 1;
 }
