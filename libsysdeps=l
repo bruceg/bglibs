@@ -4,4 +4,8 @@ uint32_pack_lsb.o
 uint32_pack_msb.o
 uint32_unpack_lsb.o
 uint32_unpack_msb.o
+uint64_pack_lsb.o
+uint64_pack_msb.o
+uint64_unpack_lsb.o
+uint64_unpack_msb.o
 unsetenv.o
