@@ -108,7 +108,7 @@ int main(int argc, char* argv[])
     obuf_puts(&outbuf, "0x");
     if (bits > 32) {
       obuf_putxw(&outbuf, crctab[i]>>32, digits-8, '0');
-      obuf_putxw(&outbuf, crctab[i], 8, '0');
+      obuf_putxw(&outbuf, crctab[i] & 0xffffffffUL, 8, '0');
     }
     else
       obuf_putxw(&outbuf, crctab[i], digits, '0');

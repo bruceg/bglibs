@@ -6,6 +6,8 @@ Changes in version 1.011
 
 - Fixed missing "ULL" on one constant in the SHA-512 library.
 
+- Fixed up crc64 table generation on 64-bit platforms.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
