@@ -2,6 +2,8 @@
 #include <unistd.h>
 #include "iobuf.h"
 
+static const char errmsg[] = "ibuf_refill called with non-empty buffer!\n";
+
 int ibuf_refill(ibuf* in)
 {
   iobuf* io;
@@ -12,8 +14,10 @@ int ibuf_refill(ibuf* in)
   if (io->flags) return 0;
   if (io->bufstart != 0) {
     if (io->bufstart < io->buflen) {
-      io->buflen -= io->bufstart;
-      memcpy(io->buffer, io->buffer+io->bufstart, io->buflen);
+      write(1, errmsg, sizeof errmsg);
+      exit(1);
+      /* io->buflen -= io->bufstart; */
+      /* memcpy(io->buffer, io->buffer+io->bufstart, io->buflen); */
     }
     else
       io->buflen = 0;

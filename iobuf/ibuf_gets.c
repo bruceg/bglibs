@@ -7,14 +7,17 @@ int ibuf_gets(ibuf* in, char* data, unsigned datalen, char boundary)
   
   io = &in->io;
   in->count = 0;
-  while (datalen) {
-    if (io->bufstart >= io->buflen) ibuf_refill(in);
-    if (ibuf_timedout(in)) return 0;
-    if (ibuf_eof(in) || ibuf_error(in)) break;
+  if (ibuf_eof(in) || ibuf_error(in) || ibuf_timedout(in)) return 0;
+  while (datalen > 1) {
+    if (io->bufstart >= io->buflen && !ibuf_refill(in)) {
+      if (ibuf_eof(in)) break;
+      return 0;
+    }
     in->count++;
     ch = io->buffer[io->bufstart++];
     *data++ = ch;
-    if (ch == boundary) return 1;
+    if (ch == boundary) break;
   }
-  return ibuf_eof(in);
+  *data = 0;
+  return 1;
 }
