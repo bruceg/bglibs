@@ -50,7 +50,8 @@ void insthier(void)
   CF(crypto, md5.h);
   CF(crypto, sha1.h);
   CF(crypto, sha256.h);
-  CF(crypto, sha512a.h);
+  CF(crypto, sha384.h);
+  CF(crypto, sha512.h);
   
   DI(cvm);
   CF(cvm, client.h);
