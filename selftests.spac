@@ -1,2 +1,2 @@
 : selftests.sh
-env - HOME=`pwd` PATH="/bin:/usr/bin:/usr/local/bin" sh selftests.sh
+sh selftests.sh
