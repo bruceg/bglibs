@@ -3,7 +3,7 @@
 #ifndef CDB_H
 #define CDB_H
 
-#include "uint32.h"
+#include "sysdeps.h"
 
 #define CDB_HASHSTART 5381
 extern uint32 cdb_hashadd(uint32,unsigned char);
@@ -20,7 +20,10 @@ struct cdb {
   uint32 hslots; /* initialized if loop is nonzero */
   uint32 dpos; /* initialized if cdb_findnext() returns 1 */
   uint32 dlen; /* initialized if cdb_findnext() returns 1 */
-} ;
+
+  uint32 nextrec; /* initialized if cdb_{first,next}rec() returns 1 */
+  /* (uint32)-1 means no next record */
+};
 
 extern void cdb_free(struct cdb *);
 extern void cdb_init(struct cdb *,int fd);
