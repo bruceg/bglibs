@@ -8,8 +8,8 @@ const char* sasl_mech_cvm = 0;
 int sasl_start(const char* mechanism, const str* initresponse, str* challenge)
 {
   sasl_mechanism* mech;
-  for (mech = sasl_mechanisms; mech->name != 0; ++mech) {
-    if (mech->cvm != 0 && strcasecmp(mechanism, mech->name) == 0) {
+  for (mech = sasl_mechanisms; mech != 0; mech = mech->next) {
+    if (strcasecmp(mechanism, mech->name) == 0) {
       sasl_mech_cvm = mech->cvm;
       sasl_response = mech->response;
       return mech->start(initresponse, challenge);

@@ -8,13 +8,15 @@ typedef int (*saslfn)(const str* response, str* challenge);
 struct sasl_mechanism 
 {
   const char* name;
+  const char* var;
   const char* cvm;
   saslfn start;
   saslfn response;
+  struct sasl_mechanism* next;
 };
 typedef struct sasl_mechanism sasl_mechanism;
 
-extern sasl_mechanism sasl_mechanisms[];
+extern const sasl_mechanism* sasl_mechanisms;
 extern const char* sasl_domain;
 extern int sasl_init(void);
 extern int sasl_start(const char* mechanism, const str* initresponse,
