@@ -1,5 +1,5 @@
-/* net/udp.c - Create a UDP socket
- * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
+/* net/tcp4 - Create an IPv4 TCP socket
+ * Copyright (C) 2004  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +22,8 @@
 #include <unistd.h>
 #include "socket.h"
 
-/** Create a UDP/IP socket. */
-int socket_udp(void)
+/** Create a TCP/IPv4 socket. */
+int socket_tcp4(void)
 {
-  return socket(AF_INET, SOCK_DGRAM, 0);
+  return socket(AF_INET, SOCK_STREAM, 0);
 }

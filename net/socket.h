@@ -18,10 +18,12 @@ error.  All functions set errno on error.
 
 /** \name IP socket functions
 @{ */
-int socket_tcp(void);
+int socket_tcp4(void);
 int socket_tcp6(void);
-int socket_udp(void);
+#define socket_tcp socket_tcp4
+int socket_udp4(void);
 int socket_udp6(void);
+#define socket_udp socket_udp4
 int socket_connect4(int sock, const ipv4addr* ip, ipv4port port);
 int socket_bind4(int sock, const ipv4addr* ip, ipv4port port);
 int socket_accept4(int sock, ipv4addr* ip, ipv4port* port);

@@ -30,9 +30,9 @@ send4.o
 sendfd.o
 sendu.o
 shutdown.o
-tcp.o
+tcp4.o
 tcp6.o
-udp.o
+udp4.o
 udp6.o
 uncork.o
 unixdgm.o
