@@ -24,10 +24,6 @@
 #include <string.h>
 #include "cli.h"
 
-#ifndef HAVE_SRANDOM
-void srandom(unsigned int seed);
-#endif
-
 static int do_show_usage = 0;
 const char* argv0;
 const char* argv0base;
