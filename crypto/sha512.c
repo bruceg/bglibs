@@ -63,7 +63,7 @@ static const uint64 K[] = {
   0x28db77f523047d84ULL, 0x32caab7b40c72493ULL,
   0x3c9ebe0a15c9bebcULL, 0x431d67c49c100d4cULL,
   0x4cc5d4becb3e42b6ULL, 0x597f299cfc657e2aULL,
-  0x5fcb6fab3ad6faecULL, 0x6c44198c4a475817
+  0x5fcb6fab3ad6faecULL, 0x6c44198c4a475817ULL
 };
 
 static const uint64 H0[8] = {

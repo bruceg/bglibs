@@ -4,6 +4,8 @@ Changes in version 1.011
 - Fixed up the selftests in unix/selfpipe.c to work if additional file
   descriptors are already opened.
 
+- Fixed missing "ULL" on one constant in the SHA-512 library.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
