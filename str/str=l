@@ -16,6 +16,7 @@ copy5s.o
 copy6s.o
 count.o
 countof.o
+cut.o
 diff.o
 findnext.o
 findnextof.o
@@ -27,4 +28,5 @@ lstrip.o
 ready.o
 realloc.o
 rstrip.o
+sort.o
 truncate.o

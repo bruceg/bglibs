@@ -59,6 +59,9 @@ void str_subst(str* s, char from, char to);
 void str_lstrip(str* s);
 void str_rstrip(str* s);
 #define str_strip(S) (str_rstrip(S), str_lstrip(S))
+void str_lcut(str* s, unsigned count);
+void str_rcut(str* s, unsigned count);
+int str_sort(str* s, char sep, long count);
 
 /* Comparison */
 int str_cmp(const str* a, unsigned aoffset, const str* b, unsigned boffset);

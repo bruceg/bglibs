@@ -1,7 +1,7 @@
 #ifndef STR_ITER__H__
 #define STR_ITER__H__
 
-#include "str/str.h"
+#include "str.h"
 
 typedef struct
 {
@@ -18,5 +18,7 @@ int striter_advance(striter*);
 #define str_copyiter(STR,ITER) str_copyb(STR,(ITER)->startptr,(ITER)->len)
 #define str_catiter(STR,ITER) str_catb(STR,(ITER)->startptr,(ITER)->len)
 #define obuf_putiter(OBUF,ITER) obuf_write(OBUF,(ITER)->startptr,(ITER)->len)
+
+#define striter_loop(ITER,STR,SEP) for(striter_start(ITER,STR,SEP);striter_valid(ITER);striter_advance(ITER))
 
 #endif
