@@ -20,6 +20,7 @@ void insthier(void)
   cf(inc, "installer.h", -1, -1, 0644, "install/installer.h");
   C(inc, sysdeps.h);
   C(inc, systime.h);
+  C(inc, uintnn.h);
   C(inc, uint16.h);
   C(inc, uint32.h);
   C(inc, uint64.h);
