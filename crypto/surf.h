@@ -12,7 +12,5 @@
 #define SURF_SEED     128
 
 void surf(uint32 out[8], const uint32 in[12], const uint32 seed[32]);
-void surfc(unsigned char out[32],
-           const unsigned char in[48], const unsigned char seed[128]);
 
 #endif

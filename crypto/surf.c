@@ -21,12 +21,6 @@
 
 #include "surf.h"
 
-void surfc(unsigned char out[32],
-           const unsigned char in[48], const unsigned char seed[128])
-{
-  surf((uint32*)out, (const uint32*)in, (const uint32*)seed);
-}
-
 #define ROTATE(x,b) (((x) << (b)) | ((x) >> (32 - (b))))
 
 #define h(N,R) (((tmp ^ seed[N]) + a) ^ ROTATE(tmp,R))
