@@ -70,6 +70,7 @@ static unsigned calc_max_width()
       case CLI_UINTEGER:   width += 4; break;
       case CLI_STRINGLIST: width += 5; break;
       case CLI_FUNCTION:   width += 6; break;
+      case CLI_SEPARATOR:  width = 0; break;
       case CLI_FLAG:       break;
       case CLI_COUNTER:    break;
       }
@@ -82,6 +83,10 @@ static unsigned calc_max_width()
 
 static void show_option(cli_option* o, unsigned maxwidth)
 {
+  if(o->type == CLI_SEPARATOR) {
+    obuf_put3s(&outbuf, "\n", o->name, ":\n");
+    return;
+  }
   if(o == &help_option) obuf_putc(&outbuf, '\n');
   if(o->ch) {
     obuf_puts(&outbuf, "  -");
@@ -100,6 +105,7 @@ static void show_option(cli_option* o, unsigned maxwidth)
     case CLI_FUNCTION:   extra = "=VALUE"; break;
     case CLI_FLAG:       break;
     case CLI_COUNTER:    break;
+    case CLI_SEPARATOR:  break;
     }
     obuf_put3s(&outbuf, "--", o->name, extra);
     obuf_pad(&outbuf, maxwidth - strlen(o->name) - strlen(extra) + 2, ' ');

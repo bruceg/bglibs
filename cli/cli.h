@@ -9,6 +9,7 @@ enum cli_option_type {
   CLI_STRING,
   CLI_STRINGLIST,
   CLI_FUNCTION,
+  CLI_SEPARATOR,
 };
 typedef enum cli_option_type cli_option_type;
 
