@@ -13,11 +13,8 @@ int ibuf_seek(ibuf* in, unsigned offset)
   if (offset >= buf_start && offset < io->offset)
     io->bufstart = offset - buf_start;
   else {
-    if (lseek(io->fd, offset, SEEK_SET) != (off_t)offset) {
-      io->errnum = errno;
-      io->flags |= IOBUF_ERROR;
-      return 0;
-    }
+    if (lseek(io->fd, offset, SEEK_SET) != (off_t)offset)
+      IOBUF_SET_ERROR(io);
     io->offset = offset;
     io->buflen = 0;
     io->bufstart = 0;
