@@ -4,6 +4,9 @@ Changes in version 1.007
 - Fixed bug in iobuf/iobuf_init.c -- parameters to mmap happened to work
   on Linux but were completely bogus for portability.
 
+- Switched the 64-bit CRC function to use the polynomial specified in
+  the DLT1 spec (ECMA-182).
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
