@@ -4,7 +4,6 @@
 #define C(SUB,FILE) c(SUB,#FILE,-1,-1,0644)
 #define CF(SUB,FILE) cf(dir,#FILE,-1,-1,0644, #SUB "/" #FILE)
 #define DI(SUB) dir = d(inc,#SUB,-1,-1,0755)
-#define DL(SUB) dir = d(lib, "lib" #SUB,-1,-1,0755);
 
 void insthier(void)
 {
@@ -99,129 +98,113 @@ void insthier(void)
   
   lib = d(home, "lib", -1, -1, 0755);
 
-#define L(BASE) do{ \
-  c(lib, "lib" #BASE ".a", -1, -1, 0644); \
-  s(lib, #BASE, "lib" #BASE ".a"); \
-}while(0)
+  c(lib, "libbg-sysdeps.a", -1, -1, 0644);
 
-#define SL(BASE,LIB) s(dir, #LIB ".a", "../lib" #BASE ".a")
-
-#define CL(SUB,BASE,LINK) do{ \
-  cf(dir, #BASE ".a", -1, -1, 0644, #SUB "/" #BASE ".a"); \
-  s(lib, #LINK, "lib" #SUB "/" #BASE ".a"); \
-}while(0)
-
-  L(sysdeps);
+  cf(lib, "libbg-installer.a", -1, -1, 0644, "install/installer.a");
+  cf(lib, "libbg-instcheck.a", -1, -1, 0644, "install/installer.a");
+  cf(lib, "libbg-instshow.a", -1, -1, 0644,  "install/instshow.a");
 
 #undef L
 #define L(BASE) do{ \
-  cf(lib, "lib" #BASE ".a", -1, -1, 0644, "install/" #BASE ".a"); \
-  s(lib, #BASE, "lib" #BASE ".a"); \
-}while(0)
-
-  L(installer);
-  L(instcheck);
-  L(instshow);
-
-#undef L
-#define L(BASE) do{ \
-  cf(lib, "lib" #BASE ".a", -1, -1, 0644, #BASE "/lib.a"); \
-  s(lib, #BASE, "lib" #BASE ".a"); \
+  cf(lib, "libbg-" #BASE ".a", -1, -1, 0644, #BASE "/lib.a"); \
 }while(0)
 
   L(adt);
-
   L(base64);
+  L(cdb);
+  L(cli);
+  L(crc);
+  L(crypto);
+  cf(lib, "libcvm-client.a",  -1, -1, 0644, "cvm/client.a");
+  cf(lib, "libcvm-command.a", -1, -1, 0644, "cvm/command.a");
+  cf(lib, "libcvm-local.a",   -1, -1, 0644, "cvm/local.a");
+  cf(lib, "libcvm-udp.a",     -1, -1, 0644, "cvm/udp.a");
+  cf(lib, "libcvm-sasl.a",    -1, -1, 0644, "cvm-sasl/lib.a");
+  L(dict);
+  L(iobuf);
+  L(misc);
+  L(msg);
+  L(net);
+  L(path);
+  cf(lib, "libpwcmp.a",        -1, -1, 0644, "pwcmp/client.a");
+  cf(lib, "libpwcmp-module.a", -1, -1, 0644, "pwcmp/module.a");
+  L(str);
+  L(unix);
+  cf(lib, "libvmailmgr.a",     -1, -1, 0644, "vmailmgr/lib.a");
+
+#define DL(SUB) dir = d(lib, "lib" #SUB,-1,-1,0755);
+
+#define SL(BASE,LIB) s(dir, #LIB ".a", "../libbg-" #BASE ".a")
+
+  /* Compatibility links */
+  s(lib, "libsysdeps.a",   "libbg-sysdeps.a");
+  s(lib, "libinstaller.a", "libbg-installer.a");
+  s(lib, "libinstcheck.a", "libbg-instcheck.a");
+  s(lib, "libinstshow.a",  "libbg-instshow.a");
+
   DL(base64);
   SL(base64, base64);
 
-  L(cdb);
   DL(cdb);
   SL(cdb, cdb);
   SL(cdb, make);
   SL(cdb, str);
 
-  L(cli);
   DL(cli);
   SL(cli, cli);
 
-  L(crc);
-
-  L(crypto);
   DL(crypto);
   SL(crypto, md5);
   SL(crypto, sha1);
   SL(crypto, sha256);
   SL(crypto, sha512a);
 
-  cf(lib, "libcvm-client.a",  -1, -1, 0644, "cvm/client.a");
-  cf(lib, "libcvm-command.a", -1, -1, 0644, "cvm/command.a");
-  cf(lib, "libcvm-local.a",   -1, -1, 0644, "cvm/local.a");
-  cf(lib, "libcvm-udp.a",     -1, -1, 0644, "cvm/udp.a");
   DL(cvm);
-  SL(cvm-client,  client);
-  SL(cvm-command, command);
-  SL(cvm-local,   local);
-  SL(cvm-udp,     udp);
-  s(lib, "cvm-client",  "libcvm-client.a");
-  s(lib, "cvm-command", "libcvm-command.a");
-  s(lib, "cvm-local",   "libcvm-local.a");
-  s(lib, "cvm-udp",     "libcvm-udp.a");
+  s(dir, "client.a",  "../libcvm-client.a");
+  s(dir, "command.a", "../libcvm-command.a");
+  s(dir, "local.a",   "../libcvm-local.a");
+  s(dir, "udp.a",     "../libcvm-udp.a");
 
-  L(cvm-sasl);
   DL(cvm-sasl);
-  SL(cvm-sasl, cvm-sasl);
+  s(dir, "cvm-sasl.a", "../libcvm-sasl.a");
 
-  L(dict);
   DL(dict);
   SL(dict, dict);
   SL(dict, load);
   
-  L(iobuf);
   DL(iobuf);
   SL(iobuf, iobuf);
   SL(iobuf, str);
   
-  L(misc);
   DL(misc);
   SL(misc, misc);
   
-  L(msg);
   DL(msg);
   SL(msg, msg);
   SL(msg, wrap);
   
-  L(net);
   DL(net);
   SL(net, ipv4);
   SL(net, resolve);
   SL(net, socket);
   
-  L(path);
   DL(path);
   SL(path, path);
 
-  cf(lib, "libpwcmp.a",        -1, -1, 0644, "pwcmp/client.a");
-  cf(lib, "libpwcmp-module.a", -1, -1, 0644, "pwcmp/module.a");
   DL(pwcmp);
-  SL(pwcmp, client);
-  SL(pwcmp, hex);
-  SL(pwcmp-module, module);
-  s(lib, "pwcmp",        "libpwcmp.a");
-  s(lib, "pwcmp-module", "libpwcmp-module.a");
+  s(dir, "client.a", "../libpwcmp.a");
+  s(dir, "hex.a",    "../libpwcmp.a");
+  s(dir, "module.a", "../libpwcmp-module.a");
   
-  L(str);
   DL(str);
   SL(str, iter);
   SL(str, str);
   
-  L(unix);
   DL(unix);
   SL(unix, nonblock);
   SL(unix, sig);
   
-  L(vmailmgr);
   DL(vmailmgr);
-  SL(vmailmgr, client);
-  SL(vmailmgr, vpwentry);
+  s(dir, "client.a",   "../libvmailmgr.a");
+  s(dir, "vpwentry.a", "../libvmailmgr.a");
 }
