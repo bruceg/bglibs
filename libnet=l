@@ -10,7 +10,7 @@ net/cork.o
 net/getaddr4.o
 net/ipv4_addr.o
 net/ipv4_format.o
-net/ipv4_parse.o
+net/ipv4_scan.o
 net/linger.o
 net/listen.o
 net/pairdgm.o
