@@ -1,6 +1,7 @@
 -------------------------------------------------------------------------------
 Changes in version 1.009
 
+- Added a small optimization to the SHA-256/512 code.
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/

@@ -23,8 +23,6 @@
 #include "sha512.h"
 #include "uint64.h"
 
-#define min(X,Y) ((X)<(Y) ? (X) : (Y))
-
 static const uint64 K[] = {
   0x428a2f98d728ae22, 0x7137449123ef65cd,
   0xb5c0fbcfec4d3b2f, 0xe9b5dba58189dbbc,
@@ -81,7 +79,9 @@ static const uint64 H0[8] = {
 
 #define S(X,N) ((X>>N)|(X<<(64-N)))
 #define R(X,N) (X>>N)
-#define Ch(x,y,z) (((x)&(y)) | (~(x)&(z)))
+/* This optimization was found in Colin Plumb's MD5 code. */
+/* #define Ch(x,y,z) (((x)&(y)) ^ (~(x)&(z)))  */
+#define Ch(x,y,z) ((z) ^ ((x) & ((y) ^ (z))))
 #define Maj(x,y,z) (((x)&(y)) | ((x)&(z)) | ((y)&(z)))
 #define S0(x) (S(x,28) ^ S(x,34) ^ S(x,39))
 #define S1(x) (S(x,14) ^ S(x,18) ^ S(x,41))

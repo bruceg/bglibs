@@ -23,7 +23,9 @@
 
 #define S(x,n) (((x)>>n) | ((x)<<(32-n)))
 #define R(x,n) ((x)>>n)
-#define Ch(x,y,z) (((x)&(y)) ^ (~(x)&(z)))
+/* This optimization was found in Colin Plumb's MD5 code. */
+/* #define Ch(x,y,z) (((x)&(y)) ^ (~(x)&(z)))  */
+#define Ch(x,y,z) ((z) ^ ((x) & ((y) ^ (z))))
 #define Maj(x,y,z) (((x)&(y)) ^ ((x)&(z)) ^ ((y)&(z)))
 #define S0(x) (S(x, 2) ^ S(x,13) ^ S(x,22))
 #define S1(x) (S(x, 6) ^ S(x,11) ^ S(x,25))
