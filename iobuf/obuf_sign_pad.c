@@ -1,4 +1,4 @@
-#include "iobuf.h"
+#include "obuf.h"
 
 int obuf_sign_pad(obuf* out, int sign, unsigned width, char pad)
 {

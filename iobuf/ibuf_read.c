@@ -1,7 +1,7 @@
 #include <errno.h>
 #include <string.h>
 #include <unistd.h>
-#include "iobuf.h"
+#include "ibuf.h"
 
 /** Read a block of data from the \c ibuf.
 

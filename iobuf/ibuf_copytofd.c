@@ -1,5 +1,5 @@
 #include <unistd.h>
-#include "iobuf.h"
+#include "ibuf.h"
 
 /** Copy all the data from an \c ibuf to a file descriptor. */
 int ibuf_copytofd(ibuf* in, int out)

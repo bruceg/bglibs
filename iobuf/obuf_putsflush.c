@@ -1,5 +1,5 @@
 #include <string.h>
-#include "iobuf.h"
+#include "obuf.h"
 
 /** Write a C string to the \c obuf and flush it. */
 int obuf_putsflush(obuf* out, const char* str)

@@ -1,4 +1,4 @@
-#include "iobuf.h"
+#include "ibuf.h"
 
 /** Read a line from the \c ibuf into a C string. */
 int ibuf_gets(ibuf* in, char* data, unsigned datalen, char boundary)

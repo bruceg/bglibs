@@ -1,5 +1,5 @@
 #include <unistd.h>
-#include "iobuf.h"
+#include "ibuf.h"
 
 /** Initialize an \c ibuf from an already-opened file descriptor. */
 int ibuf_init(ibuf* in, int fd, ibuf_fn fn, unsigned flags, unsigned bufsize)

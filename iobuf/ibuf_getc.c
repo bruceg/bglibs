@@ -1,4 +1,4 @@
-#include "iobuf.h"
+#include "ibuf.h"
 
 /** Retrieve a single character from the \c ibuf. */
 int ibuf_getc(ibuf* in, char* ch)

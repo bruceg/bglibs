@@ -1,4 +1,4 @@
-#include "iobuf.h"
+#include "obuf.h"
 
 static int obuf_putsnumw_rec(obuf* out, long long data, int sign,
 			     unsigned width, char pad,

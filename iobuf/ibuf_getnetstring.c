@@ -1,5 +1,5 @@
 #include <errno.h>
-#include "iobuf.h"
+#include "ibuf.h"
 #include "str/str.h"
 
 /** Read a netstring from the given \c ibuf .

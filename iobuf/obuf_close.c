@@ -1,4 +1,4 @@
-#include "iobuf.h"
+#include "obuf.h"
 
 /** Flush and close the \c obuf */
 int obuf_close(obuf* out)

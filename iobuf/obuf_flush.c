@@ -1,6 +1,6 @@
 #include <errno.h>
 #include <unistd.h>
-#include "iobuf.h"
+#include "obuf.h"
 
 /** Write all pending data in the \c obuf to the file descriptor. */
 int obuf_flush(obuf* out)

@@ -67,7 +67,10 @@ void insthier(void)
   CF(fmt, number.h);
 
   DI(iobuf);
+  CF(iobuf, common.h);
+  CF(iobuf, ibuf.h);
   CF(iobuf, iobuf.h);
+  CF(iobuf, obuf.h);
 
   DI(misc);
   CF(misc, misc.h);

@@ -1,5 +1,5 @@
 #include <unistd.h>
-#include "iobuf.h"
+#include "obuf.h"
 
 static char buffer[4096];
 

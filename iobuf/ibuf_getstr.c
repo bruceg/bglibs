@@ -1,4 +1,4 @@
-#include "iobuf.h"
+#include "ibuf.h"
 #include "str/str.h"
 
 /** Read a line from the \c ibuf into a dynamic string. */

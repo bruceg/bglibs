@@ -1,4 +1,4 @@
-#include "iobuf.h"
+#include "ibuf.h"
 
 /** Retrieve the next character in the \c ibuf without advancing the
     current read position. */

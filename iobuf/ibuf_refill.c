@@ -1,6 +1,6 @@
 #include <errno.h>
 #include <unistd.h>
-#include "iobuf.h"
+#include "ibuf.h"
 
 static const char errmsg[] = "ibuf_refill called with non-empty buffer!\n";
 

@@ -1,6 +1,6 @@
 #include <stdarg.h>
 #include <string.h>
-#include "iobuf.h"
+#include "obuf.h"
 
 /** Write N C strings to the \c obuf */
 int obuf_putns(obuf* out, unsigned int count, ...)

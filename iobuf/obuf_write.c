@@ -1,7 +1,7 @@
 #include <errno.h>
 #include <string.h>
 #include <unistd.h>
-#include "iobuf.h"
+#include "obuf.h"
 
 /** Write a large block of data to the \c obuf, avoiding copying. */
 int obuf_write_large(obuf* out, const char* data, unsigned datalen)

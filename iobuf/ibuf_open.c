@@ -1,5 +1,5 @@
 #include <unistd.h>
-#include "iobuf.h"
+#include "ibuf.h"
 
 /** Initialize an \c ibuf by opening a file for reading. */
 int ibuf_open(ibuf* in, const char* filename, unsigned bufsize)

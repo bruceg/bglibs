@@ -1,5 +1,5 @@
 #include <string.h>
-#include "iobuf.h"
+#include "obuf.h"
 
 /** Write 2 C strings to the \c obuf */
 int obuf_put2s(obuf* out, const char* s1, const char* s2)

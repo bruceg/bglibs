@@ -1,6 +1,6 @@
 #include <errno.h>
 #include <unistd.h>
-#include "iobuf.h"
+#include "obuf.h"
 
 /** Flush the \c obuf and then \c fsync the file descriptor. */
 int obuf_sync(obuf* out)

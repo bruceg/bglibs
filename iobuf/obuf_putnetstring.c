@@ -1,4 +1,4 @@
-#include "iobuf.h"
+#include "obuf.h"
 
 /** Write the binary block to the \c obuf as a "netstring". */
 int obuf_putnetstring(obuf* out, const char* data, unsigned datalen)

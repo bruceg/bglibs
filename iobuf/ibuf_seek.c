@@ -1,7 +1,7 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include "iobuf.h"
+#include "ibuf.h"
 
 /** Set the effective read position. */
 int ibuf_seek(ibuf* in, unsigned offset)

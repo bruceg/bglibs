@@ -1,4 +1,4 @@
-#include "iobuf.h"
+#include "ibuf.h"
 
 /** Test if the \c ibuf has reaced end of file. */
 int ibuf_eof(ibuf* in)
