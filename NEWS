@@ -14,6 +14,8 @@ Changes in version 1.006
 
 - More portability fixes.
 
+- Started working on adding Doxygen documentation to the sources.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

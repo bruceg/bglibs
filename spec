@@ -30,6 +30,7 @@ make installer instcheck
 mkdir -p %{buildroot}/usr/local/bglibs
 ./installer
 ./instcheck
+cp -a doc %{buildroot}/usr/local/bglibs
 
 %clean
 rm -rf %{buildroot}
