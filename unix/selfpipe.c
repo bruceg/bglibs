@@ -2,6 +2,7 @@
 #include <unistd.h>
 
 #include "sysdeps.h"
+#include "unix/cloexec.h"
 #include "unix/nonblock.h"
 #include "unix/sig.h"
 #include "unix/selfpipe.h"
@@ -39,7 +40,10 @@ void selfpipe_catch_signal(int signal)
 int selfpipe_init(void)
 {
   if (pipe(fds) == -1) return -1;
-  if (!nonblock_on(fds[0]) || !nonblock_on(fds[1])) {
+  if (!nonblock_on(fds[0])
+      || !cloexec_on(fds[0])
+      || !nonblock_on(fds[1])
+      || !cloexec_on(fds[1])) {
     close(fds[0]);
     close(fds[1]);
     return -1;

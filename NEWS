@@ -7,6 +7,9 @@ Changes in version 1.019
 
 - Added cloexec_{off,on} functions to manipulate the close-on-exec flag.
 
+- Selfpipes now close-on-exec to prevent the pipe from being exported to
+  child processes.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
