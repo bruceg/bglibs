@@ -58,6 +58,7 @@ void cf(int dir, const char* filename,
 	const char* srcfile)
 {
   testmode(dir, filename, uid, gid, mode, S_IFREG);
+  (void)srcfile;
 }
 
 void c(int dir, const char* filename,

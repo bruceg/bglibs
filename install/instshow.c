@@ -67,6 +67,7 @@ void cf(int dir, const char* filename,
   puts(srcfile);
   */
   c(dir, filename, uid, gid, mode);
+  (void)srcfile;
 }
 
 int d(int dir, const char* subdir,
