@@ -62,9 +62,9 @@ int cdb_findnext(struct cdb *c,const char *key,unsigned int len)
   if (!c->loop) {
     u = cdb_hash(key,len);
     if (cdb_read(c,buf,8,(u << 3) & 2047) == -1) return -1;
-    uint32_unpack(buf + 4,&c->hslots);
+    c->hslots = uint32_get(buf + 4);
     if (!c->hslots) return 0;
-    uint32_unpack(buf,&c->hpos);
+    c->hpos = uint32_get(buf);
     c->khash = u;
     u >>= 8;
     u %= c->hslots;
@@ -74,21 +74,21 @@ int cdb_findnext(struct cdb *c,const char *key,unsigned int len)
 
   while (c->loop < c->hslots) {
     if (cdb_read(c,buf,8,c->kpos) == -1) return -1;
-    uint32_unpack(buf + 4,&pos);
+    pos = uint32_get(buf + 4);
     if (!pos) return 0;
     c->loop += 1;
     c->kpos += 8;
     if (c->kpos == c->hpos + (c->hslots << 3)) c->kpos = c->hpos;
-    uint32_unpack(buf,&u);
+    u = uint32_get(buf);
     if (u == c->khash) {
       if (cdb_read(c,buf,8,pos) == -1) return -1;
-      uint32_unpack(buf,&u);
+      u = uint32_get(buf);
       if (u == len)
 	switch(match(c,key,len,pos + 8)) {
 	  case -1:
 	    return -1;
 	  case 1:
-	    uint32_unpack(buf + 4,&c->dlen);
+	    c->dlen = uint32_get(buf + 4);
 	    c->dpos = pos + 8 + len;
 	    return 1;
 	}
