@@ -14,7 +14,7 @@ int obuf_seek(obuf* out, unsigned offset)
   
   buf_start = io->offset;
   buf_end = io->offset + io->buflen;
-  if (offset >= buf_start && offset < buf_end)
+  if (offset >= buf_start && offset <= buf_end)
     out->bufpos = offset - buf_start;
   else {
     if (!obuf_flush(out)) return 0;

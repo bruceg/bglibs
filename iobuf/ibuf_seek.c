@@ -10,7 +10,7 @@ int ibuf_seek(ibuf* in, unsigned offset)
   
   io = &(in->io);
   buf_start = io->offset - io->buflen;
-  if (offset >= buf_start && offset < io->offset)
+  if (offset >= buf_start && offset <= io->offset)
     io->bufstart = offset - buf_start;
   else {
     if (lseek(io->fd, offset, SEEK_SET) != (off_t)offset)

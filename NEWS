@@ -5,6 +5,8 @@ Changes in version 1.003
   don't contain any meta-characters.
 - Fixed a bug in str/cmp.c: it missed adding offset to the string
   pointer.
+- Fixed bug in iobuf/[io]buf_seek.c -- seeks to the current read/write
+  position should not cause an lseek syscall.
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
