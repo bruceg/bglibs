@@ -26,7 +26,7 @@ global_context = {
     'math': __import__('math'),
     'random': __import__('random'),
     're': __import__('re'),
-    'regsub': __import__('regsub'),
+    #'regsub': __import__('regsub'),
     'string': __import__('string'),
     'time': __import__('time'),
     }
