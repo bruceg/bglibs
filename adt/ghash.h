@@ -133,4 +133,17 @@ GHASH_REHASH_DEFN(PREFIX) \
 GHASH_FOREACH_DEFN(PREFIX) \
 GHASH_SEARCH_DEFN(PREFIX)
 
+struct ghashiter
+{
+  const struct ghash* ghashp;
+  unsigned index;
+  void* entry;
+};
+
+void ghashiter_first(struct ghashiter*, const struct ghash*);
+int ghashiter_valid(const struct ghashiter*);
+void ghashiter_next(struct ghashiter*);
+#define ghashiter_loop(I,G) \
+  for(ghashiter_first(I,G);ghashiter_valid(I);ghashiter_next(I))
+
 #endif
