@@ -135,6 +135,7 @@ int ibuf_getu(ibuf* in, unsigned long* data);
 int ibuf_gets(ibuf* in, char* data, unsigned datalen, char boundary);
 int ibuf_getstr(ibuf* in, struct str* s, char boundary);
 int ibuf_getstr_crlf(ibuf* in, struct str* s);
+int ibuf_getnetstring(ibuf* in, struct str* s);
 int ibuf_readall(ibuf* in, struct str* s);
 int ibuf_openreadclose(const char* filename, struct str* s);
 /* @} */

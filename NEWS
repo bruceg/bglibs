@@ -14,6 +14,8 @@ Changes in version 1.018
 
 - Added named pipe trigger functions.
 
+- Added str_getnetstring function.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

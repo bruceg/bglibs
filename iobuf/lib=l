@@ -1,5 +1,6 @@
 ibuf_copytofd.o
 ibuf_getc.o
+ibuf_getnetstring.o
 ibuf_gets.o
 ibuf_getstr_crlf.o
 ibuf_getstr.o
