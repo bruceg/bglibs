@@ -1,6 +1,0 @@
-: conf-ld
-( echo '#!/bin/sh';\
-  echo 'main="$$1"; shift';\
-  echo exec `head -1 conf-ld` '-o "$$main" "$$main.o" -L. $${1+"$$@"}';\
-) >load
-chmod 755 load
