@@ -254,7 +254,7 @@ static int cli_option_parse_long_noeq(cli_option* o, const char* arg)
   }
 }
 
-static int parse_long(int argc, char* argv[])
+static int parse_long(char* argv[])
 {
   unsigned j;
   const char* arg = argv[0]+2;
@@ -292,7 +292,7 @@ static int parse_args(int argc, char* argv[])
     }
     j = (arg[1] != '-') ?
       parse_short(argc-i, argv+i) :
-      parse_long(argc-i, argv+i);
+      parse_long(argv+i);
     if(j < 0)
       usage(1, 0);
     else
