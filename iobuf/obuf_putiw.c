@@ -33,7 +33,11 @@ int obuf_putiw(obuf* out, long data, unsigned width, char pad)
     if (width) -- width;
   }
   if (data < 10) {
-    if (width && !obuf_sign_pad(out, sign, width-1, pad)) return 0;
+    if (width) {
+      if (!obuf_sign_pad(out, sign, width-1, pad)) return 0;
+    }
+    else if (sign)
+      if (!obuf_putc(out, '-')) return 0;
     return obuf_putc(out, data + '0');
   }
   return obuf_putiw_rec(out, data, sign, width, pad);
