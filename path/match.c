@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 #include <string.h>
-#include "direntry.h"
+#include "sysdeps.h"
 #include "str/str.h"
 #include "str/iter.h"
 #include "path.h"
