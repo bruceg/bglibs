@@ -135,6 +135,10 @@ int obuf_putiw(obuf* out, long data, unsigned width, char pad);
 #define obuf_puti(out,data) obuf_putiw(out, data, 0, 0)
 int obuf_putuw(obuf* out, unsigned long data, unsigned width, char pad);
 #define obuf_putu(out,data) obuf_putuw(out, data, 0, 0)
+int obuf_putiwll(obuf* out, long long data, unsigned width, char pad);
+#define obuf_putill(out,data) obuf_putiw(out, data, 0, 0)
+int obuf_putuwll(obuf* out, unsigned long long data, unsigned width, char pad);
+#define obuf_putull(out,data) obuf_putuw(out, data, 0, 0)
 int obuf_putnetstring(obuf* out, const char* data, unsigned datalen);
 
 int iobuf_copy(ibuf* in, obuf* out);

@@ -6,7 +6,7 @@ Changes in version 1.004
 - #define MSG_NO_DEBUG before including <msg/msg.h> and no debugging
   messages will be compiled into the object code.
 
-- Added long long str_cat*ll functions.
+- Added long long str_cat*ll and obuf_put*ll functions.
 
 - Added str_match simple pattern-matching function.
 
