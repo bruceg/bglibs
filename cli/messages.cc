@@ -17,7 +17,6 @@
 #include <config.h>
 #include "fdbuf/fdbuf.h"
 #include <stdlib.h>
-#include "mystring/mystring.h"
 #include "cli.h"
 
 extern const char* argv0;
