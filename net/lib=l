@@ -31,7 +31,9 @@ sendfd.o
 sendu.o
 shutdown.o
 tcp.o
+tcp6.o
 udp.o
+udp6.o
 uncork.o
 unixdgm.o
 unixstr.o
