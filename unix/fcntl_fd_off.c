@@ -19,7 +19,7 @@
 #include <fcntl.h>
 #include "fcntl.h"
 
-int fcntl_fl_off(int fd, int flag)
+int fcntl_fd_off(int fd, int flag)
 {
   int flags;
   if ((flags = fcntl(fd, F_GETFD, 0)) == -1) return 0;
