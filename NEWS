@@ -6,6 +6,8 @@ Changes in version 1.004
 - #define MSG_NO_DEBUG before including <msg/msg.h> and no debugging
   messages will be compiled into the object code.
 
+- Added long long str_cat*ll functions.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
