@@ -30,7 +30,7 @@ do_test() {
     return 1
   }
 
-  $DIFF $t/test.exp $t/test.out || {
+  cat -v $t/test.out | $DIFF $t/test.exp - || {
     echo "=====> Output failed! <====="
     return 1
   }
