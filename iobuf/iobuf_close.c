@@ -1,11 +1,16 @@
 #include <stdlib.h>
+#include <sys/mman.h>
 #include <unistd.h>
 #include "iobuf.h"
 
 int iobuf_close(iobuf* io)
 {
   int status;
-  if (io->flags & IOBUF_NEEDSFREE) {
+  if (io->flags & IOBUF_NEEDSMUNMAP) {
+    munmap(io->buffer, io->bufsize);
+    io->buffer = 0;
+  }
+  else if (io->flags & IOBUF_NEEDSFREE) {
     free(io->buffer);
     io->buffer = 0;
   }

@@ -14,7 +14,7 @@ struct str;
 #define IOBUF_SEEKABLE 0x10	/* The fd can be lseek'ed */
 #define IOBUF_NEEDSCLOSE 0x20	/* The fd needs to be closed */
 #define IOBUF_NEEDSFREE 0x40	/* The buffer needs to be freed */
-
+#define IOBUF_NEEDSMUNMAP 0x80	/* The buffer needs to be freed with munmap */
 extern unsigned iobuf_bufsize;
 
 struct iobuf

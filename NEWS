@@ -7,6 +7,9 @@ Changes in version 1.003
   pointer.
 - Fixed bug in iobuf/[io]buf_seek.c -- seeks to the current read/write
   position should not cause an lseek syscall.
+- The iobuf library now uses an anonymous mmap region for I/O instead of
+  a malloced buffer, if possible.  Some OS's can optimize away a data
+  copy using this kind of mechanism.
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
