@@ -33,6 +33,14 @@ countof.o
 cut.o
 diff.o
 digits.o
+env_find.o
+env_from_array.o
+env_from_string.o
+env_get.o
+env_make_array.o
+env_put.o
+env_set.o
+env_unset.o
 findnext.o
 findnextof.o
 findprev.o

@@ -10,6 +10,8 @@ Changes in version 1.018
 
 - Fixed bug in ibuf_getu: didn't subtract ASCII '0' offset from digits.
 
+- Added environment string manipulation functions.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
