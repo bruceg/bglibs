@@ -1,5 +1,5 @@
-/* str/realloc.c - Ensure a string has a minimum size, copy the old string
- * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
+/* str/alloc.c - Allocate storage for a string
+ * Copyright (C) 2002  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,20 +19,21 @@
 #include <string.h>
 #include "str.h"
 
-/* Make sure that the string has at least size+1 bytes of available space. */
-int str_realloc(str* s, unsigned size)
+int str_alloc(str* s, unsigned size, int copy)
 {
   char* news;
-  ++size;
-  if (size >= s->size) {
-    size += size/8 + STR_BLOCKSIZE-1;
-    size -= size % STR_BLOCKSIZE;
-    if ((news = malloc(size)) == 0) return 0;
+  unsigned newsize;
+  if ((newsize = size + 1) < size) return 0;
+  if (newsize >= s->size) {
+    newsize += newsize/8 + STR_BLOCKSIZE-1;
+    newsize -= newsize % STR_BLOCKSIZE;
+    if (newsize <= size) return 0;
+    if ((news = malloc(newsize)) == 0) return 0;
     if (s->s) {
-      memcpy(news, s->s, s->len+1);
+      if (copy) memcpy(news, s->s, s->len+1);
       free(s->s);
     }
-    s->size = size;
+    s->size = newsize;
     s->s = news;
   }
   return 1;

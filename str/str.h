@@ -25,8 +25,9 @@ typedef struct str_sortentry str_sortentry;
 
 /* Overhead */
 int str_init(str* s);
-int str_ready(str* s, unsigned size);
-int str_realloc(str* s, unsigned size);
+int str_alloc(str* s, unsigned size, int copy);
+#define str_ready(S,SZ) str_alloc(S,SZ,0)
+#define str_realloc(S,SZ) str_alloc(S,SZ,1)
 void str_free(str* s);
 int str_truncate(str* s, unsigned len);
 
