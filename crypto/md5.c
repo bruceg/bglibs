@@ -19,41 +19,16 @@
    Boston, MA 02111-1307, USA.  */
 
 /* Written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, 1995.  */
-
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+/* Self-tests added by Bruce Guenter <bruceg@em.ca>, 2003. */
 
 #include <sys/types.h>
+#include <stdlib.h>
+#include <string.h>
 
-#if STDC_HEADERS || defined _LIBC
-# include <stdlib.h>
-# include <string.h>
-#else
-# ifndef HAVE_MEMCPY
-#  define memcpy(d, s, n) bcopy ((s), (d), (n))
-# endif
-#endif
-
+#include "sysdeps.h"
 #include "md5.h"
 
-#ifdef _LIBC
-# include <endian.h>
-# if __BYTE_ORDER == __BIG_ENDIAN
-#  define WORDS_BIGENDIAN 1
-# endif
-/* We need to keep the namespace clean so define the MD5 function
-   protected using leading __ and use weak aliases.  */
-# define md5_init_ctx __md5_init_ctx
-# define md5_process_block __md5_process_block
-# define md5_process_bytes __md5_process_bytes
-# define md5_finish_ctx __md5_finish_ctx
-# define md5_read_ctx __md5_read_ctx
-# define md5_stream __md5_stream
-# define md5_buffer __md5_buffer
-#endif
-
-#ifdef WORDS_BIGENDIAN
+#ifdef ENDIAN_MSB
 # define SWAP(n)							\
     (((n) << 24) | (((n) & 0xff00) << 8) | (((n) >> 8) & 0xff00) | ((n) >> 24))
 #else
@@ -427,21 +402,46 @@ md5_process_block (buffer, len, ctx)
   ctx->D = D;
 }
 
+#ifdef SELFTEST_MAIN
+#include <stdio.h>
 
-#ifdef _LIBC
-/* Define weak aliases.  */
-# undef md5_init_ctx
-weak_alias (__md5_init_ctx, md5_init_ctx)
-# undef md5_process_block
-weak_alias (__md5_process_block, md5_process_block)
-# undef md5_process_bytes
-weak_alias (__md5_process_bytes, md5_process_bytes)
-# undef md5_finish_ctx
-weak_alias (__md5_finish_ctx, md5_finish_ctx)
-# undef md5_read_ctx
-weak_alias (__md5_read_ctx, md5_read_ctx)
-# undef md5_stream
-weak_alias (__md5_stream, md5_stream)
-# undef md5_buffer
-weak_alias (__md5_buffer, md5_buffer)
+static void MDString(const char* str)
+{
+  struct md5_ctx ctx;
+  unsigned char digest[16];
+  unsigned int len = strlen(str);
+  unsigned i;
+  
+  md5_init_ctx(&ctx);
+  md5_process_bytes(str, len, &ctx);
+  md5_finish_ctx(&ctx, digest);
+  printf("MD5 (\"%s\") = ", str);
+  for (i = 0; i < 16; i++) printf("%02x", digest[i]);
+  printf("\n");
+}
+
+int main(void)
+{
+  printf("MD5 test suite:\n");
+  MDString("");
+  MDString("a");
+  MDString("abc");
+  MDString("message digest");
+  MDString("abcdefghijklmnopqrstuvwxyz");
+  MDString("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+  
+  MDString("1234567890123456789012345678901234567890"
+	   "1234567890123456789012345678901234567890");
+  return 0;
+}
+#endif
+#ifdef SELFTEST_EXP
+MD5 test suite:
+MD5 ("") = d41d8cd98f00b204e9800998ecf8427e
+MD5 ("a") = 0cc175b9c0f1b6a831c399e269772661
+MD5 ("abc") = 900150983cd24fb0d6963f7d28e17f72
+MD5 ("message digest") = f96b697d7cb7938d525a2f31aaf161d0
+MD5 ("abcdefghijklmnopqrstuvwxyz") = c3fcd3d76192e4007dfb496cca67e13b
+MD5 ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789") = d174ab98d277d9f5a5611c2c9f419d9f
+MD5 ("12345678901234567890123456789012345678901234567890123456789012345678901234567890") = 57edf4a22be3c955ac49da2e2107b67a
 #endif

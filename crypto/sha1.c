@@ -1,8 +1,8 @@
 /*
  SHA-1 in C
 
- By Steve Reid <steve@edmweb.com>, with small changes to make it
- fit by Bruce Guenter <bruceg@em.ca>
+ By Steve Reid <steve@edmweb.com>.
+ Small changes to make it fit by Bruce Guenter <bruceg@em.ca>
 
  100% Public Domain.
 
@@ -171,43 +171,45 @@ unsigned char c;
     memset(&finalcount, '\0', sizeof(finalcount));
 }
 
-#ifdef SHA1_SELF_TEST
-#include <stdio.h>
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
 
-void dc(int test, const unsigned char* d1, const unsigned char* d2)
+static SHA1_CTX ctx;
+
+static void init(void) { SHA1_Init(&ctx); }
+static void hash(const char* ptr, long len) { SHA1_Update(&ctx, ptr, len); }
+static void dump(void)
 {
-  int i;
-  if (memcmp(d1, d2, SHA1_DIGEST_LENGTH) != 0) {
-    printf("Test %d failed:\ncomputed = ", test);
-    for (i = 0; i < SHA1_DIGEST_LENGTH; i++) printf("%02x", d1[i]);
-    printf("\nactual  = ");
-    for (i = 0; i < SHA1_DIGEST_LENGTH; i++) printf("%02x", d2[i]);
-    printf("\n");
-  }
-  else
-    printf("Test %d succeeded.\n", test);
-}
-
-int main(void) {
-  SHA1_CTX ctx;
-  long i;
+  unsigned i;
   unsigned char digest[SHA1_DIGEST_LENGTH];
-
-  SHA1Init(&ctx);
-  SHA1Update(&ctx, "abc", 3);
-  SHA1Final(&ctx, digest);
-  dc(1, digest, "\xA9\x99\x3E\x36\x47\x06\x81\x6A\xBA\x3E\x25\x71\x78\x50\xC2\x6C\x9C\xD0\xD8\x9D");
-
-  SHA1Init(&ctx);
-  SHA1Update(&ctx, "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq", 56);
-  SHA1Final(&ctx, digest);
-  dc(2, digest, "\x84\x98\x3E\x44\x1C\x3B\xD2\x6E\xBA\xAE\x4A\xA1\xF9\x51\x29\xE5\xE5\x46\x70\xF1");
-
-  SHA1Init(&ctx);
-  for (i = 0; i < 1000000; i += 50)
-    SHA1Update(&ctx, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 50);
-  SHA1Final(&ctx, digest);
-  dc(3, digest, "\x34\xAA\x97\x3C\xD4\xC4\xDA\xA4\xF6\x1E\xEB\x2B\xDB\xAD\x27\x31\x65\x34\x01\x6F");
-  return 0;
+  SHA1_Final(&ctx, digest);
+  for (i = 0; i < sizeof(digest); ++i)
+    obuf_putXw(&outbuf, digest[i], 2, '0');
+  NL();
 }
+
+static void test(const char* ptr, long len)
+{
+  init();
+  hash(ptr, len);
+  dump();
+}
+
+MAIN
+{
+  unsigned i;
+  /* Test Vectors (from FIPS PUB 180-1) */
+  test("abc", 3);
+  test("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq", 56);
+  init();
+  for (i = 0; i < 1000000/64; ++i)
+    hash("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+	 64);
+  dump();
+}
+#endif
+#ifdef SELFTEST_EXP
+A9993E364706816ABA3E25717850C26C9CD0D89D
+84983E441C3BD26EBAAE4AA1F95129E5E54670F1
+34AA973CD4C4DAA4F61EEB2BDBAD27316534016F
 #endif

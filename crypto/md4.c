@@ -1,6 +1,6 @@
 /* md4.c - Functions to compute MD4 message digest
    according to the definition of MD4 in RFC 1320 from April 1992.
-   Copyright (C) 2000,2002 Bruce Guenter
+   Copyright (C) 2000,2003 Bruce Guenter
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,20 +20,13 @@
 /* Based on the GNU C Library MD5 source code,
    Written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, 1995.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
 #include <sys/types.h>
 #include <string.h>
+
+#include "sysdeps.h"
 #include "md4.h"
 
-# include <endian.h>
-# if __BYTE_ORDER == __BIG_ENDIAN
-#  define WORDS_BIGENDIAN 1
-# endif
-
-#ifdef WORDS_BIGENDIAN
+#ifdef ENDIAN_MSB
 # define SWAP(n)							\
     (((n) << 24) | (((n) & 0xff00) << 8) | (((n) >> 8) & 0xff00) | ((n) >> 24))
 #else
@@ -299,68 +292,44 @@ md4_process_block (buffer, ctx)
   ctx->D += D;
 }
 
-
-#ifdef MD4_SELFTEST
+#ifdef SELFTEST_MAIN
 #include <stdio.h>
-static void test(const char* str, unsigned char hash[16]) 
-{
-  unsigned char cmp[16];
-  int i;
-  md4_buffer(str, strlen(str), cmp);
-  for (i = 0; i < 16; i++)
-    if (cmp[i] != hash[i]) {
-      printf("MD4 of '%s' failed\ngood=", str);
-      for(i = 0; i < 16; i++)
-	printf("%02x", hash[i]);
-      printf("\ncalc=");
-      for(i = 0; i < 16; i++)
-	printf("%02x", cmp[i]);
-      printf("\n");
-      exit(1);
-    }
-}
 
-static void test2(const char* str1, const char* str2, unsigned char hash[16]) 
+static void MDString(const char* str)
 {
-  MD4_CTX ctx;
-  unsigned char cmp[16];
-  int i;
+  struct md4_ctx ctx;
+  unsigned char digest[16];
+  unsigned int len = strlen(str);
+  unsigned i;
+  
   md4_init_ctx(&ctx);
-  md4_process_bytes(str1, strlen(str1), &ctx);
-  md4_process_bytes(str2, strlen(str2), &ctx);
-  md4_finish_ctx(&ctx, cmp);
-  for (i = 0; i < 16; i++)
-    if (cmp[i] != hash[i]) {
-      printf("MD4 of '%s' '%s' failed\ngood=", str1, str2);
-      for(i = 0; i < 16; i++)
-	printf("%02x", hash[i]);
-      printf("\ncalc=");
-      for(i = 0; i < 16; i++)
-	printf("%02x", cmp[i]);
-      printf("\n");
-      exit(1);
-    }
+  md4_process_bytes(str, len, &ctx);
+  md4_finish_ctx(&ctx, digest);
+  printf("MD4 (\"%s\") = ", str);
+  for (i = 0; i < 16; i++) printf("%02x", digest[i]);
+  printf("\n");
 }
 
 int main(void)
 {
-  test("",
-       "\x31\xd6\xcf\xe0\xd1\x6a\xe9\x31\xb7\x3c\x59\xd7\xe0\xc0\x89\xc0");
-  test("a",
-       "\xbd\xe5\x2c\xb3\x1d\xe3\x3e\x46\x24\x5e\x05\xfb\xdb\xd6\xfb\x24");
-  test("abc",
-       "\xa4\x48\x01\x7a\xaf\x21\xd8\x52\x5f\xc1\x0a\xe8\x7a\xa6\x72\x9d");
-  test("message digest",
-       "\xd9\x13\x0a\x81\x64\x54\x9f\xe8\x18\x87\x48\x06\xe1\xc7\x01\x4b");
-  test("abcdefghijklmnopqrstuvwxyz",
-       "\xd7\x9e\x1c\x30\x8a\xa5\xbb\xcd\xee\xa8\xed\x63\xdf\x41\x2d\xa9");
-  test("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
-       "\x04\x3f\x85\x82\xf2\x41\xdb\x35\x1c\xe6\x27\xe1\x53\xe7\xf0\xe4");
-  test("123456789012345678901234567890123456789012345678901234567890123456"
-       "78901234567890",
-       "\xe3\x3b\x4d\xdc\x9c\x38\xf2\x19\x9c\x3e\x7b\x16\x4f\xcc\x05\x36");
-  test2("123456789012345678901234567890123456789012345678901234567890",
-	"12345678901234567890",
-	"\xe3\x3b\x4d\xdc\x9c\x38\xf2\x19\x9c\x3e\x7b\x16\x4f\xcc\x05\x36");
+  MDString("");
+  MDString("a");
+  MDString("abc");
+  MDString("message digest");
+  MDString("abcdefghijklmnopqrstuvwxyz");
+  MDString("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+  
+  MDString("1234567890123456789012345678901234567890"
+	   "1234567890123456789012345678901234567890");
+  return 0;
 }
+#endif
+#ifdef SELFTEST_EXP
+MD4 ("") = 31d6cfe0d16ae931b73c59d7e0c089c0
+MD4 ("a") = bde52cb31de33e46245e05fbdbd6fb24
+MD4 ("abc") = a448017aaf21d8525fc10ae87aa6729d
+MD4 ("message digest") = d9130a8164549fe818874806e1c7014b
+MD4 ("abcdefghijklmnopqrstuvwxyz") = d79e1c308aa5bbcdeea8ed63df412da9
+MD4 ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789") = 043f8582f241db351ce627e153e7f0e4
+MD4 ("12345678901234567890123456789012345678901234567890123456789012345678901234567890") = e33b4ddc9c38f2199c3e7b164fcc0536
 #endif
