@@ -17,14 +17,19 @@
  */
 #include <signal.h>
 #include "sig.h"
+#include "sysdeps.h"
 
 void sig_catch(int sig, signalfn fn)
 {
+#ifdef HASSIGACTION
   struct sigaction sa;
   sa.sa_handler = fn;
   sa.sa_flags = 0;
   sigemptyset(&sa.sa_mask);
   sigaction(sig, &sa, 0);
+#else
+  signal(sig,fn); /* won't work under System V, even nowadays---dorks */
+#endif
 }
 
 void sig_default(int sig) { sig_catch(sig, SIG_DFL); }

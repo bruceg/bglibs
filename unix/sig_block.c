@@ -17,20 +17,28 @@
  */
 #include <signal.h>
 #include "sig.h"
-#include "hassgprm.h"
+#include "sysdeps.h"
 
 void sig_block(int signal)
 {
+#ifdef HASSIGPROCMASK
   sigset_t set;
   sigemptyset(&set);
   sigaddset(&set, signal);
   sigprocmask(SIG_BLOCK, &set, 0);
+#else
+  sigblock(1 << (sig - 1));
+#endif
 }
 
 void sig_unblock(int signal)
 {
+#ifdef HASSIGPROCMASK
   sigset_t set;
   sigemptyset(&set);
   sigaddset(&set, signal);
   sigprocmask(SIG_UNBLOCK, &set, 0);
+#else
+  sigsetmask(sigsetmask(~0) & ~(1 << (sig - 1)));
+#endif
 }

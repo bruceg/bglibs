@@ -17,10 +17,15 @@
  */
 #include <signal.h>
 #include "sig.h"
+#include "sysdeps.h"
 
 void sig_suspend(void)
 {
+#ifdef HASSIGPROCMASK
   sigset_t set;
   sigemptyset(&set);
   sigsuspend(&set);
+#else
+  sigpause(0);
+#endif
 }
