@@ -13,14 +13,36 @@ static void catch_child(int signal)
   signal = 0;
 }
 
+/** Set up a self-pipe for catching child exit events.
+ *
+ * This function opens up a pipe within the program used to safely
+ * handle exiting child processes.  Every time a child exits, a single
+ * byte is written to the pipe.  The resulting file descriptor is
+ * statically assigned, so do not call this function more than once
+ * within a single program.  The file descriptor is set to non-blocking
+ * mode to prevent blocking when reading from it.
+ *
+ * To use the file descriptor, use either \c poll or \c select to
+ * determine when it is readable.  When it becomes readable, read the
+ * data written to it (and throw it away), and use \c wait or equivalent
+ * to catch the \c exit value from the child process(es).
+ *
+ * \return -1 if an error occurred, otherwise the return value is the
+ * file descriptor opened for reading.
+ */
 int selfpipe_init(void)
 {
   if (pipe(fds) == -1) return -1;
-  if (!nonblock_on(fds[0]) || !nonblock_on(fds[1])) return -1;
+  if (!nonblock_on(fds[0]) || !nonblock_on(fds[1])) {
+    close(fds[0]);
+    close(fds[1]);
+    return -1;
+  }
   sig_child_catch(catch_child);
   return fds[0];
 }
 
+/** Shut down the self-pipe. */
 void selfpipe_close(void)
 {
   close(fds[0]);
