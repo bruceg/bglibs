@@ -9,15 +9,14 @@
 #ifndef _SHA1_H
 # define _SHA1_H
 
-#include "uint32.h"
+#include <sysdeps.h>
 
 #define SHA1_DIGEST_LENGTH 20
 #define SHA1_BLOCK_LENGTH 64
 
 typedef struct {
   uint32 state[5];
-  uint32 countlo;
-  uint32 counthi;
+  uint64 bytes;
   unsigned char buffer[SHA1_BLOCK_LENGTH];
 } SHA1_CTX;
 

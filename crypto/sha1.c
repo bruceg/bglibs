@@ -17,8 +17,9 @@
 
 #include <string.h>
 
-#include "sysdeps.h"
 #include "sha1.h"
+#include "uint32.h"
+#include "uint64.h"
 
 #define rol(value, bits) (((value) << (bits)) | ((value) >> (32 - (bits))))
 
@@ -106,7 +107,7 @@ void SHA1Init(SHA1_CTX* context)
     context->state[2] = 0x98BADCFE;
     context->state[3] = 0x10325476;
     context->state[4] = 0xC3D2E1F0;
-    context->countlo = context->counthi = 0;
+    context->bytes = 0;
 }
 
 
@@ -114,26 +115,22 @@ void SHA1Init(SHA1_CTX* context)
 
 void SHA1Update(SHA1_CTX* context, const unsigned char* data, uint32 len)
 {
-uint32 i;
-uint32 j;
-
-    j = context->countlo;
-    if ((context->countlo += len << 3) < j)
-	context->counthi++;
-    context->counthi += (len>>29);
-    j = (j >> 3) % SHA1_BLOCK_LENGTH;
-    if ((j + len) >= SHA1_BLOCK_LENGTH) {
-	i = SHA1_BLOCK_LENGTH - j;
-        memcpy(&context->buffer[j], data, i);
-        SHA1Transform(context->state, context->buffer);
-        for ( ; i + SHA1_BLOCK_LENGTH <= len; i += SHA1_BLOCK_LENGTH) {
-            SHA1Transform(context->state, &data[i]);
-        }
-        j = 0;
-    }
-    else
-	i = 0;
-    memcpy(&context->buffer[j], &data[i], len - i);
+  unsigned blen = context->bytes % SHA1_BLOCK_LENGTH;
+  unsigned use;
+  context->bytes += len;
+  if (blen > 0 && len >= (use = SHA1_BLOCK_LENGTH - blen)) {
+    memcpy(context->buffer + blen, data, use);
+    SHA1Transform(context->state, context->buffer);
+    blen = 0;
+    len -= use;
+    data += use;
+  }
+  while (len >= SHA1_BLOCK_LENGTH) {
+    SHA1Transform(context->state, data);
+    len -= SHA1_BLOCK_LENGTH;
+    data += SHA1_BLOCK_LENGTH;
+  }
+  memcpy(context->buffer + blen, data, len);
 }
 
 
@@ -141,34 +138,21 @@ uint32 j;
 
 void SHA1Final(SHA1_CTX* context, unsigned char digest[SHA1_DIGEST_LENGTH])
 {
-unsigned i;
-unsigned j;
-unsigned char finalcount[8];
-unsigned char c;
-
-    finalcount[0] = (context->counthi >> 24) & 0xff;
-    finalcount[1] = (context->counthi >> 16) & 0xff;
-    finalcount[2] = (context->counthi >> 8) & 0xff;
-    finalcount[3] = context->counthi & 0xff;
-    finalcount[4] = (context->countlo >> 24) & 0xff;
-    finalcount[5] = (context->countlo >> 16) & 0xff;
-    finalcount[6] = (context->countlo >> 8) & 0xff;
-    finalcount[7] = context->countlo & 0xff;
-    c = 0x80;
-    SHA1Update(context, &c, 1);
-    c = 0x00;
-    while ((context->countlo%(SHA1_BLOCK_LENGTH*8)) != (SHA1_BLOCK_LENGTH*8-8*8))
-        SHA1Update(context, &c, 1);
-    SHA1Update(context, finalcount, 8);  /* Should cause a SHA1Transform() */
-    for (i = j = 0; i < SHA1_DIGEST_LENGTH; i += 4, j++) {
-	digest[i+0] = (unsigned char)(context->state[j] >> 24);
-	digest[i+1] = (unsigned char)(context->state[j] >> 16);
-	digest[i+2] = (unsigned char)(context->state[j] >>  8);
-	digest[i+3] = (unsigned char)(context->state[j] >>  0);
-    }
-    /* Wipe variables */
-    memset(context, '\0', sizeof(*context));
-    memset(&finalcount, '\0', sizeof(finalcount));
+  unsigned i;
+  unsigned blen = context->bytes % SHA1_BLOCK_LENGTH;
+  context->buffer[blen++] = 0x80;
+  memset(context->buffer + blen, 0, SHA1_BLOCK_LENGTH - blen);
+  if (blen > SHA1_BLOCK_LENGTH-8) {
+    SHA1Transform(context->state, context->buffer);
+    memset(context->buffer, 0, SHA1_BLOCK_LENGTH-8);
+  }
+  uint64_pack_msb((context->bytes << 3),
+		  context->buffer + SHA1_BLOCK_LENGTH - 8);
+  SHA1Transform(context->state, context->buffer);
+  for (i = 0; i < 5; ++i, digest += 4)
+    uint32_pack_msb(context->state[i], digest);
+  /* Wipe variables */
+  memset(context, 0, sizeof(*context));
 }
 
 #ifdef SELFTEST_MAIN
