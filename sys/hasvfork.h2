@@ -1,6 +1,7 @@
 #ifndef FORK_H
 #define FORK_H
 
+/* sysdep: +vfork */
 extern pid_t fork();
 extern pid_t vfork();
 

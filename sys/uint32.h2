@@ -1,1 +1,2 @@
+/* sysdep: +ulong32 */
 typedef unsigned long uint32;

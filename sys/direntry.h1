@@ -1,6 +1,8 @@
 #ifndef DIRENTRY_H
 #define DIRENTRY_H
 
+/* sysdep: +direct */
+/* sysdep: -dirent */
 #include <sys/dir.h>
 #define direntry struct direct
 
