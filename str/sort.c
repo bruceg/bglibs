@@ -59,7 +59,7 @@ int str_sort(str* s, char sep, long count)
     }
   }
   if ((ptrs = alloca(count * sizeof *ptrs)) == 0) return 0;
-  if (!str_copy(&tmp, s)) return 0;
+  if (!str_copy(&tmp, s)) { str_free(&tmp); return 0; }
   for (i = 0, ptr = tmp.s, end = tmp.s+tmp.len; i < count; ++i) {
     const char* ptrend = memchr(ptr, sep, end-ptr);
     if (ptrend == 0) ptrend = end;
@@ -73,5 +73,6 @@ int str_sort(str* s, char sep, long count)
     str_catb(s, ptrs[i].str, ptrs[i].len);
     str_catc(s, sep);
   }
+  str_free(&tmp);
   return 1;
 }
