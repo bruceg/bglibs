@@ -1,6 +1,6 @@
 #include <errno.h>
+#include "sysdeps.h"
 #include "iobuf.h"
-#include <sysdeps.h>
 
 int iobuf_timeout(iobuf* io, int poll_out)
 {
