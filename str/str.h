@@ -1,8 +1,10 @@
 #ifndef STR__H__
 #define STR__H__
 
-#define STR_MINSIZE 16
-#define STR_ROUNDSIZE 16
+/* STR_BLOCKSIZE should be set to the at least size at which the
+ * allocator (ie malloc) will align the data it returns.  String data
+ * will be allocated in steps of this number. */
+#define STR_BLOCKSIZE 16
 
 struct str
 {

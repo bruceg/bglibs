@@ -21,10 +21,10 @@
 int str_init(str* s)
 {
   char* p;
-  if ((p = malloc(STR_MINSIZE)) == 0) return 0;
+  if ((p = malloc(STR_BLOCKSIZE)) == 0) return 0;
   p[0] = 0;
   s->s = p;
   s->len = 0;
-  s->size = STR_MINSIZE;
+  s->size = STR_BLOCKSIZE;
   return 1;
 }
