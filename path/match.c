@@ -94,6 +94,6 @@ int path_match(const char* pattern, str* result, unsigned options)
     if (!str_copyb(&part, pattern, partend-pattern)) return -1;
     if ((count = match_next(&part, result, options)) == -1) return -1;
   }
-  if (!str_sort(result, 0, count)) return -1;
+  if (!str_sort(result, 0, count, 0)) return -1;
   return count;
 }
