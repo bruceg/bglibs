@@ -20,5 +20,5 @@ int ibuf_getstr(ibuf* in, str* s, char boundary)
     if (!str_catc(s, ch)) return 0;
     if (ch == boundary) break;
   }
-  return 1;
+  return in->count > 0;
 }
