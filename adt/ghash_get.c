@@ -14,6 +14,7 @@ void* ghash_get(struct ghash* d, const void* key, unsigned long hash,
     if (ghash_entry_hash(entry) == hash &&
 	keycmp(key, ghash_entry_keyptr(entry)) == 0)
       return entry;
+    ++p;
     if (++i >= size) i = 0, p = d->table;
   } while (i != start);
   return 0;
