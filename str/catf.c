@@ -18,25 +18,33 @@
 #include "str.h"
 #include "fmt/multi.h"
 
-/** Append formatted data using \c fmt_multi */
-int str_catf(str* s, const char* format, ...)
+/** Append formatted data using \c fmt_multi from a \c va_list */
+int str_catfv(str* s, const char* format, va_list ap)
 {
   unsigned length;
-  va_list ap;
+  va_list ap2;
+  va_copy(ap2, ap);
 
-  va_start(ap, format);
   length = fmt_multiv(0, format, ap);
-  va_end(ap);
-
   if (!str_realloc(s, s->len + length))
     return 0;
 
-  va_start(ap, format);
   fmt_multiv(s->s + s->len, format, ap);
-  va_end(ap);
+  va_end(ap2);
 
   s->s[s->len += length] = 0;
   return 1;
+}
+
+/** Append formatted data using \c fmt_multi from variable arguments */
+int str_catf(str* s, const char* format, ...)
+{
+  int i;
+  va_list ap;
+  va_start(ap, format);
+  i = str_catfv(s, format, ap);
+  va_end(ap);
+  return i;
 }
 
 #ifdef SELFTEST_MAIN

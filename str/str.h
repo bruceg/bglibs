@@ -1,6 +1,8 @@
 #ifndef STR__H__
 #define STR__H__
 
+#include <stdarg.h>
+
 /** \defgroup str str: Dynamically allocated string library.
 
 \par Calling Convention
@@ -75,6 +77,7 @@ int str_copy(str* s, const str* in);
 int str_copys(str* s, const char* in);
 int str_copyb(str* s, const char* in, unsigned len);
 int str_copyf(str* s, const char* format, ...);
+int str_copyfv(str* s, const char* format, va_list ap);
 int str_copyns(str* s, unsigned int count, ...);
 int str_copy2s(str* s, const char* a, const char* b);
 int str_copy3s(str* s, const char* a, const char* b, const char* c);
@@ -90,6 +93,7 @@ int str_cats(str* s, const char* in);
 int str_catc(str* s, char in);
 int str_catb(str* s, const char* in, unsigned len);
 int str_catf(str* s, const char* format, ...);
+int str_catfv(str* s, const char* format, va_list ap);
 int str_cati(str* s, long in);
 int str_catiw(str* s, long in, unsigned width, char pad);
 int str_catu(str* s, unsigned long in);

@@ -18,25 +18,33 @@
 #include "str.h"
 #include "fmt/multi.h"
 
-/** Copy formatted data using \c fmt_multi */
-int str_copyf(str* s, const char* format, ...)
+/** Copy formatted data using \c fmt_multi from a \c va_list */
+int str_copyfv(str* s, const char* format, va_list ap)
 {
   unsigned length;
-  va_list ap;
+  va_list ap2;
+  va_copy(ap2, ap);
 
-  va_start(ap, format);
   length = fmt_multiv(0, format, ap);
-  va_end(ap);
-
   if (!str_ready(s, length))
     return 0;
 
-  va_start(ap, format);
   fmt_multiv(s->s, format, ap);
-  va_end(ap);
+  va_end(ap2);
 
   s->s[s->len = length] = 0;
   return 1;
+}
+
+/** Copy formatted data using \c fmt_multi from variable arguments */
+int str_copyf(str* s, const char* format, ...)
+{
+  int i;
+  va_list ap;
+  va_start(ap, format);
+  i = str_copyfv(s, format, ap);
+  va_end(ap);
+  return i;
 }
 
 #ifdef SELFTEST_MAIN
