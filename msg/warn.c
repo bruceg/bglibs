@@ -1,4 +1,3 @@
-#include "iobuf/iobuf.h"
 #include "msg.h"
 
 void msg_warn(const char* a, const char* b, const char* c, const char* d,

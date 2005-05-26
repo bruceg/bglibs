@@ -4,7 +4,8 @@ Changes in version 1.020
 - Fixed a couple of length counting bugs in the fmt number code.
 
 - Added multiple-item formatting functions fmt_multi (similar to printf,
-  but safer), fmt_multiv, obuf_putf, str_catf, and str_copyf.
+  but safer), fmt_multiv, obuf_putf, str_catf, and str_copyf, as well as
+  a set of formatted message functions.
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
