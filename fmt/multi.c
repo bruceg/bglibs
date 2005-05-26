@@ -17,6 +17,7 @@
  */
 #include <stdarg.h>
 #include <string.h>
+#include "misc.h"
 #include "multi.h"
 #include "number.h"
 
@@ -99,37 +100,6 @@ unsigned fmt_multi(char* buffer, const char* format, ...)
   i = fmt_multiv(buffer, format, ap);
   va_end(ap);
   return i;
-}
-
-static unsigned fmt_char(char* buffer, int ch, unsigned width, char pad)
-{
-  unsigned i;
-  if (buffer != 0) {
-    for (i = width; i > 1; --i)
-      *buffer++ = pad;
-    *buffer = ch;
-  }
-  return width ? width : 1;
-}
-
-static unsigned fmt_mem(char* buffer, const char* s, unsigned length,
-			unsigned width, char pad)
-{
-  unsigned i;
-  if (length > width)
-    width = length;
-  if (buffer != 0) {
-    for (i = width; i > length; --i)
-      *buffer++ = pad;
-    for (i = length; i > 0; --i)
-      *buffer++ = *s++;
-  }
-  return width;
-}
-
-static unsigned fmt_str(char* buffer, const char* s, unsigned width, char pad)
-{
-  return fmt_mem(buffer, s, strlen(s), width, pad);
 }
 
 static unsigned fmt_ullnumwa(char* buffer, unsigned long long u,
@@ -227,7 +197,7 @@ unsigned fmt_multiv(char* buffer, const char* format, va_list ap)
       ilength = fmt_char(buffer, va_arg(ap, int), width, pad);
       break;
     case 's':
-      ilength = fmt_str(buffer, va_arg(ap, const char*), width, pad);
+      ilength = fmt_chars(buffer, va_arg(ap, const char*), width, pad);
       break;
     case 'p':
       ilength = fmt_ullnumwa(buffer, (unsigned long)va_arg(ap, void*),

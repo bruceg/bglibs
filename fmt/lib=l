@@ -1,3 +1,5 @@
+char.o
+chars.o
 lcase.o
 multi.o
 pad.o
