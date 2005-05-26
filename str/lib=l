@@ -8,6 +8,7 @@ cat3s.o
 cat4s.o
 cat5s.o
 cat6s.o
+catf.o
 catns.o
 catiwll.o
 catiw.o
@@ -26,6 +27,7 @@ copy3s.o
 copy4s.o
 copy5s.o
 copy6s.o
+copyf.o
 copyns.o
 copy.o
 count.o

@@ -1,4 +1,5 @@
 lcase.o
+multi.o
 pad.o
 sign_pad.o
 sdec.o
