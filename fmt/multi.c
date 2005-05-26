@@ -20,6 +20,77 @@
 #include "multi.h"
 #include "number.h"
 
+/** Format multiple items
+
+The \c format string used to describe the multiple items is related to
+what is used with printf and related functions, but has one critical
+difference: instead of formatted items being escaped, literal text must
+be escaped.  This solves the largest security issue with using
+printf-style format strings, which is the possibility of accidentally
+treating untrusted text as the format string.
+
+The format string is composed of zero or more format items.  Each item
+is composed of the following parts:
+
+<b>Zero or more flag characters:</b>
+
+<dl>
+
+<dt>\c # <dd>Use an "alternate form" to convert the value.  For octal
+conversion, the result is prefixed with a \c 0 .  For hexadecimal
+conversion, the result is prefixed with either \c 0x or \c 0X depending
+on the conversion type.
+
+<dt>\c - <dd>(not implemented) Pad on the right (left justified) instead
+of on the left (default right justified).
+
+<dt>\c 0 <dd>Pad the result with zeros instead of spaces.
+
+</dl>
+
+<b>Field width.</b>
+
+The option field width is a decimal digit string specifying the minimum
+field width.  If the converted value has fewer characters than the field
+width, it will be padded out to the field width.
+
+<b>Length modifier:</b>
+
+<dl>
+
+<dt>\c l <dd>(not implemented) The following conversion uses a \c long
+integer type.
+
+<dt>\c ll <dd>(not implemented) The following conversion uses a \c long
+\c long integer type.
+
+</dl>
+
+<b>Conversion specifier.</b>
+
+<dl>
+
+<dt>\c d <dt>\c i <dd>The \c int argument is converted to a signed
+decimal string.
+
+<dt>\c o <dt>\c u <dt>\c x <dt>\c X <dd>The \c unsigned \c int argument
+is converted to a unsigned octal, unsigned decimal, lowercase unsigned
+hexadecimal, or uppercase unsigned hexadecimal string respectively.
+
+<dt>\c c <dd>The \c int argument is converted to an unsigned char.
+
+<dt>\c s <dd>The \c const \c char* argument is converted.
+
+<dt>\c p <dd>The \c void* argument is converted to a hexadecimal string.
+
+<dt>\c \\ <dd>The next character literal from the format string is
+converted as with \c c conversion.
+
+<dt>\c {string} <dd>The literal string enclosed by the parenthesis is
+converted as with \c s conversion.
+
+</dl>
+*/
 unsigned fmt_multi(char* buffer, const char* format, ...)
 {
   va_list ap;
@@ -95,75 +166,7 @@ static unsigned fmt_unumwa(char* buffer, unsigned long u,
 
 /** Format multiple items, using a va_list.
 
-The \c format string used to describe the multiple items is related to
-what is used with printf and related functions, but has one critical
-difference: instead of formatted items being escaped, literal text must
-be escaped.  This solves the largest security issue with using
-printf-style format strings, which is the possibility of accidentally
-treating untrusted text as the format string.
-
-The format string is composed of zero or more format items.  Each item
-is composed of the following parts:
-
-<b>Zero or more flag characters:</b>
-
-<dl>
-
-<dt>\c # <dd>Use an "alternate form" to convert the value.  For octal
-conversion, the result is prefixed with a \c 0 .  For hexadecimal
-conversion, the result is prefixed with either \c 0x or \c 0X depending
-on the conversion type.
-
-<dt>\c - <dd>(not implemented) Pad on the right (left justified) instead
-of on the left (default right justified).
-
-<dt>\c 0 <dd>Pad the result with zeros instead of spaces.
-
-</dl>
-
-<b>Field width.</b>
-
-The option field width is a decimal digit string specifying the minimum
-field width.  If the converted value has fewer characters than the field
-width, it will be padded out to the field width.
-
-<b>Length modifier:</b>
-
-<dl>
-
-<dt>\c l <dd>(not implemented) The following conversion uses a \c long
-integer type.
-
-<dt>\c ll <dd>(not implemented) The following conversion uses a \c long
-\c long integer type.
-
-</dl>
-
-<b>Conversion specifier.</b>
-
-<dl>
-
-<dt>\c d <dt>\c i <dd>The \c int argument is converted to a signed
-decimal string.
-
-<dt>\c o <dt>\c u <dt>\c x <dt>\c X <dd>The \c unsigned \c int argument
-is converted to a unsigned octal, unsigned decimal, lowercase unsigned
-hexadecimal, or uppercase unsigned hexadecimal string respectively.
-
-<dt>\c c <dd>The \c int argument is converted to an unsigned char.
-
-<dt>\c s <dd>The \c const \c char* argument is converted.
-
-<dt>\c p <dd>The \c void* argument is converted to a hexadecimal string.
-
-<dt>\c \\ <dd>The next character literal from the format string is
-converted as with \c c conversion.
-
-<dt>\c {string} <dd>The literal string enclosed by the parenthesis is
-converted as with \c s conversion.
-
-</dl>
-
+This is the core function used to format multiple items.
 */
 unsigned fmt_multiv(char* buffer, const char* format, va_list ap)
 {
