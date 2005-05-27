@@ -2,7 +2,7 @@
 #include <str/str.h>
 
 /** Open and read the entire file into the \c str . */
-int ibuf_openreadclose(const char* filename, str* out)
+int ibuf_openreadclose(const char* filename, struct str* out)
 {
   ibuf in;
   int r;

@@ -7,7 +7,7 @@
 If the input is not a netstring, \c errno (and \c in->io.errnum ) will
 be set to \c EPROTOTYPE and the state of \c in will be undefined.
 */
-int ibuf_getnetstring(ibuf* in, str* s)
+int ibuf_getnetstring(ibuf* in, struct str* s)
 {
   unsigned long len;
   char ch;

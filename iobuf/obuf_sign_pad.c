@@ -1,5 +1,12 @@
 #include "obuf.h"
 
+/** Pad the output with \c width instances of the single character \c
+    ch, preceded by an optional negative sign at an appropriate place.
+
+If the pad character is \c '0' then any negative sign is placed as the
+first character, followed by padding.  Otherwise, it is preceded by the
+padding.
+*/
 int obuf_sign_pad(obuf* out, int sign, unsigned width, char pad)
 {
   if (!width) return !sign || obuf_putc(out, '-');

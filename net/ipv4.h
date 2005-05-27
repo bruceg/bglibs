@@ -8,7 +8,10 @@
 @{ */
 
 /** IPv4 address structure. */
-typedef struct { uint8 addr[4]; } ipv4addr;
+typedef struct {
+  /** 32-bit IPv4 address, represented as 4 8-bit \c unsigned \c chars. */
+  uint8 addr[4];
+} ipv4addr;
 /** IPv4 port number. */
 typedef uint16 ipv4port;
 

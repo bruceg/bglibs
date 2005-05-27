@@ -25,6 +25,7 @@ struct ibuf
   /** Function used to read data from the file descriptor. */
   ibuf_fn readfn;
 };
+/** Input specific buffer typedef. */
 typedef struct ibuf ibuf;
 
 extern ibuf inbuf;

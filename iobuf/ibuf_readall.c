@@ -2,7 +2,7 @@
 #include <str/str.h>
 
 /** Read the remainder of the \c ibuf into the \c str. */
-int ibuf_readall(ibuf* in, str* out)
+int ibuf_readall(ibuf* in, struct str* out)
 {
   if (ibuf_eof(in)) return 1;
   if (ibuf_error(in)) return 0;

@@ -40,6 +40,7 @@ struct str
   /** The size of the above block. */
   unsigned size;
 };
+/** String structure typedef. */
 typedef struct str str;
 
 /**
@@ -48,9 +49,12 @@ typedef struct str str;
 */
 struct str_sortentry
 {
+  /** Pointer to the string data to compare. */
   const char* str;
+  /** Length of the string data to compare. */
   unsigned long len;
 };
+/** String sort entry typedef. */
 typedef struct str_sortentry str_sortentry;
 
 /** \name Globals

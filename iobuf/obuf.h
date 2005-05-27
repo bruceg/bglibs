@@ -28,6 +28,7 @@ struct obuf
   /** Function used to write data to the file descriptor. */
   obuf_fn writefn;
 };
+/** Output specific buffer typedef. */
 typedef struct obuf obuf;
 
 extern obuf outbuf;
