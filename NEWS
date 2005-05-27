@@ -7,6 +7,9 @@ Changes in version 1.020
   but safer), fmt_multiv, obuf_putf, str_catf, and str_copyf, as well as
   a set of formatted message functions.
 
+Note: As of this version, a C99-compatible compiler is required to build
+the software.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
