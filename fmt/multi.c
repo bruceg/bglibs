@@ -21,7 +21,7 @@
 #include "multi.h"
 #include "number.h"
 
-/** Format multiple items
+/** Format multiple items.
 
 The \c format string used to describe the multiple items is related to
 what is used with printf and related functions, but has one critical
@@ -59,11 +59,10 @@ width, it will be padded out to the field width.
 
 <dl>
 
-<dt>\c l <dd>(not implemented) The following conversion uses a \c long
-integer type.
+<dt>\c l <dd>The following conversion uses a \c long integer type.
 
-<dt>\c ll <dd>(not implemented) The following conversion uses a \c long
-\c long integer type.
+<dt>\c ll <dd>The following conversion uses a \c long \c long integer
+type.
 
 </dl>
 
@@ -145,10 +144,14 @@ unsigned fmt_multiv(char* buffer, const char* format, va_list ap)
   for (length = 0; *format != 0; ++format) {
     int pad = ' ';
     int islong = 0;
+    int islonglong = 0;
     int altfmt = 0;
     int leftadj = 0;
     unsigned width;
     unsigned ilength;
+    unsigned long long value = 0;
+    const char* altstr;
+    char conv;
 
     for (; *format != 0; ++format) {
       switch (*format) {
@@ -160,38 +163,49 @@ unsigned fmt_multiv(char* buffer, const char* format, va_list ap)
     }
     for (width = 0; *format >= '0' && *format <= '9'; ++format)
       width = (width * 10) + (*format - '0');
-    if (*format == 'l') {
+    while (*format == 'l') {
       ++format;
-      islong = 1;
-      if (*format == 'l') {
-	++format;
-	islong = 2;
-      }
+      ++islong;
     }
-    switch (*format) {
+    islonglong = islong >= 2;
+    conv = *format;
+    switch (conv) {
+    case 'i': case 'd': case 'o': case 'u': case 'x': case 'X':
+      value = islonglong
+	? va_arg(ap, unsigned long long)
+	: islong
+	? va_arg(ap, unsigned long)
+	: va_arg(ap, unsigned);
+    }
+    switch (conv) {
     case 'i':
     case 'd':
-      ilength = fmt_snumw(buffer, va_arg(ap, int), width, pad,
-			  10, fmt_lcase_digits);
+      ilength = islonglong
+	? fmt_sllnumw(buffer, value, width, pad, 10, fmt_lcase_digits)
+	: fmt_snumw(buffer, value, width, pad, 10, fmt_lcase_digits);
       break;
     case 'o':
-      ilength = fmt_unumwa(buffer, va_arg(ap, int), width, pad,
-			   8, fmt_lcase_digits,
-			   altfmt ? "0" : 0);
+      altstr = altfmt ? "0" : 0;
+      ilength = islonglong
+	? fmt_ullnumwa(buffer, value, width, pad, 8, fmt_lcase_digits, altstr)
+	: fmt_unumwa(buffer, value, width, pad, 8, fmt_lcase_digits, altstr);
       break;
     case 'u':
-      ilength = fmt_unumw(buffer, va_arg(ap, int), width, pad,
-			  10, fmt_lcase_digits);
+      ilength = islonglong
+	? fmt_ullnumw(buffer, value, width, pad, 10, fmt_lcase_digits)
+	: fmt_unumw(buffer, value, width, pad, 10, fmt_lcase_digits);
       break;
     case 'x':
-      ilength = fmt_unumwa(buffer, va_arg(ap, int), width, pad,
-			   16, fmt_lcase_digits,
-			   altfmt ? "0x" : 0);
+      altstr = altfmt ? "0x" : 0;
+      ilength = islonglong
+	? fmt_ullnumwa(buffer, value, width, pad, 16, fmt_lcase_digits, altstr)
+	: fmt_unumwa(buffer, value, width, pad, 16, fmt_lcase_digits, altstr);
       break;
     case 'X':
-      ilength = fmt_unumwa(buffer, va_arg(ap, int), width, pad,
-			   16, fmt_ucase_digits,
-			   altfmt ? "0X" : 0);
+      altstr = altfmt ? "0X" : 0;
+      ilength = islonglong
+	? fmt_ullnumwa(buffer, value, width, pad, 16, fmt_ucase_digits, altstr)
+	: fmt_unumwa(buffer, value, width, pad, 16, fmt_ucase_digits, altstr);
       break;
     case 'c':
       ilength = fmt_char(buffer, va_arg(ap, int), width, pad);
@@ -200,8 +214,8 @@ unsigned fmt_multiv(char* buffer, const char* format, va_list ap)
       ilength = fmt_chars(buffer, va_arg(ap, const char*), width, pad);
       break;
     case 'p':
-      ilength = fmt_ullnumwa(buffer, (unsigned long)va_arg(ap, void*),
-			     width, pad, 16, fmt_lcase_digits, "0x");
+      ilength = fmt_unumwa(buffer, (unsigned long)va_arg(ap, void*),
+			   width, pad, 16, fmt_lcase_digits, "0x");
       break;
     case '\\':
       ilength = fmt_char(buffer, *++format, width, pad);
@@ -255,6 +269,12 @@ MAIN
   testit("o\\|x\\|X\\|i\\|d", 95, 95, 95, 95, 95);
   testit("#o\\|#x\\|#X\\|#i\\|#d", 95, 95, 95, 95, 95);
   testit("p", (void*)12345678);
+  testit("o\\|lo\\|llo", 505050505U, 505050505UL, 5050505050505050505ULL);
+  testit("u\\|lu\\|llu", 505050505U, 505050505UL, 5050505050505050505ULL);
+  testit("x\\|lx\\|llx", 505050505U, 505050505UL, 5050505050505050505ULL);
+  testit("X\\|lX\\|llX", 505050505U, 505050505UL, 5050505050505050505ULL);
+  testit("i\\|li\\|lli", 505050505U, 505050505UL, 5050505050505050505ULL);
+  testit("i\\|li\\|lli", -505050505U, -505050505UL, -5050505050505050505ULL);
 }
 #endif
 #ifdef SELFTEST_EXP
@@ -264,4 +284,10 @@ MAIN
 15:15:137|5f|5F|95|95
 20:20:0137|0x5f|0X5F|95|95
 8:8:0xbc614e
+43:43:3606472611|3606472611|430267771265752674611
+39:39:505050505|505050505|5050505050505050505
+34:34:1e1a7589|1e1a7589|4616ff95afab7989
+34:34:1E1A7589|1E1A7589|4616FF95AFAB7989
+39:39:505050505|505050505|5050505050505050505
+42:42:-505050505|-505050505|-5050505050505050505
 #endif
