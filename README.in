@@ -16,6 +16,15 @@ A mailing list archive is available at:
 Development versions of @PACKAGE@ are available via Subversion at:
 	svn://bruce-guenter.dyndns.org/@PACKAGE@/trunk
 
+Installation:
+
+- Build the sources by running "make"
+- Run the "instshow" command to see what will be installed (optional).
+- After the package has been compiled, run the following commands as root:
+	./installer
+	./instcheck
+  These commands will produce no output if there are no errors.
+
 This package is Copyright(C) 2002-2005 Bruce Guenter, and may be copied
 according to the GNU GENERAL PUBLIC LICENSE (GPL) Version 2 or a later
 version.  A copy of this license is included with this package.  This
