@@ -1,35 +1,41 @@
 #include <errno.h>
 #include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include "iobuf/obuf.h"
+#include "msg/msg.h"
+#include "msg/wrap.h"
+#include "str/str.h"
 #include "installer.h"
 
+const char program[] = "instshow";
+const int msg_show_pid = 0;
+
 #define DENTRY_SLOTS 250
-static const char* dentries[DENTRY_SLOTS] = { "", 0 };
+static str dentries[DENTRY_SLOTS];
 static int last_dentry = 1;
 
 static void showmode(char type, unsigned mode)
 {
-  putchar(type);
-  putchar((mode & 0400) ? 'r' : '-');
-  putchar((mode & 0200) ? 'w' : '-');
-  putchar((mode & 0100) ?
-	  (mode & 04000) ? 's' : 'x' :
-	  (mode & 04000) ? 'S' : '-');
-  putchar((mode & 040) ? 'r' : '-');
-  putchar((mode & 020) ? 'w' : '-');
-  putchar((mode & 010) ?
-	  (mode & 02000) ? 's' : 'x' :
-	  (mode & 02000) ? 'S' : '-');
-  putchar((mode & 04) ? 'r' : '-');
-  putchar((mode & 02) ? 'w' : '-');
-  putchar((mode & 01) ?
-	  (mode & 01000) ? 't' : 'x' :
-	  (mode & 01000) ? 'T' : '-');
+  obuf_putf(&outbuf, "cccccccccc",
+	    type,
+	    (mode & 0400) ? 'r' : '-',
+	    (mode & 0200) ? 'w' : '-',
+	    (mode & 0100)
+	    ? (mode & 04000) ? 's' : 'x'
+	    : (mode & 04000) ? 'S' : '-',
+	    (mode & 040) ? 'r' : '-',
+	    (mode & 020) ? 'w' : '-',
+	    (mode & 010)
+	    ? (mode & 02000) ? 's' : 'x'
+	    : (mode & 02000) ? 'S' : '-',
+	    (mode & 04) ? 'r' : '-',
+	    (mode & 02) ? 'w' : '-',
+	    (mode & 01)
+	    ? (mode & 01000) ? 't' : 'x'
+	    : (mode & 01000) ? 'T' : '-');
 }
 
 #define UID_NA "      N/A"
@@ -40,18 +46,22 @@ static void show(char type, int dir, const char* filename,
 {
   showmode(type, mode);
 
-  if (uid == (unsigned)-1) fputs(UID_NA, stdout);
-  else printf(" %8d", uid);
-  if (gid == (unsigned)-1) fputs(UID_NA, stdout);
-  else printf(" %8d", gid);
+  if (uid == (unsigned)-1)
+    obuf_puts(&outbuf, UID_NA);
+  else
+    obuf_putf(&outbuf, "\\ 8d", uid);
+  if (gid == (unsigned)-1)
+    obuf_puts(&outbuf, UID_NA);
+  else
+    obuf_putf(&outbuf, "\\ 8d", gid);
 
-  putchar(' ');
+  obuf_putc(&outbuf, ' ');
   if (filename[0] != '/') {
-    fputs(dentries[dir], stdout);
-    putchar('/');
+    obuf_putstr(&outbuf, &dentries[dir]);
+    obuf_putc(&outbuf, '/');
   }
-  fputs(filename, stdout);
-  fputs(endline, stdout);
+  obuf_puts(&outbuf, filename);
+  obuf_puts(&outbuf, endline);
 }
 
 void c(int dir, const char* filename,
@@ -66,7 +76,8 @@ void cf(int dir, const char* filename,
 {
   /*
   show('-', dir, filename, uid, gid, mode, " <= ");
-  puts(srcfile);
+  obuf_puts(&outbuf, srcfile);
+  obuf_putc(&outbuf, '\n');
   */
   c(dir, filename, uid, gid, mode);
   (void)srcfile;
@@ -82,38 +93,35 @@ int d(int dir, const char* subdir,
 void s(int dir, const char* name, const char* target)
 {
   show('l', dir, name, -1, -1, 0777, " -> ");
-  puts(target);
+  obuf_puts(&outbuf, target);
+  obuf_putc(&outbuf, '\n');
 }
 
 int opendir(const char* dir)
 {
-  if (last_dentry >= DENTRY_SLOTS) {
-    fputs("instshow: error: Too many open directories!\n", stderr);
-    exit(1);
-  }
-  dentries[last_dentry] = strdup(dir);
+  if (last_dentry >= DENTRY_SLOTS)
+    die1(1, "Too many open directories");
+  wrap_str(str_copys(&dentries[last_dentry], dir));
   return last_dentry++;
 }
 
 int opensubdir(int dir, const char* subdir)
 {
-  char* str;
-  if (last_dentry >= DENTRY_SLOTS) {
-    fputs("instshow: error: Too many open directories!\n", stderr);
-    exit(1);
-  }
-  str = malloc(strlen(dentries[dir])+1+strlen(subdir)+1);
-  strcpy(str, dentries[dir]);
+  if (last_dentry >= DENTRY_SLOTS)
+    die1(1, "Too many open directories");
+  wrap_str(str_copy(&dentries[last_dentry], &dentries[dir]));
   if (dir > 0)
-    strcat(str, "/");
-  strcat(str, subdir);
-  dentries[last_dentry] = str;
+    wrap_str(str_catc(&dentries[last_dentry], '/'));
+  wrap_str(str_cats(&dentries[last_dentry], subdir));
   return last_dentry++;
 }
 
 int main(void)
 {
-  puts(" type/mode    owner    group path");
+  dentries[0].s = "";
+  dentries[0].len = 0;
+  obuf_puts(&outbuf, " type/mode    owner    group path\n");
   insthier();
+  obuf_flush(&outbuf);
   return 0;
 }

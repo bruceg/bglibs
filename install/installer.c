@@ -1,44 +1,32 @@
 #include <errno.h>
 #include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include "msg/msg.h"
 #include "installer.h"
+
+const char program[] = "installer";
+const int msg_show_pid = 0;
 
 static int sourcedir;
 
 static char buffer[4096];
 
-static void diesys(const char* msg)
-{
-  fprintf(stderr, "installer error: %s:\n  %s\n", msg,
-	  strerror(errno));
-  exit(1);
-}
-
-static void diefsys(const char* msg, const char* filename)
-{
-  fprintf(stderr, "installer error: %s '%s':\n  %s\n", msg, filename,
-	  strerror(errno));
-  exit(1);
-}
-
 static void xchdir(int fd)
 {
   if (((fd == 0) ? chdir("/") : fchdir(fd)) == -1)
-    diesys("Could not change base directory");
+    die1sys(1, "Could not change base directory");
 }
 
 static void setmodes(const char* filename,
 		     unsigned uid, unsigned gid, unsigned mode)
 {
   if (chown(filename, uid, gid) == -1)
-    diefsys("Could not set owner or group for", filename);
+    diefsys(1, "{Could not set owner or group for }s", filename);
   if (chmod(filename, mode) == -1)
-    diefsys("Could not set mode for", filename);
+    diefsys(1, "{Could not set mode for }s", filename);
 }
 
 void cf(int dir, const char* filename,
@@ -53,20 +41,22 @@ void cf(int dir, const char* filename,
   
   xchdir(sourcedir);
   if ((fdin = open(srcfile, O_RDONLY)) == -1)
-    diefsys("Could not open input file", srcfile);
+    diefsys(1, "{Could not open input file }s", srcfile);
 
   xchdir(dir);
   if ((fdout = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0600)) == -1)
-    diefsys("Could not create output file", filename);
+    diefsys(1, "{Could not create output file }s", filename);
 
   while ((rd = read(fdin, buffer, sizeof buffer)) != 0) {
-    if (rd == (unsigned)-1) diefsys("Error reading from input file", filename);
+    if (rd == (unsigned)-1)
+      diefsys(1, "{Error reading from input file }s", filename);
     for (offset = 0; offset < rd; offset += wr) {
       if ((wr = write(fdout, buffer+offset, rd-offset)) == (unsigned)-1)
-	diefsys("Error writing to output file", filename);
+	diefsys(1, "{Error writing to output file }s", filename);
     }
   }
-  if (close(fdout) == -1) diefsys("Error closing output file", filename);
+  if (close(fdout) == -1)
+    diefsys(1, "{Error closing output file }s", filename);
   close(fdin);
   setmodes(filename, uid, gid, mode);
 }
@@ -82,9 +72,9 @@ int d(int dir, const char* subdir,
 {
   xchdir(dir);
   if (mkdir(subdir, 0700) == -1 && errno != EEXIST)
-    diefsys("Could not create directory", subdir);
+    diefsys(1, "{Could not create directory }s", subdir);
   if ((dir = open(subdir, O_RDONLY)) == -1)
-    diefsys("Could not open created directory", subdir);
+    diefsys(1, "{Could not open created directory }s", subdir);
   setmodes(subdir, uid, gid, mode);
   return dir;
 }
@@ -94,16 +84,16 @@ void s(int dir, const char* name, const char* target)
   xchdir(dir);
   unlink(name);
   if (symlink(target, name) == -1)
-    diefsys("Could not create symlink", name);
+    diefsys(1, "{Could not create symlink }s", name);
 }
 
 int opendir(const char* dir)
 {
   int fd;
   if (chdir(dir) == -1)
-    diefsys("Could not change directory to", dir);
+    diefsys(1, "{Could not change directory to }s", dir);
   if ((fd = open(".", O_RDONLY)) == -1)
-    diefsys("Could not open directory", dir);
+    diefsys(1, "{Could not open directory }s", dir);
   return fd;
 }
 

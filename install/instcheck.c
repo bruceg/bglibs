@@ -1,41 +1,25 @@
 #include <errno.h>
 #include <fcntl.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include "msg/msg.h"
 #include "installer.h"
+
+const char program[] = "instcheck";
+const int msg_show_pid = 0;
 
 static struct stat statbuf;
 
 int bin;
 int man;
 
-static void diesys(const char* msg)
-{
-  fprintf(stderr, "installer error: %s:\n  %s\n", msg,
-	  strerror(errno));
-  exit(1);
-}
-
-static void diefsys(const char* msg, const char* filename)
-{
-  fprintf(stderr, "installer error: %s '%s':\n  %s\n", msg, filename,
-	  strerror(errno));
-  exit(1);
-}
-
-static void warn(const char* filename, const char* msg)
-{
-  printf("instcheck warning: File '%s' %s.\n", filename, msg);
-}
-
 static void xchdir(int fd)
 {
   if (((fd == 0) ? chdir("/") : fchdir(fd)) == -1)
-    diesys("Could not change base directory");
+    die1sys(1, "Could not change base directory");
 }
 
 static void testmode(int dir, const char* filename,
@@ -44,18 +28,18 @@ static void testmode(int dir, const char* filename,
   xchdir(dir);
   if (lstat(filename, &statbuf) == -1) {
     if (errno == ENOENT)
-      warn(filename, "is missing");
+      warnf("{Missing file: }s", filename);
     else
-      diefsys("Could not stat file", filename);
+      diefsys(1, "{Could not stat file: }s", filename);
   }
   if ((statbuf.st_mode & S_IFMT) != type)
-    warn(filename, "is the wrong type of file");
+    warnf("{Wrong file type: }s", filename);
   if (uid != (unsigned)-1 && statbuf.st_uid != uid)
-    warn(filename, "has wrong owner");
+    warnf("{Wrong owner: }s", filename);
   if (gid != (unsigned)-1 && statbuf.st_gid != gid)
-    warn(filename, "has wrong group");
+    warnf("{Wrong group: }s", filename);
   if (mode != (unsigned)-1 && (statbuf.st_mode & 07777) != mode)
-    warn(filename, "has wrong permissions");
+    warnf("{Wrong permissions: }s", filename);
 }
 
 void cf(int dir, const char* filename,
@@ -87,20 +71,20 @@ void s(int dir, const char* name, const char* target)
   xchdir(dir);
   testmode(dir, name, -1, -1, -1, S_IFLNK);
   if ((linklen = readlink(name, linkbuf, sizeof linkbuf)) == -1)
-    diefsys("Could not read symlink", name);
+    diefsys(1, "{Could not read symlink: }s", name);
   targetlen = strlen(target);
   if (targetlen != linklen ||
       memcmp(linkbuf, target, linklen) != 0)
-    warn(name, "has wrong symlink target");
+    warnf("{Wrong symlink target: }s", name);
 }
 
 int opendir(const char* dir)
 {
   int fd;
   if (chdir(dir) == -1)
-    diefsys("Could not change directory to", dir);
+    diefsys(1, "{Could not change directory: }s", dir);
   if ((fd = open(".", O_RDONLY)) == -1)
-    diefsys("Could not open directory", dir);
+    diefsys(1, "{Could not open directory: }s", dir);
   return fd;
 }
 
