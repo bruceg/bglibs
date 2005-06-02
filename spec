@@ -17,13 +17,15 @@ BG Libraries Collection
 %setup
 echo gcc "%{optflags}" -g >conf-cc
 echo gcc -g -L. >conf-ld
+echo /usr/local/bglibs/include >conf-include
+echo /usr/local/bglibs/lib >conf-lib
 
 %build
 make
 
 %install
 rm -fr %{buildroot}
-mkdir -p %{buildroot}/usr/local/bglibs
+mkdir -p %{buildroot}/usr/local/bglibs/{include,lib}
 make installer instcheck
 ./installer %{buildroot}
 ./instcheck %{buildroot}

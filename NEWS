@@ -4,6 +4,8 @@ Changes in version 1.021
 - installer/instcheck program libraries now optionally install into a
   prefix directory specified on the command line.
 
+- Installation is now done under seperate include/lib directories.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

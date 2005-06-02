@@ -1,4 +1,5 @@
-#include "conf_home.c"
+#include "conf_include.c"
+#include "conf_lib.c"
 #include "install/installer.h"
 
 #define C(SUB,FILE) c(SUB,#FILE,-1,-1,0644)
@@ -7,15 +8,9 @@
 
 void insthier(void)
 {
-  const int home = d(0, conf_home, -1, -1, 0755);
-  int bin;
-  int inc;
-  int lib;
+  int inc = opendir(conf_include);
+  int lib = opendir(conf_lib);
   int dir;
-
-  bin = d(home, "bin", -1, -1, 0755);
-
-  inc = d(home, "include", -1, -1, 0755);
 
   cf(inc, "installer.h", -1, -1, 0644, "install/installer.h");
   C(inc, sysdeps.h);
@@ -111,8 +106,6 @@ void insthier(void)
   CF(vmailmgr, client.h);
   CF(vmailmgr, vpwentry.h);
   
-  lib = d(home, "lib", -1, -1, 0755);
-
   c(lib, "libbg.a", -1, -1, 0644);
 
   c(lib, "libbg-sysdeps.a", -1, -1, 0644);
