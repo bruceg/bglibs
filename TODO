@@ -2,6 +2,8 @@
   transparently.
   - Use a prefix of ::4444/32 to distinguish from ::ffff/32 and ::0/32
 
+- Add hooks for shared library building.
+
 - Rewrite iobuf and str number conversion routines to use fmt
 
 - Add FP to fmt
@@ -12,8 +14,6 @@
   - Implement TCP queries
 
 - Add make-compile, make-load, make-makelib scripts
-
-- Add library documentation
 
 - Add some way of dealing with dependancies like "socket.lib" etc.
 
