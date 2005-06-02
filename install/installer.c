@@ -5,6 +5,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include "msg/msg.h"
+#include "msg/wrap.h"
+#include "str/str.h"
 #include "installer.h"
 
 const char program[] = "installer";
@@ -13,6 +15,18 @@ const int msg_show_pid = 0;
 static int sourcedir;
 
 static char buffer[4096];
+
+static const char* prefix = "";
+
+static str path;
+static const char* makepath(const char* name)
+{
+  wrap_str(str_copys(&path, prefix));
+  if (name[0] != '/')
+    wrap_str(str_catc(&path, '/'));
+  wrap_str(str_cats(&path, name));
+  return path.s;
+}
 
 static void xchdir(int fd)
 {
@@ -90,10 +104,10 @@ void s(int dir, const char* name, const char* target)
 int opendir(const char* dir)
 {
   int fd;
-  if (chdir(dir) == -1)
-    diefsys(1, "{Could not change directory to }s", dir);
+  if (chdir(makepath(dir)) == -1)
+    diefsys(1, "{Could not change directory to }s", path.s);
   if ((fd = open(".", O_RDONLY)) == -1)
-    diefsys(1, "{Could not open directory }s", dir);
+    diefsys(1, "{Could not open directory }s", path.s);
   return fd;
 }
 
@@ -103,9 +117,12 @@ int opensubdir(int dir, const char* subdir)
   return opendir(subdir);
 }
 
-int main(void)
+int main(int argc, char* argv[])
 {
-  sourcedir = opendir(".");
+  if (argc > 1)
+    prefix = argv[1];
+  if ((sourcedir = open(".", O_RDONLY)) == -1)
+    die1sys(1, "Could not open working directory");
   umask(077);
   insthier();
   return 0;

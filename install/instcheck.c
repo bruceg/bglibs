@@ -6,6 +6,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include "msg/msg.h"
+#include "msg/wrap.h"
+#include "str/str.h"
 #include "installer.h"
 
 const char program[] = "instcheck";
@@ -13,8 +15,17 @@ const int msg_show_pid = 0;
 
 static struct stat statbuf;
 
-int bin;
-int man;
+static const char* prefix = "";
+
+static str path;
+static const char* makepath(const char* name)
+{
+  wrap_str(str_copys(&path, prefix));
+  if (name[0] != '/')
+    wrap_str(str_catc(&path, '/'));
+  wrap_str(str_cats(&path, name));
+  return path.s;
+}
 
 static void xchdir(int fd)
 {
@@ -60,7 +71,10 @@ int d(int dir, const char* subdir,
       unsigned uid, unsigned gid, unsigned mode)
 {
   testmode(dir, subdir, uid, gid, mode, S_IFDIR);
-  return opendir(subdir);
+  xchdir(dir);
+  if ((dir = open(subdir, O_RDONLY)) == -1)
+    diefsys(1, "{Could not open directory }s", subdir);
+  return dir;
 }
 
 void s(int dir, const char* name, const char* target)
@@ -81,10 +95,10 @@ void s(int dir, const char* name, const char* target)
 int opendir(const char* dir)
 {
   int fd;
-  if (chdir(dir) == -1)
-    diefsys(1, "{Could not change directory: }s", dir);
+  if (chdir(makepath(dir)) == -1)
+    diefsys(1, "{Could not change directory: }s", path.s);
   if ((fd = open(".", O_RDONLY)) == -1)
-    diefsys(1, "{Could not open directory: }s", dir);
+    diefsys(1, "{Could not open directory: }s", path.s);
   return fd;
 }
 
@@ -94,8 +108,10 @@ int opensubdir(int dir, const char* subdir)
   return opendir(subdir);
 }
 
-int main(void)
+int main(int argc, char* argv[])
 {
+  if (argc > 1)
+    prefix = argv[1];
   insthier();
   return 0;
 }

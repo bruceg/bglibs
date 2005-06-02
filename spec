@@ -23,13 +23,11 @@ make
 
 %install
 rm -fr %{buildroot}
-rm -f conf_home.c insthier.o installer instcheck
-echo %{buildroot}/usr/local/bglibs >conf-home
-make installer instcheck
-
 mkdir -p %{buildroot}/usr/local/bglibs
-./installer
-./instcheck
+make installer instcheck
+./installer %{buildroot}
+./instcheck %{buildroot}
+
 cp -a doc %{buildroot}/usr/local/bglibs
 
 %clean
