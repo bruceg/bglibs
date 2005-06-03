@@ -1,6 +1,6 @@
 #include "conf_include.c"
 #include "conf_lib.c"
-#include "install/installer.h"
+#include "instlib/installer.h"
 
 #define C(SUB,FILE) c(SUB,#FILE,-1,-1,0644)
 #define CF(SUB,FILE) cf(dir,#FILE,-1,-1,0644, #SUB "/" #FILE)
@@ -12,7 +12,7 @@ void insthier(void)
   int lib = opendir(conf_lib);
   int dir;
 
-  cf(inc, "installer.h", -1, -1, 0644, "install/installer.h");
+  cf(inc, "installer.h", -1, -1, 0644, "instlib/installer.h");
   C(inc, sysdeps.h);
   C(inc, systime.h);
   C(inc, uintnn.h);
@@ -110,9 +110,9 @@ void insthier(void)
 
   c(lib, "libbg-sysdeps.a", -1, -1, 0644);
 
-  cf(lib, "libbg-installer.a", -1, -1, 0644, "install/installer.a");
-  cf(lib, "libbg-instcheck.a", -1, -1, 0644, "install/instcheck.a");
-  cf(lib, "libbg-instshow.a", -1, -1, 0644,  "install/instshow.a");
+  cf(lib, "libbg-installer.a", -1, -1, 0644, "instlib/installer.a");
+  cf(lib, "libbg-instcheck.a", -1, -1, 0644, "instlib/instcheck.a");
+  cf(lib, "libbg-instshow.a", -1, -1, 0644,  "instlib/instshow.a");
 
 #undef L
 #define L(BASE) do{ \

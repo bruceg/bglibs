@@ -1,3 +1,3 @@
-: load insthier.o install/instshow.a libbg.a libbg-sysdeps.a
-./load insthier install/instshow.a libbg.a libbg-sysdeps.a
+: load insthier.o instlib/instshow.a libbg.a libbg-sysdeps.a
+./load insthier instlib/instshow.a libbg.a libbg-sysdeps.a
 mv insthier instshow
