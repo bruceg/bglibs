@@ -8,15 +8,14 @@ int obuf_putfv(obuf* out, const char* format, va_list ap)
   unsigned length;
   int i;
   va_list ap2;
-  va_copy(ap2, ap);
 
-  length = fmt_multiv(0, format, ap);
-  {
-    char buf[length];
-    fmt_multiv(buf, format, ap2);
-    i = obuf_write(out, buf, length);
-  }
+  va_copy(ap2, ap);
+  length = fmt_multiv(0, format, ap2);
   va_end(ap2);
+
+  char buf[length];
+  fmt_multiv(buf, format, ap);
+  i = obuf_write(out, buf, length);
 
   return i;
 }

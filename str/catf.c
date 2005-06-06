@@ -23,14 +23,14 @@ int str_catfv(str* s, const char* format, va_list ap)
 {
   unsigned length;
   va_list ap2;
-  va_copy(ap2, ap);
 
+  va_copy(ap2, ap);
   length = fmt_multiv(0, format, ap);
+  va_end(ap2);
   if (!str_realloc(s, s->len + length))
     return 0;
 
   fmt_multiv(s->s + s->len, format, ap);
-  va_end(ap2);
 
   s->s[s->len += length] = 0;
   return 1;

@@ -1,6 +1,9 @@
 -------------------------------------------------------------------------------
 Changes in version 1.021
 
+- Fixed typo bug in str_catfv and str_copyfv that caused failures on (at
+  least) PPC and S390 architectures.  Thanks Gerrit Pape.
+
 - installer/instcheck program libraries now optionally install into a
   prefix directory specified on the command line.
 

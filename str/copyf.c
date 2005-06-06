@@ -23,14 +23,14 @@ int str_copyfv(str* s, const char* format, va_list ap)
 {
   unsigned length;
   va_list ap2;
-  va_copy(ap2, ap);
 
-  length = fmt_multiv(0, format, ap);
+  va_copy(ap2, ap);
+  length = fmt_multiv(0, format, ap2);
+  va_end(ap2);
   if (!str_ready(s, length))
     return 0;
 
   fmt_multiv(s->s, format, ap);
-  va_end(ap2);
 
   s->s[s->len = length] = 0;
   return 1;
