@@ -13,9 +13,11 @@ int obuf_putfv(obuf* out, const char* format, va_list ap)
   length = fmt_multiv(0, format, ap2);
   va_end(ap2);
 
-  char buf[length];
-  fmt_multiv(buf, format, ap);
-  i = obuf_write(out, buf, length);
+  {
+    char buf[length];
+    fmt_multiv(buf, format, ap);
+    i = obuf_write(out, buf, length);
+  }
 
   return i;
 }
