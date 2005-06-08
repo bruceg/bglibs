@@ -25,7 +25,7 @@ int str_catfv(str* s, const char* format, va_list ap)
   va_list ap2;
 
   va_copy(ap2, ap);
-  length = fmt_multiv(0, format, ap);
+  length = fmt_multiv(0, format, ap2);
   va_end(ap2);
   if (!str_realloc(s, s->len + length))
     return 0;
