@@ -149,7 +149,7 @@ unsigned fmt_multiv(char* buffer, const char* format, va_list ap)
     int leftadj = 0;
     unsigned width;
     unsigned ilength;
-    unsigned long long value = 0;
+    long long value = 0;
     const char* altstr;
     char conv;
 
@@ -172,10 +172,10 @@ unsigned fmt_multiv(char* buffer, const char* format, va_list ap)
     switch (conv) {
     case 'i': case 'd': case 'o': case 'u': case 'x': case 'X':
       value = islonglong
-	? va_arg(ap, unsigned long long)
+	? va_arg(ap, long long)
 	: islong
-	? va_arg(ap, unsigned long)
-	: va_arg(ap, unsigned);
+	? va_arg(ap, long)
+	: va_arg(ap, int);
     }
     switch (conv) {
     case 'i':
