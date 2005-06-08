@@ -1,4 +1,4 @@
-for dep in ('deprecated','flock','getpeereid','inline','ipv6','mkfifo','namedpipebug','peercred','sendfile','setenv','sigaction','sigprocmask','spnam','sysselect','userpw','vfork','waitp','zlib'):
+for dep in ('daylight','deprecated','flock','getpeereid','inline','ipv6','mkfifo','namedpipebug','peercred','sendfile','setenv','sigaction','sigprocmask','spnam','sysselect','userpw','vfork','waitp','zlib'):
 	dependon(['sys/try%s.c'%dep, 'sys/has%s.h1'%dep, 'sys/has%s.h2'%dep])
 dependon([
 	'sys/tryulong32.c', 'sys/uint32.h1', 'sys/uint32.h2',
@@ -12,6 +12,7 @@ dependon([
 : choose compile load sysdeps-head.h sysdeps-tail.h
 ( set -e; \
   cat sysdeps-head.h; \
+  ./choose cl  daylight; \
   ./choose c   deprecated; \
   ./choose clr ulong32 uint32; \
   ./choose clr ulong64 uint64; \

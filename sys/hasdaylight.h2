@@ -1,0 +1,3 @@
+/* sysdep: +daylight */
+#define HASDAYLIGHT 1
+extern int daylight;

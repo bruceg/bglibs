@@ -1,0 +1,2 @@
+/* sysdep: -daylight */
+static const int daylight = 1;
