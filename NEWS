@@ -9,6 +9,9 @@ Changes in version 1.021
 
 - Installation is now done under seperate include/lib directories.
 
+- Added sysdep for "extern int daylight" (replaced by a macro if not
+  present).
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
