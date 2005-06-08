@@ -8,7 +8,8 @@ Changes in version 1.021
   platforms.  Thanks Gerrit Pape.
 
 - installer/instcheck program libraries now optionally install into a
-  prefix directory specified on the command line.
+  prefix directory specified on the command line or with
+  $install_prefix (which can be set on the make command line).
 
 - Installation is now done under seperate include/lib directories.
 

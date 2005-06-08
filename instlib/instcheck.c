@@ -110,8 +110,11 @@ int opensubdir(int dir, const char* subdir)
 
 int main(int argc, char* argv[])
 {
+  const char* tmp;
   if (argc > 1)
     prefix = argv[1];
+  else if ((tmp = getenv("install_prefix")) != 0)
+    prefix = tmp;
   insthier();
   return 0;
 }

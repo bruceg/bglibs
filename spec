@@ -26,9 +26,7 @@ make
 %install
 rm -fr %{buildroot}
 mkdir -p %{buildroot}/usr/local/bglibs/{include,lib}
-make installer instcheck
-./installer %{buildroot}
-./instcheck %{buildroot}
+make install_prefix=%{buildroot} install
 
 cp -a doc %{buildroot}/usr/local/bglibs
 
