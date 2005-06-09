@@ -17,6 +17,9 @@ argument is a directory number previously opened by \c opendir.
 
 @{ */
 
+/** The directory prefix under which all files are placed. */
+extern const char* install_prefix;
+
 /** Open a directory and provide a file handle reference for future
  * operations. */
 int opendir(const char* dir);

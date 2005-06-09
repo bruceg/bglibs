@@ -11,16 +11,13 @@
 #include "installer.h"
 
 const char program[] = "instcheck";
-const int msg_show_pid = 0;
 
 static struct stat statbuf;
-
-static const char* prefix = "";
 
 static str path;
 static const char* makepath(const char* name)
 {
-  wrap_str(str_copys(&path, prefix));
+  wrap_str(str_copys(&path, install_prefix));
   if (name[0] != '/')
     wrap_str(str_catc(&path, '/'));
   wrap_str(str_cats(&path, name));
@@ -108,13 +105,6 @@ int opensubdir(int dir, const char* subdir)
   return opendir(subdir);
 }
 
-int main(int argc, char* argv[])
+void instprep(void)
 {
-  const char* tmp;
-  if (argc > 1)
-    prefix = argv[1];
-  else if ((tmp = getenv("install_prefix")) != 0)
-    prefix = tmp;
-  insthier();
-  return 0;
 }
