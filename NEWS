@@ -1,6 +1,8 @@
 -------------------------------------------------------------------------------
 Changes in version 1.022
 
+- Fixed the instshow library to use and dispaly the install prefix just
+  like the other instlib programs.
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/

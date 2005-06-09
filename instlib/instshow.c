@@ -17,6 +17,8 @@ const int msg_show_pid = 0;
 static str dentries[DENTRY_SLOTS];
 static int last_dentry = 1;
 
+static const char* prefix = "";
+
 static void showmode(char type, unsigned mode)
 {
   obuf_putf(&outbuf, "cccccccccc",
@@ -57,6 +59,8 @@ static void show(char type, int dir, const char* filename,
 
   obuf_putc(&outbuf, ' ');
   if (filename[0] != '/') {
+    obuf_puts(&outbuf, prefix);
+    obuf_putc(&outbuf, '/');
     obuf_putstr(&outbuf, &dentries[dir]);
     obuf_putc(&outbuf, '/');
   }
@@ -116,8 +120,13 @@ int opensubdir(int dir, const char* subdir)
   return last_dentry++;
 }
 
-int main(void)
+int main(int argc, char* argv[])
 {
+  const char* tmp;
+  if (argc > 1)
+    prefix = argv[1];
+  else if ((tmp = getenv("install_prefix")) != 0)
+    prefix = tmp;
   dentries[0].s = "";
   dentries[0].len = 0;
   obuf_puts(&outbuf, " type/mode    owner    group path\n");
