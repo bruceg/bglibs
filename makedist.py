@@ -32,5 +32,5 @@ LISTS = [
 	'bgware@lists.untroubled.org',
 	]
 
-# Run any extra commands to prepare the source tree (such as making
-# documentation) here.
+# Run this shell command after everything is all done
+POSTINSTALL = 'rsync -a doc/html/ $HOME/untroubled.org/bglibs/docs/'
