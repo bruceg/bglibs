@@ -1,4 +1,10 @@
 -------------------------------------------------------------------------------
+Changes in version 1.022
+
+
+Development of this version has been sponsored by FutureQuest, Inc.
+ossi@FutureQuest.net  http://www.FutureQuest.net/
+-------------------------------------------------------------------------------
 Changes in version 1.021
 
 - Fixed typo bug in str_catfv and str_copyfv that caused failures on (at
