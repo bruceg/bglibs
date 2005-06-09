@@ -8,6 +8,6 @@ int selfpipe_init(void);
 void selfpipe_close(void);
 void selfpipe_catch_signal(int);
 
-/* @} */
+/** @} */
 
 #endif

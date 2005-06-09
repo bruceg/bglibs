@@ -24,6 +24,6 @@ extern const char* ipv4_scan(const char* s, ipv4addr* addr);
 extern const char* ipv4_format(const ipv4addr* addr);
 extern unsigned fmt_ipv4addr(char* buffer, const ipv4addr* addr);
 
-/* @} */
+/** @} */
 
 #endif

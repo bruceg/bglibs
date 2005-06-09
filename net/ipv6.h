@@ -22,6 +22,6 @@ extern const char* ipv6_scan(const char* s, ipv6addr* addr);
 extern const char* ipv6_format(const ipv6addr* addr);
 extern unsigned fmt_ipv6addr(char* buffer, const ipv6addr* addr);
 
-/* @} */
+/** @} */
 
 #endif

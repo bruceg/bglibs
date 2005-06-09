@@ -14,8 +14,8 @@
 extern unsigned fmt_multi(char* buffer, const char* format, ...);
 extern unsigned fmt_multiv(char* buffer, const char* format, va_list ap);
 
-/* @} */
+/** @} */
 
-/* @} */
+/** @} */
 
 #endif

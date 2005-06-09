@@ -39,7 +39,7 @@ entire requested operation completed, and \c 0 (false) otherwise.
 #define IOBUF_NEEDSMUNMAP 0x80
 extern unsigned iobuf_bufsize;
 
-/* @} */
+/** @} */
 
 /** \name Common
  * @{ */
@@ -88,6 +88,6 @@ int iobuf_close(iobuf* io);
 /** True if the \c iobuf is in a "bad" state. */
 #define iobuf_bad(io) ((io)->flags & IOBUF_BADFLAGS)
 int iobuf_timeout(iobuf* io, int poll_out);
-/* @} */
+/** @} */
 
 #endif

@@ -36,6 +36,6 @@ extern int trigger_set(iopoll_fd* io, const char* path);
 
 extern void trigger_pull(const char* path);
 
-/* @} */
+/** @} */
 
 #endif

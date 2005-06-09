@@ -42,6 +42,6 @@ int striter_advance(striter*);
 /** Loop macro; use in place of \c for(...) */
 #define striter_loop(ITER,STR,SEP) for(striter_start(ITER,STR,SEP);striter_valid(ITER);striter_advance(ITER))
 
-/* @} */
+/** @} */
 
 #endif

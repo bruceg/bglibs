@@ -48,7 +48,7 @@ int socket_getaddr6(int sock, ipv6addr* ip, ipv6port* port);
 int socket_cork(int sock);
 int socket_uncork(int sock);
 int socket_notcpdelay(int sock, int enable);
-/* @} */
+/** @} */
 
 /** \name UNIX local-domain socket functions
 @{ */
@@ -63,7 +63,7 @@ int socket_sendu(int sock, const char* buffer, unsigned buflen);
 
 int socket_pairstr(int fd[2]);
 int socket_pairdgm(int fd[2]);
-/* @} */
+/** @} */
 
 /** \name Functions for any type of socket
 @{ */
@@ -76,8 +76,8 @@ int socket_shutdown(int sock, int shut_rd, int shut_wr);
 
 int socket_sendfd(int sock, int fd);
 int socket_recvfd(int sock);
-/* @} */
+/** @} */
 
-/* @} */
+/** @} */
 
 #endif

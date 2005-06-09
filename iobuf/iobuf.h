@@ -15,8 +15,8 @@ int iobuf_copyflush(ibuf* in, obuf* out);
 int ibuf_copytofd(ibuf* in, int out);
 int obuf_copyfromfd(int in, obuf* out);
 
-/* @} */
+/** @} */
 
-/* @} */
+/** @} */
 
 #endif

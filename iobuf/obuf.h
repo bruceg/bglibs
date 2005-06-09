@@ -113,6 +113,6 @@ int obuf_putullnumw(obuf* out, unsigned long long num, unsigned width, char pad,
 		    unsigned base, const char* digits);
 int obuf_putnetstring(obuf* out, const char* data, unsigned datalen);
 int obuf_sign_pad(obuf* out, int sign, unsigned width, char pad);
-/* @} */
+/** @} */
 
 #endif

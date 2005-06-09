@@ -22,6 +22,6 @@ extern int envstr_from_array(struct str* env, char** array, int overwrite);
 extern int envstr_from_string(struct str* env, const char* s, int overwrite);
 extern char** envstr_make_array(const struct str* env);
 
-/* @} */
+/** @} */
 
 #endif

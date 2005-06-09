@@ -60,6 +60,6 @@ int ibuf_getstr_crlf(ibuf* in, struct str* s);
 int ibuf_getnetstring(ibuf* in, struct str* s);
 int ibuf_readall(ibuf* in, struct str* s);
 int ibuf_openreadclose(const char* filename, struct str* s);
-/* @} */
+/** @} */
 
 #endif

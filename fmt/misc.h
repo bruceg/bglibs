@@ -20,8 +20,8 @@ extern unsigned fmt_chars(char* buffer, const char* s,
 extern unsigned fmt_str(char* buffer, const struct str* s,
 			unsigned width, char pad);
 
-/* @} */
+/** @} */
 
-/* @} */
+/** @} */
 
 #endif

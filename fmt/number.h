@@ -67,7 +67,7 @@ extern unsigned fmt_sdec(char* buffer, long num);
 extern unsigned fmt_sdecw(char* buffer, long num,
 			  unsigned width, char pad);
 
-/* @} */
+/** @} */
 
 /** \name Signed long long integer conversions
  * @{ */
@@ -79,7 +79,7 @@ extern unsigned fmt_slldec(char* buffer, long long num);
 extern unsigned fmt_slldecw(char* buffer, long long num,
 			    unsigned width, char pad);
 
-/* @} */
+/** @} */
 
 /** \name Unsigned integer conversions
  * @{ */
@@ -97,7 +97,7 @@ extern unsigned fmt_uHex(char* buffer, unsigned long num);
 extern unsigned fmt_uHexw(char* buffer, unsigned long num,
 			  unsigned width, char pad);
 
-/* @} */
+/** @} */
 
 /** \name Unsigned long long integer conversions
  * @{ */
@@ -115,8 +115,8 @@ extern unsigned fmt_ullHex(char* buffer, unsigned long long num);
 extern unsigned fmt_ullHexw(char* buffer, unsigned long long num,
 			    unsigned width, char pad);
 
-/* @} */
+/** @} */
 
-/* @} */
+/** @} */
 
 #endif

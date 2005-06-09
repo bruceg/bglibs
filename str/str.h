@@ -61,7 +61,7 @@ typedef struct str_sortentry str_sortentry;
  * @{ */
 extern const char str_lcase_digits[36];
 extern const char str_ucase_digits[36];
-/* @} */
+/** @} */
 
 /** \name Overhead Functions
  * @{ */
@@ -73,7 +73,7 @@ int str_alloc(str* s, unsigned size, int copy);
 #define str_realloc(S,SZ) str_alloc(S,SZ,1)
 void str_free(str* s);
 int str_truncate(str* s, unsigned len);
-/* @} */
+/** @} */
 
 /** \name Assignment Functions
  * @{ */
@@ -88,7 +88,7 @@ int str_copy3s(str* s, const char* a, const char* b, const char* c);
 int str_copy4s(str* s, const char* a, const char* b, const char* c, const char* d);
 int str_copy5s(str* s, const char* a, const char* b, const char* c, const char* d, const char* e);
 int str_copy6s(str* s, const char* a, const char* b, const char* c, const char* d, const char* e, const char* f);
-/* @} */
+/** @} */
 
 /** \name Appending Functions
  * @{ */
@@ -128,7 +128,7 @@ int str_cat6s(str* s, const char* a, const char* b, const char* c, const char* d
 int str_join(str* s, char sep, const str* t);
 int str_joins(str* s, char sep, const char* in);
 int str_joinb(str* s, char sep, const char* in, unsigned len);
-/* @} */
+/** @} */
 
 /** \name In-place Modification Functions */
 /* @{ */
@@ -147,7 +147,7 @@ int str_splices(str* s, unsigned start, unsigned len, const char* r);
 int str_spliceb(str* s, unsigned start, unsigned len,
 		const char* r, unsigned rlen);
 long str_xlate(str* s, const char* from, const char* to, unsigned nchars);
-/* @} */
+/** @} */
 
 /** \name Comparison Functions
  * @{ */
@@ -166,7 +166,7 @@ int str_startb(const str* a, const char* b, unsigned len);
 int str_case_start(const str* a, const str* b);
 int str_case_starts(const str* a, const char* b);
 int str_case_startb(const str* a, const char* b, unsigned len);
-/* @} */
+/** @} */
 
 /** \name Searching Functions
  * @{ */
@@ -185,7 +185,7 @@ int str_findnextnot(const str* s, const char* list, unsigned pos);
 int str_findprev(const str* s, char ch, unsigned pos);
 int str_findprevof(const str* s, const char* list, unsigned pos);
 int str_findprevnot(const str* s, const char* list, unsigned pos);
-/* @} */
+/** @} */
 
 /** \name Pattern Matching Functions
  * @{ */
@@ -201,8 +201,8 @@ int str_globs(const str* s, const char* pattern);
 int str_case_glob(const str* s, const str* pattern);
 int str_case_globb(const str* s, const char* pptr, unsigned plen);
 int str_case_globs(const str* s, const char* pattern);
-/* @} */
+/** @} */
 
-/* @} */
+/** @} */
 
 #endif
