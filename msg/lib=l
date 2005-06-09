@@ -7,6 +7,7 @@ die.o
 dief.o
 error.o
 errorf.o
+wrap_alloc.o
 wrap_chdir.o
 wrap_exit.o
 wrap_str.o
