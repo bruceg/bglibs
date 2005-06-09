@@ -1,0 +1,7 @@
+: bg-installer BIN conf-bin INCLUDE conf-include LIB conf-lib
+./bg-installer -v "`head -n 1 conf-bin`" <BIN
+./bg-installer -c "`head -n 1 conf-bin`" <BIN
+./bg-installer -v "`head -n 1 conf-include`" <INCLUDE
+./bg-installer -c "`head -n 1 conf-include`" <INCLUDE
+./bg-installer -v "`head -n 1 conf-lib`" <LIB
+./bg-installer -c "`head -n 1 conf-lib`" <LIB

@@ -1,6 +1,9 @@
 -------------------------------------------------------------------------------
 Changes in version 1.022
 
+- Added a generic installer program, similar to the "install" program
+  included with ezmlm.
+
 - Fixed the instshow library to use and dispaly the install prefix just
   like the other instlib programs.
 

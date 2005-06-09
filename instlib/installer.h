@@ -1,7 +1,7 @@
 #ifndef SPAC__INSTALLER__H__
 #define SPAC__INSTALLER__H__
 
-/** \defgroup installer installer: Installation program generation
+/** \defgroup instlib instlib: Installation program generation
 
 The installer libraries provide for building a program to install files,
 to verify (check) an installation, and to show what would be installed,
