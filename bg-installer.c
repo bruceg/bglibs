@@ -164,7 +164,7 @@ static void checkmode(unsigned uid, unsigned gid,
 		      unsigned mode, unsigned type)
 {
   struct stat st;
-  if (stat(path.s, &st) == -1) {
+  if (lstat(path.s, &st) == -1) {
     if (errno == ENOENT)
       error("does not exist");
     else
