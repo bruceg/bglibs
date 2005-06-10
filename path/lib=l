@@ -2,4 +2,5 @@ contains.o
 fnmatch.o
 match.o
 merge.o
+mkdirs.o
 mktemp.o
