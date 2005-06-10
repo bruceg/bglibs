@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include "msg/msg.h"
 #include "msg/wrap.h"
+#include "path/path.h"
 #include "str/str.h"
 #include "installer.h"
 
@@ -82,7 +83,7 @@ int d(int dir, const char* subdir,
       unsigned uid, unsigned gid, unsigned mode)
 {
   xchdir(dir);
-  if (mkdir(subdir, 0700) == -1 && errno != EEXIST)
+  if (path_mkdirs(subdir, 0700) == -1 && errno != EEXIST)
     diefsys(1, "{Could not create directory }s", subdir);
   if ((dir = open(subdir, O_RDONLY)) == -1)
     diefsys(1, "{Could not open created directory }s", subdir);
@@ -98,20 +99,29 @@ void s(int dir, const char* name, const char* target)
     diefsys(1, "{Could not create symlink }s", name);
 }
 
-int opendir(const char* dir)
+static int dochdir(const char* dir)
 {
   int fd;
-  if (chdir(makepath(dir)) == -1)
-    diefsys(1, "{Could not change directory to }s", path.s);
+  if (chdir(dir) == -1)
+    diefsys(1, "{Could not change directory to }s", dir);
   if ((fd = open(".", O_RDONLY)) == -1)
-    diefsys(1, "{Could not open directory }s", path.s);
+    diefsys(1, "{Could not open directory }s", dir);
   return fd;
+}
+
+int opendir(const char* dir)
+{
+  dir = makepath(dir);
+  if (path_mkdirs(dir, 0777) == -1
+      && errno != EEXIST)
+    diefsys(1, "{Could not create directory }s", dir);
+  return dochdir(dir);
 }
 
 int opensubdir(int dir, const char* subdir)
 {
   xchdir(dir);
-  return opendir(subdir);
+  return dochdir(subdir);
 }
 
 void instprep(void)

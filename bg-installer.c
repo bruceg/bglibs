@@ -9,6 +9,7 @@
 #include "iobuf/obuf.h"
 #include "iobuf/iobuf.h"
 #include "msg/msg.h"
+#include "path/path.h"
 #include "str/str.h"
 
 static int opt_verbose = 0;
@@ -211,8 +212,8 @@ static void d(unsigned uid, unsigned gid, unsigned mode)
 
   if (!opt_dryrun) {
     if (stat(path.s, &st) != 0) {
-      if (mkdir(path.s, 0700) == -1)
-	diefsys(1, "{Could not make directory '}s{'}", path.s);
+      if (path_mkdirs(path.s, 0700) == -1)
+	diefsys(1, "{Could not create directory '}s{'}", path.s);
     }
     else if (!S_ISDIR(st.st_mode))
       dief(1, "{Path '}s{' exists but is not a directory}", path.s);
@@ -268,7 +269,11 @@ int cli_main(int argc, char* argv[])
   prefix = getenv("install_prefix");
   if (opt_check)
     opt_dryrun = 1;
-  
+
+  if (path_mkdirs(topdir, 0777) != 0
+      && errno != EEXIST)
+    diefsys(1, "{Could not create directory '}s{'}", topdir);
+
   while (ibuf_getstr(&inbuf, &line, LF)) {
     const char* uidstr = 0;
     const char* gidstr = 0;
