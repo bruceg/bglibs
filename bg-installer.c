@@ -1,5 +1,6 @@
 #include "sysdeps.h"
 #include <errno.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -150,11 +151,12 @@ static void show(char type, unsigned uid, unsigned gid, unsigned mode,
   obuf_endl(&outbuf);
 }
 
-static void setmode(unsigned uid, unsigned gid, unsigned mode)
+static void setmode(const char* filename,
+		    unsigned uid, unsigned gid, unsigned mode)
 {
-  if (chown(path.s, uid, gid) != 0)
+  if (chown(filename, uid, gid) != 0)
     diefsys(1, "{Could not set owner on '}s{'}", path.s);
-  if (chmod(path.s, mode) != 0)
+  if (chmod(filename, mode) != 0)
     diefsys(1, "{Could not set permissions on '}s{'}", path.s);
 }
 
@@ -183,7 +185,9 @@ static void checkmode(unsigned uid, unsigned gid,
 static void c(unsigned uid, unsigned gid, unsigned mode, const char* src)
 {
   ibuf in;
-  obuf out;
+  int out;
+  static str pathtmp;
+
   show('-', uid, gid, mode, " <= ", src);
 
   if (!opt_dryrun) {
@@ -192,13 +196,15 @@ static void c(unsigned uid, unsigned gid, unsigned mode, const char* src)
       diefsys(1, "{Could not remove '}s{'}", path.s);
     if (!ibuf_open(&in, src, 0))
       diefsys(1, "{Could not open '}s{'}", src);
-    if (!obuf_open(&out, path.s, OBUF_CREATE|OBUF_EXCLUSIVE, 0600, 0))
-      diefsys(1, "{Could not create '}s{'}", path.s);
-    if (!iobuf_copy(&in, &out)
-	|| !obuf_close(&out))
-      diefsys(1, "{Could not write '}s{'}", path.s);
+    if ((out = path_mktemp(path.s, &pathtmp)) == -1)
+      die1sys(1, "Could not create temporary file");
+    if (!ibuf_copytofd(&in, out)
+	|| close(out) != 0)
+      diefsys(1, "{Could not write '}s{'}", pathtmp.s);
+    setmode(pathtmp.s, uid, gid, mode);
+    if (rename(pathtmp.s, path.s) != 0)
+      diefsys(1, "{Could not rename '}s{' to '}s{'}", pathtmp.s, path.s);
     ibuf_close(&in);
-    setmode(uid, gid, mode);
   }
 
   if (opt_check) {
@@ -218,7 +224,7 @@ static void d(unsigned uid, unsigned gid, unsigned mode)
     }
     else if (!S_ISDIR(st.st_mode))
       dief(1, "{Path '}s{' exists but is not a directory}", path.s);
-    setmode(uid, gid, mode);
+    setmode(path.s, uid, gid, mode);
   }
 
   if (opt_check) {

@@ -1,5 +1,6 @@
 #include <errno.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -50,27 +51,30 @@ void cf(int dir, const char* filename,
   size_t rd;
   size_t wr;
   size_t offset;
+  static str tmpname;
   
   xchdir(sourcedir);
   if ((fdin = open(srcfile, O_RDONLY)) == -1)
     diefsys(1, "{Could not open input file }s", srcfile);
 
   xchdir(dir);
-  if ((fdout = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0600)) == -1)
-    diefsys(1, "{Could not create output file }s", filename);
+  if ((fdout = path_mktemp(filename, &tmpname)) == -1)
+    die1sys(1, "Could not create temporary file");
 
   while ((rd = read(fdin, buffer, sizeof buffer)) != 0) {
     if (rd == (unsigned)-1)
       diefsys(1, "{Error reading from input file }s", filename);
     for (offset = 0; offset < rd; offset += wr) {
       if ((wr = write(fdout, buffer+offset, rd-offset)) == (unsigned)-1)
-	diefsys(1, "{Error writing to output file }s", filename);
+	die1sys(1, "Error writing to output file");
     }
   }
   if (close(fdout) == -1)
-    diefsys(1, "{Error closing output file }s", filename);
+    diefsys(1, "{Error closing output file }s", tmpname.s);
+  setmodes(tmpname.s, uid, gid, mode);
+  if (rename(tmpname.s, filename))
+    diefsys(1, "{Could not rename '}s{' to '}s{'}", tmpname.s, filename);
   close(fdin);
-  setmodes(filename, uid, gid, mode);
 }
 
 void c(int dir, const char* filename,
