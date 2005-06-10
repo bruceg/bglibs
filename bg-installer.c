@@ -63,7 +63,7 @@ on the command line, and \c DIR and \c FILENAME given in the
 installation file.
 
 - c lines copy regular files from the current directory
-- d lines create directories (\c FILENAME is ignored)
+- d lines create directories
 - s lines create symlinks (\c UID, \c GID, and \c MODE are ignored)
 */
 
@@ -94,7 +94,8 @@ static void makepath(const char* dir, const char* file)
   if (prefix != 0)
     str_copys(&path, prefix);
   str_joins(&path, '/', topdir);
-  str_joins(&path, '/', dir);
+  if (dir != 0)
+    str_joins(&path, '/', dir);
   if (file != 0)
     str_joins(&path, '/', file);
 }
@@ -270,7 +271,8 @@ int cli_main(int argc, char* argv[])
   if (opt_check)
     opt_dryrun = 1;
 
-  if (path_mkdirs(topdir, 0777) != 0
+  makepath(0, 0);
+  if (path_mkdirs(path.s, 0777) != 0
       && errno != EEXIST)
     diefsys(1, "{Could not create directory '}s{'}", topdir);
 
