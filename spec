@@ -19,6 +19,7 @@ echo gcc "%{optflags}" -g >conf-cc
 echo gcc -g -L. >conf-ld
 echo /usr/local/bglibs/include >conf-include
 echo /usr/local/bglibs/lib >conf-lib
+echo %{_bindir} >conf-bin
 
 %build
 make
@@ -36,3 +37,4 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %doc ANNOUNCEMENT COPYING NEWS README
 /usr/local/bglibs
+%{_bindir}/*
