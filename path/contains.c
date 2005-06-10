@@ -18,6 +18,12 @@
 #include <string.h>
 #include "path.h"
 
+/** Test if a path contains a component.
+
+Returns true if the \c path contains \c part either at the start
+followed by a slash, at the end preceded by a slash, or elsewhere with a
+slash on either side.
+*/
 int path_contains(const char* path, const char* part)
 {
   long partlen = strlen(part);

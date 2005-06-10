@@ -120,6 +120,12 @@ static int match_next(const str* part, str* result, unsigned options)
     match_next_nomagic(part, result, options);
 }
 
+/** Matches the pattern against existing files.
+
+This function produces a list of existing files in \c result (in the
+current directory) that match the given pattern.  If \c options has \c
+PATH_MATCH_DOTFILES set, the result may contain paths starting with ".".
+*/
 int path_match(const char* pattern, str* result, unsigned options)
 {
   static str part;

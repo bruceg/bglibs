@@ -18,11 +18,17 @@
 #include <string.h>
 #include "path.h"
 
+/** Does the string have glob characters in it.
+
+Returns true if the given string contains at least one instance of
+either <tt>*</tt>, <tt>?</tt>, or <tt>[</tt>.
+*/
 int has_magic(const char* s)
 {
   return strchr(s, '*') || strchr(s, '?') || strchr(s, '[');
 }
 
+/** Matches a path using glob patterns. */
 int fnmatch(const char* filename, const char* pattern, unsigned options)
 {
   str t;

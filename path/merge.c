@@ -40,6 +40,17 @@ static int path_merge_part(str* path, const char* part, unsigned long len)
   return str_catb(path, part, len);
 }
 
+/** Merge two paths together.
+
+This function takes a starting path, and merges the second path into it.
+If the second path starts with a "/", it replaces the existing path
+completely.  If the second path contains any ".." components, the
+preceding directory component in the current path (if any) is removed.
+All "." components are removed.
+
+The effects of this function are equivalent to changing directory to the
+first path and then using the second one.
+*/
 int path_merge(str* path, const char* start)
 {
   /* If the path to merge in starts with a "/", drop the previous path */

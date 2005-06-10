@@ -5,6 +5,12 @@
 #include <unistd.h>
 #include "path.h"
 
+/** Create a temporary file.
+
+This function creates a temporary file by adding an difficult-to-predict
+suffix (using the PID and microsecond timestamp) to the given prefix.
+If this filename does not exist, it is opened in read/write mode.
+*/
 int path_mktemp(const char* prefix, str* filename)
 {
   struct stat s;
