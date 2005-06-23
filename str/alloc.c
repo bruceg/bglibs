@@ -1,5 +1,5 @@
 /* str/alloc.c - Allocate storage for a string
- * Copyright (C) 2002  Bruce Guenter <bruceg@em.ca>
+ * Copyright (C) 2002-2005  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,16 +33,19 @@ int str_alloc(str* s, unsigned size, int copy)
 {
   char* news;
   unsigned newsize;
-  if ((newsize = size + 1) < size) return 0;
+  /* overflow protection */
+  if ((newsize = size + 1) < size)
+    return 0;
   if (newsize >= s->size) {
     newsize += newsize/8 + STR_BLOCKSIZE-1;
     newsize -= newsize % STR_BLOCKSIZE;
-    if (newsize <= size) return 0;
-    if ((news = malloc(newsize)) == 0) return 0;
-    if (s->s) {
-      if (copy) memcpy(news, s->s, s->len+1);
+    /* more overflow protection */
+    if (newsize <= size)
+      return 0;
+    if ((news = copy ? realloc(s->s, newsize) : malloc(newsize)) == 0)
+      return 0;
+    if (!copy)
       free(s->s);
-    }
     s->size = newsize;
     s->s = news;
   }

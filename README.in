@@ -19,11 +19,9 @@ Development versions of @PACKAGE@ are available via Subversion at:
 Installation:
 
 - Build the sources by running "make"
-- Run the "instshow" command to see what will be installed (optional).
+? Run the "make instshow" command to see what will be installed (optional).
 - After the package has been compiled, run the following commands as root:
-	./installer
-	./instcheck
-  These commands will produce no output if there are no errors.
+	make install
 
 This package is Copyright(C) 2002-2005 Bruce Guenter, and may be copied
 according to the GNU GENERAL PUBLIC LICENSE (GPL) Version 2 or a later

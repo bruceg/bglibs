@@ -1,6 +1,7 @@
 -------------------------------------------------------------------------------
 Changes in version 1.023
 
+- Tweaked str_alloc to use realloc when appropriate.
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
