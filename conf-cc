@@ -1,0 +1,3 @@
+gcc -W -Wall -Wshadow -Os -g
+
+This will be used to compile .c files.

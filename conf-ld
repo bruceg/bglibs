@@ -1,0 +1,3 @@
+gcc -g
+
+This will be used to link .o and .a files into an executable.
