@@ -1,8 +1,8 @@
 c:::644::libbg.a
 c:::644::libbg-sysdeps.a
-c:::644::libbg-installer.a:instlib/installer.a
-c:::644::libbg-instcheck.a:instlib/instcheck.a
-c:::644::libbg-instshow.a:instlib/instshow.a
+c:::644::libbg-installer.a:installer.a
+c:::644::libbg-instcheck.a:instcheck.a
+c:::644::libbg-instshow.a:instshow.a
 
 c:::644::libbg-adt.a:adt/lib.a
 c:::644::libbg-base64.a:base64/lib.a

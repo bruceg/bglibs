@@ -6,6 +6,9 @@ Changes in version 1.023
 - Fixed glob pattern matches to use "!" instead of "~" for negating
   character sets like all other globs use.
 
+- Fixed the installer libraries to include all the necessary object
+  files for producing the installer/instcheck/instshow programs.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
