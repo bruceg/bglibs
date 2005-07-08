@@ -3,6 +3,9 @@ Changes in version 1.023
 
 - Tweaked str_alloc to use realloc when appropriate.
 
+- Fixed glob pattern matches to use "!" instead of "~" for negating
+  character sets like all other globs use.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

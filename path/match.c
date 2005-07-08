@@ -183,7 +183,7 @@ MAIN
   match("*.o*", 0);
   match("*.[eo]", 0);
   match("t*", 0);
-  match("*.[~o]*", 0);
+  match("*.[!o]*", 0);
 }
 #endif
 #ifdef SELFTEST_EXP
@@ -204,6 +204,6 @@ test
 test.exp
 test.o
 test.out
-*.[~o]* 0 => 1
+*.[!o]* 0 => 1
 test.exp
 #endif

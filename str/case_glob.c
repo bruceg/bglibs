@@ -8,7 +8,7 @@
  * *      matches everything
  * ?      matches any single character
  * [seq]  matches any sing echaracter in seq
- * [~seq] matches any single character not in seq
+ * [!seq] matches any single character not in seq
  */
 
 static unsigned make_set(const char* pptr, unsigned plen, char set[256])
@@ -17,7 +17,7 @@ static unsigned make_set(const char* pptr, unsigned plen, char set[256])
   char value;
   if (plen == 0 || *pptr != '[') return 0;
   ++pptr; --plen;
-  if (*pptr == '~') {
+  if (*pptr == '!') {
     memset(set, 1, 256);
     value = 0;
     ++pptr; --plen;
@@ -192,10 +192,10 @@ MAIN
   t("A", "[a]");
   t("A", "[A]");
   /* Case sensitivity: negated set */
-  t("a", "[~a]");
-  t("a", "[~A]");
-  t("A", "[~a]");
-  t("A", "[~A]");
+  t("a", "[!a]");
+  t("a", "[!A]");
+  t("A", "[!a]");
+  t("A", "[!A]");
   /* Case sensitivity: search */
   t("a", "*a");
   t("a", "*A");
@@ -254,18 +254,18 @@ MAIN
   t("abc", "*[xyz]*");
   t("abc", "*[xyz]");
   /* Third case: negated set */
-  t("abc", "[~a]*");
-  t("abc", "*[~a]*");
-  t("abc", "*[~a]");
-  t("abc", "[~b]*");
-  t("abc", "*[~b]*");
-  t("abc", "*[~b]");
-  t("abc", "[~c]*");
-  t("abc", "*[~c]*");
-  t("abc", "*[~c]");
-  t("abc", "[~x]*");
-  t("abc", "*[~x]*");
-  t("abc", "*[~x]");
+  t("abc", "[!a]*");
+  t("abc", "*[!a]*");
+  t("abc", "*[!a]");
+  t("abc", "[!b]*");
+  t("abc", "*[!b]*");
+  t("abc", "*[!b]");
+  t("abc", "[!c]*");
+  t("abc", "*[!c]*");
+  t("abc", "*[!c]");
+  t("abc", "[!x]*");
+  t("abc", "*[!x]*");
+  t("abc", "*[!x]");
   /* Fourth case: preceding wildcard */
   t("abc", "?a*");
   t("abc", "*?a*");
@@ -308,10 +308,10 @@ a [a] result=1
 a [A] result=1
 A [a] result=1
 A [A] result=1
-a [~a] result=0
-a [~A] result=0
-A [~a] result=0
-A [~A] result=0
+a [!a] result=0
+a [!A] result=0
+A [!a] result=0
+A [!A] result=0
 a *a result=1
 a *A result=1
 A *a result=1
@@ -355,18 +355,18 @@ abc *[cxy] result=1
 abc [xyz]* result=0
 abc *[xyz]* result=0
 abc *[xyz] result=0
-abc [~a]* result=0
-abc *[~a]* result=1
-abc *[~a] result=1
-abc [~b]* result=1
-abc *[~b]* result=1
-abc *[~b] result=1
-abc [~c]* result=1
-abc *[~c]* result=1
-abc *[~c] result=0
-abc [~x]* result=1
-abc *[~x]* result=1
-abc *[~x] result=1
+abc [!a]* result=0
+abc *[!a]* result=1
+abc *[!a] result=1
+abc [!b]* result=1
+abc *[!b]* result=1
+abc *[!b] result=1
+abc [!c]* result=1
+abc *[!c]* result=1
+abc *[!c] result=0
+abc [!x]* result=1
+abc *[!x]* result=1
+abc *[!x] result=1
 abc ?a* result=0
 abc *?a* result=0
 abc *?a result=0
