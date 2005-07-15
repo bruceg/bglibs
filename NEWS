@@ -1,4 +1,10 @@
 -------------------------------------------------------------------------------
+Changes in version 1.025
+
+
+Development of this version has been sponsored by FutureQuest, Inc.
+ossi@FutureQuest.net  http://www.FutureQuest.net/
+-------------------------------------------------------------------------------
 Changes in version 1.024
 
 - Fixed (again) glob patterns to allow both "!" (like modern glob) or
