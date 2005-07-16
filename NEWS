@@ -1,6 +1,8 @@
 -------------------------------------------------------------------------------
 Changes in version 1.025
 
+- Renamed the "setmode" function in bg-installer that was causing
+  compile problems on *BSD systems.
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/

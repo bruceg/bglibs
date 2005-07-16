@@ -151,8 +151,8 @@ static void show(char type, unsigned uid, unsigned gid, unsigned mode,
   obuf_endl(&outbuf);
 }
 
-static void setmode(const char* filename,
-		    unsigned uid, unsigned gid, unsigned mode)
+static void setperms(const char* filename,
+		     unsigned uid, unsigned gid, unsigned mode)
 {
   if (chown(filename, uid, gid) != 0)
     diefsys(1, "{Could not set owner on '}s{'}", path.s);
@@ -201,7 +201,7 @@ static void c(unsigned uid, unsigned gid, unsigned mode, const char* src)
     if (!ibuf_copytofd(&in, out)
 	|| close(out) != 0)
       diefsys(1, "{Could not write '}s{'}", pathtmp.s);
-    setmode(pathtmp.s, uid, gid, mode);
+    setperms(pathtmp.s, uid, gid, mode);
     if (rename(pathtmp.s, path.s) != 0)
       diefsys(1, "{Could not rename '}s{' to '}s{'}", pathtmp.s, path.s);
     ibuf_close(&in);
@@ -224,7 +224,7 @@ static void d(unsigned uid, unsigned gid, unsigned mode)
     }
     else if (!S_ISDIR(st.st_mode))
       dief(1, "{Path '}s{' exists but is not a directory}", path.s);
-    setmode(path.s, uid, gid, mode);
+    setperms(path.s, uid, gid, mode);
   }
 
   if (opt_check) {
