@@ -1,6 +1,7 @@
-for dep in ('daylight','deprecated','flock','getpeereid','inline','ipv6','mkfifo','namedpipebug','peercred','sendfile','setenv','sigaction','sigprocmask','spnam','sysselect','userpw','vfork','waitp','zlib'):
+for dep in ('daylight','deprecated','flock','getpeereid','inline','ipv6','mkfifo','namedpipebug','peercred','sendfile','setenv','sigaction','sigprocmask','spnam','sysselect','timespec','userpw','vfork','waitp','zlib'):
 	dependon(['sys/try%s.c'%dep, 'sys/has%s.h1'%dep, 'sys/has%s.h2'%dep])
 dependon([
+	'systime.h',
 	'sys/tryulong32.c', 'sys/uint32.h1', 'sys/uint32.h2',
 	'sys/tryulong64.c', 'sys/uint64.h1', 'sys/uint64.h2',
 	'sys/tryendian.c', 'sys/endian.h1', 'sys/endian.h2',
@@ -33,6 +34,7 @@ dependon([
   ./choose clr poll iopoll; \
   ./choose c   sysselect; \
   ./choose cl  setenv; \
+  ./choose c   timespec; \
   ./choose cl  unsetenv unsetenv; \
   ./choose clr unaligned unaligned; \
   ./choose cl  mkfifo; \
