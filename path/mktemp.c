@@ -14,8 +14,10 @@ If this filename does not exist, it is opened in read/write mode.
 int path_mktemp(const char* prefix, str* filename)
 {
   struct stat s;
-  long pid = getpid();
+  static long pid = 0;
   struct timeval tv;
+  if (pid == 0)
+    pid = getpid();
   do {
     if (!str_copys(filename, prefix)) return -1;
     if (!str_catc(filename, '.')) return -1;
@@ -24,7 +26,7 @@ int path_mktemp(const char* prefix, str* filename)
     if (!str_catc(filename, '.')) return -1;
     if (!str_catu(filename, tv.tv_sec)) return -1;
     if (!str_catc(filename, '.')) return -1;
-    if (!str_catu(filename, tv.tv_usec)) return -1;
+    if (!str_catuw(filename, tv.tv_usec, 6, '0')) return -1;
   } while (lstat(filename->s, &s) != -1);
   return open(filename->s, O_RDWR | O_EXCL | O_CREAT, 0600);
 }
