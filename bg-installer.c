@@ -23,8 +23,8 @@ const char cli_help_prefix[] = "\n";
 const char cli_help_suffix[] =
 "See http://untroubled.org/bglibs/docs/group__installer.html\n"
 "for more information\n";
-const char cli_args_usage[] = "top-directory <LIST";
-const int cli_args_min = 1;
+const char cli_args_usage[] = "[top-directory] <LIST";
+const int cli_args_min = 0;
 const int cli_args_max = 1;
 cli_option cli_options[] = {
   { 'v', "verbose", CLI_FLAG, 1, &opt_verbose,
@@ -43,12 +43,14 @@ standard input, and executes the instructions in the directory named on
 the command line.
 
 Each line in the file is an individual instruction.  Blank lines and
-lines beginning with \c # are ignored.  All other lines must have
-following format:
+lines beginning with \c # are ignored.  Lines beginning with
+<tt>&gt;</tt>, if present, instruct bg-installer as to which base
+directory to use (see below).  All other lines must have following format:
 
 <tt>CMD:[UID]:[GID]:MODE:DIR[:FILENAME[:SOURCE]]</tt>
 
 - CMD is a single character specifying the installation command.
+- BASE is a
 - UID (optional) is the owner ID for the target file
 - GID (optional) is the group ID for the target file
 - MODE is the permissions of the installed file in octal.
@@ -66,12 +68,19 @@ installation file.
 - c lines copy regular files from the current directory
 - d lines create directories
 - s lines create symlinks (\c UID, \c GID, and \c MODE are ignored)
+
+When \c bg-installer encounters a base directory directive, as indicated
+above, it opens the file named \c conf-BASE (where \c BASE is the word
+on the directive line), reads the first line, and uses that as the base
+directory (prefixed by \c $install_prefix as above).
+
 */
 
 static const char* prefix;
-static const char* topdir;
 static unsigned lineno = 0;
+static str topdir;
 static str path;
+static str line;
 static int errors = 0;
 
 static int getint(const char* s, unsigned* i, int base, const char* desc)
@@ -94,7 +103,7 @@ static void makepath(const char* dir, const char* file)
   path.len = 0;
   if (prefix != 0)
     str_copys(&path, prefix);
-  str_joins(&path, '/', topdir);
+  str_join(&path, '/', &topdir);
   if (dir != 0)
     str_joins(&path, '/', dir);
   if (file != 0)
@@ -266,21 +275,38 @@ static void s(const char* src)
   }
 }
 
-int cli_main(int argc, char* argv[])
+void setup_topdir(const char* newpath)
 {
-  static str line;
-
-  topdir = argv[0];
-  if (topdir[0] != '/')
+  if (newpath[0] != '/')
     die1(1, "Top directory must start with a slash");
-  prefix = getenv("install_prefix");
-  if (opt_check)
-    opt_dryrun = 1;
-
+  str_copys(&topdir, newpath);
   makepath(0, 0);
   if (path_mkdirs(path.s, 0777) != 0
       && errno != EEXIST)
     diefsys(1, "{Could not create directory '}s{'}", topdir);
+}
+
+void read_setup_topdir(const char* name)
+{
+  ibuf in;
+  str_copy2s(&path, "conf-", name);
+  if (!ibuf_open(&in, path.s, 0))
+    diefsys(1, "{Could not open '}s{'}", path.s);
+  if (!ibuf_getstr(&in, &line, LF))
+    diefsys(1, "{Could not read line from '}s{'}", path.s);
+  ibuf_close(&in);
+  str_strip(&line);
+  setup_topdir(line.s);
+}
+
+int cli_main(int argc, char* argv[])
+{
+  if (opt_check)
+    opt_dryrun = 1;
+
+  prefix = getenv("install_prefix");
+  if (argv[0] != 0)
+    setup_topdir(argv[0]);
 
   while (ibuf_getstr(&inbuf, &line, LF)) {
     const char* uidstr = 0;
@@ -298,6 +324,10 @@ int cli_main(int argc, char* argv[])
     str_rstrip(&line);
     if (line.len == 0 || line.s[0] == '#')
       continue;
+    if (line.s[0] == '>') {
+      read_setup_topdir(line.s+1);
+      continue;
+    }
 
     str_subst(&line, ':', 0);
     if ((i = str_findfirst(&line, 0)) > 0) {

@@ -1,6 +1,9 @@
 -------------------------------------------------------------------------------
 Changes in version 1.025
 
+- Added the capability to bg-installer to handle multiple destinations
+  within the same source list.
+
 - Renamed the "setmode" function in bg-installer that was causing
   compile problems on *BSD systems.
 
