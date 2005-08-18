@@ -1,4 +1,4 @@
-for dep in ('daylight','deprecated','flock','getpeereid','inline','ipv6','mkfifo','namedpipebug','peercred','sendfile','setenv','sigaction','sigprocmask','spnam','sysselect','timespec','userpw','vfork','waitp','zlib'):
+for dep in ('clockgettime','daylight','deprecated','flock','getpeereid','inline','ipv6','mkfifo','namedpipebug','peercred','sendfile','setenv','sigaction','sigprocmask','spnam','sysselect','timespec','userpw','vfork','waitp','zlib'):
 	dependon(['sys/try%s.c'%dep, 'sys/has%s.h1'%dep, 'sys/has%s.h2'%dep])
 dependon([
 	'systime.h',
@@ -35,6 +35,7 @@ dependon([
   ./choose c   sysselect; \
   ./choose cl  setenv; \
   ./choose c   timespec; \
+  ./choose c   clockgettime; \
   ./choose cl  unsetenv unsetenv; \
   ./choose clr unaligned unaligned; \
   ./choose cl  mkfifo; \

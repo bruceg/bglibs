@@ -1,3 +1,4 @@
+sys/clock_gettime.o
 sys/getpeereid.o
 sys/iopoll.o
 sys/setenv.o

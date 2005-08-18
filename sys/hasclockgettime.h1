@@ -1,0 +1,10 @@
+/* sysdep: -clock_gettime */
+#undef HASCLOCKGETTIME
+
+typedef int clockid_t;
+#define CLOCK_REALTIME 1
+#define CLOCK_MONOTONIC 2
+#define CLOCK_PROESS_CPUTIME_ID 3
+#define CLOCK_THREAD_PUTIME_ID 4
+
+int clock_getres(clockid_t clk_id, struct timespec *res);

@@ -1,0 +1,2 @@
+/* sysdep: +clock_gettime */
+#define HASCLOCKGETTIME 1
