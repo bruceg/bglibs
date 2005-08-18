@@ -10,6 +10,7 @@
 #include "iobuf/obuf.h"
 #include "iobuf/iobuf.h"
 #include "msg/msg.h"
+#include "msg/wrap.h"
 #include "path/path.h"
 #include "str/str.h"
 
@@ -102,12 +103,12 @@ static void makepath(const char* dir, const char* file)
 {
   path.len = 0;
   if (prefix != 0)
-    str_copys(&path, prefix);
-  str_join(&path, '/', &topdir);
+    wrap_str(str_copys(&path, prefix));
+  wrap_str(str_join(&path, '/', &topdir));
   if (dir != 0)
-    str_joins(&path, '/', dir);
+    wrap_str(str_joins(&path, '/', dir));
   if (file != 0)
-    str_joins(&path, '/', file);
+    wrap_str(str_joins(&path, '/', file));
 }
 
 static void error(const char* msg)
@@ -279,7 +280,7 @@ void setup_topdir(const char* newpath)
 {
   if (newpath[0] != '/')
     die1(1, "Top directory must start with a slash");
-  str_copys(&topdir, newpath);
+  wrap_str(str_copys(&topdir, newpath));
   makepath(0, 0);
   if (path_mkdirs(path.s, 0777) != 0
       && errno != EEXIST)
@@ -289,7 +290,7 @@ void setup_topdir(const char* newpath)
 void read_setup_topdir(const char* name)
 {
   ibuf in;
-  str_copy2s(&path, "conf-", name);
+  wrap_str(str_copy2s(&path, "conf-", name));
   if (!ibuf_open(&in, path.s, 0))
     diefsys(1, "{Could not open '}s{'}", path.s);
   if (!ibuf_getstr(&in, &line, LF))
