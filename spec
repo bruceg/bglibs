@@ -2,7 +2,7 @@ Name: @PACKAGE@
 Summary: BG Libraries Collection
 Version: @VERSION@
 Release: 1
-Copyright: GPL
+License: GPL
 Group: Development/Libraries
 Source: http://untroubled.org/@PACKAGE@/@PACKAGE@-@VERSION@.tar.gz
 BuildRoot: %{_tmppath}/@PACKAGE@-buildroot
