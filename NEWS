@@ -1,4 +1,10 @@
 -------------------------------------------------------------------------------
+Changes in version 1.027
+
+
+Development of this version has been sponsored by FutureQuest, Inc.
+ossi@FutureQuest.net  http://www.FutureQuest.net/
+-------------------------------------------------------------------------------
 Changes in version 1.026
 
 - Fixed negative indexing bugs in str_findprev* and ibuf_getstr_crlf
