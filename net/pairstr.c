@@ -1,3 +1,4 @@
+/* $Id$ */
 /* net/pairstr.c - Create a pair of stream sockets
  * Copyright (C) 2002  Bruce Guenter <bruceg@em.ca>
  *

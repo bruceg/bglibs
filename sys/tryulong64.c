@@ -1,3 +1,4 @@
+/* $Id$ */
 main()
 {
   unsigned long u;

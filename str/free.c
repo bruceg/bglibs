@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/free.c - Free the storage allocated by a string
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

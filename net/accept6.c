@@ -1,3 +1,4 @@
+/* $Id$ */
 /* net/accept6.c - Accept an IPv6 connection
  * Copyright (C) 2004  Bruce Guenter <bruceg@em.ca>
  *

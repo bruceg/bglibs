@@ -1,3 +1,4 @@
+/* $Id$ */
 #include <signal.h>
 
 void main()

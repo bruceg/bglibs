@@ -1,3 +1,4 @@
+/* $Id$ */
 #ifndef BGLIBS__STR__ENV__H__
 #define BGLIBS__STR__ENV__H__
 

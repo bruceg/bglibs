@@ -1,3 +1,4 @@
+/* $Id$ */
 /* Declaration of functions and data types used for MD4 hash computing
    library functions.
    Copyright (C) 2000,2002 Bruce Guenter.

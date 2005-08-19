@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/copy.c - Copy one string into another
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

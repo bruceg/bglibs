@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "obuf.h"
 
 /** Write a single character to the \c obuf */

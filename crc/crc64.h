@@ -1,3 +1,4 @@
+/* $Id$ */
 #ifndef CRC64__H__
 #define CRC64__H__
 

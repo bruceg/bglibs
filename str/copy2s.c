@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/copy2s.c - Copy two C strings into a dynamic str
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

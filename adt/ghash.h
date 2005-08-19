@@ -1,3 +1,4 @@
+/* $Id$ */
 #ifndef BGLIBS__GENERIC_HASH__H__
 #define BGLIBS__GENERIC_HASH__H__
 

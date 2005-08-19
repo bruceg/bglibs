@@ -1,3 +1,4 @@
+/* $Id$ */
 /* sig_suspend - Suspend delivery of signals
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

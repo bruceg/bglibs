@@ -1,3 +1,4 @@
+/* $Id$ */
 /* fmt/snum.c - Format a signed integer.
  * Copyright (C) 2004  Bruce Guenter <bruceg@em.ca>
  *

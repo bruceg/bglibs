@@ -1,3 +1,4 @@
+/* $Id$ */
 #ifndef UINT32_H
 #define UINT32_H
 

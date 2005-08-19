@@ -1,3 +1,4 @@
+/* $Id$ */
 /* cdb/strgetnext.c -- Retrieve the next record from a CDB as a str
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

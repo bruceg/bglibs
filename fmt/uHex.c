@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "number.h"
 
 /** Format an unsigned integer as (upper-case) hexadecimal with

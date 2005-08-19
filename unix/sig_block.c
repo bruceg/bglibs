@@ -1,3 +1,4 @@
+/* $Id$ */
 /* sig_block.c - Block and unblock signals
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

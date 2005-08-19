@@ -1,3 +1,4 @@
+/* $Id$ */
 #ifndef CRC16__ARC__H__
 #define CRC16__ARC__H__
 

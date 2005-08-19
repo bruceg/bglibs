@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "uint32.h"
 
 #ifndef __INLINE_UINT_MSB

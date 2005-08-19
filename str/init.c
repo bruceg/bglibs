@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/init.c - Initialize a string to a minimum size
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

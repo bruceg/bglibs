@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/copy6s.c - Copy six C strings into a dynamic str
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

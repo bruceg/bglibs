@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/cat3s.c - Append three C strings to a dynamic str
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

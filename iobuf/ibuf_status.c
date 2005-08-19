@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "ibuf.h"
 
 /** Test if the \c ibuf has reaced end of file. */

@@ -1,3 +1,4 @@
+/* $Id$ */
 #ifndef VMAILMGR__CLIPP__CLIPP__H__
 #define VMAILMGR__CLIPP__CLIPP__H__
 

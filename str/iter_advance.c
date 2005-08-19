@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "iter.h"
 #include "str.h"
 

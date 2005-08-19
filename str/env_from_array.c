@@ -1,3 +1,4 @@
+/* $Id$ */
 #include <string.h>
 #include "str.h"
 #include "env.h"

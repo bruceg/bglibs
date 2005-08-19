@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "gcrc.h"
 
 uint64 gcrc64rfl(uint64 crc, const char* data, long len,

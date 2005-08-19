@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/lower.c - Translate a string into lowercase
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

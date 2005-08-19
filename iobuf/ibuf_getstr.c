@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "ibuf.h"
 #include "str/str.h"
 

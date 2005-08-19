@@ -1,3 +1,4 @@
+/* $Id$ */
 /* sha512.c - SHA-512 algorithm
  * Copyright (C) 2003  Bruce Guenter <bruceg@em.ca>
  *

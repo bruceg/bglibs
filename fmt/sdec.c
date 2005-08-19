@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "number.h"
 
 /** Format a signed integer as decimal with padding. */

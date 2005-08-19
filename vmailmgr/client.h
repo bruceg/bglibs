@@ -1,3 +1,4 @@
+/* $Id$ */
 #ifndef VMAILMGR__CLIENT__H__
 #define VMAILMGR__CLIENT__H__
 

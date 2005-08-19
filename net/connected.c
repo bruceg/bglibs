@@ -1,3 +1,4 @@
+/* $Id$ */
 /* net/connected.c - Test if a socket is connected
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

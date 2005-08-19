@@ -1,3 +1,4 @@
+/* $Id$ */
 #include <stdarg.h>
 #include <string.h>
 #include "obuf.h"

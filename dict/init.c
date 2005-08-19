@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "dict.h"
 
 int dict_init(dict* d)

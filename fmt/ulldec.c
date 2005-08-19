@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "number.h"
 
 /** Format an unsigned long long integer as decimal with padding. */

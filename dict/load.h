@@ -1,3 +1,4 @@
+/* $Id$ */
 #ifndef DICT__LOAD__H__
 #define DICT__LOAD__H__
 

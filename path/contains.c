@@ -1,3 +1,4 @@
+/* $Id$ */
 /* path/contains.c - Filename component testing.
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

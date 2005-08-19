@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "msg.h"
 
 void die_oom(int code)

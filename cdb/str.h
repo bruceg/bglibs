@@ -1,3 +1,4 @@
+/* $Id$ */
 #ifndef CDB__STR__H__
 #define CDB__STR__H__
 

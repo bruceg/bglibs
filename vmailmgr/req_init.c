@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "client.h"
 
 int vclient_req_init(vclient_req* vr, const str* cmd)

@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/rstrip.c - Strip whitespace from the right of a string
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

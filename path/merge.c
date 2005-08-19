@@ -1,3 +1,4 @@
+/* $Id$ */
 /* path/merge.c - Merge one path into another.
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

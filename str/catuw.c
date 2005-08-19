@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/catuw.c - Append an unsigned integer
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

@@ -1,3 +1,4 @@
+/* $Id$ */
 #ifndef FMT__MISC__H__
 #define FMT__MISC__H__
 

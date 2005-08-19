@@ -1,3 +1,4 @@
+/* $Id$ */
 /* sig_catch.c - Cause a signal to be handled (caught) by a function
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

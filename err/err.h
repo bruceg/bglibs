@@ -1,3 +1,4 @@
+/* $Id$ */
 #ifndef ERR__H__
 #define ERR__H__
 

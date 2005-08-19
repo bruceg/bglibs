@@ -1,3 +1,4 @@
+/* $Id$ */
 #ifndef NET__SOCKET__H__
 #define NET__SOCKET__H__
 

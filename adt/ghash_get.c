@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "ghash.h"
 
 void** ghash_find(struct ghash* d, const void* key)

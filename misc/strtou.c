@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "misc.h"
 
 unsigned long strtou(const char* str, const char** end)

@@ -1,3 +1,4 @@
+/* $Id$ */
 #ifndef BGLIBS__UINTNN__H__
 #define BGLIBS__UINTNN__H__
 

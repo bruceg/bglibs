@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/copy3s.c - Copy three C strings into a dynamic str
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

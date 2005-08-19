@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/catiwll.c - Append an signed long long integer
  * Copyright (C) 2002  Bruce Guenter <bruceg@em.ca>
  *

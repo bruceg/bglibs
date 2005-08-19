@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/catxw.c - Append an hexadecimal number
  * Copyright (C) 2002  Bruce Guenter <bruceg@em.ca>
  *

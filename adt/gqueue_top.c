@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "gqueue.h"
 
 void* gqueue_top(const struct gqueue* q)

@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/findnextof.c - Find the next character of a set in a string
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

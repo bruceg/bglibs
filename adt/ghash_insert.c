@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "ghash.h"
 
 void ghash_insert(struct ghash* d, void* e)

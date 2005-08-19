@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/start.c - String prefix matching
  * Copyright (C) 2003  Bruce Guenter <bruceg@em.ca>
  *

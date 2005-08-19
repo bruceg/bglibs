@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "gstack.h"
 
 void* gstack_top(const struct gstack* s)

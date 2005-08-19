@@ -1,3 +1,4 @@
+/* $Id$ */
 #ifndef MSG__WRAP__H__
 #define MSG__WRAP__H__
 

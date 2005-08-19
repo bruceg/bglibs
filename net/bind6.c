@@ -1,3 +1,4 @@
+/* $Id$ */
 /* net/bind6.c - Bind an IPv6 address to a socket
  * Copyright (C) 2004  Bruce Guenter <bruceg@em.ca>
  *

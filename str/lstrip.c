@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/lstrip.c - Strip whitespace from the left of a string
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

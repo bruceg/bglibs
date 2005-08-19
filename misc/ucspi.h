@@ -1,3 +1,4 @@
+/* $Id$ */
 #ifndef BGLIBS__MISC__UCSPI__H__
 #define BGLIBS__MISC__UCSPI__H__
 

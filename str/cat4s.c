@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/cat4s.c - Append four C strings to a dynamic str
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

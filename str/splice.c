@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/splice.c - Insert into the middle of a string.
  * Copyright (C) 2003  Bruce Guenter <bruceg@em.ca>
  *

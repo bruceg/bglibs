@@ -1,3 +1,4 @@
+/* $Id$ */
 /* cdb/get.c -- Retrieve a record from a CDB as a str
  * Copyright (C) 2001-2002  Bruce Guenter <bruceg@em.ca>
  *

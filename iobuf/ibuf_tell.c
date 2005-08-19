@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "ibuf.h"
 
 /** Look up the current effective read position. */

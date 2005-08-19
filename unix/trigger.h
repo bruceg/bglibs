@@ -1,3 +1,4 @@
+/* $Id$ */
 #ifndef BGLIBS__UNIX__TRIGGER__H__
 #define BGLIBS__UNIX__TRIGGER__H__
 

@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "dict.h"
 
 dict_entry* dict_get(dict* d, const str* s)

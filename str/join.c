@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/join.c - Join two strings together
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

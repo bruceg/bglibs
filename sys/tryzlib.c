@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "zlib.h"
 
 int main(void) {

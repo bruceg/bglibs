@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "obuf.h"
 
 /** Pad the output with \c width instances of the single character \c

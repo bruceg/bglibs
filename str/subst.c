@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/subst.c - Substitute one character for another
  * Copyright (C) 2004  Bruce Guenter <bruceg@em.ca>
  *

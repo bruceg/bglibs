@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/copy4s.c - Copy four C strings into a dynamic str
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *

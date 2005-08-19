@@ -1,3 +1,4 @@
+/* $Id$ */
 /* net/getaddr6.c - Determine the IPv6 address of a socket
  * Copyright (C) 2004  Bruce Guenter <bruceg@em.ca>
  *

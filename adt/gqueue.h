@@ -1,3 +1,4 @@
+/* $Id$ */
 #ifndef BGLIBS__GENERIC_QUEUE__H__
 #define BGLIBS__GENERIC_QUEUE__H__
 

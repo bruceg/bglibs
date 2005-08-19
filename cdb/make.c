@@ -1,3 +1,4 @@
+/* $Id$ */
 /* Public domain. */
 
 #include <errno.h>

@@ -1,3 +1,4 @@
+/* $Id$ */
 #ifndef IO_BUF__IBUF__H__
 #define IO_BUF__IBUF__H__
 

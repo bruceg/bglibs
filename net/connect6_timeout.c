@@ -1,3 +1,4 @@
+/* $Id$ */
 /* net/connect6_timeout.c - Make an IPv6 connection with a timeout
  * Copyright (C) 2004  Bruce Guenter <bruceg@em.ca>
  *

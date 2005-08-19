@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "ghash.h"
 
 static void next(struct ghashiter* iter, unsigned i)

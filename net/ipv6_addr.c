@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "ipv6.h"
 
 /** IPv6 "any" address constant. */

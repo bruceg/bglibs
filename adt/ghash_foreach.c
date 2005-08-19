@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "ghash.h"
 
 void ghash_foreach(struct ghash* d, void (*fn)(void* entry))

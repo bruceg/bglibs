@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "obuf.h"
 
 /** Write the binary block to the \c obuf as a "netstring". */

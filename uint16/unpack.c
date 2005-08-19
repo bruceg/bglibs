@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "uint16.h"
 
 #ifndef __INLINE_UINT_LSB

@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "base64.h"
 
 int base64_decode_line(const char* encoded, str* bin)

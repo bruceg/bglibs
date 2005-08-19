@@ -1,3 +1,4 @@
+/* $Id$ */
 /* str/cmp.c - Compare part of two strings
  * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
  *
