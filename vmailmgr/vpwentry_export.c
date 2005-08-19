@@ -4,6 +4,8 @@
 
 static int str_catunul(str* result, unsigned long u)
 {
+  if (u == (unsigned)-1)
+    return str_catb(result, "-", 2);
   return str_catu(result, u) && str_catc(result, 0);
 }
 
