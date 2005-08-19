@@ -300,9 +300,11 @@ void setup_topdir(const char* newpath)
     die1(1, "Top directory must start with a slash");
   wrap_str(str_copys(&topdir, newpath));
   makepath(0, 0);
-  if (path_mkdirs(path.s, 0777) != 0
-      && errno != EEXIST)
-    diefsys(1, "{Could not create directory '}s{'}", topdir);
+  if (!opt_dryrun) {
+    if (path_mkdirs(path.s, 0777) != 0
+	&& errno != EEXIST)
+      diefsys(1, "{Could not create directory '}s{'}", topdir);
+  }
 }
 
 void read_setup_topdir(const char* name)
