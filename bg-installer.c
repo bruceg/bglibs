@@ -68,8 +68,10 @@ directory to use (see below).  All other lines must have following format:
 
 <tt>CMD:[UID]:[GID]:MODE:DIR[:FILENAME[:SOURCE]]</tt>
 
-- CMD is a single character specifying the installation command.
-- BASE is a
+- CMD is a single character specifying the installation command,
+  optionally followed by \c ? indicating the command should only
+  execute if the source exists.  If the \c ? is followed by a name,
+  it is used instead of \c SOURCE as the filename to test.
 - UID (optional) is the owner ID for the target file
 - GID (optional) is the group ID for the target file
 - MODE is the permissions of the installed file in octal.
@@ -382,8 +384,22 @@ int cli_main(int argc, char* argv[])
       continue;
     makepath(dir, file);
 
+    if (src == 0 || *src == 0)
+      src = file;
+    if (line.s[1] == '?') {
+      const char* testfile;
+      struct stat st;
+      testfile = (line.s[2] != 0) ? line.s + 2 : src;
+      if (lstat(testfile, &st) == -1) {
+	if (errno == ENOENT)
+	  continue;
+	else
+	  diefsys(1, "{Could not stat '}s{'}", testfile);
+      }
+    }
+
     switch (line.s[0]) {
-    case 'c': c(uid, gid, mode, src == 0 || *src == 0 ? file : src); break;
+    case 'c': c(uid, gid, mode, src); break;
     case 'd': d(uid, gid, mode); break;
     case 's': s(src); break;
     default:

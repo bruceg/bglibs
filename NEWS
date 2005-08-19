@@ -4,6 +4,9 @@ Changes in version 1.026
 - Fixed negative indexing bugs in str_findprev* and ibuf_getstr_crlf
   functions.  Thanks Gerrit Pape.
 
+- Added the capability to bg-installer to optionally run commands based
+  on the existance of the source (or another) file.
+
 - Fixed bg-installer to not create directories in "dry-run" mode.
 
 Development of this version has been sponsored by FutureQuest, Inc.
