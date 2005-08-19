@@ -1,5 +1,5 @@
 /* str/findprevof.c - Find the previous instance of a character set
- * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
+ * Copyright (C) 2001,2005  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,11 +23,14 @@ int str_findprevof(const str* s, const char* list, unsigned pos)
 {
   char* p;
   int map[256];
-  str_buildmap(map, list);
-  if (pos >= s->len) pos = s->len - 1;
-  for (p = s->s + pos; p >= s->s; --p, --pos)
-    if (map[*(unsigned char*)p] >= 0)
-      return pos;
+  if (s->len > 0) {
+    str_buildmap(map, list);
+    if (pos >= s->len)
+      pos = s->len - 1;
+    for (p = s->s + pos; p >= s->s; --p, --pos)
+      if (map[*(unsigned char*)p] >= 0)
+	return pos;
+  }
   return -1;
 }
 
@@ -37,11 +40,13 @@ int str_findprevof(const str* s, const char* list, unsigned pos)
 void selftest(void)
 {
   str s = { "01234567890123456", 16, 0 };
+  str e = { 0, 0, 0 };
   obuf_puti(&outbuf, str_findprevof(&s, "654", 10)); NL();
   obuf_puti(&outbuf, str_findprevof(&s, "654", 5)); NL();
   obuf_puti(&outbuf, str_findprevof(&s, "654", 3)); NL();
   obuf_puti(&outbuf, str_findprevof(&s, "456", -1)); NL();
   obuf_puti(&outbuf, str_findprevof(&s, "678", -1)); NL();
+  obuf_puti(&outbuf, str_findprevof(&e, "678", -1)); NL();
 }
 #endif
 #ifdef SELFTEST_EXP
@@ -50,4 +55,5 @@ void selftest(void)
 -1
 15
 8
+-1
 #endif

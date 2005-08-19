@@ -1,6 +1,8 @@
 -------------------------------------------------------------------------------
 Changes in version 1.026
 
+- Fixed negative indexing bug in str_findprev* functions.
+  Thanks Gerrit Pape.
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/

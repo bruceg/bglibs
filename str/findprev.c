@@ -1,5 +1,5 @@
 /* str/findprev.c - Find the previous instance of a character
- * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
+ * Copyright (C) 2001,2005  Bruce Guenter <bruceg@em.ca>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,9 +21,13 @@
 int str_findprev(const str* s, char ch, unsigned pos)
 {
   char* p;
-  if (pos >= s->len) pos = s->len - 1;
-  for (p = s->s + pos; p >= s->s; --p)
-    if (*p == ch) return p - s->s;
+  if (s->len > 0) {
+    if (pos >= s->len)
+      pos = s->len - 1;
+    for (p = s->s + pos; p >= s->s; --p)
+      if (*p == ch)
+	return p - s->s;
+  }
   return -1;
 }
 
@@ -32,11 +36,13 @@ int str_findprev(const str* s, char ch, unsigned pos)
 void selftest(void)
 {
   str s = { "01234567890123456", 16, 0 };
+  str e = { 0, 0, 0 };
   obuf_puti(&outbuf, str_findprev(&s, '6', 10)); NL();
   obuf_puti(&outbuf, str_findprev(&s, '6', 6)); NL();
   obuf_puti(&outbuf, str_findprev(&s, '6', 5)); NL();
   obuf_puti(&outbuf, str_findprev(&s, '4', -1)); NL();
   obuf_puti(&outbuf, str_findprev(&s, '6', -1)); NL();
+  obuf_puti(&outbuf, str_findprev(&e, '6', -1)); NL();
 }
 #endif
 #ifdef SELFTEST_EXP
@@ -45,4 +51,5 @@ void selftest(void)
 -1
 14
 6
+-1
 #endif
