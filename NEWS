@@ -3,6 +3,10 @@ Changes in version 1.027
 
 - Fixed numberic export glitch in vpwentry_export.
 
+- Fixed dependancies to let "make -j" work properly.
+
+- Added some pre-computed .lib files (such as socket.lib).
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
