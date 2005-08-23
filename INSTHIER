@@ -99,6 +99,14 @@ c:::644:vmailmgr:client.h:vmailmgr/client.h
 c:::644:vmailmgr:vpwentry.h:vmailmgr/vpwentry.h
 
 >lib
+c:::644::crypt.lib
+c:::644::m.lib
+c:::644::net.lib
+c:::644::rt.lib
+c:::644::s.lib
+c:::644::shadow.lib
+c:::644::socket.lib
+
 c:::644::libbg.a
 c:::644::libbg-sysdeps.a
 c:::644::libbg-installer.a:installer.a
