@@ -28,3 +28,25 @@ int ibuf_getnetstring(ibuf* in, struct str* s)
   }
   return 1;
 }
+
+#ifdef SELFTEST_MAIN
+#include <unistd.h>
+#include "selftest.c"
+
+ibuf in = {
+  { -1, "0:,1:a,10:0123456789,4:", 23, 23, 0, 0, 0, 0, 0 },
+  0, (ibuf_fn)read
+};
+
+MAIN
+{
+  static str s;
+  while (ibuf_getnetstring(&in, &s))
+    obuf_putf(&outbuf, "u{:}s{\n}", s.len, s.s);
+}
+#endif
+#ifdef SELFTEST_EXP
+0:
+1:a
+10:0123456789
+#endif

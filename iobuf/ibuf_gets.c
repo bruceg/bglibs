@@ -23,3 +23,24 @@ int ibuf_gets(ibuf* in, char* data, unsigned datalen, char boundary)
   *data = 0;
   return 1;
 }
+
+#ifdef SELFTEST_MAIN
+#include <unistd.h>
+#include "selftest.c"
+
+ibuf in = {
+  { -1, "a\0bcd\0efgh", 10, 10, 0, 0, 0, 0, 0 },
+  0, (ibuf_fn)read
+};
+
+MAIN
+{
+  char buf[999];
+  while (ibuf_gets(&in, buf, sizeof buf, 0))
+    obuf_putf(&outbuf, "u{:}s{\n}", in.count, buf);
+}
+#endif
+#ifdef SELFTEST_EXP
+2:a
+4:bcd
+#endif

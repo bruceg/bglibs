@@ -32,3 +32,26 @@ int ibuf_getstr_crlf(ibuf* in, struct str* s)
   str_truncate(s, len);
   return 1;
 }
+
+#ifdef SELFTEST_MAIN
+#include <unistd.h>
+#include "selftest.c"
+
+ibuf in = {
+  { -1, "\n\r\na\nb\r\nd", 9, 9, 0, 0, 0, 0, 0 },
+  0, (ibuf_fn)read
+};
+
+MAIN
+{
+  static str s;
+  while (ibuf_getstr_crlf(&in, &s))
+    obuf_putf(&outbuf, "u{:}u{:}s{\n}", in.count, s.len, s.s);
+}
+#endif
+#ifdef SELFTEST_EXP
+1:0:
+2:0:
+2:1:a
+3:1:b
+#endif

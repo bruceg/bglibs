@@ -13,3 +13,27 @@ int ibuf_getc(ibuf* in, char* ch)
   in->count = 1;
   return 1;
 }
+
+#ifdef SELFTEST_MAIN
+#include <unistd.h>
+#include "selftest.c"
+
+ibuf in = {
+  { -1, "abcde", 5, 5, 0, 0, 0, 0, 0 },
+  0, (ibuf_fn)read
+};
+
+MAIN
+{
+  char ch;
+  while (ibuf_getc(&in, &ch))
+    obuf_putf(&outbuf, "c\\\n", ch);
+}
+#endif
+#ifdef SELFTEST_EXP
+a
+b
+c
+d
+e
+#endif
