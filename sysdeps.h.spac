@@ -1,24 +1,18 @@
-for dep in ('clockgettime','daylight','deprecated','flock','getpeereid','inline','ipv6','mkfifo','namedpipebug','peercred','sendfile','setenv','sigaction','sigprocmask','spnam','sysselect','timespec','userpw','vfork','waitp','zlib'):
+for dep in ('clockgettime','daylight','deprecated','endian','flock',
+	'getpeereid','inline','ipv6','mkfifo','namedpipebug','peercred',
+	'poll','sendfile','setenv','sigaction','sigprocmask','spnam',
+	'sysselect','timespec','ulong32','ulong64','unaligned','unsetenv',
+	'userpw','vfork','waitp','zlib'):
 	dependon(['sys/try%s.c'%dep, 'sys/has%s.h0'%dep, 'sys/has%s.h1'%dep])
-dependon([
-	'systime.h',
-	'sys/tryulong32.c', 'sys/uint32.h0', 'sys/uint32.h1',
-	'sys/tryulong64.c', 'sys/uint64.h0', 'sys/uint64.h1',
-	'sys/tryendian.c', 'sys/endian.h0', 'sys/endian.h1',
-	'sys/trydirent.c', 'sys/direntry.h0', 'sys/direntry.h1',
-	'sys/trypoll.c', 'sys/iopoll.h0', 'sys/iopoll.h1',
-	'sys/tryunsetenv.c', 'sys/unsetenv.h0', 'sys/unsetenv.h1',
-	'sys/tryunaligned.c', 'sys/unaligned.h0', 'sys/unaligned.h1',
-	])
-: choose compile load sysdeps-head.h sysdeps-tail.h
+: Makefile choose compile load sysdeps-head.h sysdeps-tail.h systime.h
 ( set -e; \
   cat sysdeps-head.h; \
   ./choose cl  daylight; \
   ./choose c   deprecated; \
-  ./choose clr ulong32 uint32; \
-  ./choose clr ulong64 uint64; \
-  ./choose clr endian endian; \
-  ./choose c   dirent direntry; \
+  ./choose clr ulong32; \
+  ./choose clr ulong64; \
+  ./choose clr endian; \
+  ./choose c   dirent; \
   ./choose c   ipv6; \
   ./choose cl  vfork; \
   ./choose cl  getpeereid; \
@@ -31,13 +25,13 @@ dependon([
   ./choose cl  userpw; \
   ./choose cl  waitp; \
   ./choose c   zlib; \
-  ./choose clr poll iopoll; \
+  ./choose clr poll; \
   ./choose c   sysselect; \
   ./choose cl  setenv; \
   ./choose c   timespec; \
   ./choose c   clockgettime; \
-  ./choose cl  unsetenv unsetenv; \
-  ./choose clr unaligned unaligned; \
+  ./choose cl  unsetenv; \
+  ./choose clr unaligned; \
   ./choose cl  mkfifo; \
   ./choose clr namedpipebug; \
   ./choose c   inline; \

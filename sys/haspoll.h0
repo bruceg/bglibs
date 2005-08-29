@@ -1,6 +1,3 @@
-#ifndef IOPOLL__H__
-#define IOPOLL__H__
-
 /* sysdep: -poll */
 #define IOPOLL_SELECT
 
@@ -15,5 +12,3 @@ typedef struct {
 
 extern int iopoll(iopoll_fd* fds, unsigned nfds, unsigned long timeout);
 extern int iopoll_restart(iopoll_fd* fds, unsigned nfds, unsigned long timeout);
-
-#endif
