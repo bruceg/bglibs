@@ -1,0 +1,2 @@
+/* sysdep: +hasdl */
+#define HASDL 1

@@ -1,16 +1,18 @@
+mode="$1"
 try="sys/try$2"
-h="sys/${3:-has$2}.h"
+h="sys/has$2.h"
 result="${h}1"
+shift 2
 
-case "$1" in
+case "$mode" in
   *c*) ./compile "$try".c >/dev/null 2>&1 || result="${h}0" ;;
 esac
 
-case "$1" in
-  *l*) ./load "$try" >/dev/null 2>&1 || result="${h}0" ;;
+case "$mode" in
+  *l*) ./load "$try" "$@" >/dev/null 2>&1 || result="${h}0" ;;
 esac
 
-case "$1" in
+case "$mode" in
   *r*) ./"$try" >/dev/null 2>&1 || result="${h}0" ;;
 esac
 

@@ -1,9 +1,10 @@
-for dep in ('clockgettime','daylight','deprecated','endian','flock',
+for dep in ('clockgettime','daylight','deprecated','dl','endian','flock',
 	'getpeereid','inline','ipv6','mkfifo','namedpipebug','peercred',
 	'poll','sendfile','setenv','sigaction','sigprocmask','spnam',
 	'sysselect','timespec','ulong32','ulong64','unaligned','unsetenv',
 	'userpw','vfork','waitp','zlib'):
 	dependon(['sys/try%s.c'%dep, 'sys/has%s.h0'%dep, 'sys/has%s.h1'%dep])
+dependon(['systime.h','dl.lib'])
 : Makefile choose compile load sysdeps-head.h sysdeps-tail.h systime.h
 ( set -e; \
   cat sysdeps-head.h; \
@@ -13,6 +14,7 @@ for dep in ('clockgettime','daylight','deprecated','endian','flock',
   ./choose clr ulong64; \
   ./choose clr endian; \
   ./choose c   dirent; \
+  ./choose cl  dl `cat dl.lib`; \
   ./choose c   ipv6; \
   ./choose cl  vfork; \
   ./choose cl  getpeereid; \
