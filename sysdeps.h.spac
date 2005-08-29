@@ -1,14 +1,14 @@
 for dep in ('clockgettime','daylight','deprecated','flock','getpeereid','inline','ipv6','mkfifo','namedpipebug','peercred','sendfile','setenv','sigaction','sigprocmask','spnam','sysselect','timespec','userpw','vfork','waitp','zlib'):
-	dependon(['sys/try%s.c'%dep, 'sys/has%s.h1'%dep, 'sys/has%s.h2'%dep])
+	dependon(['sys/try%s.c'%dep, 'sys/has%s.h0'%dep, 'sys/has%s.h1'%dep])
 dependon([
 	'systime.h',
-	'sys/tryulong32.c', 'sys/uint32.h1', 'sys/uint32.h2',
-	'sys/tryulong64.c', 'sys/uint64.h1', 'sys/uint64.h2',
-	'sys/tryendian.c', 'sys/endian.h1', 'sys/endian.h2',
-	'sys/trydirent.c', 'sys/direntry.h1', 'sys/direntry.h2',
-	'sys/trypoll.c', 'sys/iopoll.h1', 'sys/iopoll.h2',
-	'sys/tryunsetenv.c', 'sys/unsetenv.h1', 'sys/unsetenv.h2',
-	'sys/tryunaligned.c', 'sys/unaligned.h1', 'sys/unaligned.h2',
+	'sys/tryulong32.c', 'sys/uint32.h0', 'sys/uint32.h1',
+	'sys/tryulong64.c', 'sys/uint64.h0', 'sys/uint64.h1',
+	'sys/tryendian.c', 'sys/endian.h0', 'sys/endian.h1',
+	'sys/trydirent.c', 'sys/direntry.h0', 'sys/direntry.h1',
+	'sys/trypoll.c', 'sys/iopoll.h0', 'sys/iopoll.h1',
+	'sys/tryunsetenv.c', 'sys/unsetenv.h0', 'sys/unsetenv.h1',
+	'sys/tryunaligned.c', 'sys/unaligned.h0', 'sys/unaligned.h1',
 	])
 : choose compile load sysdeps-head.h sysdeps-tail.h
 ( set -e; \

@@ -1,17 +1,17 @@
 try="sys/try$2"
 h="sys/${3:-has$2}.h"
-result="${h}2"
+result="${h}1"
 
 case "$1" in
-  *c*) ./compile "$try".c >/dev/null 2>&1 || result="${h}1" ;;
+  *c*) ./compile "$try".c >/dev/null 2>&1 || result="${h}0" ;;
 esac
 
 case "$1" in
-  *l*) ./load "$try" >/dev/null 2>&1 || result="${h}1" ;;
+  *l*) ./load "$try" >/dev/null 2>&1 || result="${h}0" ;;
 esac
 
 case "$1" in
-  *r*) ./"$try" >/dev/null 2>&1 || result="${h}1" ;;
+  *r*) ./"$try" >/dev/null 2>&1 || result="${h}0" ;;
 esac
 
 rm -f "$try".o "$try"
