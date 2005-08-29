@@ -27,9 +27,9 @@ static const char* import_flags(vpwentry* vpw,
     if (ptr >= end) return 0;
     value = *(unsigned char*)ptr++;
     switch(flag) {
-    case 10: /* vdomain::ATTR_HAS_MAILBOX */
+    case VPWENTRY_HAS_MAILBOX:
       vpw->has_mailbox = value; break;
-    case 8: /* vdomain::ATTR_MAILBOX_ENABLED */
+    case VPWENTRY_MAILBOX_ENABLED:
       vpw->is_mailbox_enabled = value; break;
     default:
       return 0;
