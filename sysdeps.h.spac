@@ -4,7 +4,7 @@ for dep in ('clockgettime','daylight','deprecated','dl','endian','flock',
 	'sysselect','timespec','ulong32','ulong64','unaligned','unsetenv',
 	'userpw','vfork','waitp','zlib'):
 	dependon(['sys/try%s.c'%dep, 'sys/has%s.h0'%dep, 'sys/has%s.h1'%dep])
-dependon(['systime.h','dl.lib'])
+dependon(['systime.h','dl.lib','rt.lib'])
 : Makefile choose compile load sysdeps-head.h sysdeps-tail.h systime.h
 ( set -e; \
   cat sysdeps-head.h; \
@@ -31,7 +31,7 @@ dependon(['systime.h','dl.lib'])
   ./choose c   sysselect; \
   ./choose cl  setenv; \
   ./choose c   timespec; \
-  ./choose c   clockgettime; \
+  ./choose cl  clockgettime `cat rt.lib`; \
   ./choose cl  unsetenv; \
   ./choose clr unaligned; \
   ./choose cl  mkfifo; \
