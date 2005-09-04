@@ -1,5 +1,5 @@
 /* $Id$ */
-// Copyright (C) 1999,2000 Bruce Guenter <bruceg@em.ca>
+// Copyright (C) 1999,2000,2005 Bruce Guenter <bruceg@em.ca>
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 #include "cdb++/datum.h"
 #include "fdbuf/fdbuf.h"
 
-typedef unsigned long uint32;
+typedef unsigned uint32;
 
 #define CDBMAKE_HPLIST 1000
 
