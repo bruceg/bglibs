@@ -33,8 +33,6 @@ protected:
   void dupnil();
   void dup(const char*, size_t);
   void dup(const char*);
-  void append(const char*);
-  void append(const char*, size_t);
   void assign(const char*);
   void assign(const char*, size_t);
 public:
@@ -97,6 +95,9 @@ public:
 
   unsigned count(char ch) const;
   
+  void append(const char*);
+  void append(const char*, size_t);
+
   void operator+=(const mystring& str) {append(str.rep->buf, str.rep->length);}
   void operator+=(const char* str) { append(str); }
   void operator+=(char ch)
