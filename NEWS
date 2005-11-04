@@ -3,6 +3,9 @@ Changes in version 1.028
 
 - Added sysdep for dynamic linker functions (dlopen etc).
 
+- Fixed bug in self test for unix/selfpipe.c that caused problems with
+  running make.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

@@ -75,17 +75,18 @@ MAIN
 {
   int buf;
   int fd = selfpipe_init();
+  pid_t pid = getpid();
   puti("FD[0] >= 0", fds[0] >= 0);
   puti("FD[1] >= 0", fds[1] >= 0);
   puti("FD[0] != FD[1]", fds[0] != fds[1]);
   puti("Returned FD == FD[0]", fd == fds[0]);
   puti("read before SIGCHLD", read(fd, &buf, sizeof buf));
   puti("errno is EAGAIN", errno == EAGAIN);
-  kill(0, SIGCHLD);
+  kill(pid, SIGCHLD);
   puti("read after SIGCHLD", read(fd, &buf, sizeof buf));
   puti("second read", read(fd, &buf, sizeof buf));
-  kill(0, SIGCHLD);
-  kill(0, SIGCHLD);
+  kill(pid, SIGCHLD);
+  kill(pid, SIGCHLD);
   puti("read after two SIGCHLDs", read(fd, &buf, sizeof buf));
   puti("second read", read(fd, &buf, sizeof buf));
   selfpipe_close();
