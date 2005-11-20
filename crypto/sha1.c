@@ -3,7 +3,7 @@
  SHA-1 in C
 
  By Steve Reid <steve@edmweb.com>.
- Small changes to make it fit by Bruce Guenter <bruceg@em.ca>
+ Small changes to make it fit by Bruce Guenter <bruce@untroubled.org>
 
  100% Public Domain.
 

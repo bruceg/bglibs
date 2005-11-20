@@ -1,6 +1,6 @@
 /* $Id$ */
 /* cdb/get.c -- Retrieve a record from a CDB as a str
- * Copyright (C) 2001-2002  Bruce Guenter <bruceg@em.ca>
+ * Copyright (C) 2001-2002  Bruce Guenter <bruce@untroubled.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

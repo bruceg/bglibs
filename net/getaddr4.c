@@ -1,6 +1,6 @@
 /* $Id$ */
 /* net/getaddr4.c - Determine the IPv4 address of a socket
- * Copyright (C) 2001  Bruce Guenter <bruceg@em.ca>
+ * Copyright (C) 2001  Bruce Guenter <bruce@untroubled.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

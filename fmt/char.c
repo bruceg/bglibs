@@ -1,6 +1,6 @@
 /* $Id$ */
 /* fmt/char.c - Format a single character.
- * Copyright (C) 2005  Bruce Guenter <bruceg@em.ca>
+ * Copyright (C) 2005  Bruce Guenter <bruce@untroubled.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

@@ -3,7 +3,7 @@
  SHA-1 in C
 
  By Steve Reid <steve@edmweb.com>, with small changes to make it
- fit by Bruce Guenter <bruceg@em.ca>
+ fit by Bruce Guenter <bruce@untroubled.org>
 
 */
 

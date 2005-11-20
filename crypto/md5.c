@@ -20,7 +20,7 @@
    Boston, MA 02111-1307, USA.  */
 
 /* Written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, 1995.  */
-/* Self-tests added by Bruce Guenter <bruceg@em.ca>, 2003. */
+/* Self-tests added by Bruce Guenter <bruce@untroubled.org>, 2003. */
 
 #include <sys/types.h>
 #include <stdlib.h>

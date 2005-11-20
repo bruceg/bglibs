@@ -8,7 +8,7 @@ Source: http://untroubled.org/@PACKAGE@/@PACKAGE@-@VERSION@.tar.gz
 BuildRoot: %{_tmppath}/@PACKAGE@-buildroot
 #BuildArch: noarch
 URL: http://untroubled.org/@PACKAGE@/
-Packager: Bruce Guenter <bruceg@em.ca>
+Packager: Bruce Guenter <bruce@untroubled.org>
 
 %description
 BG Libraries Collection

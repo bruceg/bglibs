@@ -1,6 +1,6 @@
 /* $Id$ */
 /* net/connectu_timeout.c - Make an UNIX domain connection with a timeout
- * Copyright (C) 2004  Bruce Guenter <bruceg@em.ca>
+ * Copyright (C) 2004  Bruce Guenter <bruce@untroubled.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
