@@ -6,6 +6,8 @@ Changes in version 1.028
 - Fixed bug in self test for unix/selfpipe.c that caused problems with
   running make.
 
+- Switched from standard GPL to LGPL-2.1 license.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
