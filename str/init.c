@@ -1,6 +1,6 @@
 /* $Id$ */
 /* str/init.c - Initialize a string to a minimum size
- * Copyright (C) 2001  Bruce Guenter <bruce@untroubled.org>
+ * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public

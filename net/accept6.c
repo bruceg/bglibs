@@ -1,6 +1,6 @@
 /* $Id$ */
 /* net/accept6.c - Accept an IPv6 connection
- * Copyright (C) 2004  Bruce Guenter <bruce@untroubled.org>
+ * Copyright (C) 2004,2005  Bruce Guenter <bruce@untroubled.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public

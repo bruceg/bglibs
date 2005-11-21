@@ -1,7 +1,7 @@
 /* $Id$ */
 /* md4.c - Functions to compute MD4 message digest
    according to the definition of MD4 in RFC 1320 from April 1992.
-   Copyright (C) 2000,2003 Bruce Guenter
+   Copyright (C) 2000,2003,2005 Bruce Guenter
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Lesser General Public
