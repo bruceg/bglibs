@@ -1,5 +1,5 @@
-for dep in ('clockgettime','daylight','deprecated','dl','endian','flock',
-	'getpeereid','inline','ipv6','mkfifo','namedpipebug','peercred',
+for dep in ('clockgettime','daylight','deprecated','dirent','dl','endian',
+	'flock','getpeereid','inline','ipv6','mkfifo','namedpipebug','peercred',
 	'poll','sendfile','setenv','sigaction','sigprocmask','spnam',
 	'sysselect','timespec','ulong32','ulong64','unaligned','unsetenv',
 	'userpw','vfork','waitp','zlib'):
