@@ -1,6 +1,8 @@
 -------------------------------------------------------------------------------
 Changes in version 1.029
 
+- Added support for UID and GID names (instead of just numbers) in
+  bg-installer.
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/

@@ -18,6 +18,8 @@
  */
 #include "sysdeps.h"
 #include <errno.h>
+#include <grp.h>
+#include <pwd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -104,7 +106,28 @@ static str path;
 static str line;
 static int errors = 0;
 
-static int getint(const char* s, unsigned* i, int base, const char* desc)
+static int getpwnam_uid(const char* s, unsigned* i)
+{
+  struct passwd* pw;
+  if ((pw = getpwnam(s)) != 0) {
+    *i = pw->pw_uid;
+    return 1;
+  }
+  return 0;
+}
+
+static int getgrnam_gid(const char* s, unsigned *i)
+{
+  struct group* gr;
+  if ((gr = getgrnam(s)) != 0) {
+    *i = gr->gr_gid;
+    return 1;
+  }
+  return 0;
+}
+
+static int getint(const char* s, unsigned* i, int base, const char* desc,
+		  int (*xlate)(const char*, unsigned*))
 {
   char* end;
   if (*s == 0)
@@ -112,8 +135,16 @@ static int getint(const char* s, unsigned* i, int base, const char* desc)
   else {
     *i = strtoul(s, &end, base);
     if (*end != 0) {
-      warnf("{Line #}u{ has invalid }s{ number, skipping\n}", lineno, desc);
-      return 0;
+      if (xlate != 0) {
+	if (!xlate(s, i)) {
+	  warnf("{Line #}u{ has invalid }s{, skipping\n}", lineno, desc);
+	  return 0;
+	}
+      }
+      else {
+	warnf("{Line #}u{ has invalid }s{ number, skipping\n}", lineno, desc);
+	return 0;
+      }
     }
   }
   return 1;
@@ -376,11 +407,11 @@ int cli_main(int argc, char* argv[])
       warnf("{Line #}u{ is missing required fields\n}", lineno);
       continue;
     }
-    if (!getint(uidstr, &uid, 10, "UID"))
+    if (!getint(uidstr, &uid, 10, "UID", getpwnam_uid))
       continue;
-    if (!getint(gidstr, &gid, 10, "GID"))
+    if (!getint(gidstr, &gid, 10, "GID", getgrnam_gid))
       continue;
-    if (!getint(modestr, &mode, 8, "permissions"))
+    if (!getint(modestr, &mode, 8, "permissions", 0))
       continue;
     makepath(dir, file);
 
