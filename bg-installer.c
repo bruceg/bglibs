@@ -68,14 +68,14 @@ lines beginning with \c # are ignored.  Lines beginning with
 <tt>&gt;</tt>, if present, instruct bg-installer as to which base
 directory to use (see below).  All other lines must have following format:
 
-<tt>CMD:[UID]:[GID]:MODE:DIR[:FILENAME[:SOURCE]]</tt>
+<tt>CMD:[OWNER]:[GROUP]:MODE:DIR[:FILENAME[:SOURCE]]</tt>
 
 - CMD is a single character specifying the installation command,
   optionally followed by \c ? indicating the command should only
   execute if the source exists.  If the \c ? is followed by a name,
   it is used instead of \c SOURCE as the filename to test.
-- UID (optional) is the owner ID for the target file
-- GID (optional) is the group ID for the target file
+- OWNER (optional) is the owner user ID or name for the target file.
+- GROUP (optional) is the group ID or name for the target file.
 - MODE is the permissions of the installed file in octal.
 - DIR is the subdirectory of the installation prefix for the destination file.
 - FILENAME (optional) is the name of the file to install into the
