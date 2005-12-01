@@ -27,6 +27,7 @@
 #include <string.h>
 
 #include "sysdeps.h"
+#include "hmac.h"
 #include "md5.h"
 
 #ifdef ENDIAN_MSB
@@ -403,21 +404,50 @@ md5_process_block (buffer, len, ctx)
   ctx->D = D;
 }
 
+static void md5_process_bytes_wrapper(void* ctx,
+				      unsigned const char* bytes,
+				      unsigned long len)
+{
+  md5_process_bytes(bytes, len, ctx);
+}
+
+const struct hmac_control_block hmac_md5 = {
+  sizeof(struct md5_ctx),
+  128/8,
+  64,
+  (hmac_init_fn)md5_init_ctx,
+  (hmac_update_fn)md5_process_bytes_wrapper,
+  (hmac_finalize_fn)md5_finish_ctx
+};
+
 #ifdef SELFTEST_MAIN
 #include <stdio.h>
+#include "str/str.h"
 
-static void MDString(const char* str)
+static void MDString(const char* s)
 {
   struct md5_ctx ctx;
   unsigned char digest[16];
-  unsigned int len = strlen(str);
+  unsigned int len = strlen(s);
   unsigned i;
   
   md5_init_ctx(&ctx);
-  md5_process_bytes(str, len, &ctx);
+  md5_process_bytes(s, len, &ctx);
   md5_finish_ctx(&ctx, digest);
-  printf("MD5 (\"%s\") = ", str);
+  printf("MD5 (\"%s\") = ", s);
   for (i = 0; i < 16; i++) printf("%02x", digest[i]);
+  printf("\n");
+}
+
+static void HMACTest(const char* key, const char* data)
+{
+  const str key_str = { (char*)key, strlen(key), 0 };
+  const str data_str = { (char*)data, strlen(data), 0 };
+  unsigned char digest[128/8];
+  unsigned i;
+  hmac(&hmac_md5, &key_str, &data_str, digest);
+  printf("HMAC (%d,%d) = ", key_str.len, data_str.len);
+  for (i = 0; i < sizeof digest; ++i) printf("%02x", digest[i]);
   printf("\n");
 }
 
@@ -433,6 +463,17 @@ int main(void)
   
   MDString("1234567890123456789012345678901234567890"
 	   "1234567890123456789012345678901234567890");
+
+  /* Test vectors from RFC 2104 */
+  HMACTest("\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b",
+	   "Hi There");
+  HMACTest("Jefe", "what do ya want for nothing?");
+  HMACTest("\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa",
+	   "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd"
+	   "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd"
+	   "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd"
+	   "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd"
+	   "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd");
   return 0;
 }
 #endif
@@ -445,4 +486,7 @@ MD5 ("message digest") = f96b697d7cb7938d525a2f31aaf161d0
 MD5 ("abcdefghijklmnopqrstuvwxyz") = c3fcd3d76192e4007dfb496cca67e13b
 MD5 ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789") = d174ab98d277d9f5a5611c2c9f419d9f
 MD5 ("12345678901234567890123456789012345678901234567890123456789012345678901234567890") = 57edf4a22be3c955ac49da2e2107b67a
+HMAC (16,8) = 9294727a3638bb1c13f48ef8158bfc9d
+HMAC (4,28) = 750c783e6ab0b503eaa86e310a5db738
+HMAC (16,50) = 56be34521d144c88dbb8c733f0e8b3f6
 #endif

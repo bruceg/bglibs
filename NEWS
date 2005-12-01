@@ -1,5 +1,9 @@
 -------------------------------------------------------------------------------
-Changes in version 1.029
+Changes in version 1.030
+
+- Added a RFC 2104 generic HMAC (keyed hashing for message
+  authentication) routine to the crypto section, with control blocks for
+  MD5, SHA1, SHA256, SHA384, and SHA512.
 
 - Added support for UID and GID names (instead of just numbers) in
   bg-installer.

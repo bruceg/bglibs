@@ -21,6 +21,7 @@
  */
 #include <string.h>
 #include "sysdeps.h"
+#include "hmac.h"
 #include "sha384.h"
 #include "uint64.h"
 
@@ -54,20 +55,42 @@ void SHA384_final(SHA384_ctx* ctx, uint8* digest)
   memset(ctx, 0, sizeof *ctx);
 }
 
-#ifdef SELFTEST_MAIN
-#include <stdio.h>
+const struct hmac_control_block hmac_sha384 = {
+  sizeof(SHA384_ctx),
+  SHA384_DIGEST_LENGTH,
+  64,
+  (hmac_init_fn)SHA384_init,
+  (hmac_update_fn)SHA384_update,
+  (hmac_finalize_fn)SHA384_final
+};
 
-static void test(const char* str)
+#ifdef SELFTEST_MAIN
+#include "iobuf/obuf.h"
+#include "str/str.h"
+
+static void test(const char* s)
 {
-   SHA384_ctx ctx;
-   unsigned i;
-   unsigned char digest[SHA384_DIGEST_LENGTH];
-   SHA384_init(&ctx);
-   SHA384_update(&ctx, str, strlen(str));
-   SHA384_final(&ctx, digest);
-   for (i = 0; i < sizeof(digest); i++)
-      printf("%02x", digest[i]);
-   printf("\n");
+  SHA384_ctx ctx;
+  unsigned i;
+  unsigned char digest[SHA384_DIGEST_LENGTH];
+  SHA384_init(&ctx);
+  SHA384_update(&ctx, s, strlen(s));
+  SHA384_final(&ctx, digest);
+  for (i = 0; i < sizeof digest; ++i)
+    obuf_putxw(&outbuf, digest[i], 2, '0');
+  obuf_endl(&outbuf);
+}
+
+static void test_hmac(const char* key, const char* data)
+{
+  const str key_str = { (char*)key, strlen(key), 0 };
+  const str data_str = { (char*)data, strlen(data), 0 };
+  unsigned char digest[SHA384_DIGEST_LENGTH];
+  unsigned i;
+  hmac(&hmac_sha384, &key_str, &data_str, digest);
+  for (i = 0; i < sizeof digest; ++i)
+    obuf_putxw(&outbuf, digest[i], 2, '0');
+  obuf_endl(&outbuf);
 }
 
 int main(void)
@@ -82,6 +105,17 @@ int main(void)
   test("For this sample, this 63-byte string will be used as input data");
   test("And this textual data, astonishing as it may appear, is exactly 128 bytes in length, as are both SHA-384 and SHA-512 block sizes");
   test("By hashing data that is one byte less than a multiple of a hash block length (like this 127-byte string), bugs may be revealed.");
+
+  test_hmac("\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b",
+	    "Hi There");
+  test_hmac("Jefe", "what do ya want for nothing?");
+  test_hmac("\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa",
+	    "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd"
+	    "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd"
+	    "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd"
+	    "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd"
+	    "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd");
+
   return 0;
 }
 #endif
@@ -94,4 +128,7 @@ e28e35e25a1874908bf0958bb088b69f3d742a753c86993e9f4b1c4c21988f958bd1fe0315b195ac
 37b49ef3d08de53e9bd018b0630067bd43d09c427d06b05812f48531bce7d2a698ee2d1ed1ffed46fd4c3b9f38a8a557
 e3e3602f4d90c935321d788f722071a8809f4f09366f2825cd85da97ccd2955eb6b8245974402aa64789ed45293e94ba
 1ca650f38480fa9dfb5729636bec4a935ebc1cd4c0055ee50cad2aa627e066871044fd8e6fdb80edf10b85df15ba7aab
+de17382c92c81f6ffe76f42345d24385af25d7c078f0d395bff492ea8fd164511c2ed25e51104892ac826a0194892369
+bb8af7f58ac9e83a872e512f75d874cc45e3dd1cd4765466ccea195bc3002cce3c9f1baf44f2d72813a24d1152e3666f
+a70d84cec95de65f9d562f6706e6d0b861a674c881b080587a75be47dd2a33ce49eafa90acc497b4967dd1d11f9457cf
 #endif

@@ -1,3 +1,4 @@
+hmac.o
 md4.o
 md5-crypt.o
 md5.o

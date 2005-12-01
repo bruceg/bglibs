@@ -18,6 +18,7 @@
  */
 
 #include <string.h>
+#include "hmac.h"
 #include "sha256.h"
 #include "uint32.h"
 #include "uint64.h"
@@ -179,23 +180,45 @@ void SHA256_final(SHA256_ctx* ctx, uint8* digest)
   memset(ctx, 0, sizeof *ctx);
 }
 
-#ifdef SELFTEST_MAIN
-#include <stdio.h>
+const struct hmac_control_block hmac_sha256 = {
+  sizeof(SHA256_ctx),
+  SHA256_DIGEST_LENGTH,
+  64,
+  (hmac_init_fn)SHA256_init,
+  (hmac_update_fn)SHA256_update,
+  (hmac_finalize_fn)SHA256_final
+};
 
-static void test(const char* str)
+#ifdef SELFTEST_MAIN
+#include "iobuf/obuf.h"
+#include "str/str.h"
+
+static void test(const char* s)
 {
   SHA256_ctx ctx;
   unsigned i;
   unsigned char digest[SHA256_DIGEST_LENGTH];
   SHA256_init(&ctx);
-  SHA256_update(&ctx, str, strlen(str));
+  SHA256_update(&ctx, s, strlen(s));
   SHA256_final(&ctx, digest);
-  for (i = 0; i < sizeof(digest); i++)
-    printf("%02x", digest[i]);
-  printf("\n");
+  for (i = 0; i < sizeof digest; ++i)
+    obuf_putxw(&outbuf, digest[i], 2, '0');
+  obuf_endl(&outbuf);
 }
 
-int main( void )
+static void test_hmac(const char* key, const char* data)
+{
+  const str key_str = { (char*)key, strlen(key), 0 };
+  const str data_str = { (char*)data, strlen(data), 0 };
+  unsigned char digest[SHA256_DIGEST_LENGTH];
+  unsigned i;
+  hmac(&hmac_sha256, &key_str, &data_str, digest);
+  for (i = 0; i < sizeof digest; ++i)
+    obuf_putxw(&outbuf, digest[i], 2, '0');
+  obuf_endl(&outbuf);
+}
+
+int main(void)
 {
   test("abc");
   test("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq");
@@ -207,6 +230,17 @@ int main( void )
   test("For this sample, this 63-byte string will be used as input data");
   test("And this textual data, astonishing as it may appear, is exactly 128 bytes in length, as are both SHA-384 and SHA-512 block sizes");
   test("By hashing data that is one byte less than a multiple of a hash block length (like this 127-byte string), bugs may be revealed.");
+
+  test_hmac("\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b",
+	    "Hi There");
+  test_hmac("Jefe", "what do ya want for nothing?");
+  test_hmac("\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa",
+	    "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd"
+	    "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd"
+	    "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd"
+	    "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd"
+	    "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd");
+
   return 0;
 }
 #endif
@@ -219,4 +253,7 @@ ab64eff7e88e2e46165e29f2bce41826bd4c7b3552f6b382a9e7d3af47c245f8
 f08a78cbbaee082b052ae0708f32fa1e50c5c421aa772ba5dbb406a2ea6be342
 0ab803344830f92089494fb635ad00d76164ad6e57012b237722df0d7ad26896
 e4326d0459653d7d3514674d713e74dc3df11ed4d30b4013fd327fdb9e394c26
+492ce020fe2534a5789dc3848806c78f4f6711397f08e7e7a12ca5a4483c8aa6
+5bdcc146bf60754e6a042426089575c75a003f089d2739839dec58b964ec3843
+7dda3cc169743a6484649f94f0eda0f9f2ff496a9733fb796ed5adb40a44c3c1
 #endif
