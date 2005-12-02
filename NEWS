@@ -1,4 +1,10 @@
 -------------------------------------------------------------------------------
+Changes in version 1.031
+
+
+Development of this version has been sponsored by FutureQuest, Inc.
+ossi@FutureQuest.net  http://www.FutureQuest.net/
+-------------------------------------------------------------------------------
 Changes in version 1.030
 
 - Added a RFC 2104 generic HMAC (keyed hashing for message
