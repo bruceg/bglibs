@@ -13,7 +13,7 @@ extern void base64_encode_part(const unsigned char bin[3], unsigned len,
 extern int base64_encode_line(const unsigned char* bin, unsigned long len,
 			      str* encoded);
 
-extern const char base64_asc2bin[256];
+extern const signed char base64_asc2bin[256];
 extern int base64_decode_part(const unsigned char encoded[4],
 			      unsigned char bin[3]);
 extern int base64_decode_line(const char* encoded, str* bin);

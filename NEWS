@@ -1,6 +1,8 @@
 -------------------------------------------------------------------------------
 Changes in version 1.032
 
+- Fixed base64 decoding on systems where char is unsigned by default.
+  Thanks Gerrit Pape.
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
