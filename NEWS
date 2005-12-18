@@ -1,4 +1,10 @@
 -------------------------------------------------------------------------------
+Changes in version 1.032
+
+
+Development of this version has been sponsored by FutureQuest, Inc.
+ossi@FutureQuest.net  http://www.FutureQuest.net/
+-------------------------------------------------------------------------------
 Changes in version 1.031
 
 - Brown paper bag release to fix missing header file for HMAC support.
