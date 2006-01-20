@@ -24,30 +24,31 @@
 #include <stdlib.h>
 #include <string.h>
 #include "cli.h"
+#include "internal.h"
 
 static int do_show_usage = 0;
 const char* argv0;
 const char* argv0base;
 const char* argv0dir;
 
-static cli_option help_option = { 'h', "help", CLI_FLAG,
-				  1, &do_show_usage,
-				  "Display this help and exit", 0 };
+cli_option cli_help_option = { 'h', "help", CLI_FLAG,
+			       1, &do_show_usage,
+			       "Display this help and exit", 0 };
 
-static cli_option** options;
-static unsigned optionc;
+cli_option** cli_full_options;
+unsigned cli_option_count;
 
 static void build_options()
 {
   unsigned i;
-  for(optionc = 0;
-      cli_options[optionc].ch || cli_options[optionc].name;
-      optionc++) ;
-  optionc++;
-  options = malloc(optionc * sizeof *options);
-  for(i = 0; i < optionc-1; i++)
-    options[i] = &cli_options[i];
-  options[optionc-1] = &help_option;
+  for(cli_option_count = 0;
+      cli_options[cli_option_count].ch || cli_options[cli_option_count].name;
+      cli_option_count++) ;
+  cli_option_count++;
+  cli_full_options = malloc(cli_option_count * sizeof *cli_full_options);
+  for(i = 0; i < cli_option_count-1; i++)
+    cli_full_options[i] = &cli_options[i];
+  cli_full_options[cli_option_count-1] = &cli_help_option;
 }
 
 static void show_usage()
@@ -55,88 +56,12 @@ static void show_usage()
   obuf_put5s(&outbuf, "usage: ", program, " [flags] ", cli_args_usage, "\n");
 }
 
-static unsigned calc_max_width()
-{
-  /* maxwidth is the maximum width of the long argument */
-  unsigned maxwidth = 0;
-  unsigned i;
-  for(i = 0; i < optionc; i++) {
-    unsigned width = 0;
-    cli_option* o = options[i];
-    if(o->name) {
-      width += strlen(o->name);
-      switch(o->type) {
-      case CLI_STRING:     width += 6; break;
-      case CLI_INTEGER:    width += 4; break;
-      case CLI_UINTEGER:   width += 4; break;
-      case CLI_STRINGLIST: width += 5; break;
-      case CLI_FUNCTION:   width += 6; break;
-      case CLI_SEPARATOR:  width = 0; break;
-      case CLI_FLAG:       break;
-      case CLI_COUNTER:    break;
-      }
-    }
-    if(width > maxwidth)
-      maxwidth = width;
-  }
-  return maxwidth;
-}
-
-static void show_option(cli_option* o, unsigned maxwidth)
-{
-  if(o->type == CLI_SEPARATOR) {
-    obuf_put3s(&outbuf, "\n", o->name, ":\n");
-    return;
-  }
-  if(o == &help_option) obuf_putc(&outbuf, '\n');
-  if(o->ch) {
-    obuf_puts(&outbuf, "  -");
-    obuf_putc(&outbuf, o->ch);
-  }
-  else
-    obuf_puts(&outbuf, "    ");
-  obuf_puts(&outbuf, (o->ch && o->name) ? ", " : "  ");
-  if(o->name) {
-    const char* extra = "";
-    switch(o->type) {
-    case CLI_STRING:     extra = "=VALUE"; break;
-    case CLI_INTEGER:    extra = "=INT"; break;
-    case CLI_UINTEGER:   extra = "=UNS"; break;
-    case CLI_STRINGLIST: extra = "=ITEM"; break;
-    case CLI_FUNCTION:   extra = "=VALUE"; break;
-    case CLI_FLAG:       break;
-    case CLI_COUNTER:    break;
-    case CLI_SEPARATOR:  break;
-    }
-    obuf_put3s(&outbuf, "--", o->name, extra);
-    obuf_pad(&outbuf, maxwidth - strlen(o->name) - strlen(extra) + 2, ' ');
-  }
-  else
-    obuf_pad(&outbuf, maxwidth+4, ' ');
-  obuf_put2s(&outbuf, o->helpstr, "\n");
-  if(o->defaultstr) {
-    obuf_pad(&outbuf, maxwidth+10, ' ');
-    obuf_put3s(&outbuf, "(Defaults to ", o->defaultstr, ")\n");
-  }
-}
-
-static void show_help()
-{
-  unsigned maxwidth;
-  unsigned i;
-  obuf_puts(&outbuf, cli_help_prefix);
-  maxwidth = calc_max_width();
-  for(i = 0; i < optionc; i++)
-    show_option(options[i], maxwidth);
-  obuf_puts(&outbuf, cli_help_suffix);
-}
-
 void usage(int exit_value, const char* errorstr)
 {
   if(errorstr)
     error1(errorstr);
   show_usage();
-  show_help();
+  cli_show_help();
   obuf_flush(&outbuf);
   exit(exit_value);
 }
@@ -205,8 +130,8 @@ static int parse_short(int argc, char* argv[])
   for(i = 1; i <= end; i++) {
     int ch = argv[0][i];
     unsigned j;
-    for(j = 0; j < optionc; j++) {
-      cli_option* o = options[j];
+    for(j = 0; j < cli_option_count; j++) {
+      cli_option* o = cli_full_options[j];
       if(o->ch == ch) {
 	if(o->type != CLI_FLAG &&
 	   o->type != CLI_COUNTER) {
@@ -228,7 +153,7 @@ static int parse_short(int argc, char* argv[])
 	return -1;
       }
     }
-    if(j >= optionc) {
+    if(j >= cli_option_count) {
       char tmp[] = "Unknown option letter -X.";
       tmp[23] = argv[0][i];
       error1(tmp);
@@ -264,8 +189,8 @@ static int parse_long(char* argv[])
 {
   unsigned j;
   const char* arg = argv[0]+2;
-  for(j = 0; j < optionc; j++) {
-    cli_option* o = options[j];
+  for(j = 0; j < cli_option_count; j++) {
+    cli_option* o = cli_full_options[j];
     if(o->name) {
       size_t len = strlen(o->name);
       if(!memcmp(arg, o->name, len)) {

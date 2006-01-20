@@ -50,5 +50,6 @@ extern const char* argv0;
 extern const char* argv0base;
 extern const char* argv0dir;
 extern void usage(int exit_value, const char* errorstr);
+extern void cli_show_help(void);
 
 #endif
