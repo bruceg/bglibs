@@ -6,11 +6,32 @@ my %opts;
 getopts('hc', \%opts);
 if (scalar(@ARGV) != 1
     || $opts{'c'} + $opts{'h'} != 1) {
-    print "usage: $0 -c|-h program.cli\n";
+    print
+	"usage: $0 -c|-h program.cli >FILE\n",
+	"Generate command-line parsing structures from a description file.\n",
+	"\n",
+	"  -c  Generate C source code\n",
+	"  -h  Generate C header code\n";
     exit(1);
 }
 
+my $filename = $ARGV[0];
+open(IN, '<', $filename)
+    || die "Could not open '$filename': $!\n";
+
 my $line;
+my @options;
+my %decls;
+my %defns;
+my $prefix;
+my $suffix;
+my %header = (
+	      'min' => -1,
+	      'max' => -1,
+	      'usage' => '',
+	      'show-pid' => 0,
+	      'includes' => "#include <cli/cli.h>\n",
+	      );
 
 sub is_section {
     my ($line) = @_;
@@ -60,7 +81,6 @@ my %type_defn = (
 );
 
 sub read_options {
-    my(@options);
     $line = <IN>;
     while ($line) {
 	chomp ($line);
@@ -72,12 +92,12 @@ sub read_options {
 	elsif ($line =~ /^--\s+(.+)$/) {
 	    push(@options, {
 		'short' => undef,
-		'long' => $1,
+		'long' => undef,
 		'type' => 'SEPARATOR',
 		'flag' => '0',
 		'varname' => undef,
 		'init' => '0',
-		'help' => undef,
+		'help' => $1,
 		'default' => undef,
 		'description' => undef,
 	    });
@@ -121,84 +141,77 @@ sub read_options {
 	    die "Option line is misformatted:\n  $line\n";
 	}
     }
-    push(@options, {
-	'short' => 'h',
-	'long' => 'help',
-	'type' => 'FLAG',
-	'flag' => 1,
-	'varname' => 'do_show_usage',
-	'init' => '0',
-	'help' => 'Display this help and exit',
-	'default' => undef,
-	'description' => undef,
-    });
-    \@options;
 }
 
 sub read_header {
-    my $header = {
-	'min' => -1,
-	'max' => -1,
-	'usage' => '',
-	'show-pid' => 0,
-    };
     while ($line = <IN>) {
 	chomp($line);
 	last unless $line;
-	if ($line =~ /^Min:\s*(-?\d+)$/i) {
-	    $$header{'min'} = $1;
+	unless ($line =~ /^([^\s:]+):\s*(.*)$/) {
+	    die "Invalid header line:\n  $line\n";
 	}
-	elsif ($line =~ /^Max:\s*(-?\d+)$/i) {
-	    $$header{'max'} = $1;
+	my $field = $1;
+	my $value = $2;
+	$field =~ tr/A-Z/a-z/;
+	if ($field eq 'min') {
+	    $header{'min'} = $value;
 	}
-	elsif ($line =~ /^Usage:\s*(.+)$/i) {
-	    $$header{'usage'} = $1;
+	elsif ($field eq 'max') {
+	    $header{'max'} = $value;
 	}
-	elsif ($line =~ /^Show-Pid:\s*(\d+)?$/i) {
-	    $$header{'show-pid'} = defined($1) ? $1 : 1;
+	elsif ($field eq 'usage') {
+	    $header{'usage'} = $value;
+	}
+	elsif ($field eq 'show-pid') {
+	    $header{'show-pid'} = defined($value) ? $value : 1;
+	}
+	elsif ($field eq 'include') {
+	    $header{'includes'} .= "#include $value\n";
 	}
 	else {
 	    die "Invalid header line:\n  $line\n";
 	}
     }
-    $header;
 }
 
 sub read_sections {
-    my $sections = { 'options' => [ ] };
     $line = <IN>;
     while ($line) {
 	chomp($line);
 	if ($line eq '[prefix]') {
-	    $$sections{'prefix'} = read_text($$sections{'prefix'});
-	    $$sections{'prefix'} =~ s/^\s+//;
-	    $$sections{'prefix'} =~ s/\s+$//;
+	    $prefix = read_text($prefix);
+	    $prefix =~ s/^\s+//;
+	    $prefix =~ s/\s+$//;
 	}
 	elsif ($line eq '[suffix]') {
-	    $$sections{'suffix'} = read_text($$sections{'suffix'});
-	    $$sections{'suffix'} =~ s/^\s+//;
-	    $$sections{'suffix'} =~ s/\s+$//;
+	    $suffix = read_text($suffix);
+	    $suffix =~ s/^\s+//;
+	    $suffix =~ s/\s+$//;
 	}
 	elsif ($line eq '[options]') {
-	    $$sections{'options'} = read_options();
+	    read_options();
 	}
 	else {
 	    die "Invalid section header:\n  $line\n";
 	}
     }
-    $sections;
 }
 
 sub postprocess_options {
-    my ($options) = @_;
-    foreach my $option (@$options) {
-	$$option{'decl'} = $type_decl{$$option{'type'}};
-	$$option{'defn'} = $type_defn{$$option{'type'}};
+    foreach my $option (@options) {
+	my $var = $$option{'varname'};
+	my $type = $$option{'type'};
+	if (my $decl = $type_decl{$type}) {
+	    $decls{$var} = sprintf($decl, $var);
+	}
+	if (my $defn = $type_defn{$type}) {
+	    $defns{$var} = sprintf($defn, $var, $$option{'init'});
+	}
 	my $short = defined($$option{'short'})
 	    ? "-$$option{'short'}"
 	    : '  ';
 	my $long = defined($$option{'long'})
-	    ? "--$$option{'long'}$type_suffix{$$option{'type'}}"
+	    ? "--$$option{'long'}$type_suffix{$type}"
 	    : '';
 	my $mid = (defined($$option{'short'}) && defined($$option{'long'}))
 	    ? ', '
@@ -208,29 +221,24 @@ sub postprocess_options {
 }
 
 sub output_h {
-    my ($filename, $header, $sections) = @_;
-    my $options = $$sections{'options'};
     my $guard = $filename;
     $guard =~ tr/a-z/A-Z/;
     $guard =~ s/[^0-9A-Z]/_/g;
     print "#ifndef ${guard}_H\n";
     print "#define ${guard}_H\n";
     print "/* This file was automatically generated, do not edit. */\n";
-    print "#include <cli/cli.h>\n";
+    print $header{'includes'};
 
-    foreach my $option (@$options) {
-	if (my $decl = $$option{'decl'}) {
-	    printf $decl, $$option{'varname'};
-	}
+    foreach my $var (sort keys %decls) {
+	print $decls{$var};
     }
 
     print "#endif\n";
 }
 
 sub max_width {
-    my ($options) = @_;
     my $max = 0;
-    foreach my $option (@$options) {
+    foreach my $option (@options) {
 	my $width = length($$option{'prehelp'});
 	$max = $width if $width > $max;
     }
@@ -245,68 +253,60 @@ sub c_escape {
 }
 
 sub make_helpstr {
-    my ($prefix, $suffix, $options) = @_;
-    my $width = max_width($options);
+    my $width = max_width();
     my $text;
     $text = $prefix;
     $text .= "\n";
-    foreach my $option (@$options) {
-	$text .= sprintf("  %-${width}s  %s\n",
-			 $$option{'prehelp'}, $$option{'help'});
-	if (defined($$option{'default'})) {
-	    $text .= sprintf("  %${width}s  (Defaults to %s)\n",
-			     '', $$option{'default'});
+    foreach my $option (@options) {
+	if ($$option{'type'} eq 'SEPARATOR') {
+	    $text .= sprintf("\n%s:\n", $$option{'help'});
+	}
+	else {
+	    $text .= sprintf("  %-${width}s  %s\n",
+			     $$option{'prehelp'}, $$option{'help'});
+	    if (defined($$option{'default'})) {
+		$text .= sprintf("  %${width}s  (Defaults to %s)\n",
+				 '', $$option{'default'});
+	    }
 	}
     }
+    $text .= sprintf("\n  %-${width}s  %s\n",
+		     '-h, --help',
+		     'Display this help and exit');
     $text .= $suffix;
     $text .= "\n";
     $text;
 }
 
 sub output_c {
-    my ($filename, $header, $sections) = @_;
-    my $options = $$sections{'options'};
-
     print "/* This file was automatically generated, do not edit. */\n";
+    print "#include <string.h>\n";
+    print "#include <iobuf/obuf.h>\n";
+    print $header{'includes'};
 
     my $program = $filename;
     $program =~ s/\.cli$//;
     print "const char program[] = \"$program\";\n";
 
-    print "const char cli_args_usage[] = \"$$header{'usage'}\";\n";
-    print "const int cli_args_min = $$header{'min'};\n";
-    print "const int cli_args_max = $$header{'max'};\n";
+    print "const char cli_args_usage[] = \"$header{'usage'}\";\n";
+    print "const int cli_args_min = $header{'min'};\n";
+    print "const int cli_args_max = $header{'max'};\n";
+    print "const int msg_show_pid = $header{'show-pid'};\n";
 
+    my $helpstr = c_escape(make_helpstr());
     print
-	"const char cli_help_prefix[] =\n\"",
-	c_escape($$sections{'prefix'}),
-	"\\n\";\n";
-    print
-	"const char cli_help_suffix[] =\n\"",
-	c_escape($$sections{'suffix'}),
-	"\\n\";\n";
+	"void cli_show_help(void) {\n",
+	"  obuf_puts(&outbuf,\n",
+	"\"$helpstr\");\n",
+	"}\n";
 
-    #my $helpstr = c_escape(make_helpstr($prefix, $suffix, $options));
-    #print "const char cli_help[] =\n\"$helpstr\";\n";
-
-    foreach my $option (@$options) {
-	if (my $defn = $$option{'defn'}) {
-	    my $init = $$option{'init'};
-	    if ($$option{'type'} eq 'FUNCTION') {
-		$init = '';
-	    }
-	    printf $defn, $$option{'varname'}, $init;
-	}
+    foreach my $var (sort keys %defns) {
+	print $defns{$var};
     }
 
     print "cli_option cli_options[] = {\n";
-    foreach my $option (@$options) {
-	if ($$option{'type'} eq 'SEPARATOR') {
-	    printf
-		"  { 0, \"%s\", CLI_SEPARATOR, 0, 0, 0, 0 },\n",
-		c_escape($$option{'long'});
-	}
-	else {
+    foreach my $option (@options) {
+	if ($$option{'type'} ne 'SEPARATOR') {
 	    my $default = c_escape($$option{'default'});
 	    my $varptr = $$option{'varname'};
 	    if (defined($varptr)) {
@@ -318,34 +318,26 @@ sub output_c {
 		$varptr = '0';
 	    }
 	    printf
-		"  { %s, %s, CLI_%s, %s, %s,\n",
+		"  { %s, %s, CLI_%s, %s, %s, 0, 0 },\n",
 		defined($$option{'short'}) ? "'$$option{'short'}'" : 0,
 		defined($$option{'long'}) ? "\"$$option{'long'}\"" : 0,
 		$$option{'type'},
 		$$option{'flag'},
 		$varptr;
-	    printf
-		"    \"%s\", %s },\n",
-		c_escape($$option{'help'}),
-		defined($default) ? "\"$default\"" : 0;
 	}
     }
     print "  {0,0,0,0,0,0,0}\n";
     print "};\n";
 }
 
-my $filename = $ARGV[0];
-open(IN, '<', $filename)
-    || die "Could not open '$filename': $!\n";
+read_header();
+read_sections();
 
-my $header = read_header();
-my $sections = read_sections();
-
-postprocess_options($$sections{'options'});
+postprocess_options();
 
 if ($opts{'c'}) {
-    output_c($filename, $header, $sections);
+    output_c();
 }
 elsif ($opts{'h'}) {
-    output_h($filename, $header, $sections);
+    output_h();
 }
