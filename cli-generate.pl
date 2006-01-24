@@ -31,6 +31,7 @@ my %header = (
 	      'usage' => '',
 	      'show-pid' => 0,
 	      'includes' => "#include <cli/cli.h>\n",
+	      'debug-bits' => 0,
 	      );
 
 sub is_section {
@@ -168,6 +169,9 @@ sub read_header {
 	elsif ($field eq 'include') {
 	    $header{'includes'} .= "#include $value\n";
 	}
+	elsif ($field eq 'debug-bits') {
+	    $header{'debug-bits'} = $value;
+	}
 	else {
 	    die "Invalid header line:\n  $line\n";
 	}
@@ -292,6 +296,7 @@ sub output_c {
     print "const int cli_args_min = $header{'min'};\n";
     print "const int cli_args_max = $header{'max'};\n";
     print "const int msg_show_pid = $header{'show-pid'};\n";
+    print "int msg_debug_bits = $header{'debug-bits'};\n";
 
     my $helpstr = c_escape(make_helpstr());
     print
