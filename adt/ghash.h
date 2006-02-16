@@ -31,7 +31,7 @@ struct ghash
 #define ghash_hashsp adt_hashsp
 
 void ghash_insert(struct ghash* d, void* e);
-int ghash_add(struct ghash* d, const void* key, const void* data);
+void* ghash_add(struct ghash* d, const void* key, const void* data);
 void ghash_free(struct ghash* d);
 void** ghash_find(struct ghash* d, const void* key);
 void* ghash_get(struct ghash* d, const void* key);
@@ -67,8 +67,9 @@ struct PREFIX##_entry { \
 GHASH_STRUCT_ENTRY(PREFIX,KTYPE,DTYPE); \
 extern void PREFIX##_init(struct ghash* d); \
 extern void PREFIX##_free(struct ghash* d); \
-extern int PREFIX##_add(struct ghash* d, \
-                        KTYPE const* key, DTYPE const* data); \
+extern struct PREFIX##_entry* PREFIX##_add(struct ghash* d, \
+                                           KTYPE const* key, \
+                                           DTYPE const* data); \
 extern struct PREFIX##_entry* PREFIX##_get(struct ghash* d, \
                                            KTYPE const* key); \
 extern int PREFIX##_rebuild(struct ghash* d); \
@@ -98,7 +99,8 @@ void PREFIX##_free(struct ghash* d) { \
 }
 
 #define GHASH_ADD_DEFN(PREFIX,KTYPE,DTYPE) \
-int PREFIX##_add(struct ghash* d, KTYPE const* key, DTYPE const* data) { \
+struct PREFIX##_entry* PREFIX##_add(struct ghash* d, \
+                                    KTYPE const* key, DTYPE const* data) { \
   return ghash_add(d, key, data); \
 }
 

@@ -7,6 +7,9 @@ Changes in version 1.040
 - Fixed base64 decoding on systems where char is unsigned by default.
   Thanks Gerrit Pape.
 
+- Tweaked the ghash_add function to return a pointer to the newly
+  created entry (since some uses will want to use it immediately).
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

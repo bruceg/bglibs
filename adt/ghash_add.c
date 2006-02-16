@@ -66,7 +66,7 @@ static int ghash_grow(struct ghash* d, unsigned count)
   return 1;
 }
 
-int ghash_add(struct ghash* d, const void* key, const void* data)
+void* ghash_add(struct ghash* d, const void* key, const void* data)
 {
   const adt_hash_t hash = d->hashfn(key);
   void* newe;
@@ -87,7 +87,7 @@ int ghash_add(struct ghash* d, const void* key, const void* data)
     return 0;
   }
   ghash_insert(d, newe);
-  return 1;
+  return newe;
 }
 
 #ifdef SELFTEST_MAIN
