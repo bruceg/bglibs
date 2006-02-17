@@ -26,7 +26,7 @@ my %defns;
 my $prefix;
 my $suffix;
 my %header = (
-	      'min' => -1,
+	      'min' => 0,
 	      'max' => -1,
 	      'usage' => '',
 	      'show-pid' => 0,
@@ -172,8 +172,11 @@ sub read_header {
 	elsif ($field eq 'debug-bits') {
 	    $header{'debug-bits'} = $value;
 	}
+	elsif ($field eq 'description') {
+	    $header{'description'} = $value;
+	}
 	else {
-	    die "Invalid header line:\n  $line\n";
+	    print STDERR "Invalid header line, ignoring:\n  $line\n";
 	}
     }
 }
@@ -259,7 +262,8 @@ sub c_escape {
 sub make_helpstr {
     my $width = max_width();
     my $text;
-    $text = $prefix;
+    $text .= "$header{'description'}\n" if $header{'description'};
+    $text .= "$prefix\n" if $prefix;
     $text .= "\n";
     foreach my $option (@options) {
 	if ($$option{'type'} eq 'SEPARATOR') {
