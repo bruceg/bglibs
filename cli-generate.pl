@@ -3,21 +3,25 @@ use strict;
 use Getopt::Std;
 
 my %opts;
-getopts('hc', \%opts);
+getopts('chm', \%opts);
 if (scalar(@ARGV) != 1
-    || $opts{'c'} + $opts{'h'} != 1) {
+    || $opts{'c'} + $opts{'h'} + $opts{'m'} != 1) {
     print
 	"usage: $0 -c|-h program.cli >FILE\n",
 	"Generate command-line parsing structures from a description file.\n",
 	"\n",
 	"  -c  Generate C source code\n",
-	"  -h  Generate C header code\n";
+	"  -h  Generate C header code\n",
+	"  -m  Generate man page source\n";
     exit(1);
 }
 
 my $filename = $ARGV[0];
 open(IN, '<', $filename)
     || die "Could not open '$filename': $!\n";
+my $program = $filename;
+$program =~ s/\.cli$//;
+$program =~ s/^.*\///;
 
 my %sections;
 my @options;
@@ -186,6 +190,7 @@ sub postprocess_options {
 	if (my $defn = $type_defn{$type}) {
 	    $defns{$var} = sprintf($defn, $var, $$option{'init'});
 	}
+	$$option{'help'} =~ s/([^\.])$/$1\./;
 	my $short = defined($$option{'short'})
 	    ? "-$$option{'short'}"
 	    : '  ';
@@ -264,8 +269,6 @@ sub output_c {
     print "#include <iobuf/obuf.h>\n";
     print $header{'includes'};
 
-    my $program = $filename;
-    $program =~ s/\.cli$//;
     print "const char program[] = \"$program\";\n";
 
     print "const char cli_args_usage[] = \"$header{'usage'}\";\n";
@@ -311,6 +314,110 @@ sub output_c {
     print "};\n";
 }
 
+sub reformat_m_tag {
+    my ($tag, $text) = @_;
+    # TeXinfo tags:
+    # code kbd key samp verb var env file command option dfn
+    # cite abbr acronym indicateurl email
+    # strong emph
+    if ($tag eq 'strong'
+	|| $tag eq 'command'
+	|| $tag eq 'option') {
+	"\\fB$text\\fR";
+    }
+    elsif ($tag eq 'emph'
+	   || $tag eq 'var'
+	   || $tag eq 'file'
+	   || $tag eq 'env') {
+	"\\fI$text\\fR";
+    }
+    elsif ($tag eq 'code'
+	   || $tag eq 'example'
+	   || $tag eq 'samp') {
+	$text;
+    }
+    else {
+	print STDERR "Warning, unknown tag \@$tag, ignoring\n";
+	$text;
+    }
+}
+
+sub parse_m_text {
+    $_ = shift;
+    s/\@program\b/\\fB$program\\fR/g;
+    s/\@([a-zA-Z]+)\{(.*?)\}/reformat_m_tag($1,$2)/eg;
+    s/^\n+//;
+    s/\n*$/\n/;
+    $_;
+}
+
+sub output_m_section {
+    my ($section) = @_;
+    my $text = $sections{$section};
+    if ($text) {
+	$section =~ tr/a-z/A-Z/;
+	print ".SH $section\n";
+	print parse_m_text($text);
+    }
+}
+
+sub output_m_options {
+    print ".SH OPTIONS\n";
+    foreach my $option (@options) {
+	if ($$option{'type'} eq 'SEPARATOR') {
+	    print ".SS $$option{'help'}\n";
+	}
+	else {
+	    print ".TP\n";
+	    print ".B $$option{'prehelp'}\n";
+	    print $$option{'help'}, "\n";
+	    print parse_m_text($$option{'description'})
+		if $$option{'description'};
+	    print "(Defaults to $$option{'default'})\n"
+		if defined($$option{'default'});
+	}
+    }
+    print
+	".TP\n",
+	".B -h, --help\n",
+	"Display usage information and exit.\n";
+}
+
+sub output_m {
+    my $section;
+    my $usage;
+    print
+	".\\\" This file was automatically generated, do not edit.\n",
+	".TH $program 1\n",
+	".SH NAME\n",
+	"$program \\- $header{'description'}\n",
+	".SH SYNOPSIS\n",
+	".B $program\n";
+
+    $_ = $header{'usage'};
+    s/([\[\]])/\\fR$1\\fI/g;
+    s/(^|\s+)(-\S+)/\\fB$1\\fI/g;
+    print ".I $_\n";
+
+    output_m_section('description');
+    output_m_options() if @options;
+    foreach $section ('return value',
+		      'errors',
+		      'examples',
+		      'environment',
+		      'files',
+		      'see also',
+		      'notes',
+		      'caveats',
+		      'diagnostics',
+		      'bugs',
+		      'restrictions',
+		      'author',
+		      'history') {
+	output_m_section($section);
+    }
+}
+
 read_header();
 read_sections();
 
@@ -323,4 +430,7 @@ if ($opts{'c'}) {
 }
 elsif ($opts{'h'}) {
     output_h();
+}
+elsif ($opts{'m'}) {
+    output_m();
 }
