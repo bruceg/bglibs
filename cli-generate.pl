@@ -373,7 +373,7 @@ sub output_m_options {
 	    print $$option{'help'}, "\n";
 	    print parse_m_text($$option{'description'})
 		if $$option{'description'};
-	    print "(Defaults to $$option{'default'})\n"
+	    print "Defaults to $$option{'default'}.\n"
 		if defined($$option{'default'});
 	}
     }

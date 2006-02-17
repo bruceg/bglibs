@@ -197,3 +197,6 @@ s::::unix:sig.a:../libbg-unix.a
 d:::755:vmailmgr
 s::::vmailmgr:client.a:../libvmailmgr.a
 s::::vmailmgr:vpwentry.a:../libvmailmgr.a
+
+>man
+c:::644:man1:cli-generate.1

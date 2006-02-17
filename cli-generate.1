@@ -1,0 +1,192 @@
+.\" $Id$
+.TH cli-generate 1
+.SH NAME
+cli-generate \- Generate source and documentation from CLI descriptions
+.SH SYNOPSIS
+.B cli-generate
+[
+.B -c
+|
+.B -h
+|
+.B -m
+]
+.I FILENAME.cli
+.SH DESCRIPTION
+.SS Operation
+.B cli-generate
+reads in a CLI (command line interface) description file, parses it into
+its various sections, and prints out one of a set of output files.  In
+typical usage, that output would be directed to a file and later
+compiled or included in other sources.
+
+The CLI file (named \fBPROGRAM\fI.cli\fR) is divided into two parts, a
+header (formatted much like a standard mail header) and a series of
+sections.  Headers and sections other than those specified below are
+ignored.  All headers and sections are optional.
+.SS File Format
+.nf
+file = header "\\n" *section
+
+header = *(header-line "\\n")
+
+header-line = header-field ":" value
+
+whitespace = *(SPACE / TAB)
+
+section = "[" name "]" "\\n" text
+
+text = *( line "\n" )
+.fi
+.SS Headers
+.TP
+.B Description:
+A one-line description of what the program does.
+.TP
+.B Include:
+Add C statements to #include the given source file.  Must be formatted
+as either
+.I <file>
+or
+.I "file"
+.TP
+.B Min:
+The minimum number of allowed non-option arguments.  Defaults to 0.
+.TP
+.B Max:
+The maximum number of allowed non-option arguments.  Negative values
+mean unlimited.  Defaults to -1.
+.TP
+.B Show-Pid:
+Set to non-zero if the resulting program is to show its PID with every
+output message.  Defaults to 0.
+.TP
+.B Usage:
+A one-line description of the intended usage.  Defaults to empty.
+.SS Section Names
+.TP
+.B [prefix]
+The text in this section is shown in the command usage before the
+options description.
+.TP
+.B [options]
+The list of options this program accepts.  See below for their format.
+.TP
+.B [suffix]
+The text in this section is shown in the command usage after the
+options description.
+.TP
+.B [description]
+.TP
+.B [return value]
+.TP
+.B [errors]
+.TP
+.B [examples]
+.TP
+.B [environment]
+.TP
+.B [files]
+.TP
+.B [see also]
+.TP
+.B [notes]
+.TP
+.B [caveats]
+.TP
+.B [diagnostics]
+.TP
+.B [bugs]
+.TP
+.B [restrictions]
+.TP
+.B [author]
+.TP
+.B [history]
+These sections are formatted and copied into the man page in the
+standard order.
+.SS Options Format
+.nf
+options = *(option / separator)
+
+option = option1 "\\n" option2 "\\n" *(line "\\n")
+
+option1 = [shortopt] [longopt] type ["=" flag-value] variable ["=" init]
+
+option2 = helpstr ["=" default]
+
+separator = "-- " text "\n"
+
+shortopt = "-" character
+
+longopt = "--" word
+
+type = "FLAG" / "COUNTER" / "INTEGER" / "UINTEGER" / "STRING" / "STRINGLIST" / "FUNCTION"
+.fi
+
+If not specified,
+.I flag-value
+and
+.I init
+are
+.IR 0 ,
+and
+.I default
+is empty.
+.SH OPTIONS
+.TP
+.B \-c
+Output C source code.
+.TP
+.B \-h
+Output C header file.
+.TP
+.B \-m
+Output a UNIX man page.
+.SH EXAMPLES
+Here is a sample CLI file, containing many of the described elements.
+
+.nf
+Min: 1
+Max: 1
+Usage: PATH
+Description: Create a file.
+Show-Pid: 0
+Include: <stdio.h>
+
+[prefix]
+If the given PATH is a directory, it is suffixed with another name.
+
+[description]
+@program generates a new random file from a variety of sources including
+@command{ls} and @command{ps} output.
+
+If the given @option{PATH} is a directory, it is suffixed with another
+name of my choosing.
+
+[options]
+-v --verbose FLAG=1 opt_verbose
+
+-t --type STRING opt_type = "type1"
+The type of the file to generate. = type1
+Possible types for this include @option{type1} and @option{base64}.
+.fi
+.SH SEE ALSO
+.\" Other man pages to check out, like man(1), man(7), makewhatis(8), or
+.\" catman(8).
+.SH NOTES
+.\" Miscellaneous commentary.
+.SH CAVEATS
+.\" Things to take special care with; sometimes called WARNINGS.
+.SH DIAGNOSTICS
+.\" All possible messages the program can print out--and
+.\" what they mean.
+.SH BUGS
+.\" Things that are broken or just don't work quite right.
+.SH RESTRICTIONS
+.\" Bugs you don't plan to fix :-)
+.SH AUTHOR
+.\" Who wrote it (or AUTHORS if multiple)
+.SH HISTORY
+.\" Programs derived from other sources sometimes have this, or
+.\" you might keep a modification log here.
