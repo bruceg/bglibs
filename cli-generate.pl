@@ -19,37 +19,11 @@ my $filename = $ARGV[0];
 open(IN, '<', $filename)
     || die "Could not open '$filename': $!\n";
 
-my $line;
+my %sections;
 my @options;
 my %decls;
 my %defns;
-my $prefix;
-my $suffix;
-my %header = (
-	      'min' => 0,
-	      'max' => -1,
-	      'usage' => '',
-	      'show-pid' => 0,
-	      'includes' => "#include <cli/cli.h>\n",
-	      'debug-bits' => 0,
-	      );
-
-sub is_section {
-    my ($line) = @_;
-    $line =~ /^\[.+\]\s*$/o;
-}
-
-sub read_text {
-    my ($text) = @_;
-    while ($line = <IN>) {
-	chomp ($line);
-	last if is_section($line);
-	if ($line || $text) {
-	    $text =~ s/$/\n$line/;
-	}
-    }
-    $text;
-}
+my %header = ( 'include' => "<cli/cli.h>\n" );
 
 my %type_suffix = (
     'STRING' => '=VALUE',
@@ -81,16 +55,13 @@ my %type_defn = (
     'COUNTER' => "int %s = %s;\n",
 );
 
-sub read_options {
-    $line = <IN>;
-    while ($line) {
-	chomp ($line);
-	last if is_section($line);
-	if (!$line) {
-	    $line = <IN>;
-	    next;
-	}
-	elsif ($line =~ /^--\s+(.+)$/) {
+sub parse_options {
+    my @lines = split('\n', $sections{'options'});
+    my $line;
+    while ($line = shift(@lines)) {
+	$line =~ s/\s+$//;
+	next if !$line;
+	if ($line =~ /^--\s+(.+)$/) {
 	    push(@options, {
 		'short' => undef,
 		'long' => undef,
@@ -102,7 +73,6 @@ sub read_options {
 		'default' => undef,
 		'description' => undef,
 	    });
-	    $line = <IN>;
 	}
 	elsif ($line =~ /^(-([^-])\s+)?(--([^=]+)\s+)?([A-Z]+)(\s*=\s*(\S+))?\s+(\S+)(\s*=\s*("[^\"]*"|-?\d+))?$/
 	       && ($2 ne '' || $4 ne '')) {
@@ -113,14 +83,14 @@ sub read_options {
 	    my $var = $8;
 	    my $init = $10;
 
-	    my $helpstr = <IN>;
+	    my $helpstr = shift(@lines);
 	    chomp($helpstr);
 	    my $default = ($helpstr =~ s/\s*=\s*([^=]+)$//) ? $1 : undef;
 
 	    my $description;
-	    while ($line = <IN>) {
+	    while ($line = shift(@lines)) {
 		chomp($line);
-		last if $line =~ /^-/ || is_section($line);
+		last if $line =~ /^-/;
 		if ($description || $line) {
 		    $description =~ s/$/\n$line/;
 		}
@@ -145,6 +115,7 @@ sub read_options {
 }
 
 sub read_header {
+    my $line;
     while ($line = <IN>) {
 	chomp($line);
 	last unless $line;
@@ -154,54 +125,55 @@ sub read_header {
 	my $field = $1;
 	my $value = $2;
 	$field =~ tr/A-Z/a-z/;
-	if ($field eq 'min') {
-	    $header{'min'} = $value;
-	}
-	elsif ($field eq 'max') {
-	    $header{'max'} = $value;
-	}
-	elsif ($field eq 'usage') {
-	    $header{'usage'} = $value;
-	}
-	elsif ($field eq 'show-pid') {
-	    $header{'show-pid'} = defined($value) ? $value : 1;
-	}
-	elsif ($field eq 'include') {
-	    $header{'includes'} .= "#include $value\n";
-	}
-	elsif ($field eq 'debug-bits') {
-	    $header{'debug-bits'} = $value;
-	}
-	elsif ($field eq 'description') {
-	    $header{'description'} = $value;
-	}
-	else {
-	    print STDERR "Invalid header line, ignoring:\n  $line\n";
-	}
+	$header{$field} .= "$value\n";
     }
 }
 
 sub read_sections {
+    my $line;
+    my $section;
+    my $text;
     $line = <IN>;
-    while ($line) {
-	chomp($line);
-	if ($line eq '[prefix]') {
-	    $prefix = read_text($prefix);
-	    $prefix =~ s/^\s+//;
-	    $prefix =~ s/\s+$//;
-	}
-	elsif ($line eq '[suffix]') {
-	    $suffix = read_text($suffix);
-	    $suffix =~ s/^\s+//;
-	    $suffix =~ s/\s+$//;
-	}
-	elsif ($line eq '[options]') {
-	    read_options();
+    unless ($line =~ /^\[(.+)\]\s*$/) {
+	die "Invalid section marker:\n  $line\n";
+    }
+    $section = $1;
+    while ($line = <IN>) {
+	if ($line =~ /^\[(.+)\]\s*$/) {
+	    my $newsection = $1;
+	    $text =~ s/\s+$//;
+	    $sections{$section} = $text;
+	    $section = $newsection;
+	    $text = '';
 	}
 	else {
-	    die "Invalid section header:\n  $line\n";
+	    $text .= $line;
 	}
     }
+    if ($section) {
+	$text =~ s/\s+$//;
+	$sections{$section} = $text;
+    }
+}
+
+sub header_num {
+    my ($key,$default) = @_;
+    $header{$key} = defined($header{$key}) ? $header{$key} + 0 : $default;
+}
+
+sub parse_header {
+    my $line;
+    my $key;
+    foreach $key (keys %header) {
+	chomp($header{$key});
+    }
+    foreach $line (split('\n', $header{'include'})) {
+	$header{'includes'} .= "#include $line\n";
+    }
+    header_num('min', 0);
+    header_num('max', -1);
+    header_num('show-pid', 0);
+    header_num('debug-bits', 0);
 }
 
 sub postprocess_options {
@@ -263,7 +235,7 @@ sub make_helpstr {
     my $width = max_width();
     my $text;
     $text .= "$header{'description'}\n" if $header{'description'};
-    $text .= "$prefix\n" if $prefix;
+    $text .= "$sections{'prefix'}\n" if $sections{'prefix'};
     $text .= "\n";
     foreach my $option (@options) {
 	if ($$option{'type'} eq 'SEPARATOR') {
@@ -281,7 +253,7 @@ sub make_helpstr {
     $text .= sprintf("\n  %-${width}s  %s\n",
 		     '-h, --help',
 		     'Display this help and exit');
-    $text .= $suffix;
+    $text .= $sections{'suffix'};
     $text .= "\n";
     $text;
 }
@@ -342,6 +314,8 @@ sub output_c {
 read_header();
 read_sections();
 
+parse_header();
+parse_options();
 postprocess_options();
 
 if ($opts{'c'}) {
