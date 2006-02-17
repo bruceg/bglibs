@@ -221,7 +221,7 @@ sub output_h {
 }
 
 sub max_width {
-    my $max = 0;
+    my $max = 10;
     foreach my $option (@options) {
 	my $width = length($$option{'prehelp'});
 	$max = $width if $width > $max;
