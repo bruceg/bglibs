@@ -30,13 +30,13 @@ file = header "\\n" *section
 
 header = *(header-line "\\n")
 
-header-line = header-field ":" value
+header-line = header-field ":" whitespace value
 
 whitespace = *(SPACE / TAB)
 
-section = "[" name "]" "\\n" text
+section = "[" name "]" "\\n" lines
 
-text = *( line "\n" )
+lines = *( line "\\n" )
 .fi
 .SS Headers
 .TP
@@ -115,7 +115,7 @@ option1 = [shortopt] [longopt] type ["=" flag-value] variable ["=" init]
 
 option2 = helpstr ["=" default]
 
-separator = "-- " text "\n"
+separator = "-- " text "\\n"
 
 shortopt = "-" character
 
@@ -171,22 +171,5 @@ name of my choosing.
 The type of the file to generate. = type1
 Possible types for this include @option{type1} and @option{base64}.
 .fi
-.SH SEE ALSO
-.\" Other man pages to check out, like man(1), man(7), makewhatis(8), or
-.\" catman(8).
-.SH NOTES
-.\" Miscellaneous commentary.
-.SH CAVEATS
-.\" Things to take special care with; sometimes called WARNINGS.
-.SH DIAGNOSTICS
-.\" All possible messages the program can print out--and
-.\" what they mean.
-.SH BUGS
-.\" Things that are broken or just don't work quite right.
-.SH RESTRICTIONS
-.\" Bugs you don't plan to fix :-)
 .SH AUTHOR
-.\" Who wrote it (or AUTHORS if multiple)
-.SH HISTORY
-.\" Programs derived from other sources sometimes have this, or
-.\" you might keep a modification log here.
+Bruce Guenter <bruce@untroubled.org>
