@@ -6,8 +6,14 @@
   - Functions:
     - initialize(void* state)
     - compress(void* state, unsigned char* block)
-    - pad(unsigned char* twoblocks, unsigned long used, unsigned long bytes)
     - extract digest(void* state)
+  - All current hash functions use exactly the same finalization code:
+    - hash 0x80
+    - hash 0x00 until there are 64 bits left in the current block
+    - hash the 64-bit number of bits originally hashed in MSB order
+      (this will cause a final compression invocation).
+
+- Rewrite all crypto hash code in terms of the above control block.
 
 - Rewrite the IPv6 library to accept/handle IPv4-only connections
   transparently.
