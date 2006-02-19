@@ -4,6 +4,9 @@ Changes in version 1.040
 - Added cli-generate, a program to produce C header and source from
   command-line interface description files.
 
+- Modified the crypto HMAC code to do precalculation of the intermediate
+  hash results.
+
 - Fixed base64 decoding on systems where char is unsigned by default.
   Thanks Gerrit Pape.
 

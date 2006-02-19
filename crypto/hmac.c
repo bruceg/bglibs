@@ -21,6 +21,81 @@
 #include "str/str.h"
 #include "hmac.h"
 
+/** Precalculate the HMAC intermediate values.
+ *
+ * Calculates the initialization vectors to effectively seed the hash
+ * function with the result of H(K XOR ipad) and H(K XOR opad).  The
+ * results of this function are used by hmac_finish.  This saves the
+ * application of the hash's compression function on two blocks for each
+ * use of the HMAC.
+ *
+ * \note \c midstate must be twice \c hcb->midstate_size bytes long.
+ */
+void hmac_prepare(const struct hmac_control_block* hcb,
+		  void* midstate,
+		  const str* secret)
+{
+  unsigned char state[hcb->state_size];
+  unsigned char block[hcb->block_size];
+  unsigned i;
+
+  /* Set up K XOR ipad, where ipad is 0x36 repeated B times */
+  if (secret->len >= hcb->block_size) {
+    hcb->init(state);
+    hcb->update(state, secret->s, secret->len);
+    hcb->finalize(state, block);
+    memset(block + hcb->digest_size, 0, sizeof block - hcb->digest_size);
+  }
+  else {
+    memcpy(block, secret->s, secret->len);
+    memset(block + secret->len, 0, sizeof block - secret->len);
+  }
+  for (i = 0; i < sizeof block; ++i)
+    block[i] ^= 0x36;
+
+  /* Generate prestate for H(K XOR ipad) */
+  hcb->init(state);
+  hcb->update(state, block, sizeof block);
+  hcb->extract(state, midstate);
+  
+  /* Generate K XOR opad */
+  for (i = 0; i < sizeof block; ++i)
+    block[i] ^= 0x36 ^ 0x5c;
+  
+  /* Generate prestate for H(K XOR opad) */
+  hcb->init(state);
+  hcb->update(state, block, sizeof block);
+  hcb->extract(state, midstate + hcb->midstate_size);
+
+  memset(state, 0, sizeof state);
+  memset(block, 0, sizeof block);
+}
+
+/** Calculate the final HMAC digest.
+ *
+ * This function uses the initialization vectors produced by \c
+ * hmac_prepare to produce the final digest output from the HMAC.
+ */
+void hmac_finish(const struct hmac_control_block* hcb,
+		 void* midstate,
+		 const str* nonce,
+		 void* output)
+{
+  unsigned char state[hcb->state_size];
+  
+  /* Generate H1 = H(K XOR ipad, nonce) */
+  hcb->inject(state, midstate);
+  hcb->update(state, nonce->s, nonce->len);
+  hcb->finalize(state, output);
+  
+  /* Generate Output = H(K XOR opad, H1) */
+  hcb->inject(state, midstate + hcb->midstate_size);
+  hcb->update(state, output, hcb->digest_size);
+  hcb->finalize(state, output);
+
+  memset(state, 0, sizeof state);
+}
+
 /** A generic RFC 2104 HMAC calculator.
  *
  * This function generates a HMAC (Keyed Hashing for Message
@@ -32,38 +107,10 @@ void hmac(const struct hmac_control_block* hcb,
 	  const str* nonce,
 	  void* output)
 {
-  unsigned char state[hcb->state_size];
-  unsigned char final[hcb->final_size];
-  unsigned char block[hcb->block_size];
-  unsigned i;
+  unsigned char midstate[hcb->state_size*2];
 
-  /* Set up K XOR ipad, where ipad is 0x36 repeated B times */
-  if (secret->len >= hcb->block_size) {
-    hcb->init(state);
-    hcb->update(state, secret->s, secret->len);
-    hcb->finalize(state, block);
-    memset(block + sizeof final, 0, sizeof block - sizeof final);
-  }
-  else {
-    memcpy(block, secret->s, secret->len);
-    memset(block + secret->len, 0, sizeof block - secret->len);
-  }
-  for (i = 0; i < sizeof block; ++i)
-    block[i] ^= 0x36;
+  hmac_prepare(hcb, midstate, secret);
+  hmac_finish(hcb, midstate, nonce, output);
 
-  /* Generate H1 = H(K XOR ipad, nonce) */
-  hcb->init(state);
-  hcb->update(state, block, sizeof block);
-  hcb->update(state, nonce->s, nonce->len);
-  hcb->finalize(state, final);
-  
-  /* Generate K XOR opad */
-  for (i = 0; i < sizeof block; ++i)
-    block[i] ^= 0x36 ^ 0x5c;
-  
-  /* Generate Output = H(K XOR opad, H1) */
-  hcb->init(state);
-  hcb->update(state, block, sizeof block);
-  hcb->update(state, final, sizeof final);
-  hcb->finalize(state, output);
+  memset(midstate, 0, sizeof midstate);
 }

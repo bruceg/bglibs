@@ -1,4 +1,9 @@
 hmac.o
+hmac-md5.o
+hmac-sha1.o
+hmac-sha256.o
+hmac-sha384.o
+hmac-sha512.o
 md4.o
 md5-crypt.o
 md5.o

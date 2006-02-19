@@ -21,7 +21,6 @@
  */
 #include <string.h>
 #include "sysdeps.h"
-#include "hmac.h"
 #include "sha512.h"
 #include "uint64.h"
 
@@ -210,15 +209,6 @@ void SHA512_final(SHA512_ctx* ctx, uint8* digest)
   memset(ctx, 0, sizeof *ctx);
 }
 
-const struct hmac_control_block hmac_sha512 = {
-  sizeof(SHA512_ctx),
-  SHA512_DIGEST_LENGTH,
-  64,
-  (hmac_init_fn)SHA512_init,
-  (hmac_update_fn)SHA512_update,
-  (hmac_finalize_fn)SHA512_final
-};
-
 #ifdef SELFTEST_MAIN
 #include "iobuf/obuf.h"
 #include "str/str.h"
@@ -231,18 +221,6 @@ static void test(const char* s)
   SHA512_init(&ctx);
   SHA512_update(&ctx, s, strlen(s));
   SHA512_final(&ctx, digest);
-  for (i = 0; i < sizeof digest; ++i)
-    obuf_putxw(&outbuf, digest[i], 2, '0');
-  obuf_endl(&outbuf);
-}
-
-static void test_hmac(const char* key, const char* data)
-{
-  const str key_str = { (char*)key, strlen(key), 0 };
-  const str data_str = { (char*)data, strlen(data), 0 };
-  unsigned char digest[SHA512_DIGEST_LENGTH];
-  unsigned i;
-  hmac(&hmac_sha512, &key_str, &data_str, digest);
   for (i = 0; i < sizeof digest; ++i)
     obuf_putxw(&outbuf, digest[i], 2, '0');
   obuf_endl(&outbuf);
@@ -261,16 +239,6 @@ int main(void)
   test("And this textual data, astonishing as it may appear, is exactly 128 bytes in length, as are both SHA-384 and SHA-512 block sizes");
   test("By hashing data that is one byte less than a multiple of a hash block length (like this 127-byte string), bugs may be revealed.");
 
-  test_hmac("\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b",
-	    "Hi There");
-  test_hmac("Jefe", "what do ya want for nothing?");
-  test_hmac("\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa",
-	    "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd"
-	    "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd"
-	    "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd"
-	    "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd"
-	    "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd");
-
   return 0;
 }
 #endif
@@ -283,7 +251,4 @@ cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0
 b3de4afbc516d2478fe9b518d063bda6c8dd65fc38402dd81d1eb7364e72fb6e6663cf6d2771c8f5a6da09601712fb3d2a36c6ffea3e28b0818b05b0a8660766
 97fb4ec472f3cb698b9c3c12a12768483e5b62bcdad934280750b4fa4701e5e0550a80bb0828342c19631ba55a55e1cee5de2fda91fc5d40e7bee1d4e6d415b3
 d399507bbf5f2d0da51db1ff1fc51c1c9ff1de0937e00d01693b240e84fcc3400601429f45c297acc6e8fcf1e4e4abe9ff21a54a0d3d88888f298971bd206cd5
-829a8aed7a9a2d3d3719bb6e6014cad27f1a7ac15c7e9ab522b88af94a1c5fac413de510e84f9bf3a72997dc754cc46edae89d1d6e506cdc9456f2841b295240
-d2766eca33fe852bd629253fe01c63519eb2459bdb0af254bd4341740b4d0ea723c6a2a4dfc34252891c14f2658055237aa3f64962d4d4de2170ae18fd9160aa
-95c7302c8d37e7ebab0d2b84537c54b7324b92f6694a7c953720bf025df7b62154a2ed8bacbab003d2ddc60e31b63afe9a567ed18b88a52fc16f39131d0051f6
 #endif

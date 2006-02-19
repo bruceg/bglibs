@@ -1,3 +1,14 @@
+- Make all the crypto hash functions plug into a common control block.
+  - Data:
+    - block size
+    - compressed state size
+    - digest size
+  - Functions:
+    - initialize(void* state)
+    - compress(void* state, unsigned char* block)
+    - pad(unsigned char* twoblocks, unsigned long used, unsigned long bytes)
+    - extract digest(void* state)
+
 - Rewrite the IPv6 library to accept/handle IPv4-only connections
   transparently.
   - Use a prefix of ::4444/32 to distinguish from ::ffff/32 and ::0/32
