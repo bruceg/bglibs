@@ -20,6 +20,7 @@ echo gcc -g -L. >conf-ld
 echo /usr/local/bglibs/include >conf-include
 echo /usr/local/bglibs/lib >conf-lib
 echo %{_bindir} >conf-bin
+echo %{_mandir} >conf-man
 
 %build
 make
@@ -38,3 +39,4 @@ rm -rf %{buildroot}
 %doc ANNOUNCEMENT COPYING NEWS README
 /usr/local/bglibs
 %{_bindir}/*
+%{_mandir}/*/*
