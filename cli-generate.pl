@@ -386,6 +386,9 @@ sub output_m_options {
 sub output_m {
     my $section;
     my $usage;
+    if (!$header{'description'}) {
+	print STDERR "Warning: The header is missing a 'description' field.\n";
+    }
     print
 	".\\\" This file was automatically generated, do not edit.\n",
 	".TH $program 1\n",
