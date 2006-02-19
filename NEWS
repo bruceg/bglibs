@@ -13,6 +13,9 @@ Changes in version 1.040
 - Tweaked the ghash_add function to return a pointer to the newly
   created entry (since some uses will want to use it immediately).
 
+- Stop blocking SIGSEGV with the sig_all_* functions, as this has
+  resulted in bugs causing endless signal loops.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

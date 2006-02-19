@@ -18,7 +18,7 @@ void sig_all_catch(signalfn fn)
 {
   int i;
   for (i = 1; i < SIGMAX; i++)
-    if (i != SIGPROF)
+    if (i != SIGPROF || i != SIGSEGV)
       sig_catch(i, fn);
 }
 
@@ -26,7 +26,7 @@ void sig_all_default(void)
 {
   int i;
   for (i = 1; i < SIGMAX; i++)
-    if (i != SIGPROF)
+    if (i != SIGPROF || i != SIGSEGV)
       sig_default(i);
 }
 
@@ -37,11 +37,11 @@ void sig_all_block(void)
   sigset_t set;
   sigemptyset(&set);
   for (i = 1; i < SIGMAX; i++)
-    if (i != SIGPROF)
+    if (i != SIGPROF || i != SIGSEGV)
       sigaddset(&set, i);
   sigprocmask(SIG_BLOCK, &set, 0);
 #else
-  sigblock(~(1 << (SIGPROF-1)));
+  sigblock(~(1 << (SIGPROF-1)) & ~(1 << (SIGSEGV-1)));
 #endif
 }
 
