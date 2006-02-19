@@ -199,4 +199,5 @@ s::::vmailmgr:client.a:../libvmailmgr.a
 s::::vmailmgr:vpwentry.a:../libvmailmgr.a
 
 >man
+d:::755:man1
 c:::644:man1:cli-generate.1
