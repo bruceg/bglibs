@@ -77,7 +77,7 @@ void hmac_prepare(const struct hmac_control_block* hcb,
  * hmac_prepare to produce the final digest output from the HMAC.
  */
 void hmac_finish(const struct hmac_control_block* hcb,
-		 void* midstate,
+		 const void* midstate,
 		 const str* nonce,
 		 void* output)
 {

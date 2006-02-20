@@ -31,7 +31,7 @@ extern void hmac_prepare(const struct hmac_control_block* hcb,
 			 void* midstate,
 			 const struct str* secret);
 extern void hmac_finish(const struct hmac_control_block* hcb,
-			void* midstate,
+			const void* midstate,
 			const struct str* nonce,
 			void* outout);
 extern void hmac(const struct hmac_control_block* hcb,

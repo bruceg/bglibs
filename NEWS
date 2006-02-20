@@ -1,6 +1,8 @@
 -------------------------------------------------------------------------------
 Changes in version 1.041
 
+- Tweaked the hmac_finish prototype to properly indicate that the
+  midstate is const and unmodified by the function.
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
