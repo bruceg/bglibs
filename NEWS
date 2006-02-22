@@ -1,5 +1,8 @@
 -------------------------------------------------------------------------------
-Changes in version 1.041
+Changes in version 1.050
+
+- Modified all the crypto hash functions to fit a control block
+  framework (like the HMAC system does).
 
 - Tweaked the hmac_finish prototype to properly indicate that the
   midstate is const and unmodified by the function.

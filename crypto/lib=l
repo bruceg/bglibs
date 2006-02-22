@@ -1,3 +1,12 @@
+hash.o
+hash-md4.o
+hash-md5.o
+hash-pack-uint128.o
+hash-pack-uint64.o
+hash-sha1.o
+hash-sha256.o
+hash-sha384.o
+hash-sha512.o
 hmac.o
 hmac-md5.o
 hmac-sha1.o
