@@ -149,6 +149,7 @@ const struct hash_control_block hash_sha256 = {
   .compress = sha256_compress,
   .packlength = hash_pack_uint64_msb,
   .extract = sha256_extract,
+  .name = "SHA256",
 };
 
 #ifdef SELFTEST_MAIN

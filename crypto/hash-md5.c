@@ -171,6 +171,7 @@ const struct hash_control_block hash_md5 = {
   .compress = md5_compress,
   .packlength = hash_pack_uint64_lsb,
   .extract = md5_extract,
+  .name = "MD5",
 };
 
 

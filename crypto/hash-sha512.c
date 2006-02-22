@@ -181,6 +181,7 @@ const struct hash_control_block hash_sha512 = {
   .compress = sha512_compress,
   .packlength = hash_pack_uint128_msb,
   .extract = sha512_extract,
+  .name = "SHA512",
 };
 
 #ifdef SELFTEST_MAIN

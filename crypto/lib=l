@@ -1,4 +1,5 @@
 hash.o
+hash-lookup.o
 hash-md4.o
 hash-md5.o
 hash-pack-uint128.o

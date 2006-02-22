@@ -20,6 +20,7 @@ struct hash_control_block
   hash_compress_fn compress;
   hash_packlength_fn packlength;
   hash_extract_fn extract;
+  const char* name;
 };
 
 struct hash_context
@@ -35,6 +36,8 @@ extern const struct hash_control_block hash_sha1;
 extern const struct hash_control_block hash_sha256;
 extern const struct hash_control_block hash_sha384;
 extern const struct hash_control_block hash_sha512;
+
+const struct hmac_control_block* hmac_lookup(const char* name);
 
 extern struct hash_context* hash_alloc(const struct hash_control_block* hcb);
 extern void hash_init(struct hash_context* hc);

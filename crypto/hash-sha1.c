@@ -118,6 +118,7 @@ const struct hash_control_block hash_sha1 = {
   .compress = sha1_compress,
   .packlength = hash_pack_uint64_msb,
   .extract = sha1_extract,
+  .name = "SHA1",
 };
 
 #ifdef SELFTEST_MAIN

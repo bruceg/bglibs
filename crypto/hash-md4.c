@@ -152,6 +152,7 @@ const struct hash_control_block hash_md4 = {
   .compress = md4_compress,
   .packlength = hash_pack_uint64_lsb,
   .extract = md4_extract,
+  .name = "MD4",
 };
 
 #ifdef SELFTEST_MAIN

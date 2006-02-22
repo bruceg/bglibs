@@ -65,6 +65,7 @@ const struct hash_control_block hash_sha384 = {
   .compress = sha512_compress,
   .packlength = hash_pack_uint128_msb,
   .extract = sha384_extract,
+  .name = "SHA384",
 };
 
 #ifdef SELFTEST_MAIN
