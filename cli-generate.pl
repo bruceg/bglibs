@@ -412,10 +412,12 @@ sub output_m {
 		      'see also',
 		      'notes',
 		      'caveats',
+		      'warnings',
 		      'diagnostics',
 		      'bugs',
 		      'restrictions',
 		      'author',
+		      'authors',
 		      'history') {
 	output_m_section($section);
     }
