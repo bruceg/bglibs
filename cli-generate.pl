@@ -1,18 +1,20 @@
 #!/usr/bin/perl
+# $Id$
 use strict;
 use Getopt::Std;
 
 my %opts;
-getopts('chm', \%opts);
+getopts('chmw', \%opts);
 if (scalar(@ARGV) != 1
-    || $opts{'c'} + $opts{'h'} + $opts{'m'} != 1) {
+    || $opts{'c'} + $opts{'h'} + $opts{'m'} + $opts{'w'} != 1) {
     print
-	"usage: $0 -c|-h program.cli >FILE\n",
+	"usage: $0 -c|-h|-m|-w program.cli >FILE\n",
 	"Generate command-line parsing structures from a description file.\n",
 	"\n",
 	"  -c  Generate C source code\n",
 	"  -h  Generate C header code\n",
-	"  -m  Generate man page source\n";
+	"  -m  Generate man page source\n",
+	"  -w  Generate HTML (web) source\n";
     exit(1);
 }
 
@@ -28,6 +30,22 @@ my @options;
 my %decls;
 my %defns;
 my %header = ( 'include' => "<cli/cli.h>\n" );
+
+my @sections = ('return value',
+		'errors',
+		'examples',
+		'environment',
+		'files',
+		'see also',
+		'notes',
+		'caveats',
+		'warnings',
+		'diagnostics',
+		'bugs',
+		'restrictions',
+		'author',
+		'authors',
+		'history');
 
 my %type_suffix = (
     'STRING' => '=VALUE',
@@ -204,6 +222,56 @@ sub postprocess_options {
     }
 }
 
+sub parse_text {
+    $_ = shift;
+    s/^\n+//;
+    s/\n*$/\n/;
+    # Split the text into paragraphs
+    my @lines = split("\n", $_);
+    my @parts;
+    my $part;
+    my $mode;
+    while (@lines) {
+	$_ = shift(@lines);
+	# Major modes, match everything up to the following "@end MODE"
+	if (/^\@(example|verbatim)$/) {
+	    push @parts, $part if $part;
+	    $mode = $1;
+	    $part = $_;
+	    while (@lines) {
+		$_ = shift(@lines);
+		last if /^\@end\s+$mode$/;
+		$part =~ s/$/\n$_/;
+	    }
+	    push @parts, $part;
+	    $part = '';
+	}
+	# single line sections, keep them seperate from the text paragraphs
+	elsif (/^\@(table\s+\S+|end\s+table)$/) {
+	    push @parts, $part if $part;
+	    push @parts, $_;
+	    $part = '';
+	}
+	elsif (!$_ || /^\@item($|\s)/) {
+	    push @parts, $part if $part;
+	    $part = $_;
+	}
+	else {
+	    $part .= "\n" if $part;
+	    $part .= $_;
+	}
+    }
+    push @parts, $part if $part;
+    foreach (@parts) {
+	s/[\s\n]+/ /gs;
+    }
+    @parts;
+}
+
+###############################################################################
+# Functions for outputting C header file
+###############################################################################
+
 sub output_h {
     my $guard = $filename;
     $guard =~ tr/a-z/A-Z/;
@@ -219,6 +287,10 @@ sub output_h {
 
     print "#endif\n";
 }
+
+###############################################################################
+# Functions for outputting C source
+###############################################################################
 
 sub max_width {
     my $max = 10;
@@ -314,6 +386,10 @@ sub output_c {
     print "};\n";
 }
 
+###############################################################################
+# Functions for outputting man page source
+###############################################################################
+
 sub reformat_m_tag {
     my ($tag, $text) = @_;
     # TeXinfo tags:
@@ -353,59 +429,10 @@ sub reformat_m_tags {
     $line;
 }
 
-sub split_text {
-    $_ = shift;
-    s/^\n+//;
-    s/\n*$/\n/;
-    # Split the text into paragraphs
-    my @lines = split("\n", $_);
-    my @parts;
-    my $part;
-    my $mode;
-    while (@lines) {
-	$_ = shift(@lines);
-	# Major modes, match everything up to the following "@end MODE"
-	if (/^\@(example|verbatim)$/) {
-	    push @parts, $part if $part;
-	    $mode = $1;
-	    $part = $_;
-	    while (@lines) {
-		$_ = shift(@lines);
-		last if /^\@end\s+$mode$/;
-		$part =~ s/$/\n$_/;
-	    }
-	    push @parts, $part;
-	    $part = '';
-	}
-	# single line sections, keep them seperate from the text paragraphs
-	elsif (/^\@(table\s+\S+|end\s+table)$/) {
-	    push @parts, $part if $part;
-	    push @parts, $_;
-	    $part = '';
-	}
-	elsif (!$_ || /^\@item($|\s)/) {
-	    push @parts, $part if $part;
-	    $part = $_;
-	}
-	else {
-	    $part .= "\n" if $part;
-	    $part .= $_;
-	}
-    }
-    push @parts, $part if $part;
-    foreach (@parts) {
-	s/[\s\n]+/ /gs;
-    }
-    @parts;
-}
-
 sub parse_m_text {
-    my $sep;
-    my $nextsep;
-    my @parts = split_text(shift);
+    my @parts = parse_text(shift);
     my $tmode;
     foreach (@parts) {
-	$nextsep = '';
 	if (s/^\@verbatim($| )//) {
 	    s/^\./\\./gm;
 	    s/^/.nf\n/;
@@ -485,7 +512,6 @@ sub output_m_options {
 
 sub output_m {
     my $section;
-    my $usage;
     if (!$header{'description'}) {
 	print STDERR "Warning: The header is missing a 'description' field.\n";
     }
@@ -504,24 +530,163 @@ sub output_m {
 
     output_m_section('description');
     output_m_options() if @options;
-    foreach $section ('return value',
-		      'errors',
-		      'examples',
-		      'environment',
-		      'files',
-		      'see also',
-		      'notes',
-		      'caveats',
-		      'warnings',
-		      'diagnostics',
-		      'bugs',
-		      'restrictions',
-		      'author',
-		      'authors',
-		      'history') {
+    foreach $section (@sections) {
 	output_m_section($section);
     }
 }
+
+###############################################################################
+# Functions for outputting HTML source
+###############################################################################
+
+sub reformat_w_tag {
+    my ($tag, $text) = @_;
+    if ($tag eq 'strong') {
+	"<strong>$text</strong>";
+    }
+    elsif ($tag eq 'emph') {
+	"<em>$text</em>";
+    }
+    elsif ($tag eq 'var') {
+	"<var>$text</var>";
+    }
+    elsif ($tag eq 'command'
+	   || $tag eq 'option'
+	   || $tag eq 'file'
+	   || $tag eq 'env') {
+	"<tt>$text</tt>";
+    }
+    elsif ($tag eq 'samp') {
+	"\"<samp>$text</samp>\"";
+    }
+    elsif ($tag eq 'code') {
+	"<code>$text</code>";
+    }
+    elsif ($tag eq 'asis') {
+	$text;
+    }
+    else {
+	print STDERR "Warning, unknown tag \@$tag, ignoring\n";
+	$text;
+    }
+}
+
+sub reformat_w_tags {
+    my $line = shift;
+    s/^\./\\./gm;
+    $line =~ s/\@program\b/<b><tt>$program<\/tt><\/b>/g;
+    $line =~ s/\@([a-zA-Z]+)\{(.*?)\}/reformat_w_tag($1,$2)/eg;
+    $line;
+}
+
+sub parse_w_text {
+    my @parts = parse_text(shift);
+    my $tmode;
+    my $par = 'p';
+    foreach (@parts) {
+	if (s/^\@verbatim($| )//) {
+	    s/\&/\&amp;/g;
+	    s/</\&lt;/g;
+	    s/>/\&gt;/g;
+	    s/^/<pre>/;
+	    s/$/<\/pre>/;
+	}
+	elsif (s/^\@example($| )//) {
+	    $_ = reformat_w_tags($_);
+	    s/^/<blockquote>/;
+	    s/$/<\/blockquote>/;
+	}
+	elsif (/^\@table( (\@\S+))?$/) {
+	    $tmode = $2 || '@asis';
+	    $_ = '<dl>';
+	}
+	elsif (/^\@end table$/) {
+	    $_ = '</dl>';
+	    $par = 'p';
+	}
+	elsif (s/^\@itemx? //s) {
+	    $_ = reformat_w_tags("$tmode\{$_\}");
+	    s/^/<dt>/;
+	    s/$/<\/dt>/;
+	    $par = 'dd';
+	}
+	else {
+	    $_ = reformat_w_tags($_);
+	    s/^/<$par>/;
+	    s/$/<\/$par>/;
+	}
+    }
+    join("\n", @parts);
+}
+
+sub output_w_section {
+    my ($section) = @_;
+    my $text = $sections{$section};
+    if ($text) {
+	$section =~ tr/a-z/A-Z/;
+	print "<a name=\"$section\"></a><h2>$section</h2>\n";
+	print parse_w_text($text), "\n";
+    }
+}
+
+sub output_w_options {
+}
+
+sub output_w {
+    my $section;
+    my $usection;
+    if (!$header{'description'}) {
+	print STDERR "Warning: The header is missing a 'description' field.\n";
+    }
+    print
+	"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n",
+	"<html>\n",
+	"<head>\n",
+	"<title>Manual page of $program</title>\n",
+	"</head>\n",
+	"<body>\n",
+	"<h1>$program</h1>\n",
+	"<hr />\n",
+	"<a name=\"index\"></a><h2>Index</h2>\n",
+	"<dl>\n",
+	"<dt><a href=\"#NAME\">NAME</a></dt>\n",
+	"<dt><a href=\"#SYNOPSIS\">SYNOPSIS</a></dt>\n";
+    print "<dt><a href=\"#DESCRIPTION\">DESCRIPTION</a></dt>\n"
+	if $sections{'description'};
+    print "<dt><a href=\"#OPTIONS\">OPTIONS</a></dt>\n"
+	if @options;
+    foreach $section (@sections) {
+	if ($sections{$section}) {
+	    $section =~ tr/a-z/A-Z/;
+	    print "<dt><a href=\"#$section\">$section</a></dt>\n";
+	}
+    }
+    print
+	"</dl>\n",
+	"<hr />\n",
+	"<a name=\"NAME\"></a><h2>NAME</h2>\n",
+	"<p>$program - $header{'description'}</p>\n",
+	"<a name=\"SYNOPSIS\"></a><h2>SYNOPSIS</h2>\n";
+    $_ = $header{'usage'};
+    s{([\[\]])}{</i>$1<i>}g;
+    s{(^|\s+)(-\S+)}{</i><b>$1</b><i>}g;
+    print "<p><i>$_</i></p>\n";
+
+    output_w_section('description');
+    output_w_options() if @options;
+    foreach $section (@sections) {
+	output_w_section($section);
+    }
+
+    print
+	"</body>\n",
+	"</html>\n";
+}
+
+    
+###############################################################################
+# Main routine
+###############################################################################
 
 read_header();
 read_sections();
@@ -538,4 +703,7 @@ elsif ($opts{'h'}) {
 }
 elsif ($opts{'m'}) {
     output_m();
+}
+elsif ($opts{'w'}) {
+    output_w();
 }
