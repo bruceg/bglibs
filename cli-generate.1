@@ -133,6 +133,63 @@ are
 and
 .I default
 is empty.
+.SS Formatting
+Except for
+.BR [prefix] ,
+.BR [options] ,
+and
+.BR [suffix] ,
+all of the sections support formatting instructions similar to that of
+TeXinfo (but greatly simplified).
+.TP
+.I @strong{text}
+Use "strong" (bold) text.
+.TP
+.I @command{text}
+Indicate the name of a command.
+.TP
+.I @option{text}
+Indicate a command-line option.
+.TP
+.I @emph{text}
+Use "emphatic" (italicized) text.
+.TP
+.I @var{text}
+Indicate a metasyntactic variable.
+.TP
+.I @env{text}
+Indicate an environment variable.
+.TP
+.I @file{text}
+Indicate the name of a file.
+.TP
+.I @code{text}
+Indicate text that is a literal example of a piece of a program.
+.TP
+.I @samp{text}
+Indicate text that is a literal example of a sequence of characters.
+.TP
+.I @example
+.TP
+.I @end example
+The text between these two tags is indented.
+.TP
+.I @verbatim
+.TP
+.I @end verbatim
+Everything between these two tags is passed as-is (verbatim) to the
+output.
+.TP
+.I @table @format
+.TP
+.I @end table
+Mark up a two-column table, or "definition list".
+.TP
+.I @item paragraph
+Add an item to a table.  The 
+.I @item
+starts a paragraph that will be the actual list entry.  Any subsequent
+paragraphs will be typeset seperately.
 .SH OPTIONS
 .TP
 .B \-c

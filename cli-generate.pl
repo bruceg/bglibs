@@ -317,9 +317,8 @@ sub output_c {
 sub reformat_m_tag {
     my ($tag, $text) = @_;
     # TeXinfo tags:
-    # code kbd key samp verb var env file command option dfn
+    # kbd key verb dfn
     # cite abbr acronym indicateurl email
-    # strong emph
     if ($tag eq 'strong'
 	|| $tag eq 'command'
 	|| $tag eq 'option') {
@@ -331,9 +330,13 @@ sub reformat_m_tag {
 	   || $tag eq 'env') {
 	"\\fI$text\\fR";
     }
-    elsif ($tag eq 'code'
-	   || $tag eq 'example'
-	   || $tag eq 'samp') {
+    elsif ($tag eq 'samp') {
+	"\"$text\"";
+    }
+    elsif ($tag eq 'code') {
+	"'$text'";
+    }
+    elsif ($tag eq 'asis') {
 	$text;
     }
     else {
@@ -342,12 +345,109 @@ sub reformat_m_tag {
     }
 }
 
-sub parse_m_text {
+sub reformat_m_tags {
+    my $line = shift;
+    s/^\./\\./gm;
+    $line =~ s/\@program\b/\\fB$program\\fR/g;
+    $line =~ s/\@([a-zA-Z]+)\{(.*?)\}/reformat_m_tag($1,$2)/eg;
+    $line;
+}
+
+sub split_text {
     $_ = shift;
-    s/\@program\b/\\fB$program\\fR/g;
-    s/\@([a-zA-Z]+)\{(.*?)\}/reformat_m_tag($1,$2)/eg;
     s/^\n+//;
     s/\n*$/\n/;
+    # Split the text into paragraphs
+    my @lines = split("\n", $_);
+    my @parts;
+    my $part;
+    my $mode;
+    while (@lines) {
+	$_ = shift(@lines);
+	# Major modes, match everything up to the following "@end MODE"
+	if (/^\@(example|verbatim)$/) {
+	    push @parts, $part if $part;
+	    $mode = $1;
+	    $part = $_;
+	    while (@lines) {
+		$_ = shift(@lines);
+		last if /^\@end\s+$mode$/;
+		$part =~ s/$/\n$_/;
+	    }
+	    push @parts, $part;
+	    $part = '';
+	}
+	# single line sections, keep them seperate from the text paragraphs
+	elsif (/^\@(table\s+\S+|end\s+table)$/) {
+	    push @parts, $part if $part;
+	    push @parts, $_;
+	    $part = '';
+	}
+	elsif (!$_ || /^\@item($|\s)/) {
+	    push @parts, $part if $part;
+	    $part = $_;
+	}
+	else {
+	    $part .= "\n" if $part;
+	    $part .= $_;
+	}
+    }
+    push @parts, $part if $part;
+    foreach (@parts) {
+	s/[\s\n]+/ /gs;
+    }
+    @parts;
+}
+
+sub parse_m_text {
+    my $sep;
+    my $nextsep;
+    my @parts = split_text(shift);
+    my $tmode;
+    foreach (@parts) {
+	$nextsep = '';
+	if (s/^\@verbatim($| )//) {
+	    s/^\./\\./gm;
+	    s/^/.nf\n/;
+	    s/$/\n.fi/;
+	}
+	elsif (s/^\@example($| )//) {
+	    $_ = reformat_m_tags($_);
+	    s/^/.RS\n/;
+	    s/$/\n.RE/;
+	}
+	elsif (/^\@table( (\@\S+))?$/) {
+	    $tmode = $2 || '@asis';
+	    $_ = '';
+	}
+	elsif (/^\@end table$/) {
+	    $_ = '.PP';
+	}
+	elsif (s/^\@itemx? //s) {
+	    $_ = reformat_m_tags("$tmode\{$_\}");
+	    s/^/.TP\n/;
+	}
+	else {
+	    $_ = reformat_m_tags($_);
+	}
+	s/$/\n/;
+    }
+    $_ = join("\n", @parts);
+    # 3 or more line feeds always need to be reduced to 2.
+    s/\n{3,}/\n\n/g;
+    # Blank lines before .TP or .PP need to be removed.
+    s/\n{2,}(\.(TP|PP))/\n$1/g;
+    # Blank lines after .PP need to be removed.
+    s/^\.PP\n{2,}/.PP\n/gm;
+    # Remove blank lines betwee the first (unindented) and second
+    # (indented) paragraphs in the .TP formatter.
+    s/^(\.TP\n[^\n]+)\n+/$1\n/gm;
+    # Strip leading blank lines in this section.
+    s/^\n+//;
+    # Strip extraneous trailing .PP lines.
+    s/\.PP\n*$//;
+    # Strip remaining trailing blank lines.
+    s/\n+$//;
     $_;
 }
 
@@ -357,7 +457,7 @@ sub output_m_section {
     if ($text) {
 	$section =~ tr/a-z/A-Z/;
 	print ".SH $section\n";
-	print parse_m_text($text);
+	print parse_m_text($text), "\n";
     }
 }
 
@@ -371,7 +471,7 @@ sub output_m_options {
 	    print ".TP\n";
 	    print ".B $$option{'prehelp'}\n";
 	    print $$option{'help'}, "\n";
-	    print parse_m_text($$option{'description'})
+	    print parse_m_text($$option{'description'}), "\n"
 		if $$option{'description'};
 	    print "Defaults to $$option{'default'}.\n"
 		if defined($$option{'default'});
