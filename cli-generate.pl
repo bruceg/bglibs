@@ -256,13 +256,13 @@ sub parse_text {
 	    $part = $_;
 	}
 	else {
-	    $part .= "\n" if $part;
+	    $part .= ' ' if $part;
 	    $part .= $_;
 	}
     }
     push @parts, $part if $part;
     foreach (@parts) {
-	s/[\s\n]+/ /gs;
+	s/[ \t]+/ /g;
     }
     @parts;
 }
@@ -432,12 +432,12 @@ sub parse_m_text {
     my @parts = parse_text(shift);
     my $tmode;
     foreach (@parts) {
-	if (s/^\@verbatim($| )//) {
+	if (s/^\@verbatim($|\n)//) {
 	    s/^\./\\./gm;
 	    s/^/.nf\n/;
 	    s/$/\n.fi/;
 	}
-	elsif (s/^\@example($| )//) {
+	elsif (s/^\@example($|\n)//) {
 	    $_ = reformat_m_tags($_);
 	    s/^/.RS\n/;
 	    s/$/\n.RE/;
