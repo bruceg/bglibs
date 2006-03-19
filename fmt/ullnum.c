@@ -46,7 +46,7 @@ unsigned fmt_ullnumw(char* buffer, unsigned long long num,
     unsigned len;
     for (len = 1; num >= base; ++len)
       num /= base;
-    return len + ((width > len) ? width - len : 0);
+    return (width > len) ? width : len;
   }
   if (num < base) {
     if (width) {

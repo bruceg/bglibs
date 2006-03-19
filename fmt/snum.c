@@ -49,7 +49,7 @@ unsigned fmt_snumw(char* buffer, long num, unsigned width, char pad,
     unsigned len;
     for (len = 1; num >= (long)base; ++len)
       num /= base;
-    return len + ((width > len) ? width - len : 0) + sign;
+    return ((width > len) ? width : len) + sign;
   }
   if (num < (long)base) {
     if (width) --width;

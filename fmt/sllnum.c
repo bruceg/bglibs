@@ -50,7 +50,7 @@ unsigned fmt_sllnumw(char* buffer, long long num, unsigned width, char pad,
     unsigned len;
     for (len = 1; num >= base; ++len)
       num /= base;
-    return len + ((width > len) ? width - len : 0) + sign;
+    return ((width > len) ? width : len) + sign;
   }
   if (num < (long long)base) {
     s += fmt_sign_pad(s, sign, width-1, pad);
