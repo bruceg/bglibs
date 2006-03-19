@@ -44,7 +44,7 @@ unsigned fmt_ullnumw(char* buffer, unsigned long long num,
   char* s = buffer;
   if (buffer == 0) {
     unsigned len;
-    for (len = 0; num > 0; ++len)
+    for (len = 1; num >= base; ++len)
       num /= base;
     return len + ((width > len) ? width - len : 0);
   }
@@ -76,6 +76,7 @@ static void test(unsigned (*fn)(char*, unsigned long long, unsigned, char),
 
 MAIN
 {
+  test(fmt_ulldecw,  0, 0,   0);
   test(fmt_ulldecw, 10, 0,   0);
   test(fmt_ulldecw, 10, 1, ' ');
   test(fmt_ulldecw, 10, 5, ' ');
@@ -89,6 +90,7 @@ MAIN
 }
 #endif
 #ifdef SELFTEST_EXP
+1:0
 2:10
 2:10
 5:   10

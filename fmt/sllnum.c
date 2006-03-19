@@ -48,7 +48,7 @@ unsigned fmt_sllnumw(char* buffer, long long num, unsigned width, char pad,
   }
   if (buffer == 0) {
     unsigned len;
-    for (len = 0; num > 0; ++len)
+    for (len = 1; num >= base; ++len)
       num /= base;
     return len + ((width > len) ? width - len : 0) + sign;
   }
@@ -66,7 +66,7 @@ unsigned fmt_sllnumw(char* buffer, long long num, unsigned width, char pad,
 void test(long long num, unsigned width, char pad)
 {
   char buf[FMT_ULONG_LEN];
-  obuf_putu(&outbuf, fmt_sdecw(0, num, width, pad));
+  obuf_putu(&outbuf, fmt_slldecw(0, num, width, pad));
   obuf_putc(&outbuf, ':');
   buf[fmt_sdecw(buf, num, width, pad)] = 0;
   obuf_puts(&outbuf, buf);
@@ -75,6 +75,7 @@ void test(long long num, unsigned width, char pad)
 
 MAIN
 {
+  test(  0, 0,   0);
   test( 10, 0,   0);
   test(-10, 0,   0);
   test( 10, 1, '0');
@@ -86,6 +87,7 @@ MAIN
 }
 #endif
 #ifdef SELFTEST_EXP
+1:0
 2:10
 3:-10
 2:10
