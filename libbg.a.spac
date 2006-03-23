@@ -1,8 +1,10 @@
 objs = { }
 for dir in ('adt','base64','cdb','crc','crypto','dict','fmt','iobuf',
-            'misc','msg','net','path','str','unix','vmailmgr'):
-	for obj in readlist(dir+'/lib=l', dir):
+            'misc','msg','net','path','str','unix'):
+	for obj in readlist('libbg-%s=l' % dir):
 		objs[obj] = 1
+for obj in readlist('libvmailmgr=l'):
+	objs[obj] = 1
 objs = objs.keys()
 objs.sort()
 

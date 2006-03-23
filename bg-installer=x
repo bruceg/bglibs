@@ -1,3 +1,7 @@
-cli/lib.a
-libbg.a
+libbg-cli.a
+libbg-msg.a
+libbg-path.a
+libbg-iobuf.a
+libbg-fmt.a
+libbg-str.a
 libbg-sysdeps.a

@@ -1,0 +1,7 @@
+cdb/cdb.o
+cdb/cdbhash.o
+cdb/find.o
+cdb/getnext.o
+cdb/get.o
+cdb/make.o
+cdb/read.o

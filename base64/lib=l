@@ -1,6 +1,0 @@
-asc2bin.o
-bin2asc.o
-decode_line.o
-decode_part.o
-encode_line.o
-encode_part.o

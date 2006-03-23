@@ -1,0 +1,17 @@
+msg/common.o
+msg/commonf.o
+msg/debug.o
+msg/debug_bits.o
+msg/debug_init.o
+msg/debugf.o
+msg/die.o
+msg/dief.o
+msg/error.o
+msg/errorf.o
+msg/wrap_alloc.o
+msg/wrap_chdir.o
+msg/wrap_exit.o
+msg/wrap_str.o
+msg/warn.o
+msg/warnf.o
+msg/oom.o

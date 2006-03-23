@@ -1,0 +1,14 @@
+crypto/hmac.o
+crypto/hmac-md5.o
+crypto/hmac-sha1.o
+crypto/hmac-sha256.o
+crypto/hmac-sha384.o
+crypto/hmac-sha512.o
+crypto/md4.o
+crypto/md5-crypt.o
+crypto/md5.o
+crypto/sha1.o
+crypto/sha256.o
+crypto/sha384.o
+crypto/sha512.o
+crypto/surf.o

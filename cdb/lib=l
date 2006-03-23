@@ -1,7 +1,0 @@
-cdb.o
-cdbhash.o
-find.o
-getnext.o
-get.o
-make.o
-read.o

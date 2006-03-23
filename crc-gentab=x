@@ -1,3 +1,3 @@
-msg/lib.a
-iobuf/lib.a
+libbg-msg.a
+libbg-iobuf.a
 libbg-sysdeps.a

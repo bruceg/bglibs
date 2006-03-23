@@ -111,29 +111,29 @@ c:::644::socket.lib
 
 c:::644::libbg.a
 c:::644::libbg-sysdeps.a
-c:::644::libbg-installer.a:installer.a
-c:::644::libbg-instcheck.a:instcheck.a
-c:::644::libbg-instshow.a:instshow.a
+c:::644::libbg-installer.a
+c:::644::libbg-instcheck.a
+c:::644::libbg-instshow.a
 
-c:::644::libbg-adt.a:adt/lib.a
-c:::644::libbg-base64.a:base64/lib.a
-c:::644::libbg-cdb.a:cdb/lib.a
-c:::644::libbg-cli.a:cli/lib.a
-c:::644::libbg-crc.a:crc/lib.a
-c:::644::libbg-crypto.a:crypto/lib.a
-c:::644::libbg-dict.a:dict/lib.a
-c:::644::libbg-fmt.a:fmt/lib.a
-c:::644::libbg-iobuf.a:iobuf/lib.a
-c:::644::libbg-misc.a:misc/lib.a
-c:::644::libbg-msg.a:msg/lib.a
-c:::644::libbg-net.a:net/lib.a
-c:::644::libbg-path.a:path/lib.a
-c:::644::libbg-str.a:str/lib.a
-c:::644::libbg-unix.a:unix/lib.a
+c:::644::libbg-adt.a
+c:::644::libbg-base64.a
+c:::644::libbg-cdb.a
+c:::644::libbg-cli.a
+c:::644::libbg-crc.a
+c:::644::libbg-crypto.a
+c:::644::libbg-dict.a
+c:::644::libbg-fmt.a
+c:::644::libbg-iobuf.a
+c:::644::libbg-misc.a
+c:::644::libbg-msg.a
+c:::644::libbg-net.a
+c:::644::libbg-path.a
+c:::644::libbg-str.a
+c:::644::libbg-unix.a
 
-c:::644::libpwcmp.a:pwcmp/client.a
-c:::644::libpwcmp-module.a:pwcmp/module.a
-c:::644::libvmailmgr.a:vmailmgr/lib.a
+c:::644::libpwcmp.a
+c:::644::libpwcmp-module.a
+c:::644::libvmailmgr.a
 
 # Compatibility links
 s:::::libsysdeps.a:libbg-sysdeps.a

@@ -1,9 +1,0 @@
-add.o
-dicthash.o
-foreach.o
-free.o
-get.o
-init.o
-load_list.o
-load_map.o
-str_free.o
