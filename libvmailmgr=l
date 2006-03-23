@@ -1,7 +1,7 @@
-req_arg.o
-req_init.o
-req_write.o
-resp_read.o
-vpwentry_export.o
-vpwentry_free.o
-vpwentry_import.o
+vmailmgr/req_arg.o
+vmailmgr/req_init.o
+vmailmgr/req_write.o
+vmailmgr/resp_read.o
+vmailmgr/vpwentry_export.o
+vmailmgr/vpwentry_free.o
+vmailmgr/vpwentry_import.o
