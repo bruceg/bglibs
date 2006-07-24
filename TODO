@@ -1,3 +1,5 @@
+- Fix spec to handle the shared library install?
+
 - Rewrite the IPv6 library to accept/handle IPv4-only connections
   transparently.
   - Use a prefix of ::4444/32 to distinguish from ::ffff/32 and ::0/32

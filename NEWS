@@ -1,5 +1,8 @@
 -------------------------------------------------------------------------------
-Changes in version 1.042
+Changes in version 1.100
+
+* This package now builds and installs as a shared library.
+* Requires libtool to be installed.
 
 - Added support to bg-installer for installing shared libraries with
   libtool.

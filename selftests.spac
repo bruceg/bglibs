@@ -1,2 +1,2 @@
-: selftests.sh sysdeps.h libbg-sysdeps.a libbg.a
+: selftests.sh sysdeps.h libbg-sysdeps.la libbg.la
 sh selftests.sh

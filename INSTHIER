@@ -109,8 +109,8 @@ c:::644::s.lib
 c:::644::shadow.lib
 c:::644::socket.lib
 
-c:::644::libbg.a
-c:::644::libbg-sysdeps.a
+l:::644::libbg.la
+l:::644::libbg-sysdeps.la
 c:::644::libbg-installer.a
 c:::644::libbg-instcheck.a
 c:::644::libbg-instshow.a
