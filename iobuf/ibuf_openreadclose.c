@@ -8,7 +8,7 @@ int ibuf_openreadclose(const char* filename, struct str* out)
   ibuf in;
   int r;
   if (!ibuf_open(&in, filename, 0))
-    return -1;
+    return 0;
   r = ibuf_readall(&in, out);
   ibuf_close(&in);
   return r;

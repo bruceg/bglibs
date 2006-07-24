@@ -4,6 +4,8 @@ Changes in version 1.042
 - Fixed a bug in counting the length of signed and unsigned long long
   integers (0 was counted as having zero length).
 
+- Fixed bug in error return of ibuf_openreadclose.  Thanks Gerrit Pape.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
