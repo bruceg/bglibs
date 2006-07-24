@@ -1,6 +1,6 @@
 /* $Id$ */
 /* bg-installer.c - Standard bglibs installer system.
- * Copyright (C) 2005  Bruce Guenter <bruce@untroubled.org>
+ * Copyright (C) 2006  Bruce Guenter <bruce@untroubled.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,8 +24,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include "cli/cli.h"
+#include "fmt/number.h"
 #include "iobuf/ibuf.h"
 #include "iobuf/obuf.h"
 #include "iobuf/iobuf.h"
@@ -91,6 +93,7 @@ installation file.
 - c lines copy regular files from the current directory
 - d lines create directories
 - s lines create symlinks (\c UID, \c GID, and \c MODE are ignored)
+- l lines copy libraries using libtool
 
 When \c bg-installer encounters a base directory directive, as indicated
 above, it opens the file named \c conf-BASE (where \c BASE is the word
@@ -293,6 +296,63 @@ static void d(unsigned uid, unsigned gid, unsigned mode)
   }
 }
 
+static void l(unsigned uid, unsigned gid, unsigned mode, const char* src)
+{
+  int i;
+  pid_t pid;
+  const char* argv[] = {
+    "libtool",
+    "--silent",
+    "--mode=install",
+    "install",
+    0, 0, /* -g GID */
+    0, 0, /* -u UID */
+    0, 0, /* -m MODE */
+    0, /* srcfile */
+    0, /* dstfile */
+    0
+  };
+  char gidbuf[FMT_ULONG_LEN];
+  char uidbuf[FMT_ULONG_LEN];
+  char modebuf[FMT_ULONG_LEN];
+
+  show('-', uid, gid, mode, 0, 0);
+
+  if (!opt_dryrun) {
+    i = 4;
+    if (gid != (unsigned)-1) {
+      gidbuf[fmt_udec(gidbuf, gid)] = 0;
+      argv[i++] = "-g";
+      argv[i++] = gidbuf;
+    }
+    if (uid != (unsigned)-1) {
+      uidbuf[fmt_udec(uidbuf, uid)] = 0;
+      argv[i++] = "-u";
+      argv[i++] = uidbuf;
+    }
+    modebuf[fmt_unumw(modebuf, mode, 0, 0, 8, fmt_lcase_digits)] = 0;
+    argv[i++] = "-m";
+    argv[i++] = modebuf;
+    argv[i++] = src;
+    argv[i++] = path.s;
+
+    if ((pid = fork()) == -1)
+      die1sys(1, "Could not fork");
+    if (pid == 0) {
+      execvp(argv[0], (char**)argv);
+      exit(111);
+    }
+    if (waitpid(pid, &i, 0) != pid)
+      die1sys(1, "Failed to catch libtool exit");
+    if (!WIFEXITED(i) || WEXITSTATUS(i) != 0)
+      die1(1, "libtool failed");
+  }
+
+  if (opt_check) {
+    checkmode(uid, gid, mode, S_IFREG);
+  }
+}
+
 static void s(const char* src)
 {
   char buf[4096];
@@ -432,6 +492,7 @@ int cli_main(int argc, char* argv[])
     switch (line.s[0]) {
     case 'c': c(uid, gid, mode, src); break;
     case 'd': d(uid, gid, mode); break;
+    case 'l': l(uid, gid, mode, src); break;
     case 's': s(src); break;
     default:
       warnf("{Line #}u{ has invalid command letter, skipping\n}", lineno);
