@@ -34,3 +34,21 @@ int socket_tcp(void)
 {
   return socket_tcp4();
 }
+
+#ifdef SELFTEST_MAIN
+#include <sys/stat.h>
+#include "selftest.c"
+void selftest(void)
+{
+  int fd;
+  struct stat st;
+  debugsys(fd = socket_tcp4());
+  debugsys(fstat(fd, &st));
+  debugfn((st.st_mode & S_IFMT) == S_IFSOCK);
+}
+#endif
+#ifdef SELFTEST_EXP
+result=3
+result=0
+result=1
+#endif

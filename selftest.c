@@ -1,4 +1,5 @@
 /* $Id$ */
+#include <errno.h>
 #include <string.h>
 
 #include "iobuf/iobuf.h"
@@ -36,6 +37,18 @@ int debugfn(int result)
   obuf_puts(&outbuf, "result=");
   obuf_puti(&outbuf, result);
   NL();
+  return result;
+}
+
+int debugsys(int result)
+{
+  obuf_puts(&outbuf, "result=");
+  obuf_puti(&outbuf, result);
+  NL();
+  if (result == -1) {
+    obuf_puts(&outbuf, strerror(errno));
+    NL();
+  }
   return result;
 }
 
