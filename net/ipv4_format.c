@@ -41,3 +41,35 @@ unsigned fmt_ipv4addr(char* buffer, const ipv4addr* addr)
   str = format_part(addr->addr[3], str);
   return str - buffer;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+void test(const ipv4addr* ip)
+{
+  char buffer[32];
+  unsigned i;
+  debugfn(i = fmt_ipv4addr(buffer, ip));
+  buffer[i++] = '\n';
+  buffer[i] = 0;
+  obuf_putsflush(&outbuf, buffer);
+}
+
+void selftest(void)
+{
+  ipv4addr ip = {{1,2,3,4}};
+  test(&IPV4ADDR_ANY);
+  test(&IPV4ADDR_BROADCAST);
+  test(&IPV4ADDR_LOOPBACK);
+  test(&ip);
+}
+#endif
+#ifdef SELFTEST_EXP
+result=7
+0.0.0.0
+result=15
+255.255.255.255
+result=9
+127.0.0.1
+result=7
+1.2.3.4
+#endif
