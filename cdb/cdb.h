@@ -29,7 +29,7 @@ struct cdb {
 extern void cdb_free(struct cdb *);
 extern void cdb_init(struct cdb *,int fd);
 
-extern int cdb_read(struct cdb *,char *,unsigned int,uint32);
+extern int cdb_read(struct cdb *,unsigned char *,unsigned int,uint32);
 
 extern void cdb_findstart(struct cdb *);
 extern int cdb_findnext(struct cdb *,const char *,unsigned int);

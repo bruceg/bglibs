@@ -30,7 +30,7 @@ int socket_recv6(int sock, char* buffer, unsigned buflen,
 {
 #if HASIPV6
   struct sockaddr_in6 sa;
-  int dummy = sizeof sa;
+  socklen_t dummy = sizeof sa;
   int r;
 
   r = recvfrom(sock, buffer, buflen, 0, (struct sockaddr*)&sa, &dummy);

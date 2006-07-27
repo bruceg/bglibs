@@ -27,7 +27,7 @@
 int socket_getaddr4(int sock, ipv4addr* addr, ipv4port* port)
 {
   struct sockaddr_in sa;
-  int size;
+  socklen_t size;
   size = sizeof sa;
   if (getsockname(sock, (struct sockaddr*)&sa, &size) == -1) return 0;
   if (sa.sin_family != AF_INET) return 0;

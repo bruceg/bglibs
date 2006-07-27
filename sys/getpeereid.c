@@ -12,7 +12,7 @@ int getpeereid(int s, uid_t* u, gid_t* g)
 {
 #if HASPEERCRED
   struct ucred peer;
-  int optlen = sizeof peer;
+  socklen_t optlen = sizeof peer;
   if (getsockopt(s, SOL_SOCKET, SO_PEERCRED, &peer, &optlen) == -1)
     return -1;
   if (u != 0)

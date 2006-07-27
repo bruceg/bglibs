@@ -163,7 +163,9 @@ void SHA1Final(SHA1_CTX* context, unsigned char digest[SHA1_DIGEST_LENGTH])
 static SHA1_CTX ctx;
 
 static void init(void) { SHA1_Init(&ctx); }
-static void hash(const char* ptr, long len) { SHA1_Update(&ctx, ptr, len); }
+static void hash(const char* ptr, long len) {
+  SHA1_Update(&ctx, (const unsigned char*)ptr, len);
+}
 static void dump(void)
 {
   unsigned i;

@@ -28,7 +28,7 @@ int socket_recv4(int sock, char* buffer, unsigned buflen,
 		 ipv4addr* ip, ipv4port* port)
 {
   struct sockaddr_in sa;
-  int dummy = sizeof sa;
+  socklen_t dummy = sizeof sa;
   int r;
 
   r = recvfrom(sock, buffer, buflen, 0, (struct sockaddr*)&sa, &dummy);

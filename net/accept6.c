@@ -1,6 +1,6 @@
 /* $Id$ */
 /* net/accept6.c - Accept an IPv6 connection
- * Copyright (C) 2004,2005  Bruce Guenter <bruce@untroubled.org>
+ * Copyright (C) 2006  Bruce Guenter <bruce@untroubled.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -29,7 +29,7 @@ int socket_accept6(int sock, ipv6addr* ip, ipv6port *port)
 {
 #if HASIPV6
   struct sockaddr_in6 sa;
-  int dummy;
+  socklen_t dummy;
   int fd;
 
   dummy = sizeof sa;

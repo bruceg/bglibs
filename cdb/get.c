@@ -25,7 +25,8 @@ int cdb_get(struct cdb* cdb, const str* key, str* data)
   if (cdb == 0 || key == 0 || data == 0) return -1;
   if (!cdb_find(cdb, key->s, key->len)) return 0;
   if (!str_ready(data, cdb->dlen)) return -1;
-  if (cdb_read(cdb, data->s, cdb->dlen, cdb->dpos) == -1) return -1;
+  if (cdb_read(cdb, (unsigned char*)data->s, cdb->dlen, cdb->dpos) == -1)
+    return -1;
   data->len = cdb->dlen;
   data->s[data->len] = 0;
   return 1;

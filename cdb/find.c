@@ -7,7 +7,7 @@
 #include "cdb.h"
 #include "uint32.h"
 
-int cdb_read(struct cdb *c,char *buf,unsigned int len,uint32 pos)
+int cdb_read(struct cdb *c,unsigned char *buf,unsigned int len,uint32 pos)
 {
   if (c->map) {
     if ((pos > c->size) || (c->size - pos < len)) goto FORMAT;
@@ -39,7 +39,7 @@ int cdb_read(struct cdb *c,char *buf,unsigned int len,uint32 pos)
 
 static int match(struct cdb *c,const char *key,unsigned int len,uint32 pos)
 {
-  char buf[32];
+  unsigned char buf[32];
   unsigned int n;
 
   while (len > 0) {
@@ -56,7 +56,7 @@ static int match(struct cdb *c,const char *key,unsigned int len,uint32 pos)
 
 int cdb_findnext(struct cdb *c,const char *key,unsigned int len)
 {
-  char buf[8];
+  unsigned char buf[8];
   uint32 pos;
   uint32 u;
 

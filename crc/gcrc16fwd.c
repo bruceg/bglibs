@@ -4,7 +4,7 @@
 uint16 gcrc16fwd(uint16 crc, const char* data, long len,
 		 const uint16 table[256])
 {
-  const unsigned char* ptr = data;
+  const unsigned char* ptr = (const unsigned char*)data;
   while (len-- > 0)
     crc = table[((crc >> 8) ^ *ptr++) & 0xff] ^ (crc << 8);
   return crc;

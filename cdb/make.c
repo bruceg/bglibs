@@ -16,7 +16,7 @@ int cdb_make_start(struct cdb_make *c,int fd)
   c->fd = fd;
   c->pos = sizeof c->final;
   if (!obuf_init(&c->b,fd,0,IOBUF_SEEKABLE,8192)) return -1;
-  if (!obuf_write(&c->b,c->final,sizeof c->final)) {
+  if (!obuf_write(&c->b,(char*)c->final,sizeof c->final)) {
     obuf_close(&c->b);
     return -1;
   }
@@ -55,14 +55,14 @@ int cdb_make_addend(struct cdb_make *c,unsigned int keylen,unsigned int datalen,
 
 int cdb_make_addbegin(struct cdb_make *c,unsigned int keylen,unsigned int datalen)
 {
-  char buf[8];
+  unsigned char buf[8];
 
   if (keylen > 0xffffffff) { errno = ENOMEM; return -1; }
   if (datalen > 0xffffffff) { errno = ENOMEM; return -1; }
 
   uint32_pack(keylen,buf);
   uint32_pack(datalen,buf + 4);
-  if (!obuf_write(&c->b,buf,8)) return -1;
+  if (!obuf_write(&c->b,(char*)buf,8)) return -1;
   return 0;
 }
 
@@ -76,7 +76,7 @@ int cdb_make_add(struct cdb_make *c,const char *key,unsigned int keylen,const ch
 
 int cdb_make_finish(struct cdb_make *c)
 {
-  char buf[8];
+  unsigned char buf[8];
   int i;
   uint32 len;
   uint32 u;
@@ -146,13 +146,13 @@ int cdb_make_finish(struct cdb_make *c)
     for (u = 0;u < len;++u) {
       uint32_pack(c->hash[u].h,buf);
       uint32_pack(c->hash[u].p,buf + 4);
-      if (!obuf_write(&c->b,buf,8)) return -1;
+      if (!obuf_write(&c->b,(char*)buf,8)) return -1;
       if (posplus(c,8) == -1) return -1;
     }
   }
 
   if (!obuf_seek(&c->b,0)) return -1;
-  if (!obuf_write(&c->b,c->final,sizeof c->final)) return -1;
+  if (!obuf_write(&c->b,(char*)c->final,sizeof c->final)) return -1;
   if (!obuf_close(&c->b)) return -1;
   return 0;
 }

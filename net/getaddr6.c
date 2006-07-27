@@ -29,7 +29,7 @@ int socket_getaddr6(int sock, ipv6addr* addr, ipv6port* port)
 {
 #if HASIPV6
   struct sockaddr_in6 sa;
-  int size;
+  socklen_t size;
   size = sizeof sa;
   if (getsockname(sock, (struct sockaddr*)&sa, &size) == -1) return 0;
   if (sa.sin6_family != AF_INET6) return 0;

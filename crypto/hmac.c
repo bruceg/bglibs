@@ -42,7 +42,7 @@ void hmac_prepare(const struct hmac_control_block* hcb,
   /* Set up K XOR ipad, where ipad is 0x36 repeated B times */
   if (secret->len >= hcb->block_size) {
     hcb->init(state);
-    hcb->update(state, secret->s, secret->len);
+    hcb->update(state, (const unsigned char*)secret->s, secret->len);
     hcb->finalize(state, block);
     memset(block + hcb->digest_size, 0, sizeof block - hcb->digest_size);
   }
@@ -85,7 +85,7 @@ void hmac_finish(const struct hmac_control_block* hcb,
   
   /* Generate H1 = H(K XOR ipad, nonce) */
   hcb->inject(state, midstate);
-  hcb->update(state, nonce->s, nonce->len);
+  hcb->update(state, (const unsigned char*)nonce->s, nonce->len);
   hcb->finalize(state, output);
   
   /* Generate Output = H(K XOR opad, H1) */

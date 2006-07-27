@@ -109,12 +109,12 @@ unsigned fmt_ipv6addr(char* buffer, const ipv6addr* addr)
 
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
-static void test(const unsigned char a[16])
+static void test(const char a[16])
 {
   ipv6addr ip;
   int i;
   for (i = 0; i < 16; ++i)
-    obuf_putxw(&outbuf, a[i], 2, '0');
+    obuf_putxw(&outbuf, (unsigned char)a[i], 2, '0');
   obuf_putc(&outbuf, '=');
   memcpy(&ip, a, 16);
   obuf_put2s(&outbuf, ipv6_format(&ip), "\n");

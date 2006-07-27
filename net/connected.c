@@ -25,7 +25,7 @@
 int socket_connected(int sock)
 {
   struct sockaddr sa;
-  int dummy;
+  socklen_t dummy;
   char ch;
   
   dummy = sizeof sa;

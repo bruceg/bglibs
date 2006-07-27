@@ -1,6 +1,6 @@
 /* $Id$ */
 /* net/accept4.c - Accept an IPv4 connection
- * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
+ * Copyright (C) 2006  Bruce Guenter <bruce@untroubled.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -27,7 +27,7 @@
 int socket_accept4(int sock, ipv4addr* ip, ipv4port *port)
 {
   struct sockaddr_in sa;
-  int dummy;
+  socklen_t dummy;
   int fd;
 
   dummy = sizeof sa;

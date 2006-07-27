@@ -8,7 +8,7 @@
 #define DICT_HASHSTART 5381
 uint32 dict_hashadd(uint32 h, const unsigned char* data, unsigned long len);
 #define dict_hash(BUF,LEN) dict_hashadd(DICT_HASHSTART,BUF,LEN)
-#define dict_hashstr(STR) dict_hashadd(DICT_HASHSTART,(STR)->s,(STR)->len)
+#define dict_hashstr(STR) dict_hashadd(DICT_HASHSTART,(const unsigned char*)(STR)->s,(STR)->len)
 
 struct dict_entry
 {
