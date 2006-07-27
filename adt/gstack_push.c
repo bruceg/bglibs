@@ -4,6 +4,8 @@
 
 #include "gstack.h"
 
+/** Add a new element onto the stack. If the copy function \c fn is \c
+ * NULL memcpy is used in its place. */
 int gstack_push(struct gstack* s, unsigned datasize, const void* data,
 		adt_copy_fn* fn)
 {

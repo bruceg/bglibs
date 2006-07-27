@@ -4,6 +4,8 @@
 
 #include "gqueue.h"
 
+/** Add a new element onto the queue. If the copy function \c fn is \c
+ * NULL memcpy is used in its place. */
 int gqueue_push(struct gqueue* q, unsigned datasize, const void* data,
 		adt_copy_fn* fn)
 {
@@ -15,9 +17,11 @@ int gqueue_push(struct gqueue* q, unsigned datasize, const void* data,
     free(n);
     return 0;
   }
-  if ((n->next = q->head) == 0)
-    q->tail = n;
-  q->head = n;
+  if (q->tail == 0)
+    q->head = n;
+  else
+    q->tail->next = n;
+  q->tail = n;
   ++q->count;
   return 1;
 }
