@@ -91,4 +91,6 @@ int iobuf_close(iobuf* io);
 int iobuf_timeout(iobuf* io, int poll_out);
 /** @} */
 
+/** @} */
+
 #endif
