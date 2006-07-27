@@ -187,7 +187,10 @@ struct PREFIX##_entry* PREFIX##_search(struct ghash* d, int (*fn)(const struct P
   return ghash_search(d, (int (*)(const void*))fn); \
 }
 
-/** Define all necessary functions for a specialized \c ghash table. */
+/** Define all necessary functions for a specialized \c ghash table. If
+ * either of the copy functions \c KCOPY or \c DCOPY are \c NULL, a
+ * simple memcpy is used instead.  If either of the free functions \c
+ * KFREE or \c DFREE are NULL, no data freeing is attempted. */
 #define GHASH_DEFN(PREFIX,KTYPE,DTYPE,HASHFN,CMPFN,KCOPY,DCOPY,KFREE,DFREE) \
 GHASH_INIT_DEFN(PREFIX,KTYPE,DTYPE,HASHFN,CMPFN,KCOPY,DCOPY,KFREE,DFREE) \
 GHASH_FREE_DEFN(PREFIX) \

@@ -80,7 +80,9 @@ void* ghash_add(struct ghash* d, const void* key, const void* data)
   if ((newe = malloc(d->entrysize)) == 0) return 0;
   memset(newe, 0, d->entrysize);
   ghash_entry_hash(newe) = hash;
-  if (!d->keycopy(ghash_entry_keyptr(newe), key)) {
+  if (d->keycopy == 0)
+    memcpy(ghash_entry_keyptr(newe), key, d->keysize);
+  else if (!d->keycopy(ghash_entry_keyptr(newe), key)) {
     free(newe);
     return 0;
   }
