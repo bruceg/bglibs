@@ -102,6 +102,7 @@ c:::644:vmailmgr:vpwentry.h:vmailmgr/vpwentry.h
 
 >lib
 c:::644::crypt.lib
+c:::644::dl.lib
 c:::644::m.lib
 c:::644::net.lib
 c:::644::rt.lib
