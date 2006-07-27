@@ -1,6 +1,7 @@
 /* $Id$ */
 #include "ghash.h"
 
+/** Iterate over a \c ghash table, calling a function for each entry. */
 void ghash_foreach(struct ghash* d, void (*fn)(void* entry))
 {
   void** p;

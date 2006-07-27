@@ -4,6 +4,9 @@
 
 #include "ghash.h"
 
+/** Rebuild the entry pointer table in a \c ghash table. This function
+ * is used internally after either rehashing the table or removing an
+ * entry. */
 int ghash_rebuild(struct ghash* d)
 {
   unsigned i;

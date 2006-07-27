@@ -4,6 +4,7 @@
 
 #include "ghash.h"
 
+/** Free all data (and entries) in a \c ghash table. */
 void ghash_free(struct ghash* d)
 {
   unsigned long i;

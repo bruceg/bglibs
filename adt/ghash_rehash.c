@@ -4,6 +4,8 @@
 
 #include "ghash.h"
 
+/** Regenerate all the hash values in a \c ghash table and then rebuild
+ * it. Use this function when any of the keys change value. */
 int ghash_rehash(struct ghash* d)
 {
   unsigned i;

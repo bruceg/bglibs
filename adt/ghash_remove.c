@@ -4,6 +4,12 @@
 
 #include "ghash.h"
 
+/** Remove an entry from a \c ghash table. This function attempts to do
+ * the minimum amount of rebuilding necessary to adjust the positions of
+ * entries that may fall in the same slot as the newly removed entry.
+ *
+ * \returns True if the entry was found (and removed), false otherwise.
+ */
 int ghash_remove(struct ghash* d, const void* key)
 {
   void* entry;

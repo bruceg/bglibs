@@ -1,6 +1,8 @@
 /* $Id$ */
 #include "ghash.h"
 
+/** Search for the first entry in the \c ghash table for which the given
+ * function returns true. */
 void* ghash_search(struct ghash* d, int (*fn)(const void* entry))
 {
   void** p;

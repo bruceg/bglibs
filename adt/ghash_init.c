@@ -1,6 +1,7 @@
 /* $Id$ */
 #include "ghash.h"
 
+/** Initialize an empty \c ghash table. */
 void ghash_init(struct ghash* d,
 		unsigned long keysize,
 		unsigned long entrysize,
