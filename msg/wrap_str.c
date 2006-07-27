@@ -12,7 +12,7 @@ void wrap_str(int result)
 #include "selftest.c"
 const char program[] = "testprog";
 const int msg_show_pid = 0;
-void selftest(void)
+MAIN
 {
   wrap_exit = 0;
   wrap_str(1);

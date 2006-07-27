@@ -50,7 +50,7 @@ int str_spliceb(str* s, unsigned start, unsigned len,
 
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
-void selftest(void)
+MAIN
 {
   static str s;
   str_copyb(&s, "abcde", 5);

@@ -33,7 +33,7 @@ int str_init(str* s)
 
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
-void selftest(void)
+MAIN
 {
   static str s;
   debugstrfn(str_init(&s), &s);

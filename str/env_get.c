@@ -15,7 +15,7 @@ const char* envstr_get(const struct str* env, const char* var)
 
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
-void selftest(void)
+MAIN
 {
   static const str env = {"A=1\0B=2\0C=3\0", 12, 0};
   const char* c;

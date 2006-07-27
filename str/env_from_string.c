@@ -19,7 +19,7 @@ int envstr_from_string(struct str* env, const char* s, int overwrite)
 
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
-void selftest(void)
+MAIN
 {
   static str env;
   debugstrfn(envstr_from_string(&env, "A=3\0C=4\0", 1), &env);

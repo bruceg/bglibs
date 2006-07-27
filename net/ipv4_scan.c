@@ -73,7 +73,7 @@ static void test(const char* start)
   obuf_flush(&outbuf);
 }
 
-void selftest(void)
+MAIN
 {
   test("0");
   test("0.");

@@ -24,7 +24,7 @@ int envstr_put(struct str* env, const char* asgn, int overwrite)
 
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
-void selftest(void)
+MAIN
 {
   static str env;
   debugstrfn(envstr_put(&env, "A=4", 0), &env);

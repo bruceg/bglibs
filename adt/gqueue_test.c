@@ -11,7 +11,7 @@ GQUEUE_DECL(test,int);
 GQUEUE_DEFN(test,int,0,0);
 static struct gqueue queue;
 
-void selftest(void)
+MAIN
 {
   int i;
   int* p;

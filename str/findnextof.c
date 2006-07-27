@@ -34,7 +34,7 @@ int str_findnextof(const str* s, const char* list, unsigned pos)
 
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
-void selftest(void)
+MAIN
 {
   str s = { "01234567890123456", 16, 0 };
   obuf_puti(&outbuf, str_findnextof(&s, "654", 0)); NL();

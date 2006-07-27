@@ -20,7 +20,7 @@ int envstr_set(struct str* env, const char* var, const char* val, int overwrite)
 
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
-void selftest(void)
+MAIN
 {
   static str env;
   debugstrfn(envstr_set(&env, "A", "4", 0), &env);

@@ -50,7 +50,7 @@ void msg_commonf(const char* type,
 #include "selftest.c"
 const char program[] = "testprog";
 const int msg_show_pid = 0;
-void selftest(void)
+MAIN
 {
   warnf("ss", "a", "b");
 }

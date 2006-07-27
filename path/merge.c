@@ -78,7 +78,7 @@ int path_merge(str* path, const char* start)
 #include "path.h"
 static str path;
 void showpath(void) { obuf_putstr(&outbuf, &path); NL(); }
-void selftest(void)
+MAIN
 {
   str_copys(&path, "/");
   path_merge(&path, "a"); showpath();

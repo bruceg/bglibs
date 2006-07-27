@@ -54,7 +54,7 @@ void test(const ipv4addr* ip)
   obuf_putsflush(&outbuf, buffer);
 }
 
-void selftest(void)
+MAIN
 {
   ipv4addr ip = {{1,2,3,4}};
   test(&IPV4ADDR_ANY);

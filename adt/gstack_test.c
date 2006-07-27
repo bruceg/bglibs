@@ -11,7 +11,7 @@ GSTACK_DECL(test,int);
 GSTACK_DEFN(test,int,0,0);
 static struct gstack stack;
 
-void selftest(void)
+MAIN
 {
   int i;
   int* p;

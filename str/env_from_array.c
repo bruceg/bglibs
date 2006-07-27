@@ -19,7 +19,7 @@ int envstr_from_array(struct str* env, char** array, int overwrite)
 
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
-void selftest(void)
+MAIN
 {
   static str env;
   char* array[3] = {"A=1","B=2",0};

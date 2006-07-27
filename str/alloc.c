@@ -59,7 +59,7 @@ void test(str* s, unsigned size)
 {
   debugstrfn(str_alloc(s, size, 0), s);
 }
-void selftest(void)
+MAIN
 {
   static str s;
   test(&s, 0);

@@ -37,7 +37,7 @@ int str_findprevnot(const str* s, const char* list, unsigned pos)
 
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
-void selftest(void)
+MAIN
 {
   str s = { "01234567890123456", 16, 0 };
   str e = { 0, 0, 0 };

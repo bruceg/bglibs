@@ -135,7 +135,7 @@ static void test(const char* start)
   obuf_flush(&outbuf);
 }
 
-void selftest(void)
+MAIN
 {
   test("::");
   test("::1");

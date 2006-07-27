@@ -38,7 +38,7 @@ int socket_tcp(void)
 #ifdef SELFTEST_MAIN
 #include <sys/stat.h>
 #include "selftest.c"
-void selftest(void)
+MAIN
 {
   int fd;
   struct stat st;

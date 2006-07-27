@@ -50,7 +50,7 @@ int str_catf(str* s, const char* format, ...)
 
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
-void selftest(void)
+MAIN
 {
   static str s;
   str_copys(&s, "foo");

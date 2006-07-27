@@ -32,7 +32,7 @@ void str_free(str* s)
 
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
-void selftest(void)
+MAIN
 {
   static str s;
   str_alloc(&s, 1, 0);

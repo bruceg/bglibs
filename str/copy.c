@@ -43,7 +43,7 @@ int str_copyb(str* s, const char* in, unsigned len)
 
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
-void selftest(void)
+MAIN
 {
   static str s;
   debugstrfn(str_copys(&s, "foo"), &s);

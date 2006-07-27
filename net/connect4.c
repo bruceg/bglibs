@@ -38,7 +38,7 @@ int socket_connect4(int sock, const ipv4addr* ip, ipv4port port)
 
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
-void selftest(void)
+MAIN
 {
   int sock1;
   int sock2;
