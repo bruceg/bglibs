@@ -5,7 +5,7 @@
 #include "ghash.h"
 
 #ifdef SELFTEST_MAIN
-#include <stdio.h>
+#include "selftest.c"
 
 static struct ghash dict;
 GHASH_DECL(test,const char*,int);
@@ -13,7 +13,7 @@ GHASH_DEFN(test,const char*,int,adt_hashsp,adt_cmpsp,adt_copysp,0,adt_freesp,0);
 
 static void print(struct test_entry* entry)
 {
-  printf("[%s] = %d\n", entry->key, entry->data);
+  obuf_putf(&outbuf, "{[}s{] = }i{\n}", entry->key, entry->data);
 }
 
 const char* keys[] = {
@@ -22,26 +22,49 @@ const char* keys[] = {
   0
 };
 
-int main(void)
+static void testkeys(void)
 {
   int i;
   struct test_entry* p;
-  test_init(&dict);
-  printf("size=%d count=%d\n", dict.size, dict.count);
-  for (i = 0; keys[i] != 0; ++i) {
-    test_add(&dict, &keys[i], &i);
-    printf("size=%d count=%d\n", dict.size, dict.count);
-  }
   for (i = 0; keys[i] != 0; ++i) {
     if ((p = test_get(&dict, &keys[i])) == 0)
-      printf("Could not locate key [%s]\n", keys[i]);
-    if (p->data != i)
-      printf("Result for key [%s] is wrong (was %d should be %d)\n",
-	     keys[i], p->data, i);
+      obuf_putf(&outbuf, "{Could not locate key [}s{]\n}", keys[i]);
+    else if (p->data != i)
+      obuf_putf(&outbuf,
+		"{Result for key [}s{] is wrong (was }d{ should be }d{)\n}",
+		keys[i], p->data, i);
   }
+}
+
+MAIN
+{
+  int i;
+  struct test_entry* p;
+  struct ghashiter iter;
+
+  test_init(&dict);
+  obuf_putf(&outbuf, "{size=}d{ count=}d{\n}", dict.size, dict.count);
+
+  for (i = 0; keys[i] != 0; ++i) {
+    test_add(&dict, &keys[i], &i);
+    obuf_putf(&outbuf, "{size=}d{ count=}d{\n}", dict.size, dict.count);
+  }
+
+  testkeys();
+
   test_foreach(&dict, print);
+
+  ghash_remove(&dict, &keys[1]);
+  ghash_remove(&dict, &keys[11]);
+  ghash_remove(&dict, &keys[24]);
+  testkeys();
+
+  ghashiter_loop(&iter, &dict) {
+    p = iter.entry;
+    obuf_putf(&outbuf, "{[}s{] = }i{\n}", p->key, p->data);
+  }
+
   test_free(&dict);
-  return 0;
 }
 #endif
 #ifdef SELFTEST_EXP
@@ -96,6 +119,32 @@ size=61 count=26
 [s] = 18
 [r] = 17
 [y] = 24
+[x] = 23
+[z] = 25
+Could not locate key [b]
+Could not locate key [l]
+Could not locate key [y]
+[e] = 4
+[d] = 3
+[g] = 6
+[f] = 5
+[a] = 0
+[c] = 2
+[m] = 12
+[o] = 14
+[n] = 13
+[i] = 8
+[h] = 7
+[k] = 10
+[j] = 9
+[u] = 20
+[t] = 19
+[w] = 22
+[v] = 21
+[q] = 16
+[p] = 15
+[s] = 18
+[r] = 17
 [x] = 23
 [z] = 25
 #endif
