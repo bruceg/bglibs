@@ -29,17 +29,17 @@ extern void PREFIX##_pop(struct gqueue* q);
 
 #define GQUEUE_PUSH_DEFN(PREFIX,TYPE,COPY) \
 int PREFIX##_push(struct gqueue* q, TYPE const* data) { \
-  return gqueue_push(s, sizeof *data, data, (adt_copy_fn*)COPY); \
+  return gqueue_push(q, sizeof *data, data, (adt_copy_fn*)COPY); \
 }
 
 #define GQUEUE_TOP_DEFN(PREFIX,TYPE) \
 TYPE* PREFIX##_top(struct gqueue* q) { \
-  return (s->head == 0) ? 0 : (TYPE*)s->head->data; \
+  return (q->head == 0) ? 0 : (TYPE*)q->head->data; \
 }
 
 #define GQUEUE_POP_DEFN(PREFIX,FREE) \
 void PREFIX##_pop(struct gqueue* q) { \
-  gqueue_pop(s, (adt_free_fn*)(FREE)); \
+  gqueue_pop(q, (adt_free_fn*)(FREE)); \
 }
 
 #define GQUEUE_DEFN(PREFIX,TYPE,COPY,FREE) \
