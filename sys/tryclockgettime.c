@@ -1,5 +1,5 @@
 /* $Id$ */
-#include <time.h>
+#include "systime.h"
 
 int main(void)
 {
