@@ -1,6 +1,6 @@
-for dep in ('clockgettime','daylight','deprecated','dirent','dl','endian',
-	'flock','getpeereid','inline','ipv6','mkfifo','namedpipebug','peercred',
-	'poll','sendfile','setenv','sigaction','sigprocmask','spnam',
+for dep in ('attribute','clockgettime','daylight','deprecated','dirent','dl',
+	'endian','flock','getpeereid','inline','ipv6','mkfifo','namedpipebug',
+	'peercred','poll','sendfile','setenv','sigaction','sigprocmask','spnam',
 	'sysselect','timespec','ulong32','ulong64','unaligned','unsetenv',
 	'userpw','vfork','waitp','zlib'):
 	dependon(['sys/try%s.c'%dep, 'sys/has%s.h0'%dep, 'sys/has%s.h1'%dep])
@@ -8,6 +8,7 @@ dependon(['systime.h','dl.lib','rt.lib'])
 : Makefile choose compile load sysdeps-head.h sysdeps-tail.h systime.h
 ( set -e; \
   cat sysdeps-head.h; \
+  ./choose c   attribute; \
   ./choose cl  daylight; \
   ./choose c   deprecated; \
   ./choose clr ulong32; \
