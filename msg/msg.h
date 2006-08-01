@@ -4,8 +4,8 @@
 
 #include <stdarg.h>
 
-extern const char program[];
-extern const int msg_show_pid;
+extern const char program[] __attribute__((__weak__));
+extern const int msg_show_pid __attribute__((__weak__));
 extern int msg_debug_bits;
 
 void msg_common(const char* type, const char*, const char*, const char*, const char*, const char*, const char*, int);

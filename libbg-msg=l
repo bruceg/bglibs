@@ -8,6 +8,7 @@ msg/die.o
 msg/dief.o
 msg/error.o
 msg/errorf.o
+msg/show_pid.o
 msg/wrap_alloc.o
 msg/wrap_chdir.o
 msg/wrap_exit.o

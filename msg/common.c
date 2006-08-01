@@ -13,14 +13,17 @@ void msg_common(const char* type,
 		const char* d, const char* e, const char* f,
 		int showsys)
 {
-  obuf_puts(&errbuf, program);
-  if (msg_show_pid) {
-    if (!pid || msg_show_pid < 0) pid = getpid();
-    obuf_putc(&errbuf, '[');
-    obuf_putu(&errbuf, pid);
-    obuf_putc(&errbuf, ']');
+  if (program != 0) {
+    obuf_puts(&errbuf, program);
+    if (&msg_show_pid != 0 && msg_show_pid) {
+      if (!pid || msg_show_pid < 0)
+	pid = getpid();
+      obuf_putc(&errbuf, '[');
+      obuf_putu(&errbuf, pid);
+      obuf_putc(&errbuf, ']');
+    }
+    obuf_puts(&errbuf, ": ");
   }
-  obuf_puts(&errbuf, ": ");
   if (type) {
     obuf_puts(&errbuf, type);
     obuf_puts(&errbuf, ": ");
@@ -41,13 +44,11 @@ void msg_common(const char* type,
 
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
-const char program[] = "testprog";
-const int msg_show_pid = 0;
 MAIN
 {
   warn2("a", "b");
 }
 #endif
 #ifdef SELFTEST_EXP
-testprog: Warning: ab
+Warning: ab
 #endif

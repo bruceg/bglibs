@@ -6,6 +6,9 @@ Changes in version 1.101
 
 - Added sysdep for __attribute__.
 
+- Marked some symbols as "weak" to prevent link errors if they aren't
+  defined.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
