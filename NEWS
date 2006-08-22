@@ -1,6 +1,7 @@
 -------------------------------------------------------------------------------
 Changes in version 1.102
 
+- Added support for str formatting in fmt_multi with "S".
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/

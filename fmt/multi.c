@@ -21,6 +21,7 @@
 #include "misc.h"
 #include "multi.h"
 #include "number.h"
+#include "str/str.h"
 
 /** Format multiple items.
 
@@ -81,6 +82,8 @@ hexadecimal, or uppercase unsigned hexadecimal string respectively.
 <dt>\c c <dd>The \c int argument is converted to an unsigned char.
 
 <dt>\c s <dd>The \c const \c char* argument is converted.
+
+<dt>\c S <dd>The \c const \c str* argument is converted.
 
 <dt>\c p <dd>The \c void* argument is converted to a hexadecimal string.
 
@@ -153,6 +156,7 @@ unsigned fmt_multiv(char* buffer, const char* format, va_list ap)
     long long value = 0;
     const char* altstr;
     char conv;
+    const str* strp;
 
     for (; *format != 0; ++format) {
       switch (*format) {
@@ -213,6 +217,10 @@ unsigned fmt_multiv(char* buffer, const char* format, va_list ap)
       break;
     case 's':
       ilength = fmt_chars(buffer, va_arg(ap, const char*), width, pad);
+      break;
+    case 'S':
+      strp = va_arg(ap, const str*);
+      ilength = fmt_mem(buffer, strp->s, strp->len, width, pad);
       break;
     case 'p':
       ilength = fmt_unumwa(buffer, (unsigned long)va_arg(ap, void*),
