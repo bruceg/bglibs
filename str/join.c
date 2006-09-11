@@ -53,3 +53,20 @@ int str_joinb(str* s, char sep, const char* in, unsigned len)
   s->s[s->len] = 0;
   return 1;
 }
+
+#ifdef SELFTEST_MAIN
+#include "selftest.c"
+MAIN 
+{
+  static str s;
+  debugstrfn(str_copys(&s, "one//"), &s);
+  debugstrfn(str_joins(&s, '/', "two"), &s);
+  debugstrfn(str_joins(&s, '/', "//three/"), &s);
+}
+#endif
+
+#ifdef SELFTEST_EXP
+result=1 len=5 size=16 s=one//
+result=1 len=7 size=16 s=one/two
+result=1 len=14 size=16 s=one/two/three/
+#endif
