@@ -43,20 +43,20 @@ MAIN
   int sock1;
   int sock2;
   ipv4port port = 12345;
-  debugsys(sock1 = socket_tcp4());
+  debugsys((sock1 = socket_tcp4()) >= 0);
   debugsys(socket_reuse(sock1));
   for (port = 12345; port < 32768; ++port)
     if (socket_bind4(sock1, &IPV4ADDR_ANY, port) == 0)
       break;
   debugsys(socket_listen(sock1, 1));
-  debugsys(sock2 = socket_tcp4());
+  debugsys((sock2 = socket_tcp4()) >= 0 && sock2 != sock1);
   debugsys(socket_connect4(sock2, &IPV4ADDR_LOOPBACK, port));
 }
 #endif
 #ifdef SELFTEST_EXP
-result=3
 result=1
 result=1
-result=4
+result=1
+result=1
 result=0
 #endif

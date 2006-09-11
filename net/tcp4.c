@@ -42,13 +42,13 @@ MAIN
 {
   int fd;
   struct stat st;
-  debugsys(fd = socket_tcp4());
+  debugsys((fd = socket_tcp4()) >= 0);
   debugsys(fstat(fd, &st));
   debugfn((st.st_mode & S_IFMT) == S_IFSOCK);
 }
 #endif
 #ifdef SELFTEST_EXP
-result=3
+result=1
 result=0
 result=1
 #endif
