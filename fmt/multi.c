@@ -16,6 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
+#include <errno.h>
 #include <stdarg.h>
 #include <string.h>
 #include "misc.h"
@@ -86,6 +87,8 @@ hexadecimal, or uppercase unsigned hexadecimal string respectively.
 <dt>\c S <dd>The \c const \c str* argument is converted.
 
 <dt>\c p <dd>The \c void* argument is converted to a hexadecimal string.
+
+<dt>\c m <dd>The result of \c strerror(errno) is formatted.
 
 <dt>\c \\ <dd>The next character literal from the format string is
 converted as with \c c conversion.
@@ -225,6 +228,9 @@ unsigned fmt_multiv(char* buffer, const char* format, va_list ap)
     case 'p':
       ilength = fmt_unumwa(buffer, (unsigned long)va_arg(ap, void*),
 			   width, pad, 16, fmt_lcase_digits, "0x");
+      break;
+    case 'm':
+      ilength = fmt_chars(buffer, strerror(errno), width, pad);
       break;
     case '\\':
       ilength = fmt_char(buffer, *++format, width, pad);
