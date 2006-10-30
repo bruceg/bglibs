@@ -8,10 +8,6 @@
 
 - Rewrite iobuf and str number conversion routines to use fmt
 
-- Add FP to fmt
-  - float (32 bits) is 1+23 bits (8 bit exponent) (max 8 digits)
-  - double (64 bits) is 1+52 bits (11 bit exponent) (max 16 digits)
-
 - Finish DNS library!
   - Implement TCP queries
 
