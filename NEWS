@@ -1,6 +1,9 @@
 -------------------------------------------------------------------------------
 Changes in version 1.102
 
+- Fixed a bug in resolve_ipv4name_n: when handling multiple IPs, it
+  would always copy the first one multiple times.
+
 - Added more conversions to fmt_multi:
   S - formats a str
   m - formats the result of strerror(errno)

@@ -15,6 +15,6 @@ int resolve_ipv4name_n(const char* name, ipv4addr* addr, int maxaddrs)
   if (ent->h_addrtype != AF_INET ||
       ent->h_length != 4) return 0;
   for (i = 0; i < maxaddrs && ent->h_addr_list[i] != 0; ++i)
-    memcpy(&addr[i].addr, ent->h_addr_list[0], 4);
+    memcpy(&addr[i].addr, ent->h_addr_list[i], 4);
   return i;
 }
