@@ -1,4 +1,10 @@
 -------------------------------------------------------------------------------
+Changes in version 1.103
+
+
+Development of this version has been sponsored by FutureQuest, Inc.
+ossi@FutureQuest.net  http://www.FutureQuest.net/
+-------------------------------------------------------------------------------
 Changes in version 1.102
 
 - Fixed a bug in resolve_ipv4name_n: when handling multiple IPs, it
