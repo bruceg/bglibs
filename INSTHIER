@@ -53,6 +53,8 @@ c:::644:dict:dict.h:dict/dict.h
 c:::644:dict:load.h:dict/load.h
   
 d:::755:fmt
+c:::644:fmt:misc.h:fmt/misc.h
+c:::644:fmt:multi.h:fmt/multi.h
 c:::644:fmt:number.h:fmt/number.h
 
 d:::755:iobuf

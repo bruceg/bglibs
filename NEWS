@@ -1,6 +1,7 @@
 -------------------------------------------------------------------------------
 Changes in version 1.103
 
+- Added two missing header files: fmt/misc.h and fmt/multi.h
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
