@@ -5,6 +5,8 @@ Changes in version 1.103
 
 - Added a ghash_set function (like ghash_add, but overwrites).
 
+- Added a set of "signalfd" functions as a generic self-pipe setup.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
