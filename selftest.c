@@ -6,6 +6,9 @@
 #include "msg/msg.h"
 #include "str/str.h"
 
+const char program[] = "selftest";
+const int msg_show_pid = 0;
+
 void NL(void) { obuf_putc(&outbuf, LF); }
 
 void debugstr(const str* s)
