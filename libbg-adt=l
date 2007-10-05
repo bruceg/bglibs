@@ -10,6 +10,7 @@ adt/ghash_rebuild.o
 adt/ghash_rehash.o
 adt/ghash_remove.o
 adt/ghash_search.o
+adt/ghash_set.o
 adt/gqueue_pop.o
 adt/gqueue_push.o
 adt/gqueue_top.o

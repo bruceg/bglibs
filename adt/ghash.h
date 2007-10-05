@@ -69,6 +69,7 @@ struct ghash
 
 void ghash_insert(struct ghash* d, void* e);
 void* ghash_add(struct ghash* d, const void* key, const void* data);
+void* ghash_set(struct ghash* d, const void* key, const void* data);
 void ghash_free(struct ghash* d);
 void** ghash_find(struct ghash* d, const void* key);
 void* ghash_get(struct ghash* d, const void* key);
@@ -114,6 +115,9 @@ extern void PREFIX##_free(struct ghash* d); \
 extern struct PREFIX##_entry* PREFIX##_add(struct ghash* d, \
                                            KTYPE const* key, \
                                            DTYPE const* data); \
+extern struct PREFIX##_entry* PREFIX##_set(struct ghash* d, \
+                                           KTYPE const* key, \
+                                           DTYPE const* data); \
 extern struct PREFIX##_entry* PREFIX##_get(struct ghash* d, \
                                            KTYPE const* key); \
 extern int PREFIX##_rebuild(struct ghash* d); \
@@ -149,6 +153,13 @@ void PREFIX##_free(struct ghash* d) { \
 struct PREFIX##_entry* PREFIX##_add(struct ghash* d, \
                                     KTYPE const* key, DTYPE const* data) { \
   return ghash_add(d, key, data); \
+}
+
+/** Define a specialized \c ghash table add function. */
+#define GHASH_SET_DEFN(PREFIX,KTYPE,DTYPE) \
+struct PREFIX##_entry* PREFIX##_set(struct ghash* d, \
+                                    KTYPE const* key, DTYPE const* data) { \
+  return ghash_set(d, key, data); \
 }
 
 /** Define a specialized \c ghash table get function. */
@@ -195,6 +206,7 @@ struct PREFIX##_entry* PREFIX##_search(struct ghash* d, int (*fn)(const struct P
 GHASH_INIT_DEFN(PREFIX,KTYPE,DTYPE,HASHFN,CMPFN,KCOPY,DCOPY,KFREE,DFREE) \
 GHASH_FREE_DEFN(PREFIX) \
 GHASH_ADD_DEFN(PREFIX,KTYPE,DTYPE) \
+GHASH_SET_DEFN(PREFIX,KTYPE,DTYPE) \
 GHASH_GET_DEFN(PREFIX,KTYPE) \
 GHASH_REBUILD_DEFN(PREFIX) \
 GHASH_REHASH_DEFN(PREFIX) \
