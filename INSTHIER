@@ -47,7 +47,8 @@ c:::644:crypto:sha256.h:crypto/sha256.h
 c:::644:crypto:sha384.h:crypto/sha384.h
 c:::644:crypto:sha512.h:crypto/sha512.h
 c:::644:crypto:surf.h:crypto/surf.h
-  
+c:::644:crypto:surfrand.h:crypto/surfrand.h
+ 
 d:::755:dict
 c:::644:dict:dict.h:dict/dict.h
 c:::644:dict:load.h:dict/load.h

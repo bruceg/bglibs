@@ -12,3 +12,4 @@ crypto/sha256.o
 crypto/sha384.o
 crypto/sha512.o
 crypto/surf.o
+crypto/surfrand.o
