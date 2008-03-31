@@ -2,7 +2,7 @@
 #ifndef CDB__STR__H__
 #define CDB__STR__H__
 
-#include "cdb.h"
+#include <cdb/cdb.h>
 struct str;
 
 extern int cdb_get(struct cdb*, const struct str* key, struct str* data);

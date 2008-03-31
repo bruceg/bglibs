@@ -2,7 +2,7 @@
 #ifndef DICT__LOAD__H__
 #define DICT__LOAD__H__
 
-#include "dict.h"
+#include <dict/dict.h>
 
 extern int dict_load_list(dict*, const char* filename,  int mustexist,
 			  int (*xform)(str*));
