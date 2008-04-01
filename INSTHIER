@@ -96,6 +96,7 @@ c:::644:unix:cloexec.h:unix/cloexec.h
 c:::644:unix:fcntl.h:unix/fcntl.h
 c:::644:unix:nonblock.h:unix/nonblock.h
 c:::644:unix:selfpipe.h:unix/selfpipe.h
+c:::644:unix:signalfd.h:unix/signalfd.h
 c:::644:unix:sig.h:unix/sig.h
 c:::644:unix:trigger.h:unix/trigger.h
   

@@ -7,6 +7,7 @@ unix/fcntl_fl_on.o
 unix/nonblock_off.o
 unix/nonblock_on.o
 unix/selfpipe.o
+unix/signalfd.o
 unix/sig_alarm.o
 unix/sig_all.o
 unix/sig_block.o
