@@ -92,16 +92,16 @@ double surfrand_double(struct surfrand* c)
 /** Fill the buffer with random data */
 void surfrand_fill(struct surfrand* c, unsigned char* buf, unsigned len)
 {
-  unsigned u;
+  uint32 u;
   while (len >= 4) {
     u = surfrand_uint32(c);
-    memcpy(buf, &c, 4);
+    memcpy(buf, &u, 4);
     len -= 4;
     buf += 4;
   }
   if (len > 0) {
     u = surfrand_uint32(c);
-    memcpy(buf, &c, len);
+    memcpy(buf, &u, len);
   }
 }
 
