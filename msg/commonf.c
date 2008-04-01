@@ -51,13 +51,11 @@ void msg_commonf(const char* type,
 
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
-const char program[] = "testprog";
-const int msg_show_pid = 0;
 MAIN
 {
   warnf("ss", "a", "b");
 }
 #endif
 #ifdef SELFTEST_EXP
-testprog: Warning: ab
+selftest: Warning: ab
 #endif

@@ -12,8 +12,6 @@ void wrap_chdir(const char* dir)
 
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
-const char program[] = "testprog";
-const int msg_show_pid = 0;
 MAIN
 {
   wrap_exit = 0;
@@ -24,5 +22,5 @@ MAIN
 #endif
 #ifdef SELFTEST_EXP
 worked
-testprog: Fatal: Could not chdir to '/this/dir/should/not/exist': No such file or directory
+selftest: Fatal: Could not chdir to '/this/dir/should/not/exist': No such file or directory
 #endif

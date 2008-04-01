@@ -50,5 +50,5 @@ MAIN
 }
 #endif
 #ifdef SELFTEST_EXP
-Warning: ab
+selftest: Warning: ab
 #endif
