@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "obuf.h"
 
 static int obuf_putsnumw_rec(obuf* out, long data, int sign,

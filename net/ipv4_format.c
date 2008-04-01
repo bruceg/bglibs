@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "ipv4.h"
 
 static char* format_part(unsigned char i, char* str)

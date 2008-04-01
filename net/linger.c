@@ -1,4 +1,3 @@
-/* $Id$ */
 /* net/linger.c - Set the socket linger option.
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

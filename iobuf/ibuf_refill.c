@@ -1,4 +1,3 @@
-/* $Id$ */
 #include <errno.h>
 #include <unistd.h>
 #include "ibuf.h"

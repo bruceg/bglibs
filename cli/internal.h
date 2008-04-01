@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef CLI__INTERNAL__H__
 #define CLI__INTERNAL__H__
 

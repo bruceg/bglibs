@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef CRC16__CCITT__H__
 #define CRC16__CCITT__H__
 

@@ -1,4 +1,3 @@
-/* $Id$ */
 int test_short(char* ptr);
 int test_int(char* ptr);
 int test_long(char* ptr);

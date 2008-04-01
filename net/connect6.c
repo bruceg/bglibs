@@ -1,4 +1,3 @@
-/* $Id$ */
 /* net/connect6.c - Make an IPv6 connection
  * Copyright (C) 2004,2005  Bruce Guenter <bruce@untroubled.org>
  *

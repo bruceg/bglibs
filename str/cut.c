@@ -1,4 +1,3 @@
-/* $Id$ */
 /* str/cut.c - Cut characters from the left or right of a string.
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

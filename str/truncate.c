@@ -1,4 +1,3 @@
-/* $Id$ */
 /* str/truncate.c - Truncate a string to a particular length
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

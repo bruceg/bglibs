@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "gstack.h"
 
 /** Return the address of first (most recently pushed) element in the

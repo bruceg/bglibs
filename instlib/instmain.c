@@ -1,4 +1,3 @@
-/* $Id$ */
 #include <stdlib.h>
 #include "iobuf/obuf.h"
 #include "installer.h"

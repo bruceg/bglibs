@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "msg.h"
 
 void msg_debugf(int bit, int showsys, const char* format, ...)

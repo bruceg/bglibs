@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "ghash.h"
 
 /** Search for the first entry in the \c ghash table for which the given

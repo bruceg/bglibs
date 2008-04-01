@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef BASE64__H__
 #define BASE64__H__
 

@@ -1,4 +1,3 @@
-/* $Id$ */
 /* str/copyf.c - Copy formatted data into a string
  * Copyright (C) 2005  Bruce Guenter <bruce@untroubled.org>
  *

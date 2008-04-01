@@ -1,4 +1,3 @@
-/* $Id$ */
 /* unix/nonblock_on.c - Turn on non-blocking I/O mode on a fd
  * Copyright (C) 2004,2005  Bruce Guenter <bruce@untroubled.org>
  *

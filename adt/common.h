@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef BGLIBS__ADT__COMMON__H__
 #define BGLIBS__ADT__COMMON__H__
 

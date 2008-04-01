@@ -1,4 +1,3 @@
-/* $Id$ */
 /* path/fnmatch.c - Filename pattern matching
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

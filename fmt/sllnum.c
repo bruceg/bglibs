@@ -1,4 +1,3 @@
-/* $Id$ */
 /* fmt/sllnum.c - Format a signed long long integer.
  * Copyright (C) 2004,2005  Bruce Guenter <bruce@untroubled.org>
  *

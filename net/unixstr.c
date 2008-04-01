@@ -1,4 +1,3 @@
-/* $Id$ */
 /* net/unixstr.c - Create UNIX domain stream socket
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

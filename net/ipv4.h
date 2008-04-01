@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef NET__IPV4__H__
 #define NET__IPV4__H__
 

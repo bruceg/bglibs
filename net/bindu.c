@@ -1,4 +1,3 @@
-/* $Id$ */
 /* net/bind4.c - Bind a UNIX domain address to a socket
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

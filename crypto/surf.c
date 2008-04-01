@@ -1,4 +1,3 @@
-/* $Id$ */
 /* surf.c - Simple Unpredictable Random Function
  * Copyright (C) 2004,2005,2008  Bruce Guenter <bruce@untroubled.org>
  *

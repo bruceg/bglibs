@@ -1,4 +1,3 @@
-/* $Id$ */
 /* net/pairdgm.c - Create a pair of datagram sockets
  * Copyright (C) 2002,2005  Bruce Guenter <bruce@untroubled.org>
  *

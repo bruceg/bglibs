@@ -1,4 +1,3 @@
-/* $Id$ */
 /* net/udp4.c - Create an IPv4 UDP socket
  * Copyright (C) 2004,2005  Bruce Guenter <bruce@untroubled.org>
  *

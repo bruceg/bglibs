@@ -1,4 +1,3 @@
-/* $Id$ */
 /* str/diff.c - Differentiate two strings
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

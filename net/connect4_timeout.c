@@ -1,4 +1,3 @@
-/* $Id$ */
 /* net/connect4_timeout.c - Make an IPv4 connection with a timeout
  * Copyright (C) 2004,2005  Bruce Guenter <bruce@untroubled.org>
  *

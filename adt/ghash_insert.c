@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "ghash.h"
 
 /** Insert an entry into a \c ghash table, without resizing it. */

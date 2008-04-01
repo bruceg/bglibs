@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef BGLIBS__SELF_PIPE__H__
 #define BGLIBS__SELF_PIPE__H__
 

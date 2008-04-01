@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "uint64.h"
 #include "uint32.h"
 

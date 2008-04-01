@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef GENERIC_CRC__H__
 #define GENERIC_CRC__H__
 

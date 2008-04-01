@@ -1,4 +1,3 @@
-/* $Id$ */
 /* str/catf.c - Append formatted data to a string
  * Copyright (C) 2005  Bruce Guenter <bruce@untroubled.org>
  *

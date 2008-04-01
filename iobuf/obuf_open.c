@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "obuf.h"
 
 /** Initialize an \c obuf by opening a file for writing. */

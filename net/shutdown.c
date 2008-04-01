@@ -1,4 +1,3 @@
-/* $Id$ */
 /* net/shutdown.c - Shutdown part of a socket.
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

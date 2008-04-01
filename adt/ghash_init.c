@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "ghash.h"
 
 /** Initialize an empty \c ghash table. */

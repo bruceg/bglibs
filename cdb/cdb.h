@@ -1,4 +1,3 @@
-/* $Id$ */
 /* Public domain. */
 
 #ifndef CDB_H

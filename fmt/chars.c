@@ -1,4 +1,3 @@
-/* $Id$ */
 /* fmt/chars.c - Format memory block or character string.
  * Copyright (C) 2005  Bruce Guenter <bruce@untroubled.org>
  *

@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef FMT__NUMBER__H__
 #define FMT__NUMBER__H__
 

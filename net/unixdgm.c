@@ -1,4 +1,3 @@
-/* $Id$ */
 /* net/unixdgm.c - Create UNIX domain datagram socket
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

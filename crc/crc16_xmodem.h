@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef CRC16__XMODEM__H__
 #define CRC16__XMODEM__H__
 

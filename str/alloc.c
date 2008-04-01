@@ -1,4 +1,3 @@
-/* $Id$ */
 /* str/alloc.c - Allocate storage for a string
  * Copyright (C) 2002-2005  Bruce Guenter <bruce@untroubled.org>
  *

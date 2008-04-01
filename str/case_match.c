@@ -1,4 +1,3 @@
-/* $Id$ */
 /* str/match.c - Simple case insensitive pattern matching
  * Copyright (C) 2003,2005  Bruce Guenter <bruce@untroubled.org>
  *

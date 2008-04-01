@@ -1,4 +1,3 @@
-/* $Id$ */
 #include <sys/types.h>
 #include <fcntl.h>
 #include <sys/time.h>

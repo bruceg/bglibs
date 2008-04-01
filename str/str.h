@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef STR__H__
 #define STR__H__
 

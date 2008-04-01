@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "systime.h"
 
 int main(void)

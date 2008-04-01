@@ -1,4 +1,3 @@
-/* $Id$ */
 /* net/setopt.c - Set socket option
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

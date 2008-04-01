@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef VMAILMGR__VPWENTRY__H__
 #define VMAILMGR__VPWENTRY__H__
 

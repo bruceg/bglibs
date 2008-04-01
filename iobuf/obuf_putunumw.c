@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "obuf.h"
 
 static int obuf_putunumw_rec(obuf* out, unsigned long data,

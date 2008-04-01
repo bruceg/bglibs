@@ -1,4 +1,3 @@
-/* $Id$ */
 void main()
 {
   unsigned long u;

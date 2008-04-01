@@ -1,4 +1,3 @@
-/* $Id$ */
 /* str/upper.c - Translate a string into uppercase
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

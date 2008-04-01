@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "misc.h"
 
 static char utoa_buf[32];

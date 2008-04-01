@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef SYS_DEPS__H__
 #define SYS_DEPS__H__
 

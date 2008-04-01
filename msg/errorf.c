@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "msg.h"
 
 void msg_errorf(int showsys, const char* format, ...)

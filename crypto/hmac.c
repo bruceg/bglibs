@@ -1,4 +1,3 @@
-/* $Id$ */
 /* crypto/hmac.c - Hashed Message Authentication Code
  * Copyright (C) 2005  Bruce Guenter <bruce@untroubled.org>
  *

@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "iobuf.h"
 
 /** Copy all the data from an \c ibuf to an \c obuf. */

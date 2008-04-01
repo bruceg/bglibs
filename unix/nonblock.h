@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef UNIX__NONBLOCK__H__
 #define UNIX__NONBLOCK__H__
 

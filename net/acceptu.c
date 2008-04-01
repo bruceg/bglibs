@@ -1,4 +1,3 @@
-/* $Id$ */
 /* net/accept4.c - Accept an UNIX domain connection
  * Copyright (C) 2006  Bruce Guenter <bruce@untroubled.org>
  *

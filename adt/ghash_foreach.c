@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "ghash.h"
 
 /** Iterate over a \c ghash table, calling a function for each entry. */

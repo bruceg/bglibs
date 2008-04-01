@@ -1,4 +1,3 @@
-/* $Id$ */
 /* str/copy5s.c - Copy five C strings into a dynamic str
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

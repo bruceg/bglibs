@@ -1,4 +1,3 @@
-/* $Id$ */
 /* fmt/unum.c - Format an unsigned number.
  * Copyright (C) 2004,2005  Bruce Guenter <bruce@untroubled.org>
  *

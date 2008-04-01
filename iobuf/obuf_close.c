@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "obuf.h"
 
 /** Flush and close the \c obuf */

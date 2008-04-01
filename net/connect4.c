@@ -1,4 +1,3 @@
-/* $Id$ */
 /* net/connect4.c - Make an IPv4 connection
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

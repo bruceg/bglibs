@@ -1,4 +1,3 @@
-/* $Id$ */
 #include <shadow.h>
 
 void main()

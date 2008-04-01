@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef BGLIBS__NET__CMSG__H__
 #define BGLIBS__NET__CMSG__H__
 

@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "ibuf.h"
 
 /** Read a line from the \c ibuf into a C string. */

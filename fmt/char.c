@@ -1,4 +1,3 @@
-/* $Id$ */
 /* fmt/char.c - Format a single character.
  * Copyright (C) 2005  Bruce Guenter <bruce@untroubled.org>
  *

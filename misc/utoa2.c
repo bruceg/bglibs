@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "misc.h"
 
 char* utoa2(unsigned long i, char* buf)

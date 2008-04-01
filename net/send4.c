@@ -1,4 +1,3 @@
-/* $Id$ */
 /* net/send4.c - Send a datagram on a UDP socket
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

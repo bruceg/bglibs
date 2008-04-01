@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "base64.h"
 
 int base64_decode_part(const char encoded[4], unsigned char bin[3])

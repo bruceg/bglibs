@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "sysdeps.h"
 #include <errno.h>
 #include <string.h>

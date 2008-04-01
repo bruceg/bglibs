@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "mystring.h"
 
 #ifdef MYSTRING_TRACE

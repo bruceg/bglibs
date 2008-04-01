@@ -1,4 +1,3 @@
-/* $Id$ */
 /* str/catns.c - Append N C strings to a dynamic str
  * Copyright (C) 2004,2005  Bruce Guenter <bruce@untroubled.org>
  *

@@ -1,4 +1,3 @@
-/* $Id$ */
 /* cli/help.c - Show dynamic help text
  * Copyright (C) 2001,2005,2006  Bruce Guenter <bruce@untroubled.org>
  *

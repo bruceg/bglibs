@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef CHECKVPW__CGI_ARGS__H__
 #define CHECKVPW__CGI_ARGS__H__
 

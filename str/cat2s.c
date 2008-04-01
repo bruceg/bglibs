@@ -1,4 +1,3 @@
-/* $Id$ */
 /* str/cat2s.c - Append two C strings to a dynamic str
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

@@ -1,4 +1,3 @@
-/* $Id$ */
 #include <userpw.h>
 
 void main()

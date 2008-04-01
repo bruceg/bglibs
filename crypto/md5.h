@@ -1,4 +1,3 @@
-/* $Id$ */
 /* Declaration of functions and data types used for MD5 sum computing
    library functions.
    Copyright (C) 1995, 1996, 1997 Free Software Foundation, Inc.

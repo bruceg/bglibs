@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef MSG__H__
 #define MSG__H__
 

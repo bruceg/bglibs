@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "ibuf.h"
 
 /** Retrieve a single character from the \c ibuf. */

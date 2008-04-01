@@ -1,4 +1,3 @@
-/* $Id$ */
 /* str/findprevnot.c - Find the previous instance not of a character set
  * Copyright (C) 2002,2005  Bruce Guenter <bruce@untroubled.org>
  *

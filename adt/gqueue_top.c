@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "gqueue.h"
 
 /** Return the address of first (least recently pushed) element in the

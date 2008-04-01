@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef NET__RESOLVE__H__
 #define NET__RESOLVE__H__
 

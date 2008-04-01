@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef STR_ITER__H__
 #define STR_ITER__H__
 

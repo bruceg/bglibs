@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef UNIX__SIG__H__
 #define UNIX__SIG__H__
 

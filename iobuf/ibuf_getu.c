@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "ibuf.h"
 
 /** Read an unsigned long from the \c ibuf */

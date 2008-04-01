@@ -1,4 +1,3 @@
-/* $Id$ */
 /* net/udp6 - Create an IPv6 UDP socket
  * Copyright (C) 2004,2005  Bruce Guenter <bruce@untroubled.org>
  *

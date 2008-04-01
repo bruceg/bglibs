@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "dict.h"
 
 /* Public domain hash function written by D. J. Bernstein */

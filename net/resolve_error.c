@@ -1,4 +1,3 @@
-/* $Id$ */
 #include <netdb.h>
 #include "resolve.h"
 

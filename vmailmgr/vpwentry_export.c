@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "vpwentry.h"
 #include "str/str.h"
 

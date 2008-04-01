@@ -1,4 +1,3 @@
-/* $Id$ */
 /* fmt/ullnum.c - Format an unsigned long long number.
  * Copyright (C) 2004,2005  Bruce Guenter <bruce@untroubled.org>
  *

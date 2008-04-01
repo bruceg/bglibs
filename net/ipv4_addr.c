@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "ipv4.h"
 
 /** IPv4 "any" address constant. */

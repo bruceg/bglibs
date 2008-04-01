@@ -1,4 +1,3 @@
-/* $Id$ */
 /* sha256.c - SHA-256 algorithm
  * Copyright (C) 2003,2005  Bruce Guenter <bruce@untroubled.org>
  *

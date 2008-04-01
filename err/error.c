@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "err.h"
 
 void error(const char* a, const char* b, const char* c, const char* d,

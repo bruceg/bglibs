@@ -1,4 +1,3 @@
-/* $Id$ */
 /* str/catuwll.c - Append an unsigned long long integer
  * Copyright (C) 2003,2005  Bruce Guenter <bruce@untroubled.org>
  *

@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef DATUM__H__
 #define DATUM__H__
 

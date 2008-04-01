@@ -1,4 +1,3 @@
-/* $Id$ */
 /* str/catsllnum.c - Append an signed long long integer.
  * Copyright (C) 2003,2005  Bruce Guenter <bruce@untroubled.org>
  *

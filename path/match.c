@@ -1,4 +1,3 @@
-/* $Id$ */
 /* path/match.c - Filename matching utility.
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

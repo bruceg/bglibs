@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef MISC__H__
 #define MISC__H__
 

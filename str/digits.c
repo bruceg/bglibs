@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "str.h"
 
 /** Lower-case digits, also used for decimal numbers. */

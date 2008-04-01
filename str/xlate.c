@@ -1,4 +1,3 @@
-/* $Id$ */
 /* str/xlate.c - Perform 1-to-1 character translation on a string.
  * Copyright (C) 2004,2005  Bruce Guenter <bruce@untroubled.org>
  *

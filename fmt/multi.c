@@ -1,4 +1,3 @@
-/* $Id$ */
 /* fmt/multi.c - Format multiple items.
  * Copyright (C) 2005  Bruce Guenter <bruce@untroubled.org>
  *

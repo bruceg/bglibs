@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef NET__IPV6__H__
 #define NET__IPV6__H__
 

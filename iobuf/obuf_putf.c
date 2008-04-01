@@ -1,4 +1,3 @@
-/* $Id$ */
 #include <string.h>
 #include "obuf.h"
 #include "fmt/multi.h"

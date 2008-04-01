@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "ghash.h"
 
 /** Find an entry in a \c ghash table.

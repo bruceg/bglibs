@@ -1,4 +1,3 @@
-/* $Id$ */
 /* unix/cloexec_off.c - Turn off close-on-exec mode on a fd
  * Copyright (C) 2004,2005  Bruce Guenter <bruce@untroubled.org>
  *

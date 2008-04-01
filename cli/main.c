@@ -1,4 +1,3 @@
-/* $Id$ */
 /* cli/main.c - Main routine for all CLI programs
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

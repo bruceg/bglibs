@@ -1,4 +1,3 @@
-/* $Id$ */
 #include <signal.h>
 #include "sig.h"
 

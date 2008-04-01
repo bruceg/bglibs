@@ -1,4 +1,3 @@
-/* $Id$ */
 /* str/findnextnot.c - Find the next character in a string not of a set
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

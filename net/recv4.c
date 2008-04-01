@@ -1,4 +1,3 @@
-/* $Id$ */
 /* net/recv4.c - Receive a datagram from a UDP socket
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

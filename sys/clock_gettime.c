@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "sysdeps.h"
 #ifndef HASCLOCKGETTIME
 

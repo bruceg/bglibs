@@ -1,4 +1,3 @@
-/* $Id$ */
 /* str/case_start.c - Case insensitive string prefix matching
  * Copyright (C) 2003,2005  Bruce Guenter <bruce@untroubled.org>
  *

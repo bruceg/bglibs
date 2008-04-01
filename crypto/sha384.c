@@ -1,4 +1,3 @@
-/* $Id$ */
 /* sha384.c - SHA-384 algorithm
  * Copyright (C) 2003,2005  Bruce Guenter <bruce@untroubled.org>
  *

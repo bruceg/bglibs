@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef BGLIBS__GENERIC_STACK__H__
 #define BGLIBS__GENERIC_STACK__H__
 

@@ -1,4 +1,3 @@
-/* $Id$ */
 /* unix/fcntl_fl_on.c - Turn on flag with fcntl F_SETFL
  * Copyright (C) 2004,2005  Bruce Guenter <bruce@untroubled.org>
  *

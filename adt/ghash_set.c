@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "ghash.h"
 
 /** Replace or add an entry into a generic hash table. */

@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "base64.h"
 
 int base64_encode_line(const unsigned char* bin, unsigned long len,

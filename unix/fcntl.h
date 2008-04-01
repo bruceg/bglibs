@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef UNIX__FCNTL__H__
 #define UNIX__FCNTL__H__
 

@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "iobuf/iobuf.h"
 #include "str/str.h"
 #include "dict.h"

@@ -1,4 +1,3 @@
-/* $Id$ */
 /* Adapted from public domain sources written by D. J. Bernstein */
 
 #include <sys/types.h>

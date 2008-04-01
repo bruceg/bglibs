@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "base64.h"
 
 void base64_encode_whole(const unsigned char bin[3], char encoded[4])

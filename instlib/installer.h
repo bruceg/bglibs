@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef SPAC__INSTALLER__H__
 #define SPAC__INSTALLER__H__
 

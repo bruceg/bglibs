@@ -1,4 +1,3 @@
-/* $Id$ */
 /* net/connectu_timeout.c - Make an UNIX domain connection with a timeout
  * Copyright (C) 2004,2005  Bruce Guenter <bruce@untroubled.org>
  *

@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef UINT16_H
 #define UINT16_H
 

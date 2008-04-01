@@ -1,4 +1,3 @@
-/* $Id$ */
 // Copyright (C) 1999,2000,2005 Bruce Guenter <bruce@untroubled.org>
 //
 // This library is free software; you can redistribute it and/or

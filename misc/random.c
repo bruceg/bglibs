@@ -1,4 +1,3 @@
-/* $Id$ */
 /* This is the ``Mersenne Twister'' random number generator MT19937, which
  * generates pseudorandom integers uniformly distributed in 0..(2^32 - 1)
  * starting from any odd seed in 0..(2^32 - 1).  This version is a recode

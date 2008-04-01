@@ -1,4 +1,3 @@
-/* $Id$ */
 /* net/tcp4 - Create an IPv4 TCP socket
  * Copyright (C) 2004,2005  Bruce Guenter <bruce@untroubled.org>
  *

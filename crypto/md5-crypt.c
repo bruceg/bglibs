@@ -1,4 +1,3 @@
-/* $Id$ */
 /* One way encryption based on MD5 sum.
    Copyright (C) 1996, 1997 Free Software Foundation, Inc.
    This file is part of the GNU C Library.

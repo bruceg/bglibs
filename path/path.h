@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef LIB__PATH__H__
 #define LIB__PATH__H__
 

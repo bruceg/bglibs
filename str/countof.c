@@ -1,4 +1,3 @@
-/* $Id$ */
 /* str/count.c - Count the instances of a character set
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

@@ -1,4 +1,3 @@
-/* $Id$ */
 /* bg-installer.c - Standard bglibs installer system.
  * Copyright (C) 2006  Bruce Guenter <bruce@untroubled.org>
  *

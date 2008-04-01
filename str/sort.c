@@ -1,4 +1,3 @@
-/* $Id$ */
 /* str/sort.c - Split up a string and sort its pieces.
  * Copyright (C) 2001,2005  Bruce Guenter <bruce@untroubled.org>
  *

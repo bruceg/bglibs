@@ -1,4 +1,3 @@
-/* $Id$ */
 #include <stdlib.h>
 #include "err.h"
 

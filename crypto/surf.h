@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef BGLIBS__SURF__H__
 #define BGLIBS__SURF__H__
 

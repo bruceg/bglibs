@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "number.h"
 
 /** Array of digits for lower-case conversions */

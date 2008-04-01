@@ -1,4 +1,3 @@
-/* $Id$ */
 /* socket/notcpdelay.c - Turn on/off TCP "NODELAY" flag.
  * Copyright (C) 2003,2005  Bruce Guenter <bruce@untroubled.org>
  *

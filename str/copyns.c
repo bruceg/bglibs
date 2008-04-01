@@ -1,4 +1,3 @@
-/* $Id$ */
 /* str/copyns.c - Copy N C strings into a dynamic str
  * Copyright (C) 2004,2005  Bruce Guenter <bruce@untroubled.org>
  *

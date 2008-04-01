@@ -1,4 +1,3 @@
-/* $Id$ */
 #include <unistd.h>
 #include "obuf.h"
 

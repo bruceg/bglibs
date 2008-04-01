@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "obuf.h"
 
 const char obuf_dec_digits[10] = "0123456789";

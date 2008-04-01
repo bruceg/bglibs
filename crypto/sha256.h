@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef BGLIBS__SHA256__H__
 #define BGLIBS__SHA256__H__
 

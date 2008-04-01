@@ -1,4 +1,3 @@
-/* $Id$ */
 #include <string.h>
 #include "ipv4.h"
 

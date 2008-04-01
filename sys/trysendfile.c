@@ -1,4 +1,3 @@
-/* $Id$ */
 #include <sys/sendfile.h>
 #include <asm/unistd.h>
 #include <unistd.h>
