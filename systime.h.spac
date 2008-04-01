@@ -3,4 +3,4 @@
     echo '#include <sys/time.h>' ); \
   ( ./compile sys/trytime.c >/dev/null 2>&1 && \
     echo '#include <time.h>' ) ) >systime.h
-rm -f trysystime.o trytime.o
+rm -f sys/trysystime.o sys/trytime.o
