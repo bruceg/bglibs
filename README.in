@@ -13,8 +13,8 @@ To subscribe, send an email to:
 A mailing list archive is available at:
 	http://lists.untroubled.org/
 
-Development versions of @PACKAGE@ are available via Subversion at:
-	svn://bruce-guenter.dyndns.org/@PACKAGE@/trunk
+Development versions of @PACKAGE@ are available via git at:
+	http://untroubled.org/git/@PACKAGE@.git
 
 Installation:
 
@@ -22,7 +22,7 @@ Installation:
 - After the package has been compiled, run the following command as root:
 	make install
 
-Copyright(C) 2002-2006 Bruce Guenter <bruce@untroubled.org>
+Copyright(C) 2002-2008 Bruce Guenter <bruce@untroubled.org>
 
 This library is free software; you can redistribute it and/or modify it
 under the terms of the GNU Lesser General Public License as published by
