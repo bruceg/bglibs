@@ -26,7 +26,19 @@
 
 #define h(N,R) (((tmp ^ seed[N]) + a) ^ ROTATE(tmp,R))
 
-void surf(uint32 y[8], const uint32 p[12], const uint32 seed[32])
+/** Simple Unpredictable Random Function
+ *
+ * This function converts a 384-bit input into a 256-bit output, given a
+ * 1024-bit seed k.  When k is secret and uniformly selected, surf(k)
+ * seems to be indistinguishable from a uniformly selected
+ * 384-bit-to-256-bit function.
+ *
+ * See http://cr.yp.to/papers/surf.ps This implementation was derived
+ * from this paper and from dns_random.c from djbdns-1.05, which was
+ * made public domain as per http://cr.yp.to/distributors.html on
+ * 2007-12-28.
+ */
+void surf(uint32 out[8], const uint32 in[12], const uint32 seed[32])
 {
   uint32 x[12];
   uint32 a;
@@ -35,9 +47,9 @@ void surf(uint32 y[8], const uint32 p[12], const uint32 seed[32])
   int loop;
   uint32 tmp;
   for (i = 0; i < 12; ++i)
-    x[i] = p[i] ^ seed[i + 12];
+    x[i] = in[i] ^ seed[i + 12];
   for (i = 0; i < 8; ++i)
-    y[i] = seed[i + 24];
+    out[i] = seed[i + 24];
   a = 0;
   tmp = x[11];
   for (loop = 0; loop < 2; ++loop) {
@@ -57,7 +69,7 @@ void surf(uint32 y[8], const uint32 p[12], const uint32 seed[32])
       tmp = x[11] += h(11, 13);
     }
     for (i = 0; i < 8; ++i)
-      y[i] ^= x[i + 4];
+      out[i] ^= x[i + 4];
   }
 }
 

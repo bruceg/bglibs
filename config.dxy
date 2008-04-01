@@ -495,6 +495,7 @@ WARN_LOGFILE           =
 
 INPUT                  = bg-installer.c \
 			 adt \
+			 crypto \
                          fmt \
                          instlib \
                          iobuf \

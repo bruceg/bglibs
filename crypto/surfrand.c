@@ -29,6 +29,17 @@ static void generate(struct surfrand* c)
   c->used = 0;
 }
 
+/** Initialize the \c surfrand structure.
+ *
+ * Initializes the seed in \c c from the input \c data, and sets the
+ * counter to zero.  If more than \c SURF_SEED_U32 bytes of input data
+ * is given, the extra data is merged into the seed.  If less, the given
+ * data is repeated until the seed is filled.
+ *
+ * The counter is treated as a giant multi-word integer, and is
+ * incremented once each time data is generated.  This makes the
+ * theoretical period of this generator 8*2^32^12 or >10^116.
+ */
 void surfrand_init(struct surfrand* c, const uint32* data, unsigned words)
 {
   uint32* ptr;
@@ -56,6 +67,9 @@ void surfrand_init(struct surfrand* c, const uint32* data, unsigned words)
   c->used = SURF_OUT_U32;
 }
 
+/** Output an random unsigned 32-bit integer.
+ *
+ * All the bits in the output integer are equally random. */
 uint32 surfrand_uint32(struct surfrand* c)
 {
   if (c->used >= SURF_OUT_U32)
@@ -63,6 +77,11 @@ uint32 surfrand_uint32(struct surfrand* c)
   return c->generated[c->used++];
 }
 
+/** Output a random double precision floating-point number in the range 0-1.
+ *
+ * This routine uses two calls to surfrand_uint32 to fill all the
+ * precision of a double precision floating-point with randomness.
+ */
 double surfrand_double(struct surfrand* c)
 {
   const uint32 u1 = surfrand_uint32(c);
@@ -70,6 +89,7 @@ double surfrand_double(struct surfrand* c)
   return u1 * (1.0/4294967296.0) + u2 * (1.0/4294967296.0/4294967296.0);
 }
 
+/** Fill the buffer with random data */
 void surfrand_fill(struct surfrand* c, unsigned char* buf, unsigned len)
 {
   unsigned u;
