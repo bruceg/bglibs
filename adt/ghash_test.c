@@ -58,6 +58,13 @@ MAIN
   ghash_remove(&dict, &keys[24]);
   testkeys();
 
+  i = 1010;
+  if ((p = ghash_set(&dict, &keys[10], &i)) != 0)
+    obuf_putf(&outbuf, "{Set [}s{] to }d{\n}", p->key, p->data);
+  i = 1020;
+  if ((p = ghash_set(&dict, &keys[20], &i)) != 0)
+    obuf_putf(&outbuf, "{Set [}s{] to }d{\n}", p->key, p->data);
+
   ghashiter_loop(&iter, &dict) {
     p = iter.entry;
     obuf_putf(&outbuf, "{[}s{] = }i{\n}", p->key, p->data);
@@ -123,6 +130,8 @@ size=61 count=26
 Could not locate key [b]
 Could not locate key [l]
 Could not locate key [y]
+Set [k] to 1010
+Set [u] to 1020
 [e] = 4
 [d] = 3
 [g] = 6
@@ -134,9 +143,9 @@ Could not locate key [y]
 [n] = 13
 [i] = 8
 [h] = 7
-[k] = 10
+[k] = 1010
 [j] = 9
-[u] = 20
+[u] = 1020
 [t] = 19
 [w] = 22
 [v] = 21
