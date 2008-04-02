@@ -8,15 +8,23 @@ Version: @VERSION@
 Release: 1
 License: GPL
 Group: Development/Libraries
-Source: http://untroubled.org/@PACKAGE@/@PACKAGE@-@VERSION@.tar.gz
-BuildRoot: %{_tmppath}/@PACKAGE@-buildroot
+Source: http://untroubled.org/%{name}/%{name}-%{version}.tar.gz
+BuildRoot: %{_tmppath}/%{name}-buildroot
 BuildRequires: libtool
-URL: http://untroubled.org/@PACKAGE@/
+URL: http://untroubled.org/%{name}/
 Packager: Bruce Guenter <bruce@untroubled.org>
-Provides: bglibs-devel = %{version}
 
 %description
 BG Libraries Collection
+
+%package devel
+Summary: Development includes and libraries for bglibs
+Requires: bglibs-%{version}
+Group: Development/Libraries
+
+%description devel
+The bglibs-devel package contains the header and object files necessary
+for developing programs which use the bglibs libraries.
 
 %prep
 %setup
@@ -47,6 +55,17 @@ fgrep -x /usr/local/bglibs/lib /etc/ld.so.conf >/dev/null \
 %files
 %defattr(-,root,root)
 %doc ANNOUNCEMENT COPYING NEWS README
-%{basedir}
-%{_bindir}/*
+%{basedir}/lib/*.so.*
+%{_bindir}/bg-installer
+
+%files devel
+%defattr(-,root,root)
+%{basedir}/doc
+%{basedir}/include
+%{basedir}/lib/*.a
+%{basedir}/lib/*.lib
+%{basedir}/lib/*.so
+%{basedir}/lib/*/*.a
+%{_bindir}/cli-generate
+%{_bindir}/crc-gentab
 %{_mandir}/*/*

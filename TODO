@@ -1,10 +1,6 @@
-- Fix spec to handle the shared library install?
-
 - Rewrite the IPv6 library to accept/handle IPv4-only connections
   transparently.
   - Use a prefix of ::4444/32 to distinguish from ::ffff/32 and ::0/32
-
-* Add hooks for shared library building. *
 
 - Rewrite iobuf and str number conversion routines to use fmt
 
@@ -12,8 +8,6 @@
   - Implement TCP queries
 
 - Add make-compile, make-load, make-makelib scripts
-
-- Add some way of dealing with dependancies like "socket.lib" etc.
 
 - exec replacement?  http://cr.yp.to/lib/pathexec.html
 
