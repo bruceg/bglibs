@@ -46,6 +46,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#include "sysdeps.h"
 #include "systime.h"
 #include "misc.h"
 
