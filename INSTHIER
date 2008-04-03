@@ -158,7 +158,7 @@ d:::755:cli
 s::::cli:cli.a:../libbg-cli.a
 
 d:::755:crypto
-s::::crypto:md5:../libbg-crypto.a
+s::::crypto:md5.a:../libbg-crypto.a
 s::::crypto:sha1.a:../libbg-crypto.a
 s::::crypto:sha256.a:../libbg-crypto.a
 s::::crypto:sha512a.a:../libbg-crypto.a
