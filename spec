@@ -19,7 +19,7 @@ BG Libraries Collection
 
 %package devel
 Summary: Development includes and libraries for bglibs
-Requires: bglibs-%{version}
+Requires: bglibs = %{version}
 Group: Development/Libraries
 
 %description devel
