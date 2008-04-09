@@ -11,9 +11,9 @@ fmt/snum.o
 fmt/ucase.o
 fmt/udec.o
 fmt/ulldec.o
-fmt/uHex.o
-fmt/uhex.o
-fmt/ullHex.o
-fmt/ullhex.o
+fmt/uhexl.o
+fmt/uhexu.o
+fmt/ullhexl.o
+fmt/ullhexu.o
 fmt/ullnum.o
 fmt/unum.o

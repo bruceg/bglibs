@@ -3,6 +3,9 @@ Changes in version 1.104
 
 - Fixed several typos in the installation files.
 
+- Renamed some files that differed only in upper/lower case.  This
+  should fix building on OSX.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
