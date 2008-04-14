@@ -1,6 +1,7 @@
 -------------------------------------------------------------------------------
 Changes in version 1.105
 
+- Fixed envstr_unset to remove all instances of the given name.
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
