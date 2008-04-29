@@ -1,0 +1,3 @@
+/* sysdep: +dirent_type */
+#define HASDIRENTTYPE 1
+

@@ -4,5 +4,5 @@
 void foo()
 {
   struct dirent *d;
-  d->d_ino;
+  d->d_type;
 }

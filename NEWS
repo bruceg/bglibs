@@ -3,7 +3,7 @@ Changes in version 1.105
 
 - Fixed envstr_unset to remove all instances of the given name.
 
-- Added sysdep for d_ino in struct dirent.
+- Added sysdep for d_ino and d_type in struct dirent.
 
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
