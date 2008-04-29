@@ -1,0 +1,2 @@
+/* sysdep: -dirent_ino */
+#undef HASDIRENTINO

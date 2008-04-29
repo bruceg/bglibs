@@ -1,0 +1,3 @@
+/* sysdep: +dirent_ino */
+#define HASDIRENTINO 1
+

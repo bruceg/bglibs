@@ -1,4 +1,5 @@
-for dep in ('attribute','clockgettime','daylight','deprecated','dirent','dl',
+for dep in ('attribute','clockgettime','daylight','deprecated',
+	'dirent','direntino','dl',
 	'endian','flock','getpeereid','inline','ipv6','mkfifo','namedpipebug',
 	'peercred','poll','sendfile','setenv','sigaction','sigprocmask','spnam',
 	'sysselect','timespec','ulong32','ulong64','unaligned','unsetenv',
@@ -15,6 +16,7 @@ dependon(['systime.h','dl.lib','rt.lib'])
   ./choose clr ulong64; \
   ./choose clr endian; \
   ./choose c   dirent; \
+  ./choose c   direntino; \
   ./choose cl  dl `cat dl.lib`; \
   ./choose c   ipv6; \
   ./choose cl  vfork; \
