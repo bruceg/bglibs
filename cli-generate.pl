@@ -276,7 +276,7 @@ sub output_h {
     $guard =~ s/[^0-9A-Z]/_/g;
     print "#ifndef ${guard}_H\n";
     print "#define ${guard}_H\n";
-    print "/* This file was automatically generated, do not edit. */\n";
+    print "/* This file was automatically generated from ${filename}, do not edit. */\n";
     print $header{'includes'};
 
     foreach my $var (sort keys %decls) {
@@ -334,7 +334,7 @@ sub make_helpstr {
 }
 
 sub output_c {
-    print "/* This file was automatically generated, do not edit. */\n";
+    print "/* This file was automatically generated from ${filename}, do not edit. */\n";
     print "#include <string.h>\n";
     print "#include <iobuf/obuf.h>\n";
     print $header{'includes'};
@@ -514,7 +514,7 @@ sub output_m {
 	print STDERR "Warning: The header is missing a 'description' field.\n";
     }
     print
-	".\\\" This file was automatically generated, do not edit.\n",
+	".\\\" This file was automatically generated from ${filename}, do not edit.\n",
 	".TH $program 1\n",
 	".SH NAME\n",
 	"$program \\- $header{'description'}\n",
@@ -638,9 +638,10 @@ sub output_w {
     }
     print
 	"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n",
+	"<!-- This file was automatically generated from ${filename} -->\n",
 	"<html>\n",
 	"<head>\n",
-	"<title>Manual page of $program</title>\n",
+	"<title>Manual page for $program</title>\n",
 	"</head>\n",
 	"<body>\n",
 	"<h1>$program</h1>\n",
