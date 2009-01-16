@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include "ibuf.h"
 
-/** Copy all the data from an \c ibuf to a file descriptor. */
+/** Copy all the data from an \c ibuf to an output file descriptor. */
 int ibuf_copytofd(ibuf* in, int out)
 {
   const char* buf;

@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include "obuf.h"
 
-/** Copy all the data from an \c ibuf to an \c obuf. */
+/** Copy all the data from an input file descriptor to an \c obuf. */
 int obuf_copyfromfd(int in, obuf* out)
 {
   long rd;
