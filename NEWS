@@ -5,6 +5,9 @@ Changes in version 1.105
 
 - Added sysdep for d_ino and d_type in struct dirent.
 
+- Fixed the path_match function to match filenames containing pattern
+  characters (ie [filename] etc).
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

@@ -41,10 +41,13 @@ static int match_first(int absolute, const str* part, str* result,
   DIR* dir;
   direntry* entry;
   int count = 0;
+  int asis = 0;
   if (!str_truncate(result, 0)) return -1;
   if (has_magic(part->s)) {
     if ((dir = opendir(absolute ? "/" : ".")) == 0) return -1;
     while ((entry = readdir(dir)) != 0) {
+      if (str_diffs(part, entry->d_name) == 0)
+	asis = 1;
       if (fnmatch(entry->d_name, part->s, options)) {
 	if (absolute) if (!str_catc(result, '/')) return -1;
 	if (!str_catb(result, entry->d_name, strlen(entry->d_name)+1))
@@ -53,6 +56,11 @@ static int match_first(int absolute, const str* part, str* result,
       }
     }
     closedir(dir);
+    if (count == 0 && asis) {
+      if (!str_catb(result, part->s, part->len + 1))
+	return -1;
+      count = 1;
+    }
     return count;
   }
   else {
@@ -69,15 +77,16 @@ static int match_next_magic(const str* part, str* result, unsigned options)
   DIR* dir;
   direntry* entry;
   striter path;
-  int magic;
   int count;
-  count = 0;
-  magic = has_magic(part->s);
+  int asis;
+  count = asis = 0;
   if (!str_copy(&tmplist, result)) return -1;
   if (!str_truncate(result, 0)) return -1;
   striter_loop(&path, &tmplist, 0) {
     if ((dir = opendir(path.startptr)) == 0) continue;
     while ((entry = readdir(dir)) != 0) {
+      if (str_diffs(part, entry->d_name) == 0)
+	asis = 1;
       if (fnmatch(entry->d_name, part->s, options)) {
 	if (!str_cats(result, path.startptr) ||
 	    !str_catc(result, '/') ||
@@ -89,6 +98,13 @@ static int match_next_magic(const str* part, str* result, unsigned options)
       }
     }
     closedir(dir);
+  }
+  if (count == 0 && asis) {
+    if (!str_cats(result, path.startptr) ||
+	!str_catc(result, '/') ||
+	!str_catb(result, part->s, part->len + 1))
+      return -1;
+    count = 1;
   }
   return count;
 }
@@ -159,6 +175,7 @@ int path_match(const char* pattern, str* result, unsigned options)
 
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
+#include <unistd.h>
 static void match(const char* pattern, unsigned options)
 {
   static str s;
@@ -184,6 +201,14 @@ MAIN
   match("*.[eo]", 0);
   match("t*", 0);
   match("*.[!o]*", 0);
+
+  mkdir("[test]", 0777);
+  close(open("[test]/file", O_WRONLY | O_CREAT | O_TRUNC, 0666));
+  match("[test]", 0);
+  match("[test]/*", 0);
+  match("[test]/*", PATH_MATCH_DOTFILES);
+  unlink("[test]/file");
+  rmdir("[test]");
 }
 #endif
 #ifdef SELFTEST_EXP
@@ -206,4 +231,12 @@ test.o
 test.out
 *.[!o]* 0 => 1
 test.exp
+[test] 0 => 1
+[test]
+[test]/ * 0 => 1
+[test]/file
+[test]/ * 1 => 3
+[test]/.
+[test]/..
+[test]/file
 #endif
