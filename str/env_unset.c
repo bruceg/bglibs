@@ -9,7 +9,8 @@ void envstr_unset(struct str* env, const char* var)
   unsigned long varlen = strlen(var);
   while ((found = envstr_find(env, var, varlen)) != 0) {
     unsigned long foundlen = strlen(found) + 1;
-    if (found - env->s + foundlen > env->len - (found - env->s))
+    unsigned long foundoff = found - env->s;
+    if (foundoff + foundlen > env->len - foundoff)
       foundlen = env->len - (found - env->s);
     str_spliceb(env, found - env->s, foundlen, 0, 0);
   }
