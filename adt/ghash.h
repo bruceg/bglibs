@@ -97,9 +97,9 @@ struct PREFIX##_entry { \
 }
 
 /** The offset of the key into a specialized \c ghash entry. */
-#define GHASH_KEYOFFSET(PREFIX) ((unsigned)&((struct PREFIX##_entry*)0)->key)
+#define GHASH_KEYOFFSET(PREFIX) ((unsigned long)&((struct PREFIX##_entry*)0)->key)
 /** The offset of the data into a specialized \c ghash entry. */
-#define GHASH_DATAOFFSET(PREFIX) ((unsigned)&((struct PREFIX##_entry*)0)->data)
+#define GHASH_DATAOFFSET(PREFIX) ((unsigned long)&((struct PREFIX##_entry*)0)->data)
 /** The actual size of the key data in a specialized \c ghash entry. */
 #define GHASH_KEYSIZE(PREFIX) ( \
   GHASH_DATAOFFSET(PREFIX)-GHASH_KEYOFFSET(PREFIX) \
