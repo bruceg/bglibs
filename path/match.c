@@ -23,6 +23,7 @@
 #include "str/str.h"
 #include "str/iter.h"
 #include "path.h"
+#include "msg/msg.h"
 
 static str tmplist;
 static str tmpitem;
@@ -41,26 +42,20 @@ static int match_first(int absolute, const str* part, str* result,
   DIR* dir;
   direntry* entry;
   int count = 0;
-  int asis = 0;
   if (!str_truncate(result, 0)) return -1;
   if (has_magic(part->s)) {
     if ((dir = opendir(absolute ? "/" : ".")) == 0) return -1;
     while ((entry = readdir(dir)) != 0) {
-      if (str_diffs(part, entry->d_name) == 0)
-	asis = 1;
       if (fnmatch(entry->d_name, part->s, options)) {
 	if (absolute) if (!str_catc(result, '/')) return -1;
-	if (!str_catb(result, entry->d_name, strlen(entry->d_name)+1))
+	if (!str_catb(result, entry->d_name, strlen(entry->d_name)+1)) {
+	  closedir(dir);
 	  return -1;
+	}
 	++count;
       }
     }
     closedir(dir);
-    if (count == 0 && asis) {
-      if (!str_catb(result, part->s, part->len + 1))
-	return -1;
-      count = 1;
-    }
     return count;
   }
   else {
@@ -78,15 +73,12 @@ static int match_next_magic(const str* part, str* result, unsigned options)
   direntry* entry;
   striter path;
   int count;
-  int asis;
-  count = asis = 0;
+  count = 0;
   if (!str_copy(&tmplist, result)) return -1;
   if (!str_truncate(result, 0)) return -1;
   striter_loop(&path, &tmplist, 0) {
     if ((dir = opendir(path.startptr)) == 0) continue;
     while ((entry = readdir(dir)) != 0) {
-      if (str_diffs(part, entry->d_name) == 0)
-	asis = 1;
       if (fnmatch(entry->d_name, part->s, options)) {
 	if (!str_cats(result, path.startptr) ||
 	    !str_catc(result, '/') ||
@@ -98,13 +90,6 @@ static int match_next_magic(const str* part, str* result, unsigned options)
       }
     }
     closedir(dir);
-  }
-  if (count == 0 && asis) {
-    if (!str_cats(result, path.startptr) ||
-	!str_catc(result, '/') ||
-	!str_catb(result, part->s, part->len + 1))
-      return -1;
-    count = 1;
   }
   return count;
 }
@@ -144,6 +129,7 @@ PATH_MATCH_DOTFILES set, the result may contain paths starting with ".".
 */
 int path_match(const char* pattern, str* result, unsigned options)
 {
+  /* FIXME: make this stack allocated */
   static str part;
   
   int count;
@@ -167,6 +153,10 @@ int path_match(const char* pattern, str* result, unsigned options)
     if ((partend = strchr(pattern, '/')) == 0) partend = patend;
     if (!str_copyb(&part, pattern, partend-pattern)) return -1;
     if ((count = match_next(&part, result, options)) == -1) return -1;
+  }
+  if (count == 0 && exists(pattern)) {
+    if (!str_copys(result, pattern)) return -1;
+    return 1;
   }
   if (!str_sort(result, 0, count, 0)) return -1;
   str_free(&tmplist);
@@ -203,11 +193,17 @@ MAIN
   match("*.[!o]*", 0);
 
   mkdir("[test]", 0777);
-  close(open("[test]/file", O_WRONLY | O_CREAT | O_TRUNC, 0666));
+  close(open("[test]/.file", O_WRONLY | O_CREAT | O_TRUNC, 0666));
+  close(open("[test]/[f2]", O_WRONLY | O_CREAT | O_TRUNC, 0666));
   match("[test]", 0);
-  match("[test]/*", 0);
   match("[test]/*", PATH_MATCH_DOTFILES);
-  unlink("[test]/file");
+  match("[test]/.file", 0);
+  match("[test]/[f2]", 0);
+  match("*/*", 0);
+  match("*/*", PATH_MATCH_DOTFILES);
+  match("*/[f2]", 0);
+  unlink("[test]/.file");
+  unlink("[test]/[f2]");
   rmdir("[test]");
 }
 #endif
@@ -233,10 +229,15 @@ test.out
 test.exp
 [test] 0 => 1
 [test]
-[test]/ * 0 => 1
-[test]/file
-[test]/ * 1 => 3
-[test]/.
-[test]/..
-[test]/file
+[test]/* 1 => 0
+[test]/.file 0 => 1
+[test]/.file
+[test]/[f2] 0 => 1
+[test]/[f2]
+*/* 0 => 1
+[test]/[f2]
+*/* 1 => 2
+[test]/.file
+[test]/[f2]
+*/[f2] 0 => 0
 #endif
