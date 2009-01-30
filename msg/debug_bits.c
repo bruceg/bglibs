@@ -1,2 +1,2 @@
 #include "msg.h"
-int msg_debug_bits = 1;
+int msg_debug_bits = 0;
