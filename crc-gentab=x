@@ -1,4 +1,4 @@
--static-libtool-libs
+-static
 libbg-msg.la
 libbg-iobuf.la
 libbg-sysdeps.la

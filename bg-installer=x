@@ -1,4 +1,4 @@
--static-libtool-libs
+-static
 libbg-cli.la
 libbg-msg.la
 libbg-path.la
