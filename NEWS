@@ -12,6 +12,9 @@ Changes in version 1.105
 
 - Fixed the debug messages to not enable any by default.
 
+- Modified the build procedure to build all sources with libtool.
+  This should fix problems with parallel make.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

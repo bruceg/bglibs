@@ -1,7 +1,8 @@
-libbg-cli.a
-libbg-msg.a
-libbg-path.a
-libbg-iobuf.a
-libbg-fmt.a
-libbg-str.a
-libbg-sysdeps.a
+-static-libtool-libs
+libbg-cli.la
+libbg-msg.la
+libbg-path.la
+libbg-iobuf.la
+libbg-fmt.la
+libbg-str.la
+libbg-sysdeps.la

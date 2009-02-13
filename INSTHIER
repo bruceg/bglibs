@@ -117,92 +117,92 @@ c:::644::socket.lib
 
 l:::755::libbg.la
 l:::755::libbg-sysdeps.la
-c:::644::libbg-installer.a
-c:::644::libbg-instcheck.a
-c:::644::libbg-instshow.a
+c:::644::libbg-installer.a:.libs/libbg-installer.a
+c:::644::libbg-instcheck.a:.libs/libbg-instcheck.a
+c:::644::libbg-instshow.a:.libs/libbg-instshow.a
 
-c:::644::libbg-adt.a
-c:::644::libbg-base64.a
-c:::644::libbg-cdb.a
-c:::644::libbg-cli.a
-c:::644::libbg-crc.a
-c:::644::libbg-crypto.a
-c:::644::libbg-dict.a
-c:::644::libbg-fmt.a
-c:::644::libbg-iobuf.a
-c:::644::libbg-misc.a
-c:::644::libbg-msg.a
-c:::644::libbg-net.a
-c:::644::libbg-path.a
-c:::644::libbg-str.a
-c:::644::libbg-unix.a
+c:::644::libbg-adt.a:.libs/libbg-adt.a
+c:::644::libbg-base64.a:.libs/libbg-base64.a
+c:::644::libbg-cdb.a:.libs/libbg-cdb.a
+c:::644::libbg-cli.a:.libs/libbg-cli.a
+c:::644::libbg-crc.a:.libs/libbg-crc.a
+c:::644::libbg-crypto.a:.libs/libbg-crypto.a
+c:::644::libbg-dict.a:.libs/libbg-dict.a
+c:::644::libbg-fmt.a:.libs/libbg-fmt.a
+c:::644::libbg-iobuf.a:.libs/libbg-iobuf.a
+c:::644::libbg-misc.a:.libs/libbg-misc.a
+c:::644::libbg-msg.a:.libs/libbg-msg.a
+c:::644::libbg-net.a:.libs/libbg-net.a
+c:::644::libbg-path.a:.libs/libbg-path.a
+c:::644::libbg-str.a:.libs/libbg-str.a
+c:::644::libbg-unix.a:.libs/libbg-unix.a
 
-c:::644::libpwcmp.a
-c:::644::libpwcmp-module.a
-c:::644::libvmailmgr.a
+c:::644::libpwcmp.a:.libs/libpwcmp.a
+c:::644::libpwcmp-module.a:.libs/libpwcmp-module.a
+c:::644::libvmailmgr.a:.libs/libvmailmgr.a
 
 # Compatibility links
-s:::::libsysdeps.a:libbg-sysdeps.a
-s:::::libinstaller.a:libbg-installer.a
-s:::::libinstcheck.a:libbg-instcheck.a
-s:::::libinstshow.a:libbg-instshow.a
+s:::::libsysdeps.a:libbg-sysdeps.a:.libs/libbg-sysdeps.a
+s:::::libinstaller.a:libbg-installer.a:.libs/libbg-installer.a
+s:::::libinstcheck.a:libbg-instcheck.a:.libs/libbg-instcheck.a
+s:::::libinstshow.a:libbg-instshow.a:.libs/libbg-instshow.a
 
 d:::755:base64
-s::::base64:base64.a:../libbg-base64.a
+s::::base64:base64.a:../libbg-base64.a:.libs/../libbg-base64.a
 
 d:::755:cdb
-s::::cdb:cdb.a:../libbg-cdb.a
-s::::cdb:make.a:../libbg-cdb.a
-s::::cdb:str.a:../libbg-cdb.a
+s::::cdb:cdb.a:../libbg-cdb.a:.libs/../libbg-cdb.a
+s::::cdb:make.a:../libbg-cdb.a:.libs/../libbg-cdb.a
+s::::cdb:str.a:../libbg-cdb.a:.libs/../libbg-cdb.a
 
 d:::755:cli
-s::::cli:cli.a:../libbg-cli.a
+s::::cli:cli.a:../libbg-cli.a:.libs/../libbg-cli.a
 
 d:::755:crypto
-s::::crypto:md5.a:../libbg-crypto.a
-s::::crypto:sha1.a:../libbg-crypto.a
-s::::crypto:sha256.a:../libbg-crypto.a
-s::::crypto:sha512a.a:../libbg-crypto.a
+s::::crypto:md5.a:../libbg-crypto.a:.libs/../libbg-crypto.a
+s::::crypto:sha1.a:../libbg-crypto.a:.libs/../libbg-crypto.a
+s::::crypto:sha256.a:../libbg-crypto.a:.libs/../libbg-crypto.a
+s::::crypto:sha512a.a:../libbg-crypto.a:.libs/../libbg-crypto.a
 
 d:::755:dict
-s::::dict:dict.a:../libbg-dict.a
-s::::dict:load.a:../libbg-dict.a
+s::::dict:dict.a:../libbg-dict.a:.libs/../libbg-dict.a
+s::::dict:load.a:../libbg-dict.a:.libs/../libbg-dict.a
   
 d:::755:iobuf
-s::::iobuf:iobuf.a:../libbg-iobuf.a
-s::::iobuf:str.a:../libbg-iobuf.a
+s::::iobuf:iobuf.a:../libbg-iobuf.a:.libs/../libbg-iobuf.a
+s::::iobuf:str.a:../libbg-iobuf.a:.libs/../libbg-iobuf.a
   
 d:::755:misc
-s::::misc:misc.a:../libbg-misc.a
+s::::misc:misc.a:../libbg-misc.a:.libs/../libbg-misc.a
   
 d:::755:msg
-s::::msg:msg.a:../libbg-msg.a
-s::::msg:wrap.a:../libbg-msg.a
+s::::msg:msg.a:../libbg-msg.a:.libs/../libbg-msg.a
+s::::msg:wrap.a:../libbg-msg.a:.libs/../libbg-msg.a
   
 d:::755:net
-s::::net:ipv4.a:../libbg-net.a
-s::::net:resolve.a:../libbg-net.a
-s::::net:socket.a:../libbg-net.a
+s::::net:ipv4.a:../libbg-net.a:.libs/../libbg-net.a
+s::::net:resolve.a:../libbg-net.a:.libs/../libbg-net.a
+s::::net:socket.a:../libbg-net.a:.libs/../libbg-net.a
   
 d:::755:path
-s::::path:path.a:../libbg-path.a
+s::::path:path.a:../libbg-path.a:.libs/../libbg-path.a
 
 d:::755:pwcmp
-s::::pwcmp:client.a:../libpwcmp.a
-s::::pwcmp:hex.a:../libpwcmp.a
-s::::pwcmp:module.a:../libpwcmp-module.a
+s::::pwcmp:client.a:../libpwcmp.a:.libs/../libpwcmp.a
+s::::pwcmp:hex.a:../libpwcmp.a:.libs/../libpwcmp.a
+s::::pwcmp:module.a:../libpwcmp-module.a:.libs/../libpwcmp-module.a
   
 d:::755:str
-s::::str:iter.a:../libbg-str.a
-s::::str:str.a:../libbg-str.a
+s::::str:iter.a:../libbg-str.a:.libs/../libbg-str.a
+s::::str:str.a:../libbg-str.a:.libs/../libbg-str.a
   
 d:::755:unix
-s::::unix:nonblock.a:../libbg-unix.a
-s::::unix:sig.a:../libbg-unix.a
+s::::unix:nonblock.a:../libbg-unix.a:.libs/../libbg-unix.a
+s::::unix:sig.a:../libbg-unix.a:.libs/../libbg-unix.a
   
 d:::755:vmailmgr
-s::::vmailmgr:client.a:../libvmailmgr.a
-s::::vmailmgr:vpwentry.a:../libvmailmgr.a
+s::::vmailmgr:client.a:../libvmailmgr.a:.libs/../libvmailmgr.a
+s::::vmailmgr:vpwentry.a:../libvmailmgr.a:.libs/../libvmailmgr.a
 
 >man
 d:::755:man1

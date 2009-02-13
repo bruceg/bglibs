@@ -1,3 +1,4 @@
-libbg-msg.a
-libbg-iobuf.a
-libbg-sysdeps.a
+-static-libtool-libs
+libbg-msg.la
+libbg-iobuf.la
+libbg-sysdeps.la

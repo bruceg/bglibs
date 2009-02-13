@@ -1,2 +1,2 @@
-dependon([ fn[:-2]+'.a' for fn in glob('*=l') ])
+dependon([ fn[:-2]+'.la' for fn in glob('*=l') ])
 : libbg.la libbg-sysdeps.la
