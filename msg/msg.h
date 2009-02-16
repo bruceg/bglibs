@@ -2,7 +2,7 @@
 #define MSG__H__
 
 #include <stdarg.h>
-#include "debug.h"
+#include "msg/debug.h"
 
 extern const char program[] __attribute__((__weak__));
 extern const int msg_show_pid __attribute__((__weak__));

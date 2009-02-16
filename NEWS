@@ -1,6 +1,8 @@
 -------------------------------------------------------------------------------
 Changes in version 1.106
 
+- Fixed installation of msg/debug.h header file.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
