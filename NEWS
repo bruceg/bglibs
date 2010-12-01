@@ -1,4 +1,7 @@
 
+- Added str_end* and str_case_end* functions, parallel to str_start* and
+  str_case_start* but for suffixes.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

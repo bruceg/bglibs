@@ -166,6 +166,14 @@ int str_startb(const str* a, const char* b, unsigned len);
 int str_case_start(const str* a, const str* b);
 int str_case_starts(const str* a, const char* b);
 int str_case_startb(const str* a, const char* b, unsigned len);
+
+int str_end(const str* a, const str* b);
+int str_ends(const str* a, const char* b);
+int str_endb(const str* a, const char* b, unsigned len);
+
+int str_case_end(const str* a, const str* b);
+int str_case_ends(const str* a, const char* b);
+int str_case_endb(const str* a, const char* b, unsigned len);
 /** @} */
 
 /** \name Searching Functions

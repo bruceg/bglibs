@@ -1,5 +1,6 @@
 str/alloc.o
 str/buildmap.o
+str/case_end.o
 str/case_glob.o
 str/case_match.o
 str/case_start.o
@@ -35,6 +36,7 @@ str/countof.o
 str/cut.o
 str/diff.o
 str/digits.o
+str/end.o
 str/env_find.o
 str/env_from_array.o
 str/env_from_string.o
