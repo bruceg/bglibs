@@ -22,7 +22,9 @@ extern const ipv4addr IPV4ADDR_LOOPBACK;
 extern int ipv4_parse(const char* s, ipv4addr* addr, const char** end) __attribute__((__deprecated__));
 extern const char* ipv4_scan(const char* s, ipv4addr* addr);
 extern const char* ipv4_format(const ipv4addr* addr);
+extern const char* ipv4_format_reverse(const ipv4addr* addr);
 extern unsigned fmt_ipv4addr(char* buffer, const ipv4addr* addr);
+extern unsigned fmt_ipv4addr_reverse(char* buffer, const ipv4addr* addr);
 
 /** @} */
 

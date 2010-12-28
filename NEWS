@@ -1,3 +1,4 @@
+- Added reversed IPv4 formatting functions (from Jorge Valdes).
 
 - Added str_end* and str_case_end* functions, parallel to str_start* and
   str_case_start* but for suffixes.
