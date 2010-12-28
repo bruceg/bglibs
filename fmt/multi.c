@@ -61,9 +61,9 @@ width, it will be padded out to the field width.
 
 <dl>
 
-<dt>\c l <dd>The following conversion uses a \c long integer type.
+<dt>\c l <dd>The following integer conversion uses a \c long type.
 
-<dt>\c ll <dd>The following conversion uses a \c long \c long integer
+<dt>\c ll <dd>The following integer conversion uses a \c long \c long
 type.
 
 </dl>
@@ -94,6 +94,12 @@ converted as with \c c conversion.
 
 <dt>\c {string} <dd>The literal string enclosed by the parenthesis is
 converted as with \c s conversion.
+
+<dt>\c @ <dd>Formats an arbitrary object using two arguments: The first
+::fmt_function argument is used to format the following \c void*
+argument.  The ::fmt_function is passed the output buffer, the data
+pointer, width, and pad character, and is expected to return the number
+of bytes formatted.
 
 </dl>
 */
@@ -159,6 +165,8 @@ unsigned fmt_multiv(char* buffer, const char* format, va_list ap)
     const char* altstr;
     char conv;
     const str* strp;
+    const void* voidp;
+    fmt_function fn;
 
     for (; *format != 0; ++format) {
       switch (*format) {
@@ -231,6 +239,11 @@ unsigned fmt_multiv(char* buffer, const char* format, va_list ap)
     case 'm':
       ilength = fmt_chars(buffer, strerror(errno), width, pad);
       break;
+    case '@':
+      fn = va_arg(ap, fmt_function);
+      voidp = va_arg(ap, const void*);
+      ilength = fn(buffer, voidp, width, pad);
+      break;
     case '\\':
       ilength = fmt_char(buffer, *++format, width, pad);
       break;
@@ -254,6 +267,11 @@ unsigned fmt_multiv(char* buffer, const char* format, va_list ap)
 
 #ifdef SELFTEST_MAIN
 #include "selftest.c"
+unsigned fmt_bool(char* buffer, const void* data, unsigned width, char pad)
+{
+  return fmt_chars(buffer, data ? "true" : "false", width, pad);
+}
+
 void testit(const char* format, ...)
 {
   char buffer[100];
@@ -289,6 +307,7 @@ MAIN
   testit("X\\|lX\\|llX", 505050505U, 505050505UL, 5050505050505050505ULL);
   testit("i\\|li\\|lli", 505050505U, 505050505UL, 5050505050505050505ULL);
   testit("i\\|li\\|lli", -505050505U, -505050505UL, -5050505050505050505ULL);
+  testit("10@\\|010@", fmt_bool, (void*)1, fmt_bool, (void*)0);
 }
 #endif
 #ifdef SELFTEST_EXP
@@ -304,4 +323,5 @@ MAIN
 34:34:1E1A7589|1E1A7589|4616FF95AFAB7989
 39:39:505050505|505050505|5050505050505050505
 42:42:-505050505|-505050505|-5050505050505050505
+21:21:      true|00000false
 #endif
