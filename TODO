@@ -4,6 +4,10 @@
 
 - Rewrite iobuf and str number conversion routines to use fmt
 
+- Add Jenkin's lookup3 hash http://burtleburtle.net/bob/hash/doobs.html
+  - Replace adt_hashb, or add some other library of hash functions
+  - What about FNV or other good ones?
+
 - Finish DNS library!
   - Implement TCP queries
 
