@@ -1,0 +1,2 @@
+/* sysdep: +hasnoreturn */
+#define __NORETURN__ __attribute__((__noreturn__))
