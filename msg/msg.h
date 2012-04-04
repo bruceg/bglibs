@@ -1,6 +1,7 @@
 #ifndef MSG__H__
 #define MSG__H__
 
+#include <sysdeps.h>
 #include <stdarg.h>
 #include "msg/debug.h"
 
@@ -15,8 +16,8 @@ void msg_warn(const char*, const char*, const char*, const char*, const char*, c
 void msg_warnf(int showsys, const char* format, ...);
 void msg_error(const char*, const char*, const char*, const char*, const char*, const char*, int);
 void msg_errorf(int showsys, const char* format, ...);
-void msg_die(int, const char*, const char*, const char*, const char*, const char*, const char*, int);
-void msg_dief(int code, int showsys, const char* format, ...);
+void msg_die(int code, const char* a, const char* b, const char* c, const char* d, const char* e, const char* f, int showsys) __NORETURN__;
+void msg_dief(int code, int showsys, const char* format, ...) __NORETURN__;
 
 #define msg1(a)           msg(a,0,0,0,0,0)
 #define msg2(a,b)         msg(a,b,0,0,0,0)
