@@ -12,7 +12,10 @@ c:::644::uintnn.h
 c:::644::uint16.h
 c:::644::uint32.h
 c:::644::uint64.h
-  
+
+d:::755:bglibs
+c:::644:bglibs:$2:include/*
+
 d:::755:adt
 c:::644:adt:common.h:adt/common.h
 c:::644:adt:ghash.h:adt/ghash.h
