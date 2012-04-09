@@ -412,6 +412,91 @@ void read_setup_topdir(const char* name)
   setup_topdir(line.s);
 }
 
+static void do_action(unsigned uid, unsigned gid, unsigned mode, const char* dir, const char* dest, const char* src)
+{
+  if (src == 0 || *src == 0)
+    src = dest;
+
+  makepath(dir, dest);
+
+  if (line.s[1] == '?') {
+    const char* testfile;
+    struct stat st;
+    testfile = (line.s[2] != 0) ? line.s + 2 : src;
+    if (lstat(testfile, &st) == -1) {
+      if (errno == ENOENT)
+	return;
+      else
+	diefsys(1, "{Could not stat '}s{'}", testfile);
+    }
+  }
+
+  switch (line.s[0]) {
+  case 'c': c(uid, gid, mode, src); break;
+  case 'd': d(uid, gid, mode); break;
+  case 'l': l(uid, gid, mode, src); break;
+  case 's': s(src); break;
+  default:
+    warnf("{Line #}u{ has invalid command letter, skipping\n}", lineno);
+  }
+}
+
+static void parse_line(void)
+{
+  const char* uidstr = 0;
+  const char* gidstr = 0;
+  const char* modestr = 0;
+  const char* dir = 0;
+  const char* file = 0;
+  const char* src = 0;
+  unsigned uid;
+  unsigned gid;
+  unsigned mode;
+  int i;
+
+  ++lineno;
+  str_rstrip(&line);
+  if (line.len == 0 || line.s[0] == '#')
+    return;
+  if (line.s[0] == '>') {
+    read_setup_topdir(line.s+1);
+    return;
+  }
+
+  str_subst(&line, ':', 0);
+  if ((i = str_findfirst(&line, 0)) > 0) {
+    uidstr = line.s + ++i;
+    if ((i = str_findnext(&line, 0, i)) > 0) {
+      gidstr = line.s + ++i;
+      if ((i = str_findnext(&line, 0, i)) > 0) {
+	modestr = line.s + ++i;
+	if ((i = str_findnext(&line, 0, i)) > 0) {
+	  dir = line.s + ++i;
+	  if ((i = str_findnext(&line, 0, i)) > 0) {
+	    file = line.s + ++i;
+	    if ((i = str_findnext(&line, 0, i)) > 0)
+	      src = line.s + ++i;
+	  }
+	}
+      }
+    }
+  }
+
+  if (dir == 0
+      || (line.s[0] != 'd' && file == 0)) {
+    warnf("{Line #}u{ is missing required fields\n}", lineno);
+    return;
+  }
+  if (!getint(uidstr, &uid, 10, "UID", getpwnam_uid))
+    return;
+  if (!getint(gidstr, &gid, 10, "GID", getgrnam_gid))
+    return;
+  if (!getint(modestr, &mode, 8, "permissions", 0))
+    return;
+
+  do_action(uid, gid, mode, dir, file, src);
+}
+
 int cli_main(int argc, char* argv[])
 {
   if (opt_check)
@@ -421,82 +506,8 @@ int cli_main(int argc, char* argv[])
   if (argv[0] != 0)
     setup_topdir(argv[0]);
 
-  while (ibuf_getstr(&inbuf, &line, LF)) {
-    const char* uidstr = 0;
-    const char* gidstr = 0;
-    const char* modestr = 0;
-    const char* dir = 0;
-    const char* file = 0;
-    const char* src = 0;
-    unsigned uid;
-    unsigned gid;
-    unsigned mode;
-    int i;
-
-    ++lineno;
-    str_rstrip(&line);
-    if (line.len == 0 || line.s[0] == '#')
-      continue;
-    if (line.s[0] == '>') {
-      read_setup_topdir(line.s+1);
-      continue;
-    }
-
-    str_subst(&line, ':', 0);
-    if ((i = str_findfirst(&line, 0)) > 0) {
-      uidstr = line.s + ++i;
-      if ((i = str_findnext(&line, 0, i)) > 0) {
-	gidstr = line.s + ++i;
-	if ((i = str_findnext(&line, 0, i)) > 0) {
-	  modestr = line.s + ++i;
-	  if ((i = str_findnext(&line, 0, i)) > 0) {
-	    dir = line.s + ++i;
-	    if ((i = str_findnext(&line, 0, i)) > 0) {
-	      file = line.s + ++i;
-	      if ((i = str_findnext(&line, 0, i)) > 0)
-		src = line.s + ++i;
-	    }
-	  }
-	}
-      }
-    }
-
-    if (dir == 0
-	|| (line.s[0] != 'd' && file == 0)) {
-      warnf("{Line #}u{ is missing required fields\n}", lineno);
-      continue;
-    }
-    if (!getint(uidstr, &uid, 10, "UID", getpwnam_uid))
-      continue;
-    if (!getint(gidstr, &gid, 10, "GID", getgrnam_gid))
-      continue;
-    if (!getint(modestr, &mode, 8, "permissions", 0))
-      continue;
-    makepath(dir, file);
-
-    if (src == 0 || *src == 0)
-      src = file;
-    if (line.s[1] == '?') {
-      const char* testfile;
-      struct stat st;
-      testfile = (line.s[2] != 0) ? line.s + 2 : src;
-      if (lstat(testfile, &st) == -1) {
-	if (errno == ENOENT)
-	  continue;
-	else
-	  diefsys(1, "{Could not stat '}s{'}", testfile);
-      }
-    }
-
-    switch (line.s[0]) {
-    case 'c': c(uid, gid, mode, src); break;
-    case 'd': d(uid, gid, mode); break;
-    case 'l': l(uid, gid, mode, src); break;
-    case 's': s(src); break;
-    default:
-      warnf("{Line #}u{ has invalid command letter, skipping\n}", lineno);
-    }
-  }
+  while (ibuf_getstr(&inbuf, &line, LF))
+    parse_line();
 
   if (errors > 0)
     dief(1, "d{ errors were detected}", errors);
