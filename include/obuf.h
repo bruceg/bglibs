@@ -2,7 +2,7 @@
 #define IO_BUF__OBUF__H__
 
 #include <stdarg.h>
-#include <iobuf/common.h>
+#include "iobuf_common.h"
 
 /** \defgroup obuf obuf: Output Buffer Management
 

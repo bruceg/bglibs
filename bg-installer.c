@@ -27,9 +27,9 @@
 #include <unistd.h>
 #include "cli/cli.h"
 #include "fmt/number.h"
-#include "iobuf/ibuf.h"
-#include "iobuf/obuf.h"
-#include "iobuf/iobuf.h"
+#include "ibuf.h"
+#include "obuf.h"
+#include "iobuf.h"
 #include "msg/msg.h"
 #include "msg/wrap.h"
 #include "path/path.h"

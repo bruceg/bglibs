@@ -4,7 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "iobuf/iobuf.h"
+#include "iobuf.h"
 #include "msg/msg.h"
 #include "path/path.h"
 #include "str/str.h"

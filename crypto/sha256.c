@@ -179,7 +179,7 @@ void SHA256_final(SHA256_ctx* ctx, uint8* digest)
 }
 
 #ifdef SELFTEST_MAIN
-#include "iobuf/obuf.h"
+#include "obuf.h"
 #include "str/str.h"
 
 static void test(const char* s)

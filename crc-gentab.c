@@ -2,7 +2,7 @@
 #include <string.h>
 
 #include "sysdeps.h"
-#include "iobuf/iobuf.h"
+#include "iobuf.h"
 #include "msg/msg.h"
 
 /* This generalized CRC table generator is derived from the descriptions in

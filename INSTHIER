@@ -62,10 +62,9 @@ c:::644:fmt:multi.h:fmt/multi.h
 c:::644:fmt:number.h:fmt/number.h
 
 d:::755:iobuf
-c:::644:iobuf:common.h:iobuf/common.h
-c:::644:iobuf:ibuf.h:iobuf/ibuf.h
-c:::644:iobuf:iobuf.h:iobuf/iobuf.h
-c:::644:iobuf:obuf.h:iobuf/obuf.h
+s::::iobuf:ibuf.h:../ibuf.h
+s::::iobuf:iobuf.h:../iobuf.h
+s::::iobuf:obuf.h:../obuf.h
 
 d:::755:misc
 c:::644:misc:misc.h:misc/misc.h

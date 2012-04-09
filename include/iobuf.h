@@ -1,9 +1,9 @@
 #ifndef IO_BUF__H__
 #define IO_BUF__H__
 
-#include <iobuf/common.h>
-#include <iobuf/ibuf.h>
-#include <iobuf/obuf.h>
+#include "iobuf_common.h"
+#include "ibuf.h"
+#include "obuf.h"
 
 /** \addtogroup iobuf
  * @{ */

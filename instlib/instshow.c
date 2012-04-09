@@ -7,7 +7,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include "iobuf/obuf.h"
+#include "obuf.h"
 #include "msg/msg.h"
 #include "msg/wrap.h"
 #include "str/str.h"

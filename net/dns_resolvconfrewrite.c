@@ -2,7 +2,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "iobuf/ibuf.h"
+#include "ibuf.h"
 #include "str/iter.h"
 #include "dns.h"
 

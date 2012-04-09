@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "iobuf/obuf.h"
+#include "obuf.h"
 #include "installer.h"
 
 const int msg_show_pid = 0;

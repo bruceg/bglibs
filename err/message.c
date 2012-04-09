@@ -2,7 +2,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include "iobuf/iobuf.h"
+#include "iobuf.h"
 #include "err.h"
 
 static pid_t pid = 0;

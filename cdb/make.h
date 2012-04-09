@@ -3,7 +3,7 @@
 #ifndef CDB_MAKE_H
 #define CDB_MAKE_H
 
-#include "iobuf/iobuf.h"
+#include "iobuf.h"
 #include "sysdeps.h"
 
 #define CDB_HPLIST 1000

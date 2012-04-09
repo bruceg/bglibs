@@ -1,5 +1,5 @@
 #include <string.h>
-#include "iobuf/iobuf.h"
+#include "iobuf.h"
 #include "msg/msg.h"
 #include "msg/wrap.h"
 #include "path/path.h"

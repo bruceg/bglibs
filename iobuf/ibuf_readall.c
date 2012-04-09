@@ -1,4 +1,4 @@
-#include <iobuf/iobuf.h>
+#include "iobuf.h"
 #include <str/str.h>
 
 /** Read the remainder of the \c ibuf into the \c str. */
