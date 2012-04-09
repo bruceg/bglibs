@@ -1,3 +1,6 @@
+#define opendir orig_opendir
+#include "sysdeps.h"
+#undef opendir
 #include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h>
