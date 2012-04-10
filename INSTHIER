@@ -4,7 +4,6 @@ c:::755::cli-generate
 c:::755::crc-gentab
 
 >include
-c:::644::installer.h:instlib/installer.h
 c:::644::sysdeps.h
 c:::644::sysdeps.h
 c:::644::systime.h
@@ -119,9 +118,6 @@ c:::644::socket.lib
 
 l:::755::libbg.la
 l:::755::libbg-sysdeps.la
-c:::644::libbg-installer.a:.libs/libbg-installer.a
-c:::644::libbg-instcheck.a:.libs/libbg-instcheck.a
-c:::644::libbg-instshow.a:.libs/libbg-instshow.a
 
 c:::644::libbg-adt.a:.libs/libbg-adt.a
 c:::644::libbg-base64.a:.libs/libbg-base64.a
@@ -145,9 +141,6 @@ c:::644::libvmailmgr.a:.libs/libvmailmgr.a
 
 # Compatibility links
 s:::::libsysdeps.a:libbg-sysdeps.a:.libs/libbg-sysdeps.a
-s:::::libinstaller.a:libbg-installer.a:.libs/libbg-installer.a
-s:::::libinstcheck.a:libbg-instcheck.a:.libs/libbg-instcheck.a
-s:::::libinstshow.a:libbg-instshow.a:.libs/libbg-instshow.a
 
 d:::755:base64
 s::::base64:base64.a:../libbg-base64.a:.libs/../libbg-base64.a
