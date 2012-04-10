@@ -17,7 +17,6 @@
  */
 #include "cdb.h"
 #include "str.h"
-#include "bglibs/str.h"
 
 int cdb_getnext(struct cdb* cdb, const str* key, str* data)
 {

@@ -24,9 +24,9 @@ d:::755:base64
 s::::base64:base64.h:../base64.h
 
 d:::755:cdb
-c:::644:cdb:cdb.h:cdb/cdb.h
-c:::644:cdb:make.h:cdb/make.h
-c:::644:cdb:str.h:cdb/str.h
+s:::644:cdb:cdb.h:../cdb.h
+s:::644:cdb:make.h:../cdb.h
+s:::644:cdb:str.h:../cdb.h
 
 d:::755:cli
 s::::cli:cli.h:../cli.h
