@@ -5,7 +5,7 @@
 #include <unistd.h>
 
 #include "iobuf.h"
-#include "msg/msg.h"
+#include "msg.h"
 #include "path/path.h"
 #include "str.h"
 

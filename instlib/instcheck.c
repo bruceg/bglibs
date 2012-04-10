@@ -8,8 +8,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include "msg/msg.h"
-#include "msg/wrap.h"
+#include "msg.h"
+#include "wrap.h"
 #include "str.h"
 #include "installer.h"
 

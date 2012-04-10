@@ -17,7 +17,7 @@
  */
 
 #include "iobuf.h"
-#include "msg/msg.h"
+#include "msg.h"
 #include <time.h>
 #include "systime.h"
 #include <stdlib.h>

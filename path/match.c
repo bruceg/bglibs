@@ -23,7 +23,7 @@
 #include "str.h"
 #include "striter.h"
 #include "path.h"
-#include "msg/msg.h"
+#include "msg.h"
 
 static str tmplist;
 static str tmpitem;

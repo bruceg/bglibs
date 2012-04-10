@@ -71,9 +71,9 @@ c:::644:misc:misc.h:misc/misc.h
 c:::644:misc:ucspi.h:misc/ucspi.h
   
 d:::755:msg
-c:::644:msg:debug.h:msg/debug.h
-c:::644:msg:msg.h:msg/msg.h
-c:::644:msg:wrap.h:msg/wrap.h
+s::::msg:debug.h:../debug.h
+s::::msg:msg.h:../msg.h
+s::::msg:wrap.h:../wrap.h
   
 d:::755:net
 c:::644:net:dns.h:net/dns.h

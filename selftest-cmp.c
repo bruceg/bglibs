@@ -1,7 +1,7 @@
 #include <string.h>
 #include "iobuf.h"
-#include "msg/msg.h"
-#include "msg/wrap.h"
+#include "msg.h"
+#include "wrap.h"
 #include "path/path.h"
 #include "str.h"
 

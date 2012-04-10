@@ -1,9 +1,9 @@
 #ifndef MSG__H__
 #define MSG__H__
 
-#include <sysdeps.h>
+#include "sysdeps.h"
 #include <stdarg.h>
-#include "msg/debug.h"
+#include "debug.h"
 
 extern const char program[] __attribute__((__weak__));
 extern const int msg_show_pid __attribute__((__weak__));
