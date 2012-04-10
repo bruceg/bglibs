@@ -88,8 +88,10 @@ directory to use (see below).  All other lines must have following format:
 If \c SOURCE contains wildcards, the command is repeated once for each
 matching filename.
 
-If \c FILENAME is empty, it is replaced with the expanded value of
-\c SOURCE .
+If \c FILENAME is empty, it is replaced with the value of \c SOURCE
+after wildcard expansion.  Each instance of \c $N in \c FILENAME where
+\c N is a single digit is replaced with the Nth part of the source
+filename.  \c $0 is replaced with the whole source filename.
 
 The target filename is \c PREFIX/TOP/DIR/FILENAME where \c PREFIX is the
 value of \c $install_prefix if it is set, \c TOP is the directory given
@@ -169,6 +171,44 @@ static void makepath(str* dest, const char* dir, const char* file)
     wrap_str(str_joins(dest, '/', dir));
   if (file != 0)
     wrap_str(str_joins(dest, '/', file));
+}
+
+static void pathsubst(str* dest, const str* template, const char* filename)
+{
+  striter i;
+  int j;
+  int k;
+  const char* parts[10];
+  static str partstr;
+
+  /* Split up the filename on slashes */
+  wrap_str(str_copys(&partstr, filename));
+  str_subst(&partstr, '/', '\0');
+  parts[0] = filename;
+  for (j = 1, striter_start(&i, &partstr, '\0');
+       j < 10 && striter_valid(&i);
+       j++, striter_advance(&i))
+    parts[j] = partstr.s + i.start;
+  for (; j < 10; j++)
+    parts[j] = 0;
+
+  /* Substitute into global path */
+  dest->len = 0;
+  j = k = 0;
+  while ((k = str_findnext(template, '$', j)) >= 0) {
+    wrap_str(str_catb(dest, template->s+j, k-j));
+    ++k;
+    j = template->s[k];
+    if (j >= '0' && j <= '9') {
+      j -= '0';
+      if (parts[j] != 0)
+	wrap_str(str_cats(dest, parts[j]));
+    }
+    else if (j == '$')
+      wrap_str(str_catc(dest, '$'));
+    j = k + 1;
+  }
+  wrap_str(str_catb(dest, template->s+j, template->len-j));
 }
 
 static void error(const char* msg)
@@ -421,7 +461,9 @@ void read_setup_topdir(const char* name)
 
 static void do_single(unsigned uid, unsigned gid, unsigned mode, const char* dir, const char* dest, const char* src)
 {
-  makepath(&path, dir, (dest == 0 || *dest == 0) ? src : dest);
+  static str pathtmp;
+  makepath(&pathtmp, dir, (dest == 0 || *dest == 0) ? src : dest);
+  pathsubst(&path, &pathtmp, (src == 0) ? "" : src);
 
   if (line.s[1] == '?') {
     const char* testfile;
@@ -448,14 +490,12 @@ static void do_single(unsigned uid, unsigned gid, unsigned mode, const char* dir
 static void do_action(unsigned uid, unsigned gid, unsigned mode, const char* dir, const char* dest, const char* src)
 {
   static str matches;
-  static str pathtmpl;
   striter i;
 
   if (src == 0 || *src == 0)
     src = dest;
 
   if (src != 0 && has_magic(src)) {
-    wrap_str(str_copy(&pathtmpl, &path));
     if (path_match(src, &matches, 0) < 0)
       diefsys(1, "{Could not path match '}s{'}", path.s);
     striter_loop(&i, &matches, '\0')
