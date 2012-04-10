@@ -34,7 +34,7 @@
 #include "msg/wrap.h"
 #include "path/path.h"
 #include "str.h"
-#include "str/iter.h"
+#include "striter.h"
 #include "bg-installer-cli.h"
 
 static const char* prefix;

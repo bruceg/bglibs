@@ -1,6 +1,6 @@
 #include <string.h>
 #include "str.h"
-#include "iter.h"
+#include "striter.h"
 #include "env.h"
 
 /** Get the value of an assignment from an environment string. */

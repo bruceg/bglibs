@@ -1,6 +1,6 @@
 #include <string.h>
 #include "str.h"
-#include "iter.h"
+#include "striter.h"
 #include "env.h"
 
 /** Find the named variable in the environment string.

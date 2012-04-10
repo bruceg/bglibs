@@ -21,7 +21,7 @@
 
 #include "sysdeps.h"
 #include "str.h"
-#include "str/iter.h"
+#include "striter.h"
 #include "path.h"
 #include "msg/msg.h"
 

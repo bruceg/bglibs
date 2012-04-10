@@ -1,4 +1,4 @@
-#include "iter.h"
+#include "striter.h"
 #include "str.h"
 
 /** Advance a striter to the next substring. */

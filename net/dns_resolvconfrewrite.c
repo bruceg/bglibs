@@ -3,7 +3,7 @@
 #include <unistd.h>
 
 #include "ibuf.h"
-#include "str/iter.h"
+#include "striter.h"
 #include "dns.h"
 
 static str data = {0};
