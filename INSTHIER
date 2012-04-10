@@ -95,13 +95,13 @@ s::::str:iter.h:../striter.h
 s::::str:str.h:../str.h
   
 d:::755:unix
-c:::644:unix:cloexec.h:unix/cloexec.h
+s::::unix:cloexec.h:../cloexec.h
 c:::644:unix:fcntl.h:unix/fcntl.h
-c:::644:unix:nonblock.h:unix/nonblock.h
-c:::644:unix:selfpipe.h:unix/selfpipe.h
-c:::644:unix:signalfd.h:unix/signalfd.h
-c:::644:unix:sig.h:unix/sig.h
-c:::644:unix:trigger.h:unix/trigger.h
+s::::unix:nonblock.h:../nonblock.h
+s::::unix:selfpipe.h:../selfpipe.h
+s::::unix:signalfd.h:../signalfd.h
+s::::unix:sig.h:../sig.h
+s::::unix:trigger.h:../trigger.h
   
 d:::755:vmailmgr
 c:::644:vmailmgr:client.h:vmailmgr/client.h

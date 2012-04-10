@@ -2,10 +2,10 @@
 #include <unistd.h>
 
 #include "sysdeps.h"
-#include "unix/cloexec.h"
-#include "unix/nonblock.h"
-#include "unix/sig.h"
-#include "unix/selfpipe.h"
+#include "cloexec.h"
+#include "nonblock.h"
+#include "sig.h"
+#include "selfpipe.h"
 
 static int fds[2] = { -1, -1 };
 

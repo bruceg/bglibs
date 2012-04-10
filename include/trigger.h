@@ -1,7 +1,7 @@
 #ifndef BGLIBS__UNIX__TRIGGER__H__
 #define BGLIBS__UNIX__TRIGGER__H__
 
-#include <sysdeps.h>
+#include "sysdeps.h"
 
 /** \defgroup trigger trigger: Safe external event notification
 

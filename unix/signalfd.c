@@ -2,10 +2,10 @@
 #include <unistd.h>
 
 #include "sysdeps.h"
-#include "unix/cloexec.h"
-#include "unix/nonblock.h"
-#include "unix/sig.h"
-#include "unix/signalfd.h"
+#include "cloexec.h"
+#include "nonblock.h"
+#include "sig.h"
+#include "signalfd.h"
 
 static int fds[2] = { -1, -1 };
 
