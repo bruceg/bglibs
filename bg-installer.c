@@ -159,16 +159,16 @@ static int getint(const char* s, unsigned* i, int base, const char* desc,
   return 1;
 }
 
-static void makepath(const char* dir, const char* file)
+static void makepath(str* dest, const char* dir, const char* file)
 {
-  path.len = 0;
+  dest->len = 0;
   if (prefix != 0)
-    wrap_str(str_copys(&path, prefix));
-  wrap_str(str_join(&path, '/', &topdir));
+    wrap_str(str_copys(dest, prefix));
+  wrap_str(str_join(dest, '/', &topdir));
   if (dir != 0)
-    wrap_str(str_joins(&path, '/', dir));
+    wrap_str(str_joins(dest, '/', dir));
   if (file != 0)
-    wrap_str(str_joins(&path, '/', file));
+    wrap_str(str_joins(dest, '/', file));
 }
 
 static void error(const char* msg)
@@ -398,7 +398,7 @@ void setup_topdir(const char* newpath)
   if (newpath[0] != '/')
     die1(1, "Top directory must start with a slash");
   wrap_str(str_copys(&topdir, newpath));
-  makepath(0, 0);
+  makepath(&path, 0, 0);
   if (!opt_dryrun) {
     if (path_mkdirs(path.s, 0777) != 0
 	&& errno != EEXIST)
@@ -421,7 +421,7 @@ void read_setup_topdir(const char* name)
 
 static void do_single(unsigned uid, unsigned gid, unsigned mode, const char* dir, const char* dest, const char* src)
 {
-  makepath(dir, (dest == 0 || *dest == 0) ? src : dest);
+  makepath(&path, dir, (dest == 0 || *dest == 0) ? src : dest);
 
   if (line.s[1] == '?') {
     const char* testfile;
