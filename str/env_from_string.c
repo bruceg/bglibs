@@ -1,5 +1,5 @@
 #include <string.h>
-#include "bglibs/str.h"
+#include "str.h"
 #include "env.h"
 
 /** Adds the string-based list of assignments to the environment string.

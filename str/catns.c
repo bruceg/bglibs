@@ -17,7 +17,7 @@
  */
 #include <stdarg.h>
 #include <string.h>
-#include "bglibs/str.h"
+#include "str.h"
 
 /** Append N C strings */
 int str_catns(str* s, unsigned int count, ...)

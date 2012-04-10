@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 #include <stdlib.h>
-#include "bglibs/str.h"
+#include "str.h"
 
 /** Free a string's storage.
  * This function also sets all the members of the structure to zero.

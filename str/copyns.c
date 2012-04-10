@@ -17,7 +17,7 @@
  */
 #include <stdarg.h>
 #include <string.h>
-#include "bglibs/str.h"
+#include "str.h"
 
 /** Copy in the concatenation of N C strings */
 int str_copyns(str* s, unsigned int count, ...)

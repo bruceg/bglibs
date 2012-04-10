@@ -18,7 +18,7 @@
 #include <ctype.h>
 #include <string.h>
 
-#include "bglibs/str.h"
+#include "str.h"
 
 /** Match the suffix of the string to a binary chunk. */
 int str_case_endb(const str* a, const char* b, unsigned len)

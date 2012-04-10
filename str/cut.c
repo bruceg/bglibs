@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 #include <string.h>
-#include "bglibs/str.h"
+#include "str.h"
 
 /** Cut \c count bytes from the right (end) of the string */
 void str_rcut(str* s, unsigned count)

@@ -17,7 +17,7 @@
  */
 #include <stdlib.h>
 #include <string.h>
-#include "bglibs/str.h"
+#include "str.h"
 
 /** Allocate storage for a string.
  *

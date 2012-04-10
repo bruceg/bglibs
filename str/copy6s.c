@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 #include <string.h>
-#include "bglibs/str.h"
+#include "str.h"
 
 /** Copy in the concatenation of 6 C strings */
 int str_copy6s(str* s, const char* a, const char* b, const char* c,

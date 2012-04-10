@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 #include <stdlib.h>
-#include "bglibs/str.h"
+#include "str.h"
 
 /** Initialize a string, giving it a small empty allocation. */
 int str_init(str* s)

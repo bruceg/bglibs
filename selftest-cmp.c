@@ -3,7 +3,7 @@
 #include "msg/msg.h"
 #include "msg/wrap.h"
 #include "path/path.h"
-#include "bglibs/str.h"
+#include "str.h"
 
 const char program[] = "selftest-cmp";
 

@@ -1,5 +1,5 @@
 #include <string.h>
-#include "bglibs/str.h"
+#include "str.h"
 #include "iter.h"
 #include "env.h"
 

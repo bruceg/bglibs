@@ -406,7 +406,7 @@ md5_process_block (buffer, len, ctx)
 
 #ifdef SELFTEST_MAIN
 #include <stdio.h>
-#include "bglibs/str.h"
+#include "str.h"
 
 static void MDString(const char* s)
 {

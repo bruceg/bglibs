@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 #include <string.h>
-#include "bglibs/str.h"
+#include "str.h"
 
 /** Append 3 C strings */
 int str_cat3s(str* s, const char* a, const char* b, const char* c)

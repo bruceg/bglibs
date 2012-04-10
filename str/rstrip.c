@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 #include <ctype.h>
-#include "bglibs/str.h"
+#include "str.h"
 
 /** Strip all white space from the right (end) of the string */
 void str_rstrip(str* s)

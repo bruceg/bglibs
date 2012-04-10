@@ -17,7 +17,7 @@
  */
 #include <stdlib.h>
 #include <string.h>
-#include "bglibs/str.h"
+#include "str.h"
 
 static int default_cmp(const str_sortentry* a,
 		       const str_sortentry* b)

@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 #include <ctype.h>
-#include "bglibs/str.h"
+#include "str.h"
 
 /** Translate all upper-case characters to lower-case */
 void str_lower(str* s)

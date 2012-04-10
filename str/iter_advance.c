@@ -1,5 +1,5 @@
 #include "iter.h"
-#include "bglibs/str.h"
+#include "str.h"
 
 /** Advance a striter to the next substring. */
 int striter_advance(striter* iter)

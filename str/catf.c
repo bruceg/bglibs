@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
-#include "bglibs/str.h"
+#include "str.h"
 #include "fmt/multi.h"
 
 /** Append formatted data using \c fmt_multi from a \c va_list */

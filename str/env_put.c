@@ -1,5 +1,5 @@
 #include <string.h>
-#include "bglibs/str.h"
+#include "str.h"
 #include "env.h"
 
 /** Put an assignment, in \c NAME=value format, into the environment

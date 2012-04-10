@@ -57,7 +57,7 @@ const struct hmac_control_block hmac_md5 = {
 
 #ifdef SELFTEST_MAIN
 #include <stdio.h>
-#include "bglibs/str.h"
+#include "str.h"
 
 static void HMACTest(const char* key, const char* data)
 {

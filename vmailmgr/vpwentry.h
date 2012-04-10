@@ -1,7 +1,7 @@
 #ifndef VMAILMGR__VPWENTRY__H__
 #define VMAILMGR__VPWENTRY__H__
 
-#include "bglibs/str.h"
+#include <bglibs/str.h>
 
 struct vpwentry 
 {

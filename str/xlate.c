@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 #include <ctype.h>
-#include "bglibs/str.h"
+#include "str.h"
 
 /** Substitute one character for another throughout the string.
     \returns the number of substitutions made.

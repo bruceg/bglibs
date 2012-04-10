@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 #include <string.h>
-#include "bglibs/str.h"
+#include "str.h"
 
 /** Find the next instance of the given character, on or after \c pos */
 int str_findnext(const str* s, char ch, unsigned pos)

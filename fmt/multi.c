@@ -21,7 +21,7 @@
 #include "misc.h"
 #include "multi.h"
 #include "number.h"
-#include "bglibs/str.h"
+#include "str.h"
 
 /** Format multiple items.
 
