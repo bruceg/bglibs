@@ -23,7 +23,7 @@ c:::644:adt:gqueue.h:adt/gqueue.h
 c:::644:adt:gstack.h:adt/gstack.h
 
 d:::755:base64
-c:::644:base64:base64.h:base64/base64.h
+s::::base64:base64.h:../base64.h
 
 d:::755:cdb
 c:::644:cdb:cdb.h:cdb/cdb.h

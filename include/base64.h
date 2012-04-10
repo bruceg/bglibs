@@ -1,7 +1,7 @@
 #ifndef BASE64__H__
 #define BASE64__H__
 
-#include <bglibs/str.h>
+#include "str.h"
 
 #define BASE64_PAD '='
 
