@@ -52,8 +52,8 @@ s::::crypto:surf.h:../surf.h
 s::::crypto:surfrand.h:../surfrand.h
  
 d:::755:dict
-c:::644:dict:dict.h:dict/dict.h
-c:::644:dict:load.h:dict/load.h
+s::::dict:dict.h:../dict.h
+s::::dict:load.h:../dict.h
   
 d:::755:fmt
 c:::644:fmt:misc.h:fmt/misc.h

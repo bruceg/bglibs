@@ -1,7 +1,7 @@
 #ifndef DICT__H__
 #define DICT__H__
 
-#include <bglibs/str.h>
+#include "str.h"
 #include "uint32.h"
 
 #define DICT_HASHSTART 5381
@@ -31,5 +31,10 @@ extern int dict_add(dict*, const str*, void*);
 extern dict_entry* dict_get(dict*, const str*);
 extern void dict_foreach(dict* d, void (*fn)(const str* key, void** dataptr));
 extern void dict_str_free(void*);
+
+extern int dict_load_list(dict*, const char* filename,  int mustexist,
+			  int (*xform)(str*));
+extern int dict_load_map(dict*, const char* filename, int mustexist, char sep,
+			 int (*keyxform)(str*), int (*valxform)(str*));
 
 #endif
