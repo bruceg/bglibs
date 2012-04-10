@@ -17,7 +17,7 @@
  */
 #include "sysdeps.h"
 #include <string.h>
-#include "str/str.h"
+#include "bglibs/str.h"
 #include "hmac.h"
 
 /** Precalculate the HMAC intermediate values.

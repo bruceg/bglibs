@@ -17,7 +17,7 @@
  */
 #include <string.h>
 
-#include "str.h"
+#include "bglibs/str.h"
 
 /** Match the prefix of the string to a C string. */
 int str_starts(const str* a, const char* b)

@@ -55,7 +55,6 @@ void SHA384_final(SHA384_ctx* ctx, uint8* digest)
 
 #ifdef SELFTEST_MAIN
 #include "obuf.h"
-#include "str/str.h"
 
 static void test(const char* s)
 {

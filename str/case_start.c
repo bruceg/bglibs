@@ -18,7 +18,7 @@
 #include <ctype.h>
 #include <string.h>
 
-#include "str.h"
+#include "bglibs/str.h"
 
 /** Match the prefix of the string to a binary chunk. */
 int str_case_startb(const str* a, const char* b, unsigned len)

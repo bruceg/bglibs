@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
-#include "str.h"
+#include "bglibs/str.h"
 
 /** Append an unsigned integer, optionally padded to a minimum width */
 int str_catunumw(str* s, unsigned long in, unsigned width, char pad,

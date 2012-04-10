@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <str/str.h>
+#include <bglibs/str.h>
 
 /* GLOB patterns:
  * *      matches everything

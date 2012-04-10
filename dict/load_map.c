@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "iobuf.h"
-#include "str/str.h"
+#include "str.h"
 #include "dict.h"
 #include "load.h"
 

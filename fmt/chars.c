@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 #include <string.h>
-#include "str/str.h"
+#include "bglibs/str.h"
 #include "misc.h"
 
 /* Format a block of characters */

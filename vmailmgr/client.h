@@ -1,7 +1,7 @@
 #ifndef VMAILMGR__CLIENT__H__
 #define VMAILMGR__CLIENT__H__
 
-#include "str/str.h"
+#include "bglibs/str.h"
 
 #define VCLIENT_MAXLEN 65535
 struct vclient_req

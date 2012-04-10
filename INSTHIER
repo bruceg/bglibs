@@ -93,7 +93,7 @@ c:::644:pwcmp:module.h:pwcmp/module.h
 d:::755:str
 c:::644:str:env.h:str/env.h
 c:::644:str:iter.h:str/iter.h
-c:::644:str:str.h:str/str.h
+s::::str:str.h:../str.h
   
 d:::755:unix
 c:::644:unix:cloexec.h:unix/cloexec.h

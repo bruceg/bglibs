@@ -1,7 +1,7 @@
 #ifndef LIB__PATH__H__
 #define LIB__PATH__H__
 
-#include "str/str.h"
+#include "bglibs/str.h"
 
 /** \defgroup path path: Filename manipulation functions
 

@@ -1,5 +1,5 @@
 #include <string.h>
-#include "str.h"
+#include "bglibs/str.h"
 #include "env.h"
 
 /** Set the named variable to the given value in the environment string. */

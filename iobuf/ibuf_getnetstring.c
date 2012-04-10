@@ -1,6 +1,6 @@
 #include <errno.h>
 #include "ibuf.h"
-#include "str/str.h"
+#include "str.h"
 
 /** Read a netstring from the given \c ibuf .
 

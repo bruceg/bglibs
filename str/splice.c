@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 #include <string.h>
-#include "str.h"
+#include "bglibs/str.h"
 
 /* Insert one string into another */
 int str_splice(str* s, unsigned start, unsigned len, const str* r)

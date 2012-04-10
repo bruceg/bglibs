@@ -7,7 +7,7 @@
 #include "iobuf.h"
 #include "msg/msg.h"
 #include "path/path.h"
-#include "str/str.h"
+#include "bglibs/str.h"
 
 const char program[] = "selftest";
 const int msg_show_pid = 0;

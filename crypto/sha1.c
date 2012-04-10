@@ -156,7 +156,7 @@ void SHA1Final(SHA1_CTX* context, unsigned char digest[SHA1_DIGEST_LENGTH])
 }
 
 #ifdef SELFTEST_MAIN
-#include "str/str.h"
+#include "bglibs/str.h"
 
 static SHA1_CTX ctx;
 

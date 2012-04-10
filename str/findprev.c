@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
-#include "str.h"
+#include "bglibs/str.h"
 
 /** Find the previous instance of the given character on or before \c pos */
 int str_findprev(const str* s, char ch, unsigned pos)

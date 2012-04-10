@@ -1,5 +1,5 @@
 #include "iter.h"
-#include "str.h"
+#include "bglibs/str.h"
 
 /** Start (initialize) a striter. */
 void striter_start(striter* iter, const struct str* s, char sep)

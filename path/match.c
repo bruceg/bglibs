@@ -20,7 +20,7 @@
 #include <sys/stat.h>
 
 #include "sysdeps.h"
-#include "str/str.h"
+#include "bglibs/str.h"
 #include "str/iter.h"
 #include "path.h"
 #include "msg/msg.h"

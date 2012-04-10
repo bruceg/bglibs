@@ -1,5 +1,5 @@
 #include <string.h>
-#include "str.h"
+#include "bglibs/str.h"
 #include "env.h"
 
 /** Adds the assignments from the array of pointers to the environment

@@ -18,7 +18,7 @@
 #include <ctype.h>
 #include <string.h>
 
-#include "str.h"
+#include "bglibs/str.h"
 
 /** Simple but fast (linear time) pattern matching on binary pattern. */
 int str_case_matchb(const str* s, const char* pptr, unsigned plen)

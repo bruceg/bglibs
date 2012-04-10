@@ -5,7 +5,7 @@
 #include <systime.h>
 #include <net/ipv4.h>
 #include <net/ipv6.h>
-#include <str/str.h>
+#include <bglibs/str.h>
 #include <uint16.h>
 
 /** True if \c struct \c timeval \c A is less than \c B */

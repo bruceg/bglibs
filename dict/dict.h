@@ -1,7 +1,7 @@
 #ifndef DICT__H__
 #define DICT__H__
 
-#include "str/str.h"
+#include "bglibs/str.h"
 #include "uint32.h"
 
 #define DICT_HASHSTART 5381

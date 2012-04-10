@@ -1,4 +1,4 @@
-#include "str.h"
+#include "bglibs/str.h"
 
 /** Lower-case digits, also used for decimal numbers. */
 const char str_lcase_digits[36] = "0123456789abcdefghijklmnopqrstuvwxyz";

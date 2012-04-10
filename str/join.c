@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 #include <string.h>
-#include "str.h"
+#include "bglibs/str.h"
 
 /** Join two strings together with exactly one instance of the seperator. */
 int str_join(str* s, char sep, const str* in)

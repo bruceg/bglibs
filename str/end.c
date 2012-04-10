@@ -17,7 +17,7 @@
  */
 #include <string.h>
 
-#include "str.h"
+#include "bglibs/str.h"
 
 /** Match the suffix of the string to a C string. */
 int str_ends(const str* a, const char* b)

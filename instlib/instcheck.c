@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include "msg/msg.h"
 #include "msg/wrap.h"
-#include "str/str.h"
+#include "bglibs/str.h"
 #include "installer.h"
 
 const char program[] = "instcheck";

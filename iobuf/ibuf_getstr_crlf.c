@@ -15,7 +15,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 #include "ibuf.h"
-#include "str/str.h"
+#include "str.h"
 
 /** Read a line from the \c ibuf into a dynamic string, terminated by a CR+LF pair. */
 int ibuf_getstr_crlf(ibuf* in, struct str* s)
