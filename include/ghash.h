@@ -1,7 +1,7 @@
 #ifndef BGLIBS__GENERIC_HASH__H__
 #define BGLIBS__GENERIC_HASH__H__
 
-#include <adt/common.h>
+#include "adt_common.h"
 
 /** \defgroup adt_ghash adt ghash: Generic hash tables.
  *

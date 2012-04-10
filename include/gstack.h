@@ -1,7 +1,7 @@
 #ifndef BGLIBS__GENERIC_STACK__H__
 #define BGLIBS__GENERIC_STACK__H__
 
-#include <adt/common.h>
+#include "adt_common.h"
 
 /** \defgroup adt_gstack adt gstack: Generic simple stack.
  *

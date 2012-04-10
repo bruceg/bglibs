@@ -17,10 +17,9 @@ d:::755:bglibs
 c:::644:bglibs:$2:include/*
 
 d:::755:adt
-c:::644:adt:common.h:adt/common.h
-c:::644:adt:ghash.h:adt/ghash.h
-c:::644:adt:gqueue.h:adt/gqueue.h
-c:::644:adt:gstack.h:adt/gstack.h
+s::::adt:ghash.h:../ghash.h
+s::::adt:gqueue.h:../gqueue.h
+s::::adt:gstack.h:../gstack.h
 
 d:::755:base64
 s::::base64:base64.h:../base64.h

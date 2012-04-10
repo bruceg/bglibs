@@ -1,7 +1,7 @@
 #ifndef BGLIBS__GENERIC_QUEUE__H__
 #define BGLIBS__GENERIC_QUEUE__H__
 
-#include <adt/common.h>
+#include "adt_common.h"
 
 /** \defgroup adt_gqueue adt gqueue: Generic simple queue.
  *
