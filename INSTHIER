@@ -82,7 +82,7 @@ c:::644:net:resolve.h:net/resolve.h
 c:::644:net:socket.h:net/socket.h
   
 d:::755:path
-c:::644:path:path.h:path/path.h
+s::::path:path.h:../path.h
 
 d:::755:pwcmp
 c:::644:pwcmp:client.h:pwcmp/client.h

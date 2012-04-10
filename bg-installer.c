@@ -32,7 +32,7 @@
 #include "iobuf.h"
 #include "msg.h"
 #include "wrap.h"
-#include "path/path.h"
+#include "path.h"
 #include "str.h"
 #include "striter.h"
 #include "bg-installer-cli.h"

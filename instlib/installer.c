@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include "msg.h"
 #include "wrap.h"
-#include "path/path.h"
+#include "path.h"
 #include "str.h"
 #include "installer.h"
 

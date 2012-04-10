@@ -6,7 +6,7 @@
 
 #include "iobuf.h"
 #include "msg.h"
-#include "path/path.h"
+#include "path.h"
 #include "str.h"
 
 const char program[] = "selftest";
