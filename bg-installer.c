@@ -34,6 +34,7 @@
 #include "msg/wrap.h"
 #include "path/path.h"
 #include "str/str.h"
+#include "str/iter.h"
 
 static int opt_verbose = 0;
 static int opt_dryrun = 0;
@@ -83,6 +84,12 @@ directory to use (see below).  All other lines must have following format:
   directory.  It may be omitted for directories.
 - SOURCE (optional) is the name of the source file to install, if it
   differs from the destination file, or the path in the symlink.
+
+If \c SOURCE contains wildcards, the command is repeated once for each
+matching filename.
+
+If \c FILENAME is empty, it is replaced with the expanded value of
+\c SOURCE .
 
 The target filename is \c PREFIX/TOP/DIR/FILENAME where \c PREFIX is the
 value of \c $install_prefix if it is set, \c TOP is the directory given
@@ -412,12 +419,9 @@ void read_setup_topdir(const char* name)
   setup_topdir(line.s);
 }
 
-static void do_action(unsigned uid, unsigned gid, unsigned mode, const char* dir, const char* dest, const char* src)
+static void do_single(unsigned uid, unsigned gid, unsigned mode, const char* dir, const char* dest, const char* src)
 {
-  if (src == 0 || *src == 0)
-    src = dest;
-
-  makepath(dir, dest);
+  makepath(dir, (dest == 0 || *dest == 0) ? src : dest);
 
   if (line.s[1] == '?') {
     const char* testfile;
@@ -439,6 +443,26 @@ static void do_action(unsigned uid, unsigned gid, unsigned mode, const char* dir
   default:
     warnf("{Line #}u{ has invalid command letter, skipping\n}", lineno);
   }
+}
+
+static void do_action(unsigned uid, unsigned gid, unsigned mode, const char* dir, const char* dest, const char* src)
+{
+  static str matches;
+  static str pathtmpl;
+  striter i;
+
+  if (src == 0 || *src == 0)
+    src = dest;
+
+  if (src != 0 && has_magic(src)) {
+    wrap_str(str_copy(&pathtmpl, &path));
+    if (path_match(src, &matches, 0) < 0)
+      diefsys(1, "{Could not path match '}s{'}", path.s);
+    striter_loop(&i, &matches, '\0')
+      do_single(uid, gid, mode, dir, dest, i.startptr);
+  }
+  else
+    do_single(uid, gid, mode, dir, dest, src);
 }
 
 static void parse_line(void)
