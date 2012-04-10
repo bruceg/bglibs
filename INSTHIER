@@ -65,8 +65,8 @@ s::::iobuf:iobuf.h:../iobuf.h
 s::::iobuf:obuf.h:../obuf.h
 
 d:::755:misc
-c:::644:misc:misc.h:misc/misc.h
-c:::644:misc:ucspi.h:misc/ucspi.h
+s::::misc:misc.h:../misc.h
+s::::misc:ucspi.h:../ucspi.h
   
 d:::755:msg
 s::::msg:debug.h:../debug.h

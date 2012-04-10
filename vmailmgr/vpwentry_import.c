@@ -2,7 +2,7 @@
 #include <limits.h>
 #include <string.h>
 #include "systime.h"
-#include "misc/misc.h"
+#include "misc.h"
 #include "vpwentry.h"
 
 static const char* from_uint(const char* ptr, unsigned* u)

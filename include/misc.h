@@ -1,7 +1,8 @@
 #ifndef MISC__H__
 #define MISC__H__
 
-#include <sysdeps.h>
+#include "sysdeps.h"
+
 extern void random_init(uint32 seed);
 extern uint32 random_int(void);
 #define random_float() (random_int() * (double)(1.0/4294967296.0))
