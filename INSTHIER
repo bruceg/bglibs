@@ -34,13 +34,13 @@ d:::755:cli
 c:::644:cli:cli.h:cli/cli.h
 
 d:::755:crc
-c:::644:crc:crc16_arc.h:crc/crc16_arc.h
-c:::644:crc:crc16_ccitt.h:crc/crc16_ccitt.h
-c:::644:crc:crc16_xmodem.h:crc/crc16_xmodem.h
-c:::644:crc:crc32.h:crc/crc32.h
-c:::644:crc:crc32c.h:crc/crc32c.h
-c:::644:crc:crc64.h:crc/crc64.h
-c:::644:crc:gcrc.h:crc/gcrc.h
+s::::crc:crc16_arc.h:../crc16_arc.h
+s::::crc:crc16_ccitt.h:../crc16_ccitt.h
+s::::crc:crc16_xmodem.h:../crc16_xmodem.h
+s::::crc:crc32.h:../crc32.h
+s::::crc:crc32c.h:../crc32c.h
+s::::crc:crc64.h:../crc64.h
+s::::crc:gcrc.h:../gcrc.h
 
 d:::755:crypto
 c:::644:crypto:hmac.h:crypto/hmac.h

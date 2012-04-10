@@ -1,7 +1,7 @@
 #ifndef CRC16__ARC__H__
 #define CRC16__ARC__H__
 
-#include <crc/gcrc.h>
+#include "gcrc.h"
 
 #define CRC16_ARC_POLY ((uint16)0x8005)
 #define CRC16_ARC_INIT ((uint16)0)

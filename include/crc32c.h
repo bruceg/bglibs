@@ -1,7 +1,7 @@
 #ifndef CRC32C__H__
 #define CRC32C__H__
 
-#include <crc/gcrc.h>
+#include "gcrc.h"
 
 #define CRC32CPOLY    ((uint32)0x1EDC6F41UL)
 #define CRC32CINIT    ((uint32)0xFFFFFFFFUL)

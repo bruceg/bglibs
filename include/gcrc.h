@@ -1,7 +1,7 @@
 #ifndef GENERIC_CRC__H__
 #define GENERIC_CRC__H__
 
-#include <sysdeps.h>
+#include "sysdeps.h"
 
 uint16 gcrc16fwd(uint16, const char*, long len, const uint16[256]);
 uint16 gcrc16rfl(uint16, const char*, long len, const uint16[256]);

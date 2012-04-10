@@ -1,7 +1,7 @@
 #ifndef CRC16__CCITT__H__
 #define CRC16__CCITT__H__
 
-#include <crc/gcrc.h>
+#include "gcrc.h"
 
 #define CRC16_CCITT_POLY ((uint16)0x1021)
 #define CRC16_CCITT_INIT ((uint16)0xffff)

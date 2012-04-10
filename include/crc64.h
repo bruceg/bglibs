@@ -1,7 +1,7 @@
 #ifndef CRC64__H__
 #define CRC64__H__
 
-#include <crc/gcrc.h>
+#include "gcrc.h"
 
 /* Polynomial: x^64 + x^62 + x^57 + x^55 + x^54 + x^53 + x^52 + x^47 +
  * x^46 + x^45 + x^40 + x^39 + x^38 + x^37 + x^35 + x^33 + x^32 + x^31 +

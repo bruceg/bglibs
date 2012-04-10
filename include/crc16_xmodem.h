@@ -1,7 +1,7 @@
 #ifndef CRC16__XMODEM__H__
 #define CRC16__XMODEM__H__
 
-#include <uint16.h>
+#include "uint16.h"
 
 #define CRC16_XMODEM_POLY ((uint16)0x8408)
 #define CRC16_XMODEM_INIT ((uint16)0x0000)

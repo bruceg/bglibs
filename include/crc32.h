@@ -1,8 +1,8 @@
 #ifndef CRC32__H__
 #define CRC32__H__
 
-#include <crc/gcrc.h>
-#include <uint32.h>
+#include "gcrc.h"
+#include "uint32.h"
 
 #define CRC32POLY    ((uint32)0x04C11DB7UL)
 #define CRC32REVPOLY ((uint32)0xEDB88320UL)
