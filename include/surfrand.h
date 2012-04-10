@@ -1,7 +1,7 @@
 #ifndef BGLIBS__SURFRAND__H__
 #define BGLIBS__SURFRAND__H__
 
-#include <crypto/surf.h>
+#include "surf.h"
 
 /** \defgroup surfrand surfrand: Random number generator based on SURF
 @{ */

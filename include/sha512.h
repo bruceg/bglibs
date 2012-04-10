@@ -1,7 +1,7 @@
 #ifndef BGLIBS__SHA512__H__
 #define BGLIBS__SHA512__H__
 
-#include <sysdeps.h>
+#include "sysdeps.h"
 
 #define SHA512_DIGEST_LENGTH (512/8)
 

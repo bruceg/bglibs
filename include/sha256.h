@@ -1,7 +1,7 @@
 #ifndef BGLIBS__SHA256__H__
 #define BGLIBS__SHA256__H__
 
-#include <sysdeps.h>
+#include "sysdeps.h"
 
 #define SHA256_DIGEST_LENGTH (256/8)
 

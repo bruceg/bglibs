@@ -1,9 +1,9 @@
 #ifndef BGLIBS__SURF__H__
 #define BGLIBS__SURF__H__
 
-#include <uint32.h>
+#include "uint32.h"
 
-/** \defgroup crypto crypto: Cryptographic routines 
+/** \defgroup crypto crypto: Cryptographic routines
 @{ */
 
 /** The number of 32-bit words output by surf */

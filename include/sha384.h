@@ -1,8 +1,8 @@
 #ifndef BGLIBS__SHA384__H__
 #define BGLIBS__SHA384__H__
 
-#include <sysdeps.h>
-#include <crypto/sha512.h>
+#include "sysdeps.h"
+#include "sha512.h"
 
 #define SHA384_DIGEST_LENGTH (384/8)
 

@@ -9,7 +9,7 @@
 #ifndef _SHA1_H
 # define _SHA1_H
 
-#include <sysdeps.h>
+#include "sysdeps.h"
 
 #define SHA1_DIGEST_LENGTH 20
 #define SHA1_BLOCK_LENGTH 64
@@ -31,4 +31,3 @@ void SHA1Final(SHA1_CTX* context, unsigned char digest[SHA1_DIGEST_LENGTH]);
 # define SHA1_Final SHA1Final
 
 #endif
-

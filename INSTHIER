@@ -43,14 +43,14 @@ s::::crc:crc64.h:../crc64.h
 s::::crc:gcrc.h:../gcrc.h
 
 d:::755:crypto
-c:::644:crypto:hmac.h:crypto/hmac.h
-c:::644:crypto:md5.h:crypto/md5.h
-c:::644:crypto:sha1.h:crypto/sha1.h
-c:::644:crypto:sha256.h:crypto/sha256.h
-c:::644:crypto:sha384.h:crypto/sha384.h
-c:::644:crypto:sha512.h:crypto/sha512.h
-c:::644:crypto:surf.h:crypto/surf.h
-c:::644:crypto:surfrand.h:crypto/surfrand.h
+s::::crypto:hmac.h:../hmac.h
+s::::crypto:md5.h:../md5.h
+s::::crypto:sha1.h:../sha1.h
+s::::crypto:sha256.h:../sha256.h
+s::::crypto:sha384.h:../sha384.h
+s::::crypto:sha512.h:../sha512.h
+s::::crypto:surf.h:../surf.h
+s::::crypto:surfrand.h:../surfrand.h
  
 d:::755:dict
 c:::644:dict:dict.h:dict/dict.h
