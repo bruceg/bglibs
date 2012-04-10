@@ -1,5 +1,5 @@
 #include <string.h>
-#include "number.h"
+#include "fmt.h"
 
 /** Format a pad character. */
 unsigned fmt_pad(char* buffer, unsigned width, char pad)

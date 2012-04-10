@@ -26,7 +26,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include "cli.h"
-#include "fmt/number.h"
+#include "fmt.h"
 #include "ibuf.h"
 #include "obuf.h"
 #include "iobuf.h"

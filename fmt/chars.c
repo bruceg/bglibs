@@ -17,7 +17,7 @@
  */
 #include <string.h>
 #include "str.h"
-#include "misc.h"
+#include "fmt.h"
 
 /* Format a block of characters */
 unsigned fmt_mem(char* buffer, const char* s, unsigned length,

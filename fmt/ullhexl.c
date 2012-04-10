@@ -1,4 +1,4 @@
-#include "number.h"
+#include "fmt.h"
 
 /** Format an unsigned long long integer as hexadecimal with padding. */
 unsigned fmt_ullhexw(char* buffer, unsigned long long num,

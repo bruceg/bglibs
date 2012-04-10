@@ -1,6 +1,6 @@
 #include <string.h>
 #include "obuf.h"
-#include "fmt/multi.h"
+#include "fmt.h"
 
 /** Write a formatted string using \c fmt_multi from a \c va_list */
 int obuf_putfv(obuf* out, const char* format, va_list ap)

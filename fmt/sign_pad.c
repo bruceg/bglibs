@@ -1,5 +1,5 @@
 #include <string.h>
-#include "number.h"
+#include "fmt.h"
 
 /** Format padding for a signed number. */
 unsigned fmt_sign_pad(char* buffer, int sign, unsigned width, char pad)

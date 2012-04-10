@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 #include "str.h"
-#include "fmt/multi.h"
+#include "fmt.h"
 
 /** Append formatted data using \c fmt_multi from a \c va_list */
 int str_catfv(str* s, const char* format, va_list ap)

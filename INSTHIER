@@ -56,9 +56,9 @@ s::::dict:dict.h:../dict.h
 s::::dict:load.h:../dict.h
   
 d:::755:fmt
-c:::644:fmt:misc.h:fmt/misc.h
-c:::644:fmt:multi.h:fmt/multi.h
-c:::644:fmt:number.h:fmt/number.h
+s::::fmt:misc.h:../fmt.h
+s::::fmt:multi.h:../fmt.h
+s::::fmt:number.h:../fmt.h
 
 d:::755:iobuf
 s::::iobuf:ibuf.h:../ibuf.h

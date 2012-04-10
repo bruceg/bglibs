@@ -1,6 +1,6 @@
 #include <string.h>
 
-#include "fmt/number.h"
+#include "fmt.h"
 #include "dns.h"
 
 /** Generate the reverse domain name for an IPv4 address. */

@@ -1,6 +1,9 @@
 #ifndef FMT__NUMBER__H__
 #define FMT__NUMBER__H__
 
+#include <stdarg.h>
+struct str;
+
 /** \defgroup fmt fmt: Formatting Functions
 
 \par Function Naming
@@ -114,6 +117,35 @@ extern unsigned fmt_ullhexw(char* buffer, unsigned long long num,
 extern unsigned fmt_ullHex(char* buffer, unsigned long long num);
 extern unsigned fmt_ullHexw(char* buffer, unsigned long long num,
 			    unsigned width, char pad);
+
+/** @} */
+
+/** \name Miscelaneous formatting
+
+@{ */
+
+extern unsigned fmt_char(char* buffer, int ch, unsigned width, char pad);
+extern unsigned fmt_mem(char* buffer, const char* s, unsigned length,
+			unsigned width, char pad);
+extern unsigned fmt_chars(char* buffer, const char* s,
+			  unsigned width, char pad);
+extern unsigned fmt_str(char* buffer, const struct str* s,
+			unsigned width, char pad);
+
+/** @} */
+
+/** \name Multiple item formatting
+
+@{ */
+
+/** Format function prototype, used by the "@" conversion in fmt_multi() */
+typedef unsigned (*fmt_function)(char* buffer,
+				 const void* data,
+				 unsigned width,
+				 char pad);
+
+extern unsigned fmt_multi(char* buffer, const char* format, ...);
+extern unsigned fmt_multiv(char* buffer, const char* format, va_list ap);
 
 /** @} */
 
