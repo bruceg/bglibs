@@ -17,8 +17,7 @@
  */
 #include <sys/types.h>
 #include <fcntl.h>
-#include "fcntl.h"
-#include "nonblock.h"
+#include "unix.h"
 
 #ifndef O_NONBLOCK
 #define O_NONBLOCK O_NDELAY

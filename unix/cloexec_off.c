@@ -17,8 +17,7 @@
  */
 #include <sys/types.h>
 #include <fcntl.h>
-#include "fcntl.h"
-#include "cloexec.h"
+#include "unix.h"
 
 int cloexec_off(int fd)
 {

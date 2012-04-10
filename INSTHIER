@@ -95,9 +95,9 @@ s::::str:iter.h:../striter.h
 s::::str:str.h:../str.h
   
 d:::755:unix
-s::::unix:cloexec.h:../cloexec.h
-c:::644:unix:fcntl.h:unix/fcntl.h
-s::::unix:nonblock.h:../nonblock.h
+s::::unix:cloexec.h:../unix.h
+s::::unix:fcntl.h:../unix.h
+s::::unix:nonblock.h:../unix.h
 s::::unix:selfpipe.h:../selfpipe.h
 s::::unix:signalfd.h:../signalfd.h
 s::::unix:sig.h:../sig.h

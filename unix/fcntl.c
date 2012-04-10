@@ -3,7 +3,7 @@
 #ifdef SELFTEST_MAIN
 #include <unistd.h>
 #include <fcntl.h>
-#include "fcntl.h"
+#include "unix.h"
 
 static void fdtest(int fd, int flag)
 {

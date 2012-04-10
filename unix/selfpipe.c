@@ -2,8 +2,7 @@
 #include <unistd.h>
 
 #include "sysdeps.h"
-#include "cloexec.h"
-#include "nonblock.h"
+#include "unix.h"
 #include "sig.h"
 #include "selfpipe.h"
 

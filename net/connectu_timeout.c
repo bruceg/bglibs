@@ -18,7 +18,7 @@
 #include "sysdeps.h"
 #include <errno.h>
 #include "socket.h"
-#include "nonblock.h"
+#include "unix.h"
 
 /** Connect a socket to an UNIX domain address, honouring a timeout.
  *

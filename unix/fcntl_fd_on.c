@@ -17,7 +17,7 @@
  */
 #include <sys/types.h>
 #include <fcntl.h>
-#include "fcntl.h"
+#include "unix.h"
 
 int fcntl_fd_on(int fd, int flag)
 {
