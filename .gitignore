@@ -20,7 +20,8 @@ compile
 crc-gentab
 crc/crc*_table.c
 doc
-libcompile
+ltcompile
+ltload
 load
 makelib
 makeshlib
