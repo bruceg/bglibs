@@ -1,12 +1,12 @@
 #ifndef DNS_H
 #define DNS_H
 
-#include <sysdeps.h>
-#include <systime.h>
-#include <net/ipv4.h>
-#include <net/ipv6.h>
-#include <str.h>
-#include <uint16.h>
+#include "sysdeps.h"
+#include "systime.h"
+#include "ipv4.h"
+#include "ipv6.h"
+#include "str.h"
+#include "uint16.h"
 
 /** True if \c struct \c timeval \c A is less than \c B */
 #define TV_LESS(A,B) (((A)->tv_sec < (B)->tv_sec) || ((A)->tv_sec == (B)->tv_sec && (A)->tv_usec < (B)->tv_usec))

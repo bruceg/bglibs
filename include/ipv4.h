@@ -1,7 +1,7 @@
 #ifndef NET__IPV4__H__
 #define NET__IPV4__H__
 
-#include <sysdeps.h>
+#include "sysdeps.h"
 
 /** \defgroup ipv4 ipv4: IPv4 Address Handling
 

@@ -1,7 +1,7 @@
 #ifndef NET__IPV6__H__
 #define NET__IPV6__H__
 
-#include <sysdeps.h>
+#include "sysdeps.h"
 
 /** \defgroup ipv6 ipv6: IPv6 Address Handling
 

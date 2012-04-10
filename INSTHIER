@@ -75,12 +75,12 @@ s::::msg:msg.h:../msg.h
 s::::msg:wrap.h:../wrap.h
   
 d:::755:net
-c:::644:net:dns.h:net/dns.h
-c:::644:net:ipv4.h:net/ipv4.h
-c:::644:net:ipv6.h:net/ipv6.h
-c:::644:net:resolve.h:net/resolve.h
-c:::644:net:socket.h:net/socket.h
-  
+s:::644:net:dns.h:../dns.h
+s:::644:net:ipv4.h:../ipv4.h
+s:::644:net:ipv6.h:../ipv6.h
+s:::644:net:resolve.h:../resolve.h
+s:::644:net:socket.h:../socket.h
+
 d:::755:path
 s::::path:path.h:../path.h
 
