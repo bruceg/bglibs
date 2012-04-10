@@ -1,7 +1,7 @@
 #include <string.h>
 #include "str.h"
 #include "striter.h"
-#include "env.h"
+#include "envstr.h"
 
 /** Get the value of an assignment from an environment string. */
 const char* envstr_get(const struct str* env, const char* var)

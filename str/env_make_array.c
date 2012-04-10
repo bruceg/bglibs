@@ -2,7 +2,7 @@
 #include <string.h>
 #include "str.h"
 #include "striter.h"
-#include "env.h"
+#include "envstr.h"
 
 /** Make a \c environ compatable array of pointers to the environment
  * string.

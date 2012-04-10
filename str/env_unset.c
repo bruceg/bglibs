@@ -1,6 +1,6 @@
 #include <string.h>
 #include "str.h"
-#include "env.h"
+#include "envstr.h"
 
 /** Unset the named variable in the environment string. */
 void envstr_unset(struct str* env, const char* var)

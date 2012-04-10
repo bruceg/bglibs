@@ -91,7 +91,7 @@ c:::644:pwcmp:hex.h:pwcmp/hex.h
 c:::644:pwcmp:module.h:pwcmp/module.h
   
 d:::755:str
-c:::644:str:env.h:str/env.h
+s::::str:env.h:../envstr.h
 s::::str:iter.h:../striter.h
 s::::str:str.h:../str.h
   
