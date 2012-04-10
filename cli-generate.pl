@@ -27,7 +27,7 @@ my %sections;
 my @options;
 my %decls;
 my %defns;
-my %header = ( 'include' => "<cli/cli.h>\n" );
+my %header = ( 'include' => "<bglibs/cli.h>\n" );
 
 my @sections = ('return value',
 		'errors',

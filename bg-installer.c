@@ -25,7 +25,7 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <unistd.h>
-#include "cli/cli.h"
+#include "cli.h"
 #include "fmt/number.h"
 #include "ibuf.h"
 #include "obuf.h"

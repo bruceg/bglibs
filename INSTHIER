@@ -31,7 +31,7 @@ c:::644:cdb:make.h:cdb/make.h
 c:::644:cdb:str.h:cdb/str.h
 
 d:::755:cli
-c:::644:cli:cli.h:cli/cli.h
+s::::cli:cli.h:../cli.h
 
 d:::755:crc
 s::::crc:crc16_arc.h:../crc16_arc.h
