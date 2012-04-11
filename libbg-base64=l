@@ -1,6 +1,0 @@
-base64/asc2bin.o
-base64/bin2asc.o
-base64/decode_line.o
-base64/decode_part.o
-base64/encode_line.o
-base64/encode_part.o

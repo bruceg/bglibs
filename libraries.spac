@@ -1,2 +1,2 @@
 dependon([ fn[:-2]+'.la' for fn in glob('*=l') ])
-: libbg.la libbg-sysdeps.la
+: libbg.la libbg-cli.la libbg-sysdeps.la
