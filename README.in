@@ -13,8 +13,8 @@ To subscribe, send an email to:
 A mailing list archive is available at:
 	http://lists.untroubled.org/
 
-Development versions of @PACKAGE@ are available via git at:
-	http://untroubled.org/git/@PACKAGE@.git
+Development versions of @PACKAGE@ are available at GitHub:
+	https://github.com/bruceg/@PACKAGE@
 
 Installation:
 
