@@ -22,7 +22,9 @@ int getpeereid(int s, uid_t* u, gid_t* g)
 #else
   errno = ENOSYS;
   return -1;
-  s = 0; u = 0; g = 0;
+  (void)s;
+  (void)u;
+  (void)g;
 #endif
 }
 
