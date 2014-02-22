@@ -306,6 +306,25 @@ sub c_escape {
     $s;
 }
 
+sub reformat_c_tag {
+    my ($tag, $text) = @_;
+    if ($tag eq 'samp'
+	|| $tag eq 'file') {
+	"\"$text\"";
+    }
+    else {
+	# Just strip everything else
+	$text;
+    }
+}
+
+sub reformat_c_tags {
+    my $line = shift;
+    # Just strip out tags
+    $line =~ s/\@([a-zA-Z]+)\{(.*?)\}/reformat_c_tag($1,$2)/eg;
+    $line;
+}
+
 sub make_helpstr {
     my $width = max_width();
     my $text;
@@ -318,10 +337,11 @@ sub make_helpstr {
 	}
 	else {
 	    $text .= sprintf("  %-${width}s  %s\n",
-			     $$option{'prehelp'}, $$option{'help'});
+			     reformat_c_tags($$option{'prehelp'}),
+			     reformat_c_tags($$option{'help'}));
 	    if (defined($$option{'default'})) {
 		$text .= sprintf("  %${width}s  (Defaults to %s)\n",
-				 '', $$option{'default'});
+				 '', reformat_c_tags($$option{'default'}));
 	    }
 	}
     }
@@ -361,7 +381,7 @@ sub output_c {
     print "cli_option cli_options[] = {\n";
     foreach my $option (@options) {
 	if ($$option{'type'} ne 'SEPARATOR') {
-	    my $default = c_escape($$option{'default'});
+	    my $default = c_escape(reformat_c_tags($$option{'default'}));
 	    my $varptr = $$option{'varname'};
 	    if (defined($varptr)) {
 		if ($$option{'type'} ne 'FUNCTION') {
@@ -495,10 +515,10 @@ sub output_m_options {
 	else {
 	    print ".TP\n";
 	    print ".B $$option{'prehelp'}\n";
-	    print $$option{'help'}, "\n";
+	    print parse_m_text($$option{'help'}), "\n";
 	    print parse_m_text($$option{'description'}), "\n"
 		if $$option{'description'};
-	    print "Defaults to $$option{'default'}.\n"
+	    print "Defaults to ", parse_m_text($$option{'default'}), ".\n"
 		if defined($$option{'default'});
 	}
     }
