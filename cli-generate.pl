@@ -676,8 +676,9 @@ sub output_w {
 	if @options;
     foreach $section (@sections) {
 	if ($sections{$section}) {
-	    $section =~ tr/a-z/A-Z/;
-	    print "<dt><a href=\"#$section\">$section</a></dt>\n";
+	    my $name = $section;
+	    $name =~ tr/a-z/A-Z/;
+	    print "<dt><a href=\"#$name\">$name</a></dt>\n";
 	}
     }
     print
