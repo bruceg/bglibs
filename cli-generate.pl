@@ -609,7 +609,7 @@ sub parse_w_text {
 	    s/^/<pre>/;
 	    s/$/<\/pre>/;
 	}
-	elsif (s/^\@example($| )//) {
+	elsif (s/^\@example($|\n)//) {
 	    $_ = reformat_w_tags($_);
 	    s/^/<blockquote>/;
 	    s/$/<\/blockquote>/;
