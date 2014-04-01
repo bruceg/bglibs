@@ -220,50 +220,52 @@ sub postprocess_options {
     }
 }
 
-sub parse_text {
-    $_ = shift;
-    s/^\n+//;
-    s/\n*$/\n/;
-    # Split the text into paragraphs
-    my @lines = split("\n", $_);
-    my @parts;
+sub parse_text_list {
+    local($_);
     my $part;
-    my $mode;
-    while (@lines) {
-	$_ = shift(@lines);
-	# Major modes, match everything up to the following "@end MODE"
-	if (/^\@(example|verbatim)$/) {
-	    push @parts, $part if $part;
-	    $mode = $1;
-	    $part = $_;
-	    while (@lines) {
-		$_ = shift(@lines);
-		last if /^\@end\s+$mode$/;
-		$part =~ s/$/\n$_/;
-	    }
-	    push @parts, $part;
-	    $part = '';
+    my @parts;
+    foreach my $part (split(/\@item\s+/s, shift)) {
+	my @part = split(/\n\s*\n/, $part);
+	push @parts, \@part;
+    }
+    shift @parts;		# Assume first one is blank
+    return @parts;
+}
+
+sub parse_text {
+    local($_);
+    $_ = shift;
+    s/[ \t]+\n/\n/g;		# Strip trailing spaces
+    s/\n*$/\n/;			# Make sure there is exactly one \n at the end
+    s/^\n+//s;
+    my @parts;
+    while ($_) {
+	my @part;
+	# Block modes, match everything up to the following "@end MODE"
+	if (s/^\@(example|verbatim)\n(.*?)\n\@end\s+.*?\n//s) {
+	    @part = ( $1, $2 );
 	}
-	# single line sections, keep them seperate from the text paragraphs
-	elsif (/^\@(table\s+\S+|end\s+table)$/) {
-	    push @parts, $part if $part;
-	    push @parts, $_;
-	    $part = '';
+	# Table mode, break into list items with following text
+	elsif (s/^\@table\s+(\S+)\n(.*?\n)\@end\s+.*?\n//s) {
+	    my $mode = $1;
+	    my @items = parse_text_list($2);
+	    @part = ( 'table', \@items, $mode );
 	}
-	elsif (!$_ || /^\@item($|\s)/) {
-	    push @parts, $part if $part;
-	    $part = $_;
+	# List modes, break into list items with optional paragraphs
+	elsif (s/^\@(itemize|enumerate)\n(.*?\n)\@end\s+.*?\n//s) {
+	    my $mode = $1;
+	    my @items = parse_text_list($2);
+	    @part = ( $mode, \@items );
 	}
+	# Otherwise, match the next paragraph
 	else {
-	    $part .= ' ' if $part;
-	    $part .= $_;
+	    s/^(.*?)(\n\s*\n|$)//s;
+	    @part = ( undef, $1 );
 	}
+	push @parts, \@part;
+	s/^([ \t]*\n)+//;
     }
-    push @parts, $part if $part;
-    foreach (@parts) {
-	s/[ \t]+/ /g;
-    }
-    @parts;
+    return @parts;
 }
 
 ###############################################################################
@@ -448,34 +450,54 @@ sub reformat_m_tags {
 }
 
 sub parse_m_text {
-    my @parts = parse_text(shift);
-    my $tmode;
-    foreach (@parts) {
-	if (s/^\@verbatim($|\n)//) {
+    my @parts;
+    foreach my $part (parse_text(shift)) {
+	my $mode = $$part[0];
+	$_ = $$part[1];
+	if ($mode eq 'verbatim') {
 	    s/^\./\\./gm;
-	    s/^/.nf\n/;
-	    s/$/\n.fi/;
+	    s/^/.RS\n.nf\n/;
+	    s/$/\n.fi\n.RE/;
 	}
-	elsif (s/^\@example($|\n)//) {
+	elsif ($mode eq 'example') {
 	    $_ = reformat_m_tags($_);
-	    s/^/.RS\n/;
-	    s/$/\n.RE/;
+	    s/^\./\\./gm;
+	    s/^/.EX\n/;
+	    s/$/\n.EE/;
 	}
-	elsif (/^\@table( (\@\S+))?$/) {
-	    $tmode = $2 || '@asis';
-	    $_ = '';
+	elsif ($mode eq 'table') {
+	    my $tmode = $$part[2] || '@asis';
+	    my $text = '';
+	    foreach my $item (@$_) {
+		$$item[0] = "$tmode\{$$item[0]\}";
+		@$item = map { reformat_m_tags($_) } @$item;
+		$text .= ".TP\n" . join("\n\n", @$item) . "\n";
+	    }
+	    $_ = $text . ".PP\n";
 	}
-	elsif (/^\@end table$/) {
-	    $_ = '.PP';
+	elsif ($mode eq 'itemize') {
+	    my $text = '';
+	    foreach my $item (@$_) {
+		@$item = map { reformat_m_tags($_) } @$item;
+		$text .= ".TP\no\n" . join("\n\n", @$item) . "\n";
+	    }
+	    $_ = $text . ".PP\n";
 	}
-	elsif (s/^\@itemx? //s) {
-	    $_ = reformat_m_tags("$tmode\{$_\}");
-	    s/^/.TP\n/;
+	elsif ($mode eq 'enumerate') {
+	    my $n = 1;
+	    my $text = '';
+	    foreach my $item (@$_) {
+		@$item = map { reformat_m_tags($_) } @$item;
+		$text .= ".TP\n${n}.\n" . join("\n\n", @$item) . "\n";
+		$n++;
+	    }
+	    $_ = $text . ".PP\n";
 	}
 	else {
 	    $_ = reformat_m_tags($_);
 	}
 	s/$/\n/;
+	push @parts, $_;
     }
     $_ = join("\n", @parts);
     # 3 or more line feeds always need to be reduced to 2.
@@ -598,41 +620,53 @@ sub reformat_w_tags {
 }
 
 sub parse_w_text {
-    my @parts = parse_text(shift);
-    my $tmode;
-    my $par = 'p';
-    foreach (@parts) {
-	if (s/^\@verbatim($| )//) {
+    my @parts;
+    foreach my $part (parse_text(shift)) {
+	my $mode = $$part[0];
+	$_ = $$part[1];
+	if ($mode eq 'verbatim') {
 	    s/\&/\&amp;/g;
 	    s/</\&lt;/g;
 	    s/>/\&gt;/g;
 	    s/^/<pre>/;
 	    s/$/<\/pre>/;
 	}
-	elsif (s/^\@example($|\n)//) {
+	elsif ($mode eq 'example') {
 	    $_ = reformat_w_tags($_);
 	    s/^/<blockquote>/;
 	    s/$/<\/blockquote>/;
 	}
-	elsif (/^\@table( (\@\S+))?$/) {
-	    $tmode = $2 || '@asis';
-	    $_ = '<dl>';
+	elsif ($mode eq 'table') {
+	    my $text = "<dl>\n";
+	    my $tmode = $$part[2] || '@asis';
+	    foreach my $item (@$_) {
+		my $tag = 'dt';
+		foreach my $st (@$item) {
+		    $st = "$tmode\{$st\}" if $tag eq 'dt';
+		    $text .= "<$tag>" . reformat_w_tags($st) . "</$tag>\n";
+		    $tag = 'dd';
+		}
+	    }
+	    $_  = $text . "</dl>\n";
 	}
-	elsif (/^\@end table$/) {
-	    $_ = '</dl>';
-	    $par = 'p';
+	elsif ($mode eq 'itemize') {
+	    my $text = "<ul>\n";
+	    foreach my $item (@$_) {
+		$text .= '<li>' . join('<br><br>', map { reformat_w_tags($_) } @$item) . "</li>\n";
+	    }
+	    $_ = $text . "</ul>\n";
 	}
-	elsif (s/^\@itemx? //s) {
-	    $_ = reformat_w_tags("$tmode\{$_\}");
-	    s/^/<dt>/;
-	    s/$/<\/dt>/;
-	    $par = 'dd';
+	elsif ($mode eq 'enumerate') {
+	    my $text = "<ol>\n";
+	    foreach my $item (@$_) {
+		$text .= '<li>' . join('<br><br>', map { reformat_w_tags($_) } @$item) . "</li>\n";
+	    }
+	    $_ = $text . "</ol>\n";
 	}
 	else {
-	    $_ = reformat_w_tags($_);
-	    s/^/<$par>/;
-	    s/$/<\/$par>/;
+	    $_ = '<p>' . reformat_w_tags($_) . "</p>\n";
 	}
+	push @parts, $_;
     }
     join("\n", @parts);
 }
