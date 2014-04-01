@@ -1,5 +1,5 @@
 /* bg-installer.c - Standard bglibs installer system.
- * Copyright (C) 2006  Bruce Guenter <bruce@untroubled.org>
+ * Copyright (C) 2014  Bruce Guenter <bruce@untroubled.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -35,80 +35,7 @@
 #include "path/path.h"
 #include "str/str.h"
 #include "str/iter.h"
-
-static int opt_verbose = 0;
-static int opt_dryrun = 0;
-static int opt_check = 0;
-
-const char program[] = "bg-installer";
-const int msg_show_pid = 0;
-const char cli_help_prefix[] = "\n";
-const char cli_help_suffix[] =
-"See http://untroubled.org/bglibs/docs/group__installer.html\n"
-"for more information\n";
-const char cli_args_usage[] = "[top-directory] <LIST";
-const int cli_args_min = 0;
-const int cli_args_max = 1;
-cli_option cli_options[] = {
-  { 'v', "verbose", CLI_FLAG, 1, &opt_verbose,
-    "List the files as they are installed", 0 },
-  { 'n', "dry-run", CLI_FLAG, 1, &opt_dryrun,
-    "Don't modify any files", 0 },
-  { 'c', "check", CLI_FLAG, 1, &opt_check,
-    "Check destinations instead of installing", 0 },
-  {0,0,0,0,0,0,0}
-};
-
-/** \defgroup installer bg-installer: Standardzied installer program
-
-The program \c bg-installer reads an installation instruction file from
-standard input, and executes the instructions in the directory named on
-the command line.
-
-Each line in the file is an individual instruction.  Blank lines and
-lines beginning with \c # are ignored.  Lines beginning with
-<tt>&gt;</tt>, if present, instruct bg-installer as to which base
-directory to use (see below).  All other lines must have following format:
-
-<tt>CMD:[OWNER]:[GROUP]:MODE:DIR[:FILENAME[:SOURCE]]</tt>
-
-- CMD is a single character specifying the installation command,
-  optionally followed by \c ? indicating the command should only
-  execute if the source exists.  If the \c ? is followed by a name,
-  it is used instead of \c SOURCE as the filename to test.
-- OWNER (optional) is the owner user ID or name for the target file.
-- GROUP (optional) is the group ID or name for the target file.
-- MODE is the permissions of the installed file in octal.
-- DIR is the subdirectory of the installation prefix for the destination file.
-- FILENAME (optional) is the name of the file to install into the
-  directory.  It may be omitted for directories.
-- SOURCE (optional) is the name of the source file to install, if it
-  differs from the destination file, or the path in the symlink.
-
-If \c SOURCE contains wildcards, the command is repeated once for each
-matching filename.
-
-If \c FILENAME is empty, it is replaced with the value of \c SOURCE
-after wildcard expansion.  Each instance of \c $N in \c FILENAME where
-\c N is a single digit is replaced with the Nth part of the source
-filename.  \c $0 is replaced with the whole source filename.
-
-The target filename is \c PREFIX/TOP/DIR/FILENAME where \c PREFIX is the
-value of \c $install_prefix if it is set, \c TOP is the directory given
-on the command line, and \c DIR and \c FILENAME given in the
-installation file.
-
-- c lines copy regular files from the current directory
-- d lines create directories
-- s lines create symlinks (\c UID, \c GID, and \c MODE are ignored)
-- l lines copy libraries using libtool
-
-When \c bg-installer encounters a base directory directive, as indicated
-above, it opens the file named \c conf-BASE (where \c BASE is the word
-on the directive line), reads the first line, and uses that as the base
-directory (prefixed by \c $install_prefix as above).
-
-*/
+#include "bg-installer-cli.h"
 
 static const char* prefix;
 static unsigned lineno = 0;

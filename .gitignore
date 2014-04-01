@@ -14,6 +14,7 @@ README
 SRCFILES
 TARGETS
 bg-installer
+bg-installer-cli.[ch]
 choose
 cli-generate
 compile

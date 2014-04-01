@@ -1,0 +1,2 @@
+: %(stem)s.cli cli-generate
+./cli-generate -c $< >$@

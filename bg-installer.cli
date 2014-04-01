@@ -1,0 +1,134 @@
+Description:	Standardized installer program.
+Min:		0
+Max:		1
+Show-Pid:	0
+Usage:		[top-directory] <LIST
+
+[prefix]
+
+[options]
+-v --verbose FLAG=1 opt_verbose
+List the files as they are processed
+
+-n --dry-run FLAG=1 opt_dryrun
+Don't modify any files, just display
+
+-c --check FLAG=1 opt_check
+Check destinations instead of installing
+
+[suffix]
+See http://untroubled.org/bglibs/docs/group__installer.html
+for more information
+
+[description]
+
+The program @command{bg-installer} reads an installation instruction
+file from standard input, and executes the instructions in the
+directory named on the command line.
+
+Each line in the file is an individual instruction.  Blank lines and
+lines beginning with @samp{#} are ignored.  Lines beginning with
+@samp{>}, if present, instruct bg-installer as to which base directory
+to use (see below).  All other lines must have following format:
+
+@verbatim
+CMD:[OWNER]:[GROUP]:MODE:DIR[:FILENAME[:SOURCE]]
+@end verbatim
+
+@table @var
+
+@item CMD
+
+is a single character specifying the installation command, optionally
+followed by @samp{?} indicating the command should only execute if the
+source exists.  If the @samp{?} is followed by a name, it is used
+instead of @var{SOURCE} as the filename to test.
+
+@item OWNER
+
+(optional) is the owner user ID or name for the target file.
+
+@item GROUP
+
+(optional) is the group ID or name for the target file.
+
+@item MODE
+
+is the permissions of the installed file in octal.
+
+@item DIR
+
+is the subdirectory of the installation prefix for the destination file.
+
+@item FILENAME
+
+(optional) is the name of the file to install into the directory.  It
+may be omitted for directories.
+
+@item SOURCE
+
+(optional) is the name of the source file to install, if it differs
+from the destination file, or the path in the symlink.
+
+@end table
+
+If @var{SOURCE} contains wildcards, the command is repeated once for each
+matching filename.
+
+If @var{FILENAME} is empty, it is replaced with the value of
+@var{SOURCE} after wildcard expansion.  Each instance of @samp{$N} in
+@var{FILENAME} where @samp{N} is a single digit is replaced with the
+Nth part of the source filename.  @samp{$0} is replaced with the whole
+source filename.
+
+The target filename is @samp{PREFIX/TOP/DIR/FILENAME} where
+@samp{PREFIX} is the value of @var{$install_prefix} if it is set,
+@var{TOP} is the directory given on the command line, and @var{DIR}
+and @var{FILENAME} given in the installation file.
+
+@itemize
+
+@item @samp{c} lines copy regular files from the current directory
+
+@item @samp{d} lines create directories
+
+@item @samp{s} lines create symlinks (@var{UID}, @var{GID}, and @var{MODE} are ignored)
+
+@item @samp{l} lines copy libraries using libtool
+
+@end itemize
+
+When @command{bg-installer} encounters a base directory directive, as
+indicated above, it opens the file named @file{conf-BASE} (where
+@var{BASE} is the word on the directive line), reads the first line,
+and uses that as the base directory (prefixed by @env{$install_prefix}
+as above).
+
+[examples]
+@verbatim
+>bin
+c:::755::prog2
+c?:root:root:4750::prog2
+>include
+d:::755:package
+c:::644:package:base.h:pkgbase.h
+s:::::package.h:package/base.h
+@end verbatim
+
+This reads @file{conf-bin}, and installs @file{prog1} and setuid root
+@file{prog2} (if it was built) under it.  It then reads
+@file{conf-include}, creates the directory @file{package} under it,
+and installs @file{pkgbase.h} as @file{base.h} in that directory. It
+also creates a symlink @file{package.h} to @file{package/base.h}.
+
+[environment]
+@table @env
+
+@item install_prefix
+
+If set, is prefixed to all destination file names.
+
+@end table
+
+[author]
+Bruce Guenter <bruce@untroubled.org>
