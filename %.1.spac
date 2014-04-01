@@ -1,0 +1,7 @@
+if os.path.exists(base+'.cli'):
+	dependon([base+'.cli', 'cli-generate'])
+	command('./cli-generate -m $< >$@')
+elif os.path.exists(target):
+	raise IOError
+else:
+	raise ValueError
