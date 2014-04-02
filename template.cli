@@ -1,0 +1,93 @@
+Description:	A one-line description of what the program does.
+Include:	#include <this>
+Min:		0
+Max:		-1
+Show-Pid:	0
+Usage:		FILE [FILE ...]
+
+[prefix]
+The text in this section is shown in the  command  usage
+before the options description.
+
+[options]
+The list of options this program accepts.  Format is:
+
+-S --long TYPE[=VALUE] VARIABLE =default
+One line help text =default-text
+
+TYPE is one of: FLAG, COUNTER, INTEGER, UINTEGER, STRING, STRINGLIST,
+FUNCTION, or SEPARATOR.
+
+Examples:
+-q --quiet FLAG=0 opt_verbose
+Eliminate all program output except errors
+
+-v --verbose COUNTER=1 opt_verbose
+Generate more program output
+
+--count INTEGER opt_count =1
+How many items to process =only the first
+
+-x STRINGLIST opt_extensions
+Add an extension name
+
+[suffix]
+The text in this section is shown in the command usage
+after the options description.
+
+[description]
+Long drawn out discussion of the program.
+
+[return value]
+What the program or function returns if successful.
+
+[errors]
+Exceptions, return codes, exit stati, and errno settings.
+
+[examples]
+Give some example uses of the program.
+
+[environment]
+@table @env
+
+@item NAME
+What setting @env{$NAME} does.
+
+@end table
+
+[files]
+
+All files used by the program.
+
+@table @file
+
+@item filename
+
+@end table
+
+[see also]
+Other man pages to check out, like man(1), man(7), makewhatis(8), or
+catman(8).
+
+[notes]
+Miscellaneous commentary.
+
+[caveats]
+Things to take special care with; sometimes called [warnings].
+
+[diagnostics]
+All possible messages the program can print out--and
+what they mean.
+
+[bugs]
+Things that are broken or just don't work quite right.
+
+[restrictions]
+Bugs you don't plan to fix :-)
+
+[author]
+Who wrote it (or AUTHORS if multiple)
+
+[history]
+Programs derived from other sources sometimes have this, or
+you might keep a modification log here.
