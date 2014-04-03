@@ -1,16 +1,15 @@
-#include "stralloc.h"
 #include "uint16.h"
 #include "byte.h"
 #include "dns.h"
 
-int dns_ip4_packet(stralloc *out,const char *buf,unsigned int len)
+int dns_ip4_packet(str *out,const char *buf,unsigned int len)
 {
   unsigned int pos;
   char header[12];
   uint16 numanswers;
   uint16 datalen;
 
-  if (!stralloc_copys(out,"")) return -1;
+  if (!str_copys(out,"")) return -1;
 
   pos = dns_packet_copy(buf,len,0,header,12); if (!pos) return -1;
   uint16_unpack_big(header + 6,&numanswers);
@@ -25,7 +24,7 @@ int dns_ip4_packet(stralloc *out,const char *buf,unsigned int len)
       if (byte_equal(header + 2,2,DNS_C_IN))
         if (datalen == 4) {
 	  if (!dns_packet_copy(buf,len,pos,header,4)) return -1;
-	  if (!stralloc_catb(out,header,4)) return -1;
+	  if (!str_catb(out,header,4)) return -1;
 	}
     pos += datalen;
   }
@@ -36,13 +35,13 @@ int dns_ip4_packet(stralloc *out,const char *buf,unsigned int len)
 
 static char *q = 0;
 
-int dns_ip4(stralloc *out,const stralloc *fqdn)
+int dns_ip4(str *out,const str *fqdn)
 {
   unsigned int i;
   char code;
   char ch;
 
-  if (!stralloc_copys(out,"")) return -1;
+  if (!str_copys(out,"")) return -1;
   code = 0;
   for (i = 0;i <= fqdn->len;++i) {
     if (i < fqdn->len)
@@ -52,7 +51,7 @@ int dns_ip4(stralloc *out,const stralloc *fqdn)
 
     if ((ch == '[') || (ch == ']')) continue;
     if (ch == '.') {
-      if (!stralloc_append(out,&code)) return -1;
+      if (!str_catc(out,code)) return -1;
       code = 0;
       continue;
     }

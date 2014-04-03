@@ -1,11 +1,10 @@
 #include <string.h>
 
-#include "stralloc.h"
 #include "case.h"
 #include "byte.h"
 #include "dns.h"
 
-static int doit(stralloc *work,const char *rule)
+static int doit(str *work,const char *rule)
 {
   char ch;
   unsigned int colon;
@@ -30,17 +29,17 @@ static int doit(stralloc *work,const char *rule)
 
   work->len = prefixlen;
   if (ch == '-') work->len = 0;
-  return stralloc_cats(work,rule + colon + 1);
+  return str_cats(work,rule + colon + 1);
 }
 
-int dns_ip4_qualify_rules(stralloc *out,stralloc *fqdn,const stralloc *in,const stralloc *rules)
+int dns_ip4_qualify_rules(str *out,str *fqdn,const str *in,const str *rules)
 {
   unsigned int i;
   unsigned int j;
   unsigned int plus;
   unsigned int fqdnlen;
 
-  if (!stralloc_copy(fqdn,in)) return -1;
+  if (!str_copy(fqdn,in)) return -1;
 
   for (j = i = 0;j < rules->len;++j)
     if (!rules->s[j]) {
@@ -66,9 +65,9 @@ int dns_ip4_qualify_rules(stralloc *out,stralloc *fqdn,const stralloc *in,const 
   }
 }
 
-int dns_ip4_qualify(stralloc *out,stralloc *fqdn,const stralloc *in)
+int dns_ip4_qualify(str *out,str *fqdn,const str *in)
 {
-  static stralloc rules;
+  static str rules;
   if (dns_resolvconfrewrite(&rules) == -1) return -1;
   return dns_ip4_qualify_rules(out,fqdn,in,&rules);
 }

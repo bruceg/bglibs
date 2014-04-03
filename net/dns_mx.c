@@ -1,11 +1,10 @@
-#include "stralloc.h"
 #include "byte.h"
 #include "uint16.h"
 #include "dns.h"
 
 static char *q = 0;
 
-int dns_mx_packet(stralloc *out,const char *buf,unsigned int len)
+int dns_mx_packet(str *out,const char *buf,unsigned int len)
 {
   unsigned int pos;
   char header[12];
@@ -13,7 +12,7 @@ int dns_mx_packet(stralloc *out,const char *buf,unsigned int len)
   uint16 numanswers;
   uint16 datalen;
 
-  if (!stralloc_copys(out,"")) return -1;
+  if (!str_copys(out,"")) return -1;
 
   pos = dns_packet_copy(buf,len,0,header,12); if (!pos) return -1;
   uint16_unpack_big(header + 6,&numanswers);
@@ -28,9 +27,9 @@ int dns_mx_packet(stralloc *out,const char *buf,unsigned int len)
       if (byte_equal(header + 2,2,DNS_C_IN)) {
 	if (!dns_packet_copy(buf,len,pos,pref,2)) return -1;
 	if (!dns_packet_getname(buf,len,pos + 2,&q)) return -1;
-	if (!stralloc_catb(out,pref,2)) return -1;
+	if (!str_catb(out,pref,2)) return -1;
 	if (!dns_domain_todot_cat(out,q)) return -1;
-	if (!stralloc_0(out)) return -1;
+	if (!str_catc(out,0)) return -1;
       }
     pos += datalen;
   }
@@ -38,7 +37,7 @@ int dns_mx_packet(stralloc *out,const char *buf,unsigned int len)
   return 0;
 }
 
-int dns_mx(stralloc *out,const stralloc *fqdn)
+int dns_mx(str *out,const str *fqdn)
 {
   if (!dns_domain_fromdot(&q,fqdn->s,fqdn->len)) return -1;
   if (dns_resolve(q,DNS_T_MX) == -1) return -1;

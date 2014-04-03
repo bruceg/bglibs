@@ -1,7 +1,7 @@
 #ifndef DNS_H
 #define DNS_H
 
-#include "stralloc.h"
+#include <str/str.h>
 #include "iopause.h"
 #include "taia.h"
 
@@ -51,7 +51,7 @@ extern int dns_domain_equal(const char *,const char *);
 extern int dns_domain_suffix(const char *,const char *);
 extern unsigned int dns_domain_suffixpos(const char *,const char *);
 extern int dns_domain_fromdot(char **,const char *,unsigned int);
-extern int dns_domain_todot_cat(stralloc *,const char *);
+extern int dns_domain_todot_cat(str *,const char *);
 
 extern unsigned int dns_packet_copy(const char *,unsigned int,unsigned int,char *,unsigned int);
 extern unsigned int dns_packet_getname(const char *,unsigned int,unsigned int,char **);
@@ -66,19 +66,19 @@ extern int dns_resolvconfip(char *);
 extern int dns_resolve(const char *,const char *);
 extern struct dns_transmit dns_resolve_tx;
 
-extern int dns_ip4_packet(stralloc *,const char *,unsigned int);
-extern int dns_ip4(stralloc *,const stralloc *);
-extern int dns_name4_packet(stralloc *,const char *,unsigned int);
+extern int dns_ip4_packet(str *,const char *,unsigned int);
+extern int dns_ip4(str *,const str *);
+extern int dns_name4_packet(str *,const char *,unsigned int);
 extern void dns_name4_domain(char *,const char *);
 #define DNS_NAME4_DOMAIN 31
-extern int dns_name4(stralloc *,const char *);
-extern int dns_txt_packet(stralloc *,const char *,unsigned int);
-extern int dns_txt(stralloc *,const stralloc *);
-extern int dns_mx_packet(stralloc *,const char *,unsigned int);
-extern int dns_mx(stralloc *,const stralloc *);
+extern int dns_name4(str *,const char *);
+extern int dns_txt_packet(str *,const char *,unsigned int);
+extern int dns_txt(str *,const str *);
+extern int dns_mx_packet(str *,const char *,unsigned int);
+extern int dns_mx(str *,const str *);
 
-extern int dns_resolvconfrewrite(stralloc *);
-extern int dns_ip4_qualify_rules(stralloc *,stralloc *,const stralloc *,const stralloc *);
-extern int dns_ip4_qualify(stralloc *,stralloc *,const stralloc *);
+extern int dns_resolvconfrewrite(str *);
+extern int dns_ip4_qualify_rules(str *,str *,const str *,const str *);
+extern int dns_ip4_qualify(str *,str *,const str *);
 
 #endif

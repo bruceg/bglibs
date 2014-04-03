@@ -1,9 +1,8 @@
-#include "stralloc.h"
 #include "uint16.h"
 #include "byte.h"
 #include "dns.h"
 
-int dns_txt_packet(stralloc *out,const char *buf,unsigned int len)
+int dns_txt_packet(str *out,const char *buf,unsigned int len)
 {
   unsigned int pos;
   char header[12];
@@ -13,7 +12,7 @@ int dns_txt_packet(stralloc *out,const char *buf,unsigned int len)
   unsigned int txtlen;
   int i;
 
-  if (!stralloc_copys(out,"")) return -1;
+  if (!str_copys(out,"")) return -1;
 
   pos = dns_packet_copy(buf,len,0,header,12); if (!pos) return -1;
   uint16_unpack_big(header + 6,&numanswers);
@@ -36,7 +35,7 @@ int dns_txt_packet(stralloc *out,const char *buf,unsigned int len)
 	    --txtlen;
 	    if (ch < 32) ch = '?';
 	    if (ch > 126) ch = '?';
-	    if (!stralloc_append(out,&ch)) return -1;
+	    if (!str_cats(out,&ch)) return -1;
 	  }
 	}
       }
@@ -48,7 +47,7 @@ int dns_txt_packet(stralloc *out,const char *buf,unsigned int len)
 
 static char *q = 0;
 
-int dns_txt(stralloc *out,const stralloc *fqdn)
+int dns_txt(str *out,const str *fqdn)
 {
   if (!dns_domain_fromdot(&q,fqdn->s,fqdn->len)) return -1;
   if (dns_resolve(q,DNS_T_TXT) == -1) return -1;

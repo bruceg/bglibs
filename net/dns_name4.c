@@ -1,18 +1,17 @@
-#include "stralloc.h"
 #include "uint16.h"
 #include "byte.h"
 #include "dns.h"
 
 static char *q = 0;
 
-int dns_name4_packet(stralloc *out,const char *buf,unsigned int len)
+int dns_name4_packet(str *out,const char *buf,unsigned int len)
 {
   unsigned int pos;
   char header[12];
   uint16 numanswers;
   uint16 datalen;
 
-  if (!stralloc_copys(out,"")) return -1;
+  if (!str_copys(out,"")) return -1;
 
   pos = dns_packet_copy(buf,len,0,header,12); if (!pos) return -1;
   uint16_unpack_big(header + 6,&numanswers);
@@ -35,7 +34,7 @@ int dns_name4_packet(stralloc *out,const char *buf,unsigned int len)
   return 0;
 }
 
-int dns_name4(stralloc *out,const char ip[4])
+int dns_name4(str *out,const char ip[4])
 {
   char name[DNS_NAME4_DOMAIN];
 
