@@ -1,8 +1,8 @@
 #ifndef DNS_H
 #define DNS_H
 
+#include <sysdeps.h>
 #include <str/str.h>
-#include "iopause.h"
 #include "taia.h"
 
 #define DNS_C_IN "\0\1"
@@ -59,8 +59,8 @@ extern unsigned int dns_packet_skipname(const char *,unsigned int,unsigned int);
 
 extern int dns_transmit_start(struct dns_transmit *,const char *,int,const char *,const char *,const char *);
 extern void dns_transmit_free(struct dns_transmit *);
-extern void dns_transmit_io(struct dns_transmit *,iopause_fd *,struct taia *);
-extern int dns_transmit_get(struct dns_transmit *,const iopause_fd *,const struct taia *);
+extern void dns_transmit_io(struct dns_transmit *,iopoll_fd *,struct taia *);
+extern int dns_transmit_get(struct dns_transmit *,const iopoll_fd *,const struct taia *);
 
 extern int dns_resolvconfip(char *);
 extern int dns_resolve(const char *,const char *);

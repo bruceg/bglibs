@@ -222,16 +222,16 @@ int dns_transmit_start(struct dns_transmit *d,const char servers[64],int flagrec
   return firstudp(d);
 }
 
-void dns_transmit_io(struct dns_transmit *d,iopause_fd *x,struct taia *deadline)
+void dns_transmit_io(struct dns_transmit *d,iopoll_fd *x,struct taia *deadline)
 {
   x->fd = d->s1 - 1;
 
   switch(d->tcpstate) {
     case 0: case 3: case 4: case 5:
-      x->events = IOPAUSE_READ;
+      x->events = IOPOLL_READ;
       break;
     case 1: case 2:
-      x->events = IOPAUSE_WRITE;
+      x->events = IOPOLL_WRITE;
       break;
   }
 
@@ -239,7 +239,7 @@ void dns_transmit_io(struct dns_transmit *d,iopause_fd *x,struct taia *deadline)
     *deadline = d->deadline;
 }
 
-int dns_transmit_get(struct dns_transmit *d,const iopause_fd *x,const struct taia *when)
+int dns_transmit_get(struct dns_transmit *d,const iopoll_fd *x,const struct taia *when)
 {
   char udpbuf[513];
   unsigned char ch;

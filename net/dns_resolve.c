@@ -1,17 +1,39 @@
 #include <string.h>
 
-#include "iopause.h"
 #include "taia.h"
 #include "dns.h"
 
 struct dns_transmit dns_resolve_tx = {0};
+
+static void iopause(iopoll_fd *x,unsigned int len,struct taia *deadline,struct taia *stamp)
+{
+  struct taia t;
+  int millisecs;
+  double d;
+  int i;
+
+  if (taia_less(deadline,stamp))
+    millisecs = 0;
+  else {
+    t = *stamp;
+    taia_sub(&t,deadline,&t);
+    d = taia_approx(&t);
+    if (d > 1000.0) d = 1000.0;
+    millisecs = d * 1000.0 + 20.0;
+  }
+
+  for (i = 0;i < len;++i)
+    x[i].revents = 0;
+
+  iopoll(x,len,millisecs);
+}
 
 int dns_resolve(const char *q,const char qtype[2])
 {
   struct taia stamp;
   struct taia deadline;
   char servers[64];
-  iopause_fd x[1];
+  iopoll_fd x[1];
   int r;
 
   if (dns_resolvconfip(servers) == -1) return -1;
