@@ -12,14 +12,14 @@ int dns_ip4_packet(str *out,const char *buf,unsigned int len)
   if (!str_copys(out,"")) return -1;
 
   pos = dns_packet_copy(buf,len,0,header,12); if (!pos) return -1;
-  uint16_unpack_big(header + 6,&numanswers);
+  numanswers = uint16_get_msb((unsigned char*)header + 6);
   pos = dns_packet_skipname(buf,len,pos); if (!pos) return -1;
   pos += 4;
 
   while (numanswers--) {
     pos = dns_packet_skipname(buf,len,pos); if (!pos) return -1;
     pos = dns_packet_copy(buf,len,pos,header,10); if (!pos) return -1;
-    uint16_unpack_big(header + 8,&datalen);
+    datalen = uint16_get_msb((unsigned char*)header + 8);
     if (byte_equal(header,2,DNS_T_A))
       if (byte_equal(header + 2,2,DNS_C_IN))
         if (datalen == 4) {

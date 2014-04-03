@@ -205,7 +205,7 @@ int dns_transmit_start(struct dns_transmit *d,const char servers[64],int flagrec
   d->query = alloc(d->querylen);
   if (!d->query) return -1;
 
-  uint16_pack_big(d->query,len + 16);
+  uint16_pack_msb(len+16,(unsigned char*)d->query);
   byte_copy(d->query + 2,12,flagrecursive ? "\0\0\1\0\0\1\0\0\0\0\0\0" : "\0\0\0\0\0\1\0\0\0\0\0\0gcc-bug-workaround");
   byte_copy(d->query + 14,len,q);
   byte_copy(d->query + 14 + len,2,qtype);
