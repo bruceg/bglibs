@@ -2,9 +2,11 @@
 #define DNS_H
 
 #include <sysdeps.h>
+#include <systime.h>
 #include <net/ipv4.h>
 #include <str/str.h>
-#include "taia.h"
+
+#define TV_LESS(A,B) (((A)->tv_sec < (B)->tv_sec) || ((A)->tv_sec == (B)->tv_sec && (A)->tv_usec < (B)->tv_usec))
 
 #define DNS_C_IN "\0\1"
 #define DNS_C_ANY "\0\377"
@@ -33,7 +35,7 @@ struct dns_transmit {
   int tcpstate;
   unsigned int udploop;
   unsigned int curserver;
-  struct taia deadline;
+  struct timeval deadline;
   unsigned int pos;
   const ipv4addr *servers;
   ipv4addr localip;
@@ -60,8 +62,8 @@ extern unsigned int dns_packet_skipname(const char *,unsigned int,unsigned int);
 
 extern int dns_transmit_start(struct dns_transmit *,const ipv4addr [16],int,const char *,const char *,const ipv4addr *);
 extern void dns_transmit_free(struct dns_transmit *);
-extern void dns_transmit_io(struct dns_transmit *,iopoll_fd *,struct taia *);
-extern int dns_transmit_get(struct dns_transmit *,const iopoll_fd *,const struct taia *);
+extern void dns_transmit_io(struct dns_transmit *,iopoll_fd *,struct timeval *);
+extern int dns_transmit_get(struct dns_transmit *,const iopoll_fd *,const struct timeval *);
 
 extern int dns_resolvconfip(ipv4addr [16]);
 extern int dns_resolve(const char *,const char *);

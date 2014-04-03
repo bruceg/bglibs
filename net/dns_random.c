@@ -1,6 +1,5 @@
 #include <unistd.h>
 #include "dns.h"
-#include "taia.h"
 #include "uint32.h"
 
 static uint32 seed[32];
@@ -33,16 +32,14 @@ static void surf(void)
 void dns_random_init(const char data[128])
 {
   int i;
-  struct taia t;
-  char tpack[16];
+  struct timeval tv;
 
   for (i = 0;i < 32;++i)
     seed[i] = uint32_get((unsigned char*)data + 4 * i);
 
-  taia_now(&t);
-  taia_pack(tpack,&t);
-  for (i = 0;i < 4;++i)
-    in[i+4] = uint32_get(tpack + 4 * i);
+  gettimeofday(&tv,0);
+  in[4] = tv.tv_sec;
+  in[5] = tv.tv_usec;
 
   in[8] = getpid();
   in[9] = getppid();

@@ -1,25 +1,22 @@
 #include <string.h>
 
-#include "taia.h"
 #include "dns.h"
 
 struct dns_transmit dns_resolve_tx = {0};
 
-static void iopause(iopoll_fd *x,unsigned int len,struct taia *deadline,struct taia *stamp)
+static void iopause(iopoll_fd *x,unsigned int len,struct timeval *deadline,struct timeval *stamp)
 {
-  struct taia t;
   int millisecs;
-  double d;
   int i;
 
-  if (taia_less(deadline,stamp))
+  if (TV_LESS(deadline,stamp))
     millisecs = 0;
   else {
-    t = *stamp;
-    taia_sub(&t,deadline,&t);
-    d = taia_approx(&t);
-    if (d > 1000.0) d = 1000.0;
-    millisecs = d * 1000.0 + 20.0;
+    if (deadline->tv_sec - stamp->tv_sec > 1000)
+      millisecs = 1000000;
+    else
+      millisecs = (deadline->tv_sec - stamp->tv_sec) * 1000 + (deadline->tv_usec - stamp->tv_usec) / 1000;
+    millisecs += 20;
   }
 
   for (i = 0;i < len;++i)
@@ -30,8 +27,8 @@ static void iopause(iopoll_fd *x,unsigned int len,struct taia *deadline,struct t
 
 int dns_resolve(const char *q,const char qtype[2])
 {
-  struct taia stamp;
-  struct taia deadline;
+  struct timeval stamp;
+  struct timeval deadline;
   ipv4addr servers[16];
   ipv4addr ipzero;
   iopoll_fd x[1];
@@ -42,9 +39,9 @@ int dns_resolve(const char *q,const char qtype[2])
   if (dns_transmit_start(&dns_resolve_tx,servers,1,q,qtype,&ipzero) == -1) return -1;
 
   for (;;) {
-    taia_now(&stamp);
-    taia_uint(&deadline,120);
-    taia_add(&deadline,&deadline,&stamp);
+    gettimeofday(&stamp,0);
+    deadline = stamp;
+    deadline.tv_sec += 120;
     dns_transmit_io(&dns_resolve_tx,x,&deadline);
     iopause(x,1,&deadline,&stamp);
     r = dns_transmit_get(&dns_resolve_tx,x,&stamp);

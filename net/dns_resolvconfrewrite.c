@@ -3,7 +3,6 @@
 #include <unistd.h>
 
 #include "iobuf/ibuf.h"
-#include "taia.h"
 #include "dns.h"
 
 static str data = {0};
@@ -108,21 +107,21 @@ static int init(str *rules)
 
 static int ok = 0;
 static unsigned int uses;
-static struct taia deadline;
+static struct timeval deadline;
 static str rules = {0}; /* defined if ok */
 
 int dns_resolvconfrewrite(str *out)
 {
-  struct taia now;
+  struct timeval now;
 
-  taia_now(&now);
-  if (taia_less(&deadline,&now)) ok = 0;
+  gettimeofday(&now,0);
+  if (TV_LESS(&deadline,&now)) ok = 0;
   if (!uses) ok = 0;
 
   if (!ok) {
     if (init(&rules) == -1) return -1;
-    taia_uint(&deadline,600);
-    taia_add(&deadline,&now,&deadline);
+    deadline = now;
+    deadline.tv_sec += 600;
     uses = 10000;
     ok = 1;
   }

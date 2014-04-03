@@ -114,10 +114,8 @@ static int thisudp(struct dns_transmit *d)
 
         if (socket_connect4(d->s1 - 1,ip,53))
           if (send(d->s1 - 1,d->query + 2,d->querylen - 2,0) == d->querylen - 2) {
-            struct taia now;
-            taia_now(&now);
-            taia_uint(&d->deadline,timeouts[d->udploop]);
-            taia_add(&d->deadline,&d->deadline,&now);
+	    gettimeofday(&d->deadline,0);
+	    d->deadline.tv_sec += timeouts[d->udploop];
             d->tcpstate = 0;
             return 0;
           }
@@ -147,7 +145,6 @@ static int nextudp(struct dns_transmit *d)
 
 static int thistcp(struct dns_transmit *d)
 {
-  struct taia now;
   const ipv4addr *ip;
 
   socketfree(d);
@@ -163,9 +160,8 @@ static int thistcp(struct dns_transmit *d)
       if (!d->s1) { dns_transmit_free(d); return -1; }
       if (randombind(d) == -1) { dns_transmit_free(d); return -1; }
 
-      taia_now(&now);
-      taia_uint(&d->deadline,10);
-      taia_add(&d->deadline,&d->deadline,&now);
+      gettimeofday(&d->deadline,0);
+      d->deadline.tv_sec += 10;
       if (socket_connect4(d->s1 - 1,ip,53)) {
         d->tcpstate = 2;
         return 0;
@@ -222,7 +218,7 @@ int dns_transmit_start(struct dns_transmit *d,const ipv4addr servers[16],int fla
   return firstudp(d);
 }
 
-void dns_transmit_io(struct dns_transmit *d,iopoll_fd *x,struct taia *deadline)
+void dns_transmit_io(struct dns_transmit *d,iopoll_fd *x,struct timeval *deadline)
 {
   x->fd = d->s1 - 1;
 
@@ -235,11 +231,11 @@ void dns_transmit_io(struct dns_transmit *d,iopoll_fd *x,struct taia *deadline)
       break;
   }
 
-  if (taia_less(&d->deadline,deadline))
+  if (TV_LESS(&d->deadline,deadline))
     *deadline = d->deadline;
 }
 
-int dns_transmit_get(struct dns_transmit *d,const iopoll_fd *x,const struct taia *when)
+int dns_transmit_get(struct dns_transmit *d,const iopoll_fd *x,const struct timeval *when)
 {
   char udpbuf[513];
   unsigned char ch;
@@ -250,7 +246,7 @@ int dns_transmit_get(struct dns_transmit *d,const iopoll_fd *x,const struct taia
   fd = d->s1 - 1;
 
   if (!x->revents) {
-    if (taia_less(when,&d->deadline)) return 0;
+    if (TV_LESS(when,&d->deadline)) return 0;
     errno = ETIMEDOUT;
     if (d->tcpstate == 0) return nextudp(d);
     return nexttcp(d);
@@ -304,10 +300,8 @@ have sent pos bytes of query
     if (r <= 0) return nexttcp(d);
     d->pos += r;
     if (d->pos == d->querylen) {
-      struct taia now;
-      taia_now(&now);
-      taia_uint(&d->deadline,10);
-      taia_add(&d->deadline,&d->deadline,&now);
+      gettimeofday(&d->deadline,0);
+      d->deadline.tv_sec += 10;
       d->tcpstate = 3;
     }
     return 0;
