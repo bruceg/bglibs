@@ -1,11 +1,11 @@
 #include <sysdeps.h>
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
 #include <unistd.h>
 
 #include "socket.h"
-#include "error.h"
 #include "uint16.h"
 #include "dns.h"
 
@@ -26,7 +26,7 @@ static int serverfailed(const char *buf,unsigned int len)
   if (!dns_packet_copy(buf,len,0,out,12)) return 1;
   rcode = out[3];
   rcode &= 15;
-  if (rcode && (rcode != 3)) { errno = error_again; return 1; }
+  if (rcode && (rcode != 3)) { errno = EAGAIN; return 1; }
   return 0;
 }
 
@@ -170,7 +170,7 @@ static int thistcp(struct dns_transmit *d)
         d->tcpstate = 2;
         return 0;
       }
-      if ((errno == error_inprogress) || (errno == error_wouldblock)) {
+      if ((errno == EINPROGRESS) || (errno == EWOULDBLOCK)) {
         d->tcpstate = 1;
         return 0;
       }
@@ -199,7 +199,7 @@ int dns_transmit_start(struct dns_transmit *d,const char servers[64],int flagrec
   unsigned int len;
 
   dns_transmit_free(d);
-  errno = error_io;
+  errno = EIO;
 
   len = dns_domain_length(q);
   d->querylen = len + 18;
@@ -246,12 +246,12 @@ int dns_transmit_get(struct dns_transmit *d,const iopause_fd *x,const struct tai
   int r;
   int fd;
 
-  errno = error_io;
+  errno = EIO;
   fd = d->s1 - 1;
 
   if (!x->revents) {
     if (taia_less(when,&d->deadline)) return 0;
-    errno = error_timeout;
+    errno = ETIMEDOUT;
     if (d->tcpstate == 0) return nextudp(d);
     return nexttcp(d);
   }
@@ -263,7 +263,7 @@ have sent query to curserver on UDP socket s
 */
     r = recv(fd,udpbuf,sizeof udpbuf,0);
     if (r <= 0) {
-      if (errno == error_connrefused) if (d->udploop == 2) return 0;
+      if (errno == ECONNREFUSED) if (d->udploop == 2) return 0;
       return nextudp(d);
     }
     if (r + 1 > sizeof udpbuf) return 0;

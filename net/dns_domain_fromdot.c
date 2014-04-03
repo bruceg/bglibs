@@ -1,7 +1,7 @@
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "error.h"
 #include "dns.h"
 
 int dns_domain_fromdot(char **out,const char *buf,unsigned int n)
@@ -13,7 +13,7 @@ int dns_domain_fromdot(char **out,const char *buf,unsigned int n)
   char ch;
   char *x;
 
-  errno = error_proto;
+  errno = EPROTO;
 
   for (;;) {
     if (!n) break;

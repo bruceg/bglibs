@@ -1,7 +1,7 @@
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "error.h"
 #include "case.h"
 #include "dns.h"
 
