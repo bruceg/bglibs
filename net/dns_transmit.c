@@ -1,8 +1,9 @@
-#include <sys/types.h>
+#include <sysdeps.h>
+#include <stdlib.h>
 #include <sys/socket.h>
 #include <unistd.h>
+
 #include "socket.h"
-#include "alloc.h"
 #include "error.h"
 #include "byte.h"
 #include "uint16.h"
@@ -42,8 +43,8 @@ static int irrelevant(const struct dns_transmit *d,const char *buf,unsigned int 
 
   dn = 0;
   pos = dns_packet_getname(buf,len,pos,&dn); if (!pos) return 1;
-  if (!dns_domain_equal(dn,d->query + 14)) { alloc_free(dn); return 1; }
-  alloc_free(dn);
+  if (!dns_domain_equal(dn,d->query + 14)) { free(dn); return 1; }
+  free(dn);
 
   pos = dns_packet_copy(buf,len,pos,out,4); if (!pos) return 1;
   if (byte_diff(out,2,d->qtype)) return 1;
@@ -55,14 +56,14 @@ static int irrelevant(const struct dns_transmit *d,const char *buf,unsigned int 
 static void packetfree(struct dns_transmit *d)
 {
   if (!d->packet) return;
-  alloc_free(d->packet);
+  free(d->packet);
   d->packet = 0;
 }
 
 static void queryfree(struct dns_transmit *d)
 {
   if (!d->query) return;
-  alloc_free(d->query);
+  free(d->query);
   d->query = 0;
 }
 
@@ -202,7 +203,7 @@ int dns_transmit_start(struct dns_transmit *d,const char servers[64],int flagrec
 
   len = dns_domain_length(q);
   d->querylen = len + 18;
-  d->query = alloc(d->querylen);
+  d->query = malloc(d->querylen);
   if (!d->query) return -1;
 
   uint16_pack_msb(len+16,(unsigned char*)d->query);
@@ -276,7 +277,7 @@ have sent query to curserver on UDP socket s
     socketfree(d);
 
     d->packetlen = r;
-    d->packet = alloc(d->packetlen);
+    d->packet = malloc(d->packetlen);
     if (!d->packet) { dns_transmit_free(d); return -1; }
     byte_copy(d->packet,d->packetlen,udpbuf);
     queryfree(d);
@@ -336,7 +337,7 @@ have received one byte of packet length into packetlen
     d->packetlen += ch;
     d->tcpstate = 5;
     d->pos = 0;
-    d->packet = alloc(d->packetlen);
+    d->packet = malloc(d->packetlen);
     if (!d->packet) { dns_transmit_free(d); return -1; }
     return 0;
   }

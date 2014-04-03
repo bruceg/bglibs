@@ -1,5 +1,6 @@
+#include <stdlib.h>
+
 #include "error.h"
-#include "alloc.h"
 #include "byte.h"
 #include "dns.h"
 
@@ -59,11 +60,11 @@ int dns_domain_fromdot(char **out,const char *buf,unsigned int n)
   if (namelen + 1 > sizeof name) return 0;
   name[namelen++] = 0;
 
-  x = alloc(namelen);
+  x = malloc(namelen);
   if (!x) return 0;
   byte_copy(x,namelen,name);
 
-  if (*out) alloc_free(*out);
+  if (*out) free(*out);
   *out = x;
   return 1;
 }

@@ -1,5 +1,6 @@
+#include <stdlib.h>
+
 #include "error.h"
-#include "alloc.h"
 #include "case.h"
 #include "byte.h"
 #include "dns.h"
@@ -18,7 +19,7 @@ unsigned int dns_domain_length(const char *dn)
 void dns_domain_free(char **out)
 {
   if (*out) {
-    alloc_free(*out);
+    free(*out);
     *out = 0;
   }
 }
@@ -29,10 +30,10 @@ int dns_domain_copy(char **out,const char *in)
   char *x;
 
   len = dns_domain_length(in);
-  x = alloc(len);
+  x = malloc(len);
   if (!x) return 0;
   byte_copy(x,len,in);
-  if (*out) alloc_free(*out);
+  if (*out) free(*out);
   *out = x;
   return 1;
 }
