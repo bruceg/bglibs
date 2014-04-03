@@ -1,4 +1,5 @@
-#include "byte.h"
+#include <string.h>
+
 #include "fmt.h"
 #include "dns.h"
 
@@ -20,5 +21,5 @@ void dns_name4_domain(char name[DNS_NAME4_DOMAIN],const char ip[4])
   i = fmt_ulong(name + namelen + 1,(unsigned long) (unsigned char) ip[0]);
   name[namelen++] = i;
   namelen += i;
-  byte_copy(name + namelen,14,"\7in-addr\4arpa\0");
+  memcpy(name + namelen,"\7in-addr\4arpa\0",14);
 }

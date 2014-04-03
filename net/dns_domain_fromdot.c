@@ -1,7 +1,7 @@
 #include <stdlib.h>
+#include <string.h>
 
 #include "error.h"
-#include "byte.h"
 #include "dns.h"
 
 int dns_domain_fromdot(char **out,const char *buf,unsigned int n)
@@ -22,7 +22,7 @@ int dns_domain_fromdot(char **out,const char *buf,unsigned int n)
       if (labellen) {
 	if (namelen + labellen + 1 > sizeof name) return 0;
 	name[namelen++] = labellen;
-	byte_copy(name + namelen,labellen,label);
+	memcpy(name + namelen,label,labellen);
 	namelen += labellen;
 	labellen = 0;
       }
@@ -52,7 +52,7 @@ int dns_domain_fromdot(char **out,const char *buf,unsigned int n)
   if (labellen) {
     if (namelen + labellen + 1 > sizeof name) return 0;
     name[namelen++] = labellen;
-    byte_copy(name + namelen,labellen,label);
+    memcpy(name + namelen,label,labellen);
     namelen += labellen;
     labellen = 0;
   }
@@ -62,7 +62,7 @@ int dns_domain_fromdot(char **out,const char *buf,unsigned int n)
 
   x = malloc(namelen);
   if (!x) return 0;
-  byte_copy(x,namelen,name);
+  memcpy(x,name,namelen);
 
   if (*out) free(*out);
   *out = x;

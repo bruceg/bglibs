@@ -3,7 +3,6 @@
 
 #include "taia.h"
 #include "env.h"
-#include "byte.h"
 #include "openreadclose.h"
 #include "dns.h"
 
@@ -70,12 +69,14 @@ static int init(str *rules)
     i = 0;
     for (j = 0;j < data.len;++j)
       if (data.s[j] == '\n') {
-        if (byte_equal("search ",7,data.s + i) || byte_equal("search\t",7,data.s + i) || byte_equal("domain ",7,data.s + i) || byte_equal("domain\t",7,data.s + i)) {
+        if (memcmp("search ",data.s + i,7) == 0 || memcmp("search\t",data.s + i,7) == 0 || memcmp("domain ",data.s + i,7) == 0 || memcmp("domain\t",data.s + i,7) == 0) {
           if (!str_copys(rules,"?:")) return -1;
           i += 7;
           while (i < j) {
-            k = byte_chr(data.s + i,j - i,' ');
-            k = byte_chr(data.s + i,k,'\t');
+	    x = memchr(data.s + i,' ',j - i);
+	    k = x ? x - (data.s + i) : j - i;
+	    x = memchr(data.s + i,'\t',k);
+	    k = x ? x - (data.s + i) : k;
             if (!k) { ++i; continue; }
             if (!str_cats(rules,"+.")) return -1;
             if (!str_catb(rules,data.s + i,k)) return -1;

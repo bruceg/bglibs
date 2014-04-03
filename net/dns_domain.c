@@ -1,8 +1,8 @@
 #include <stdlib.h>
+#include <string.h>
 
 #include "error.h"
 #include "case.h"
-#include "byte.h"
 #include "dns.h"
 
 unsigned int dns_domain_length(const char *dn)
@@ -32,7 +32,7 @@ int dns_domain_copy(char **out,const char *in)
   len = dns_domain_length(in);
   x = malloc(len);
   if (!x) return 0;
-  byte_copy(x,len,in);
+  memcpy(x,in,len);
   if (*out) free(*out);
   *out = x;
   return 1;

@@ -1,11 +1,11 @@
 #include <sysdeps.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/socket.h>
 #include <unistd.h>
 
 #include "socket.h"
 #include "error.h"
-#include "byte.h"
 #include "uint16.h"
 #include "dns.h"
 
@@ -37,7 +37,7 @@ static int irrelevant(const struct dns_transmit *d,const char *buf,unsigned int 
   unsigned int pos;
 
   pos = dns_packet_copy(buf,len,0,out,12); if (!pos) return 1;
-  if (byte_diff(out,2,d->query + 2)) return 1;
+  if (memcmp(out,d->query + 2,2)) return 1;
   if (out[4] != 0) return 1;
   if (out[5] != 1) return 1;
 
@@ -47,8 +47,8 @@ static int irrelevant(const struct dns_transmit *d,const char *buf,unsigned int 
   free(dn);
 
   pos = dns_packet_copy(buf,len,pos,out,4); if (!pos) return 1;
-  if (byte_diff(out,2,d->qtype)) return 1;
-  if (byte_diff(out + 2,2,DNS_C_IN)) return 1;
+  if (memcmp(out,d->qtype,2)) return 1;
+  if (memcmp(out + 2,DNS_C_IN,2)) return 1;
 
   return 0;
 }
@@ -104,7 +104,7 @@ static int thisudp(struct dns_transmit *d)
   while (d->udploop < 4) {
     for (;d->curserver < 16;++d->curserver) {
       ip = d->servers + 4 * d->curserver;
-      if (byte_diff(ip,4,"\0\0\0\0")) {
+      if (memcmp(ip,"\0\0\0\0",4)) {
 	d->query[2] = dns_random(256);
 	d->query[3] = dns_random(256);
 
@@ -155,7 +155,7 @@ static int thistcp(struct dns_transmit *d)
 
   for (;d->curserver < 16;++d->curserver) {
     ip = d->servers + 4 * d->curserver;
-    if (byte_diff(ip,4,"\0\0\0\0")) {
+    if (memcmp(ip,"\0\0\0\0",4)) {
       d->query[2] = dns_random(256);
       d->query[3] = dns_random(256);
 
@@ -207,14 +207,14 @@ int dns_transmit_start(struct dns_transmit *d,const char servers[64],int flagrec
   if (!d->query) return -1;
 
   uint16_pack_msb(len+16,(unsigned char*)d->query);
-  byte_copy(d->query + 2,12,flagrecursive ? "\0\0\1\0\0\1\0\0\0\0\0\0" : "\0\0\0\0\0\1\0\0\0\0\0\0gcc-bug-workaround");
-  byte_copy(d->query + 14,len,q);
-  byte_copy(d->query + 14 + len,2,qtype);
-  byte_copy(d->query + 16 + len,2,DNS_C_IN);
+  memcpy(d->query + 2,flagrecursive ? "\0\0\1\0\0\1\0\0\0\0\0\0" : "\0\0\0\0\0\1\0\0\0\0\0\0gcc-bug-workaround",12);
+  memcpy(d->query + 14,q,len);
+  memcpy(d->query + 14 + len,qtype,2);
+  memcpy(d->query + 16 + len,DNS_C_IN,2);
 
-  byte_copy(d->qtype,2,qtype);
+  memcpy(d->qtype,qtype,2);
   d->servers = servers;
-  byte_copy(d->localip,4,localip);
+  memcpy(d->localip,localip,4);
 
   d->udploop = flagrecursive ? 1 : 0;
 
@@ -279,7 +279,7 @@ have sent query to curserver on UDP socket s
     d->packetlen = r;
     d->packet = malloc(d->packetlen);
     if (!d->packet) { dns_transmit_free(d); return -1; }
-    byte_copy(d->packet,d->packetlen,udpbuf);
+    memcpy(d->packet,udpbuf,d->packetlen);
     queryfree(d);
     return 1;
   }

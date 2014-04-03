@@ -1,6 +1,7 @@
+#include <string.h>
+
 #include "taia.h"
 #include "openreadclose.h"
-#include "byte.h"
 #include "ip4.h"
 #include "env.h"
 #include "dns.h"
@@ -35,7 +36,7 @@ static int init(char ip[64])
       i = 0;
       for (j = 0;j < data.len;++j)
         if (data.s[j] == '\n') {
-          if (byte_equal("nameserver ",11,data.s + i) || byte_equal("nameserver\t",11,data.s + i)) {
+          if (memcmp("nameserver ",data.s + i,11) == 0 || memcmp("nameserver\t",data.s + i,11) == 0) {
             i += 10;
             while ((data.s[i] == ' ') || (data.s[i] == '\t'))
               ++i;
@@ -52,10 +53,10 @@ static int init(char ip[64])
   }
 
   if (!iplen) {
-    byte_copy(ip,4,"\177\0\0\1");
+    memcpy(ip,"\177\0\0\1",4);
     iplen = 4;
   }
-  byte_zero(ip + iplen,64 - iplen);
+  memset(ip + iplen,0,64 - iplen);
   return 0;
 }
 
@@ -81,6 +82,6 @@ int dns_resolvconfip(char s[64])
   }
 
   --uses;
-  byte_copy(s,64,ip);
+  memcpy(s,ip,64);
   return 0;
 }

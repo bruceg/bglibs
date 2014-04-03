@@ -1,7 +1,6 @@
 #include <string.h>
 
 #include "case.h"
-#include "byte.h"
 #include "dns.h"
 
 static int doit(str *work,const char *rule)
@@ -22,9 +21,9 @@ static int doit(str *work,const char *rule)
   if ((ch == '=') && prefixlen) return 1;
   if (case_diffb(rule,colon,work->s + prefixlen)) return 1;
   if (ch == '?') {
-    if (byte_chr(work->s,prefixlen,'.') < prefixlen) return 1;
-    if (byte_chr(work->s,prefixlen,'[') < prefixlen) return 1;
-    if (byte_chr(work->s,prefixlen,']') < prefixlen) return 1;
+    if (memchr(work->s,'.',prefixlen)) return 1;
+    if (memchr(work->s,'[',prefixlen)) return 1;
+    if (memchr(work->s,']',prefixlen)) return 1;
   }
 
   work->len = prefixlen;
@@ -38,6 +37,7 @@ int dns_ip4_qualify_rules(str *out,str *fqdn,const str *in,const str *rules)
   unsigned int j;
   unsigned int plus;
   unsigned int fqdnlen;
+  const char *p;
 
   if (!str_copy(fqdn,in)) return -1;
 
@@ -48,14 +48,16 @@ int dns_ip4_qualify_rules(str *out,str *fqdn,const str *in,const str *rules)
     }
 
   fqdnlen = fqdn->len;
-  plus = byte_chr(fqdn->s,fqdnlen,'+');
-  if (plus >= fqdnlen)
+  p = memchr(fqdn->s,'+',fqdnlen);
+  if (!p)
     return dns_ip4(out,fqdn);
+  plus = p - fqdn->s;
 
   i = plus + 1;
   for (;;) {
-    j = byte_chr(fqdn->s + i,fqdnlen - i,'+');
-    byte_copy(fqdn->s + plus,j,fqdn->s + i);
+    p = memchr(fqdn->s + i,'+',fqdnlen - i);
+    j = p ? p - (fqdn->s + i) : fqdnlen - i;
+    memcpy(fqdn->s + plus,fqdn->s + i,j);
     fqdn->len = plus + j;
     if (dns_ip4(out,fqdn) == -1) return -1;
     if (out->len) return 0;

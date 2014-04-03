@@ -1,5 +1,6 @@
+#include <string.h>
+
 #include "uint16.h"
-#include "byte.h"
 #include "dns.h"
 
 int dns_txt_packet(str *out,const char *buf,unsigned int len)
@@ -23,8 +24,8 @@ int dns_txt_packet(str *out,const char *buf,unsigned int len)
     pos = dns_packet_skipname(buf,len,pos); if (!pos) return -1;
     pos = dns_packet_copy(buf,len,pos,header,10); if (!pos) return -1;
     datalen = uint16_get_msb((unsigned char*)header + 8);
-    if (byte_equal(header,2,DNS_T_TXT))
-      if (byte_equal(header + 2,2,DNS_C_IN)) {
+    if (memcmp(header,DNS_T_TXT,2) == 0)
+      if (memcmp(header + 2,DNS_C_IN,2) == 0) {
 	if (pos + datalen > len) return -1;
 	txtlen = 0;
 	for (i = 0;i < datalen;++i) {

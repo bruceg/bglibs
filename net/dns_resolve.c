@@ -1,6 +1,7 @@
+#include <string.h>
+
 #include "iopause.h"
 #include "taia.h"
-#include "byte.h"
 #include "dns.h"
 
 struct dns_transmit dns_resolve_tx = {0};
