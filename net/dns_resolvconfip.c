@@ -1,9 +1,9 @@
+#include <stdlib.h>
 #include <string.h>
 
 #include "taia.h"
 #include "openreadclose.h"
 #include "ip4.h"
-#include "env.h"
 #include "dns.h"
 
 static str data = {0};
@@ -15,7 +15,7 @@ static int init(char ip[64])
   int iplen = 0;
   char *x;
 
-  x = env_get("DNSCACHEIP");
+  x = getenv("DNSCACHEIP");
   if (x)
     while (iplen <= 60) {
       if (*x == '.')

@@ -1,8 +1,8 @@
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
 #include "taia.h"
-#include "env.h"
 #include "openreadclose.h"
 #include "dns.h"
 
@@ -18,7 +18,7 @@ static int init(str *rules)
 
   if (!str_copys(rules,"")) return -1;
 
-  x = env_get("DNSREWRITEFILE");
+  x = getenv("DNSREWRITEFILE");
   if (!x) x = "/etc/dnsrewrite";
 
   i = openreadclose(x,&data,64);
@@ -43,7 +43,7 @@ static int init(str *rules)
     return 0;
   }
 
-  x = env_get("LOCALDOMAIN");
+  x = getenv("LOCALDOMAIN");
   if (x) {
     if (!str_copys(&data,x)) return -1;
     if (!str_catc(&data,' ')) return -1;
