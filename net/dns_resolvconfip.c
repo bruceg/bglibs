@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "iobuf/ibuf.h"
 #include "taia.h"
-#include "openreadclose.h"
 #include "dns.h"
 
 static str data = {0};
@@ -27,7 +27,7 @@ static int init(ipv4addr ip[16])
     }
 
   if (!iplen) {
-    i = openreadclose("/etc/resolv.conf",&data,64);
+    i = ibuf_openreadclose("/etc/resolv.conf",&data);
     if (i == -1) return -1;
     if (i) {
       if (!str_catc(&data,'\n')) return -1;

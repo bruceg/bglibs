@@ -2,8 +2,8 @@
 #include <string.h>
 #include <unistd.h>
 
+#include "iobuf/ibuf.h"
 #include "taia.h"
-#include "openreadclose.h"
 #include "dns.h"
 
 static str data = {0};
@@ -21,7 +21,7 @@ static int init(str *rules)
   x = getenv("DNSREWRITEFILE");
   if (!x) x = "/etc/dnsrewrite";
 
-  i = openreadclose(x,&data,64);
+  i = ibuf_openreadclose(x,&data);
   if (i == -1) return -1;
 
   if (i) {
@@ -61,7 +61,7 @@ static int init(str *rules)
     return 0;
   }
 
-  i = openreadclose("/etc/resolv.conf",&data,64);
+  i = ibuf_openreadclose("/etc/resolv.conf",&data);
   if (i == -1) return -1;
 
   if (i) {
