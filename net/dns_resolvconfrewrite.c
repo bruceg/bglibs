@@ -1,8 +1,9 @@
+#include <string.h>
 #include <unistd.h>
+
 #include "taia.h"
 #include "env.h"
 #include "byte.h"
-#include "str.h"
 #include "openreadclose.h"
 #include "dns.h"
 
@@ -92,10 +93,10 @@ static int init(stralloc *rules)
   host[0] = 0;
   if (gethostname(host,sizeof host) == -1) return -1;
   host[(sizeof host) - 1] = 0;
-  i = str_chr(host,'.');
-  if (host[i]) {
+  x = strchr(host,'.');
+  if (x) {
     if (!stralloc_copys(rules,"?:")) return -1;
-    if (!stralloc_cats(rules,host + i)) return -1;
+    if (!stralloc_cats(rules,x)) return -1;
     if (!stralloc_0(rules)) return -1;
   }
   if (!stralloc_cats(rules,"*.:")) return -1;

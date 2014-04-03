@@ -1,7 +1,8 @@
+#include <string.h>
+
 #include "stralloc.h"
 #include "case.h"
 #include "byte.h"
-#include "str.h"
 #include "dns.h"
 
 static int doit(stralloc *work,const char *rule)
@@ -9,11 +10,13 @@ static int doit(stralloc *work,const char *rule)
   char ch;
   unsigned int colon;
   unsigned int prefixlen;
+  const char *p;
 
   ch = *rule++;
   if ((ch != '?') && (ch != '=') && (ch != '*') && (ch != '-')) return 1;
-  colon = str_chr(rule,':');
-  if (!rule[colon]) return 1;
+  p = strchr(rule,':');
+  if (!p) return 1;
+  colon = p - rule;
 
   if (work->len < colon) return 1;
   prefixlen = work->len - colon;
