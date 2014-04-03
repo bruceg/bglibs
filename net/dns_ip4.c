@@ -30,7 +30,7 @@ int dns_ip4_packet(str *out,const char *buf,unsigned int len)
     pos += datalen;
   }
 
-  dns_sortip(out->s,out->len);
+  dns_sortip((ipv4addr*)out->s,out->len/4);
   return 0;
 }
 

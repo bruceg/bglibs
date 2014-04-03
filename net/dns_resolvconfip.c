@@ -3,28 +3,26 @@
 
 #include "taia.h"
 #include "openreadclose.h"
-#include "ip4.h"
 #include "dns.h"
 
 static str data = {0};
 
-static int init(char ip[64])
+static int init(ipv4addr ip[16])
 {
   int i;
   int j;
   int iplen = 0;
-  char *x;
+  const char *x;
 
   x = getenv("DNSCACHEIP");
   if (x)
-    while (iplen <= 60) {
+    while (iplen <= 15) {
       if (*x == '.')
 	++x;
       else {
-        i = ip4_scan(x,ip + iplen);
-	if (!i) break;
-	x += i;
-	iplen += 4;
+        x = ipv4_scan(x,ip + iplen);
+	if (!x) break;
+	iplen++;
       }
     }
 
@@ -40,11 +38,11 @@ static int init(char ip[64])
             i += 10;
             while ((data.s[i] == ' ') || (data.s[i] == '\t'))
               ++i;
-            if (iplen <= 60)
+            if (iplen <= 15)
               if (ip4_scan(data.s + i,ip + iplen)) {
-		if (byte_equal(ip + iplen,4,"\0\0\0\0"))
-		  byte_copy(ip + iplen,4,"\177\0\0\1");
-                iplen += 4;
+		if (memcmp(ip + iplen,"\0\0\0\0",4) == 0)
+		  memcpy(ip + iplen,"\177\0\0\1",4);
+                iplen++;
 	      }
           }
           i = j + 1;
@@ -63,9 +61,9 @@ static int init(char ip[64])
 static int ok = 0;
 static unsigned int uses;
 static struct taia deadline;
-static char ip[64]; /* defined if ok */
+static ipv4addr ip[16]; /* defined if ok */
 
-int dns_resolvconfip(char s[64])
+int dns_resolvconfip(ipv4addr s[16])
 {
   struct taia now;
 

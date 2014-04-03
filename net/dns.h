@@ -2,6 +2,7 @@
 #define DNS_H
 
 #include <sysdeps.h>
+#include <net/ipv4.h>
 #include <str/str.h>
 #include "taia.h"
 
@@ -34,15 +35,15 @@ struct dns_transmit {
   unsigned int curserver;
   struct taia deadline;
   unsigned int pos;
-  const char *servers;
-  char localip[4];
+  const ipv4addr *servers;
+  ipv4addr localip;
   char qtype[2];
 } ;
 
 extern void dns_random_init(const char *);
 extern unsigned int dns_random(unsigned int);
 
-extern void dns_sortip(char *,unsigned int);
+extern void dns_sortip(ipv4addr *,unsigned int);
 
 extern void dns_domain_free(char **);
 extern int dns_domain_copy(char **,const char *);
@@ -57,21 +58,21 @@ extern unsigned int dns_packet_copy(const char *,unsigned int,unsigned int,char 
 extern unsigned int dns_packet_getname(const char *,unsigned int,unsigned int,char **);
 extern unsigned int dns_packet_skipname(const char *,unsigned int,unsigned int);
 
-extern int dns_transmit_start(struct dns_transmit *,const char *,int,const char *,const char *,const char *);
+extern int dns_transmit_start(struct dns_transmit *,const ipv4addr [16],int,const char *,const char *,const ipv4addr *);
 extern void dns_transmit_free(struct dns_transmit *);
 extern void dns_transmit_io(struct dns_transmit *,iopoll_fd *,struct taia *);
 extern int dns_transmit_get(struct dns_transmit *,const iopoll_fd *,const struct taia *);
 
-extern int dns_resolvconfip(char *);
+extern int dns_resolvconfip(ipv4addr [16]);
 extern int dns_resolve(const char *,const char *);
 extern struct dns_transmit dns_resolve_tx;
 
 extern int dns_ip4_packet(str *,const char *,unsigned int);
 extern int dns_ip4(str *,const str *);
 extern int dns_name4_packet(str *,const char *,unsigned int);
-extern void dns_name4_domain(char *,const char *);
+extern void dns_name4_domain(char *,const ipv4addr *);
 #define DNS_NAME4_DOMAIN 31
-extern int dns_name4(str *,const char *);
+extern int dns_name4(str *,const ipv4addr *);
 extern int dns_txt_packet(str *,const char *,unsigned int);
 extern int dns_txt(str *,const str *);
 extern int dns_mx_packet(str *,const char *,unsigned int);

@@ -86,9 +86,9 @@ static int randombind(struct dns_transmit *d)
   int j;
 
   for (j = 0;j < 10;++j)
-    if (socket_bind4(d->s1 - 1,d->localip,1025 + dns_random(64510)) == 0)
+    if (socket_bind4(d->s1 - 1,&d->localip,1025 + dns_random(64510)))
       return 0;
-  if (socket_bind4(d->s1 - 1,d->localip,0) == 0)
+  if (socket_bind4(d->s1 - 1,&d->localip,0))
     return 0;
   return -1;
 }
@@ -97,13 +97,13 @@ static const int timeouts[4] = { 1, 3, 11, 45 };
 
 static int thisudp(struct dns_transmit *d)
 {
-  const char *ip;
+  const ipv4addr *ip;
 
   socketfree(d);
 
   while (d->udploop < 4) {
     for (;d->curserver < 16;++d->curserver) {
-      ip = d->servers + 4 * d->curserver;
+      ip = d->servers + d->curserver;
       if (memcmp(ip,"\0\0\0\0",4)) {
 	d->query[2] = dns_random(256);
 	d->query[3] = dns_random(256);
@@ -112,7 +112,7 @@ static int thisudp(struct dns_transmit *d)
         if (!d->s1) { dns_transmit_free(d); return -1; }
 	if (randombind(d) == -1) { dns_transmit_free(d); return -1; }
 
-        if (socket_connect4(d->s1 - 1,ip,53) == 0)
+        if (socket_connect4(d->s1 - 1,ip,53))
           if (send(d->s1 - 1,d->query + 2,d->querylen - 2,0) == d->querylen - 2) {
             struct taia now;
             taia_now(&now);
@@ -148,13 +148,13 @@ static int nextudp(struct dns_transmit *d)
 static int thistcp(struct dns_transmit *d)
 {
   struct taia now;
-  const char *ip;
+  const ipv4addr *ip;
 
   socketfree(d);
   packetfree(d);
 
   for (;d->curserver < 16;++d->curserver) {
-    ip = d->servers + 4 * d->curserver;
+    ip = d->servers + d->curserver;
     if (memcmp(ip,"\0\0\0\0",4)) {
       d->query[2] = dns_random(256);
       d->query[3] = dns_random(256);
@@ -166,7 +166,7 @@ static int thistcp(struct dns_transmit *d)
       taia_now(&now);
       taia_uint(&d->deadline,10);
       taia_add(&d->deadline,&d->deadline,&now);
-      if (socket_connect4(d->s1 - 1,ip,53) == 0) {
+      if (socket_connect4(d->s1 - 1,ip,53)) {
         d->tcpstate = 2;
         return 0;
       }
@@ -194,7 +194,7 @@ static int nexttcp(struct dns_transmit *d)
   return thistcp(d);
 }
 
-int dns_transmit_start(struct dns_transmit *d,const char servers[64],int flagrecursive,const char *q,const char qtype[2],const char localip[4])
+int dns_transmit_start(struct dns_transmit *d,const ipv4addr servers[16],int flagrecursive,const char *q,const char qtype[2],const ipv4addr *localip)
 {
   unsigned int len;
 
@@ -214,7 +214,7 @@ int dns_transmit_start(struct dns_transmit *d,const char servers[64],int flagrec
 
   memcpy(d->qtype,qtype,2);
   d->servers = servers;
-  memcpy(d->localip,localip,4);
+  d->localip = *localip;
 
   d->udploop = flagrecursive ? 1 : 0;
 

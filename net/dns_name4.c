@@ -35,7 +35,7 @@ int dns_name4_packet(str *out,const char *buf,unsigned int len)
   return 0;
 }
 
-int dns_name4(str *out,const char ip[4])
+int dns_name4(str *out,const ipv4addr *ip)
 {
   char name[DNS_NAME4_DOMAIN];
 
