@@ -75,3 +75,28 @@ int dns_ip4_r(struct dns_transmit *tx,str *out,const char *fqdn)
 }
 
 DNS_R_FN_WRAP2(dns_ip4, str*, const char*)
+
+#ifdef SELFTEST_MAIN
+str out = {0};
+void doit(const char* fqdn)
+{
+  unsigned int i;
+
+  dns_ip4(&out, fqdn);
+  obuf_putf(&outbuf, "s{ }d{:}", fqdn, out.len);
+  for (i = 0; i+4 <= out.len; i += 4) {
+    obuf_putc(&outbuf, ' ');
+    obuf_puts(&outbuf, ipv4_format((ipv4addr*)out.s + i));
+  }
+  NL();
+}
+MAIN
+{
+  doit("1.2.3.4");
+  doit("untroubled.org");
+}
+#endif
+#ifdef SELFTEST_EXP
+1.2.3.4 4: 1.2.3.4
+untroubled.org 4: 69.5.1.51
+#endif

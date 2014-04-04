@@ -127,3 +127,67 @@ int dns_resolvconfrewrite(str *out)
   if (!str_copy(out,&rules)) return -1;
   return 0;
 }
+
+#ifdef SELFTEST_MAIN
+static int dummy(str* out, const char* fn)
+{
+  return 0;
+  (void)out;
+  (void)fn;
+}
+MAIN
+{
+  str out = {0};
+  str fqdn = {0};
+  str rcfile = {0};
+
+  makefile(&rcfile, "search \tdomain1.com\ndomain domain2.com");
+  debugfn(setenv("DNSRESOLVCONF", rcfile.s, 1));
+  debugstrfn(dns_qualify(&out,&fqdn,"example.com",dummy), &fqdn);
+  debugstrfn(dns_qualify(&out,&fqdn,"sth.local",dummy), &fqdn);
+  debugstrfn(dns_qualify(&out,&fqdn,"sth",dummy), &fqdn);
+  debugstrfn(dns_qualify(&out,&fqdn,"sth.",dummy), &fqdn);
+  unlink(rcfile.s);
+
+  uses = 0; data.len = 0;
+  debugfn(setenv("LOCALDOMAIN", "local.domain", 1));
+  debugstrfn(dns_qualify(&out,&fqdn,"example.com",dummy), &fqdn);
+  debugstrfn(dns_qualify(&out,&fqdn,"sth.local",dummy), &fqdn);
+  debugstrfn(dns_qualify(&out,&fqdn,"sth",dummy), &fqdn);
+  debugstrfn(dns_qualify(&out,&fqdn,"sth.",dummy), &fqdn);
+  debugstr(&rules);
+
+  uses = 0; data.len = 0;
+  makefile(&rcfile, "-.local:me.local\n=me:127.0.0.1\n*.a:.af.mil\n?:.heaven.af.mil\n*.:\n");
+  debugfn(setenv("DNSREWRITEFILE", rcfile.s, 1));
+  debugstrfn(dns_qualify(&out,&fqdn,"example.com",dummy), &fqdn);
+  debugstrfn(dns_qualify(&out,&fqdn,"sth.local",dummy), &fqdn);
+  debugstrfn(dns_qualify(&out,&fqdn,"me",dummy), &fqdn);
+  debugstrfn(dns_qualify(&out,&fqdn,"sth.a",dummy), &fqdn);
+  debugstrfn(dns_qualify(&out,&fqdn,"sth",dummy), &fqdn);
+  debugstrfn(dns_qualify(&out,&fqdn,"sth.",dummy), &fqdn);
+  debugstr(&rules);
+  unlink(rcfile.s);
+}
+#endif
+#ifdef SELFTEST_EXP
+result=0
+result=0 len=11 size=16 s=example.com
+result=0 len=9 size=16 s=sth.local
+result=0 len=15 size=32 s=sth.domain1.com
+result=0 len=3 size=32 s=sth
+result=0
+result=0 len=11 size=32 s=example.com
+result=0 len=9 size=32 s=sth.local
+result=0 len=16 size=32 s=sth.local.domain
+result=0 len=3 size=32 s=sth
+len=21 size=32 s=?:+.local.domain^@*.:^@
+result=0
+result=0 len=11 size=32 s=example.com
+result=0 len=8 size=32 s=me.local
+result=0 len=9 size=32 s=127.0.0.1
+result=0 len=10 size=32 s=sth.af.mil
+result=0 len=17 size=32 s=sth.heaven.af.mil
+result=0 len=3 size=32 s=sth
+len=65 size=80 s=-.local:me.local^@=me:127.0.0.1^@*.a:.af.mil^@?:.heaven.af.mil^@*.:^@^@
+#endif

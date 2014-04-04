@@ -88,3 +88,67 @@ int dns_resolvconfip(ipv4addr s[DNS_MAX_IPS])
   memcpy(s,ip,64);
   return 0;
 }
+
+#ifdef SELFTEST_MAIN
+MAIN
+{
+  ipv4addr ips[DNS_MAX_IPS];
+  int i;
+  str rcfile = {0};
+  makefile(&rcfile, "nameserver 1.2.3.4\nnameserver\t 2.3.4.5\nnameserver \t3.4.5.6");
+
+  debugfn(setenv("DNSRESOLVCONF", rcfile.s, 1));
+  debugfn(dns_resolvconfip(ips));
+  for (i = 0; i < DNS_MAX_IPS; ++i) {
+    obuf_puts(&outbuf, ipv4_format(&ips[i]));
+    NL();
+  }
+
+  uses = 0;
+  debugfn(setenv("DNSCACHEIP", "192.168.1.2,192.168.1.3", 1));
+  debugfn(dns_resolvconfip(ips));
+  for (i = 0; i < DNS_MAX_IPS; ++i) {
+    obuf_puts(&outbuf, ipv4_format(&ips[i]));
+    NL();
+  }
+  unlink(rcfile.s);
+}
+#endif
+#ifdef SELFTEST_EXP
+result=0
+result=0
+1.2.3.4
+2.3.4.5
+3.4.5.6
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+result=0
+result=0
+192.168.1.2
+192.168.1.3
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+0.0.0.0
+#endif

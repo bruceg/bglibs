@@ -56,3 +56,17 @@ int dns_txt_r(struct dns_transmit *tx,str *out,const char *fqdn)
 }
 
 DNS_R_FN_WRAP2(dns_txt, str*, const char*)
+
+#ifdef SELFTEST_MAIN
+MAIN
+{
+  str out = {0};
+
+  dns_txt(&out, "gmail.com");
+  obuf_putf(&outbuf, "d{: \"}S{\"\n}", out.len, &out);
+  obuf_flush(&outbuf);
+}
+#endif
+#ifdef SELFTEST_EXP
+31: "v=spf1 redirect=_spf.google.com"
+#endif

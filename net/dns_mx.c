@@ -49,3 +49,24 @@ int dns_mx_r(struct dns_transmit *tx,str *out,const char *fqdn)
 }
 
 DNS_R_FN_WRAP2(dns_mx, str*, const char*)
+
+#ifdef SELFTEST_MAIN
+#include "str/iter.h"
+MAIN
+{
+  str out = {0};
+  striter i;
+
+  dns_mx(&out, "untroubled.org");
+  striter_loop(&i, &out, 0) {
+    obuf_putf(&outbuf, "d{ }d{: \"}s{\"\n}",
+	      uint16_get_msb((unsigned char*)i.startptr),
+	      i.len - 2,
+	      i.startptr + 2);
+  }
+  obuf_flush(&outbuf);
+}
+#endif
+#ifdef SELFTEST_EXP
+12801 18: "mx.futurequest.net"
+#endif

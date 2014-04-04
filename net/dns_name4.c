@@ -47,3 +47,20 @@ int dns_name4_r(struct dns_transmit *tx,str *out,const ipv4addr *ip)
 }
 
 DNS_R_FN_WRAP2(dns_name4, str*, const ipv4addr*)
+
+#ifdef SELFTEST_MAIN
+#include "str/iter.h"
+MAIN
+{
+  str out = {0};
+  ipv4addr ip = {{ 69,5,1,51 }};
+  striter i;
+
+  dns_name4(&out, &ip);
+  striter_loop(&i, &out, 0)
+    obuf_putf(&outbuf, "d{: \"}s{\"\n}", i.len, i.startptr);
+}
+#endif
+#ifdef SELFTEST_EXP
+14: "untroubled.org"
+#endif
