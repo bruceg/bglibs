@@ -1,6 +1,5 @@
 #include <string.h>
 
-#include "case.h"
 #include "dns.h"
 
 static int doit(str *work,const char *rule)
@@ -19,7 +18,7 @@ static int doit(str *work,const char *rule)
   if (work->len < colon) return 1;
   prefixlen = work->len - colon;
   if ((ch == '=') && prefixlen) return 1;
-  if (case_diffb(rule,colon,work->s + prefixlen)) return 1;
+  if (strncasecmp(rule,work->s + prefixlen,colon)) return 1;
   if (ch == '?') {
     if (memchr(work->s,'.',prefixlen)) return 1;
     if (memchr(work->s,'[',prefixlen)) return 1;
