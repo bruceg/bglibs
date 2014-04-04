@@ -421,7 +421,7 @@ static void MDString(const char* s)
   printf("\n");
 }
 
-int main(void)
+MAIN
 {
   printf("MD5 test suite:\n");
   MDString("");
@@ -433,7 +433,6 @@ int main(void)
   
   MDString("1234567890123456789012345678901234567890"
 	   "1234567890123456789012345678901234567890");
-  return 0;
 }
 #endif
 #ifdef SELFTEST_EXP

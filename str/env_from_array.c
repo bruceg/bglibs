@@ -17,7 +17,6 @@ int envstr_from_array(struct str* env, char** array, int overwrite)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   static str env;

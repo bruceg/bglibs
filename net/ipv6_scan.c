@@ -112,7 +112,6 @@ const char* ipv6_scan(const char* s, ipv6addr* addr)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 static void test(const char* start)
 {
   ipv6addr ip;

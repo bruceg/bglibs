@@ -13,7 +13,6 @@ char* utoa2(unsigned long i, char* buf)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 void test(unsigned long u)
 {
   char buf[32];

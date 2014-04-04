@@ -4,7 +4,6 @@
 #include "gstack.h"
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 
 GSTACK_DECL(test,int);
 GSTACK_DEFN(test,int,0,0);

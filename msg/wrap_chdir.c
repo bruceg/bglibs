@@ -10,7 +10,6 @@ void wrap_chdir(const char* dir)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   wrap_exit = 0;

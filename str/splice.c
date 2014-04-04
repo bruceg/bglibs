@@ -48,7 +48,6 @@ int str_spliceb(str* s, unsigned start, unsigned len,
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   static str s;

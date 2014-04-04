@@ -27,7 +27,6 @@ unsigned fmt_sign_pad(char* buffer, int sign, unsigned width, char pad)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 void test(int sign, unsigned width, char pad)
 {
   char buf[10];

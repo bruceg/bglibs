@@ -42,7 +42,6 @@ void msg_common(const char* type,
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   warn2("a", "b");

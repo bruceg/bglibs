@@ -18,7 +18,6 @@ int obuf_putns(obuf* out, unsigned int count, ...)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   obuf_putns(&outbuf, 4, "1", 0, "2", "3"); NL();

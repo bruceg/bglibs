@@ -27,7 +27,6 @@ char** envstr_make_array(const struct str* env)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   static const str env = {"A=1\0B=2\0C=3\0", 12, 0};

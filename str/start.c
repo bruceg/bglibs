@@ -39,7 +39,6 @@ int str_startb(const str* a, const char* b, unsigned len)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 static str s = { "Return-Path: <>\n", 16, 0 };
 void t(const char* f)
 {

@@ -28,7 +28,6 @@ const char* ucspi_getenv(const char* name)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 void put(const char* s)
 {
   obuf_puts(&outbuf, s);

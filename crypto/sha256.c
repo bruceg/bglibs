@@ -195,7 +195,7 @@ static void test(const char* s)
   obuf_endl(&outbuf);
 }
 
-int main(void)
+MAIN
 {
   test("abc");
   test("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq");
@@ -207,8 +207,6 @@ int main(void)
   test("For this sample, this 63-byte string will be used as input data");
   test("And this textual data, astonishing as it may appear, is exactly 128 bytes in length, as are both SHA-384 and SHA-512 block sizes");
   test("By hashing data that is one byte less than a multiple of a hash block length (like this 127-byte string), bugs may be revealed.");
-
-  return 0;
 }
 #endif
 #ifdef SELFTEST_EXP

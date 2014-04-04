@@ -48,7 +48,6 @@ int str_case_start(const str* a, const str* b)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 static str s = { "Return-Path: <>\n", 16, 0 };
 void t(const char* f)
 {

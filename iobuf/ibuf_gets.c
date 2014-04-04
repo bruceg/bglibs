@@ -25,7 +25,6 @@ int ibuf_gets(ibuf* in, char* data, unsigned datalen, char boundary)
 
 #ifdef SELFTEST_MAIN
 #include <unistd.h>
-#include "selftest.c"
 
 ibuf in = {
   { -1, "a\0bcd\0efgh", 10, 10, 0, 0, 0, 0, 0 },

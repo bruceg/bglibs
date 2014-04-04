@@ -34,7 +34,6 @@ int ibuf_getstr_crlf(ibuf* in, struct str* s)
 
 #ifdef SELFTEST_MAIN
 #include <unistd.h>
-#include "selftest.c"
 
 ibuf in = {
   { -1, "\n\r\na\nb\r\nd", 9, 9, 0, 0, 0, 0, 0 },

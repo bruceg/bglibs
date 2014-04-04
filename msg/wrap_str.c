@@ -8,7 +8,6 @@ void wrap_str(int result)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   wrap_exit = 0;

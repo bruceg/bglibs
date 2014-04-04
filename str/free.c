@@ -30,7 +30,6 @@ void str_free(str* s)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   static str s;

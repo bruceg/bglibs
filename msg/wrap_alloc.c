@@ -8,7 +8,6 @@ void wrap_alloc(const void* p)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   wrap_exit = 0;

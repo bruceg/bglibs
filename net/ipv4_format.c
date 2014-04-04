@@ -73,7 +73,6 @@ unsigned fmt_ipv4addr_reverse(char* buffer, const ipv4addr* addr)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 void testfn(const ipv4addr* ip, unsigned (*fn)(char*,const ipv4addr*))
 {
   char buffer[32];

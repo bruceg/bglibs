@@ -11,7 +11,6 @@ uint16 gcrc16fwd(uint16 crc, const char* data, long len,
 
 #ifdef SELFTEST_MAIN
 #include "crc16_ccitt.h"
-#include "selftest.c"
 MAIN
 {
   /* Test vectors gleaned from:

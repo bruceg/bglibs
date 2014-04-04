@@ -50,7 +50,6 @@ int ipv4_parse(const char* start, ipv4addr* addr, const char** end)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 static void test(const char* start)
 {
   ipv4addr ip;

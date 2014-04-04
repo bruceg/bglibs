@@ -30,7 +30,6 @@ unsigned fmt_char(char* buffer, int ch, unsigned width, char pad)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   char buf[99];

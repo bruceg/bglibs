@@ -51,7 +51,6 @@ int obuf_puti(obuf* out, long data)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   obuf_putiw(&outbuf,  10, 0,   0); NL();

@@ -66,7 +66,6 @@ int str_case_matchs(const str* s, const char* pattern)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 static const str s = { "abc", 3, 0 };
 void t(const char* pattern)
 {

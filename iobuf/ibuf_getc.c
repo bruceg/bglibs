@@ -15,7 +15,6 @@ int ibuf_getc(ibuf* in, char* ch)
 
 #ifdef SELFTEST_MAIN
 #include <unistd.h>
-#include "selftest.c"
 
 ibuf in = {
   { -1, "abcde", 5, 5, 0, 0, 0, 0, 0 },

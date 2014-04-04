@@ -164,7 +164,6 @@ int path_match(const char* pattern, str* result, unsigned options)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 #include <unistd.h>
 static void match(const char* pattern, unsigned options)
 {

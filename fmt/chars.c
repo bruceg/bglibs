@@ -48,7 +48,6 @@ unsigned fmt_str(char* buffer, const str* s, unsigned width, char pad)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   char buf[99];

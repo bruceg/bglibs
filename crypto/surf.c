@@ -73,7 +73,6 @@ void surf(uint32 out[8], const uint32 in[12], const uint32 seed[32])
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 static void test(const uint32 s[32], const uint32 in[32])
 {
   uint32 out[8];

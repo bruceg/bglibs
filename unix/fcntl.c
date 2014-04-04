@@ -1,7 +1,6 @@
 /* unix/fcntl.c - fcntl wrapper self-tests. */
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 #include <unistd.h>
 #include <fcntl.h>
 #include "fcntl.h"

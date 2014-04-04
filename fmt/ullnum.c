@@ -61,7 +61,6 @@ unsigned fmt_ullnumw(char* buffer, unsigned long long num,
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 static void test(unsigned (*fn)(char*, unsigned long long, unsigned, char),
 		 unsigned long long num, unsigned width, char pad)
 {

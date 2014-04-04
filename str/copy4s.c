@@ -40,7 +40,6 @@ int str_copy4s(str* s, const char* a, const char* b, const char* c,
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   static str s;

@@ -107,7 +107,6 @@ unsigned fmt_ipv6addr(char* buffer, const ipv6addr* addr)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 static void test(const char a[16])
 {
   ipv6addr ip;

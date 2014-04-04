@@ -39,7 +39,6 @@ int iobuf_init(iobuf* io, int fd, unsigned bufsize, char* buffer, unsigned flags
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   static iobuf io;

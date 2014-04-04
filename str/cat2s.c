@@ -34,7 +34,6 @@ int str_cat2s(str* s, const char* a, const char* b)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   static str s;

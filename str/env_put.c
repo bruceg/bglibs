@@ -22,7 +22,6 @@ int envstr_put(struct str* env, const char* asgn, int overwrite)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   static str env;

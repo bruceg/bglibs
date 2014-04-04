@@ -73,7 +73,6 @@ int path_merge(str* path, const char* start)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 #include "path.h"
 static str path;
 void showpath(void) { obuf_putstr(&outbuf, &path); NL(); }

@@ -11,7 +11,6 @@ uint64 gcrc64fwd(uint64 crc, const char* data, long len,
 
 #ifdef SELFTEST_MAIN
 #include "crc64.h"
-#include "selftest.c"
 MAIN
 {
   obuf_putXwll(&outbuf, crc64_block("123456789", 9), 16, '0'); NL();

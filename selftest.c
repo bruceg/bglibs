@@ -1,3 +1,5 @@
+#ifndef SELFTEST_C
+
 #include <errno.h>
 #include <string.h>
 
@@ -55,7 +57,7 @@ int debugsys(int result)
 }
 
 #define MAIN void selftest(void)
-MAIN;
+extern MAIN;
 
 int main(void)
 {
@@ -64,3 +66,5 @@ int main(void)
   obuf_flush(&errbuf);
   return 0;
 }
+
+#endif

@@ -57,7 +57,6 @@ int obuf_write(obuf* out, const char* data, unsigned datalen)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   obuf buf;

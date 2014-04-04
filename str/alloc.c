@@ -53,7 +53,6 @@ int str_alloc(str* s, unsigned size, int copy)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 void test(str* s, unsigned size)
 {
   debugstrfn(str_alloc(s, size, 0), s);

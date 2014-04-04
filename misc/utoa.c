@@ -15,7 +15,6 @@ const char* utoa(unsigned long i)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 void test(unsigned long u)
 {
   obuf_putf(&outbuf, "{utoa(}lu{) = '}s{'}", u, utoa(u));

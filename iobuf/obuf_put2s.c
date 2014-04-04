@@ -10,7 +10,6 @@ int obuf_put2s(obuf* out, const char* s1, const char* s2)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   obuf_put2s(&outbuf, "1", "2"); NL();

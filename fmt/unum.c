@@ -59,7 +59,6 @@ unsigned fmt_unumw(char* buffer, unsigned long num, unsigned width, char pad,
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 static void test(unsigned (*fn)(char*, unsigned long, unsigned, char),
 		 unsigned long num, unsigned width, char pad)
 {

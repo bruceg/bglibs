@@ -143,7 +143,6 @@ int str_glob(const str* s, const str* pattern)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 void t(const char* string, const char* pattern)
 {
   str s;

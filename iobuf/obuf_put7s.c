@@ -16,7 +16,6 @@ int obuf_put7s(obuf* out, const char* s1, const char* s2, const char* s3,
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   obuf_put7s(&outbuf, "1", "2", "3", "4", "5", "6", "7"); NL();

@@ -30,7 +30,6 @@ int ibuf_getnetstring(ibuf* in, struct str* s)
 
 #ifdef SELFTEST_MAIN
 #include <unistd.h>
-#include "selftest.c"
 
 ibuf in = {
   { -1, "0:,1:a,10:0123456789,4:", 23, 23, 0, 0, 0, 0, 0 },

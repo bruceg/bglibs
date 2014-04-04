@@ -50,7 +50,6 @@ int fnmatch(const char* filename, const char* pattern, unsigned options)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 void t(const char* filename, const char* pattern, unsigned options)
 {
   obuf_puts(&outbuf, filename);

@@ -12,7 +12,6 @@ uint32 gcrc32rfl(uint32 crc, const char* data, long len,
 #ifdef SELFTEST_MAIN
 #include "crc32.h"
 #include "crc32c.h"
-#include "selftest.c"
 MAIN
 {
   /* Test vectors gleaned from:

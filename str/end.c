@@ -39,7 +39,6 @@ int str_endb(const str* a, const char* b, unsigned len)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 static str s = { "AbCdEfGh", 8, 0 };
 void t(const char* f)
 {

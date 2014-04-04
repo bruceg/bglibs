@@ -107,7 +107,6 @@ void surfrand_fill(struct surfrand* c, unsigned char* buf, unsigned len)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 static void dumpn(struct surfrand* c, unsigned count)
 {
   while (count-- > 0) {

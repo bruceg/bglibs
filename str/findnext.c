@@ -29,7 +29,6 @@ int str_findnext(const str* s, char ch, unsigned pos)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   str s = { "01234567890123456", 16, 0 };

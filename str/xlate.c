@@ -41,7 +41,6 @@ long str_xlate(str* s, const char* from, const char* to, unsigned nchars)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 static str s;
 MAIN 
 {

@@ -71,7 +71,7 @@ static void HMACTest(const char* key, const char* data)
   printf("\n");
 }
 
-int main(void)
+MAIN
 {
   /* Test vectors from RFC 2104 */
   HMACTest("\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b",
@@ -83,7 +83,6 @@ int main(void)
 	   "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd"
 	   "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd"
 	   "\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd");
-  return 0;
 }
 #endif
 #ifdef SELFTEST_EXP

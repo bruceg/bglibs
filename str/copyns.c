@@ -36,7 +36,6 @@ int str_copyns(str* s, unsigned int count, ...)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   static str s;

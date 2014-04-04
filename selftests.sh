@@ -15,7 +15,7 @@ do_test() {
   sed -e '1,/^#ifdef SELFTEST_EXP$/d' -e '/^#endif/,$d' $1 >$t/test.exp
 
   sed -e 's/-o ${base}.o//' compile | \
-  sh -s $1 -DSELFTEST_MAIN -o $t/test.o || {
+  sh -s $1 -DSELFTEST_MAIN -o $t/test.o -include selftest.c || {
     echo "=====> Compile failed! <====="
     return 1
   }

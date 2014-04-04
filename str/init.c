@@ -31,7 +31,6 @@ int str_init(str* s)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   static str s;

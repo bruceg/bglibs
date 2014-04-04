@@ -266,7 +266,6 @@ unsigned fmt_multiv(char* buffer, const char* format, va_list ap)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 unsigned fmt_bool(char* buffer, const void* data, unsigned width, char pad)
 {
   return fmt_chars(buffer, data ? "true" : "false", width, pad);

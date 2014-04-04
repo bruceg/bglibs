@@ -4,7 +4,6 @@
 #include "ghash.h"
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 
 static struct ghash dict;
 GHASH_DECL(test,const char*,int);

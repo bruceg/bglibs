@@ -11,7 +11,6 @@ unsigned long strtou(const char* str, const char** end)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 void test(const char* s)
 {
   const char* end;

@@ -17,7 +17,6 @@ void envstr_unset(struct str* env, const char* var)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   static str env;

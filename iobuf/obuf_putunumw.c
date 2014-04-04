@@ -64,7 +64,6 @@ int obuf_putX(obuf* out, unsigned long data)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   obuf_putuw(&outbuf,  10, 0,   0); NL();

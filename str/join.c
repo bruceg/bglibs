@@ -54,7 +54,6 @@ int str_joinb(str* s, char sep, const char* in, unsigned len)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN 
 {
   static str s;

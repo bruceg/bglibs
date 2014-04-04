@@ -12,7 +12,6 @@ uint16 gcrc16rfl(uint16 crc, const char* data, long len,
 #ifdef SELFTEST_MAIN
 #include "crc16_arc.h"
 #include "crc16_xmodem.h"
-#include "selftest.c"
 MAIN
 {
   /* Test vectors gleaned from:

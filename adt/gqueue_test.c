@@ -4,7 +4,6 @@
 #include "gqueue.h"
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 
 GQUEUE_DECL(test,int);
 GQUEUE_DEFN(test,int,0,0);

@@ -48,7 +48,6 @@ int str_case_end(const str* a, const str* b)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 static str s = { "AbCdEfGh", 8, 0 };
 void t(const char* f)
 {

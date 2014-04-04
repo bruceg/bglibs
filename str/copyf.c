@@ -48,7 +48,6 @@ int str_copyf(str* s, const char* format, ...)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   static str s;

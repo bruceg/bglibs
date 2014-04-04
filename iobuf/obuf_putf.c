@@ -34,7 +34,6 @@ int obuf_putf(obuf* out, const char* format, ...)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   obuf_putf(&outbuf, "d{bar}x", 10, 20); NL();

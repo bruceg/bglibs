@@ -61,7 +61,6 @@ unsigned fmt_snumw(char* buffer, long num, unsigned width, char pad,
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 void test(long num, unsigned width, char pad)
 {
   char buf[FMT_ULONG_LEN];

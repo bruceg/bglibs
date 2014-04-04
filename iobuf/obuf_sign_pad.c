@@ -17,7 +17,6 @@ int obuf_sign_pad(obuf* out, int sign, unsigned width, char pad)
 }
 
 #ifdef SELFTEST_MAIN
-#include "selftest.c"
 MAIN
 {
   obuf_sign_pad(&outbuf, 0, 0,   0); NL();

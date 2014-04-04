@@ -63,7 +63,6 @@ void selfpipe_close(void)
 #ifdef SELFTEST_MAIN
 #include <errno.h>
 #include <signal.h>
-#include "selftest.c"
 void puti(const char* word, long i)
 {
   obuf_put2s(&outbuf, word, ": ");
