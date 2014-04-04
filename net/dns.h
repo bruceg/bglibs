@@ -69,6 +69,7 @@ extern void dns_transmit_free(struct dns_transmit *);
 extern void dns_transmit_io(struct dns_transmit *,iopoll_fd *,struct timeval *);
 extern int dns_transmit_get(struct dns_transmit *,const iopoll_fd *,const struct timeval *);
 
+extern int dns_read_resolvconf(str *out);
 extern int dns_resolvconfip(ipv4addr [DNS_MAX_IPS]);
 extern int dns_resolve(struct dns_transmit *,const char *,uint16);
 

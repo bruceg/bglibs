@@ -7,6 +7,15 @@
 
 static str data = {0};
 
+int dns_read_resolvconf(str *out)
+{
+  const char *x;
+  x = getenv("DNSRESOLVCONF");
+  if (!x)
+    x = "/etc/resolv.conf";
+  return ibuf_openreadclose(x, out);
+}
+
 static int init(ipv4addr ip[DNS_MAX_IPS])
 {
   int i;
@@ -27,7 +36,7 @@ static int init(ipv4addr ip[DNS_MAX_IPS])
     }
 
   if (!iplen) {
-    i = ibuf_openreadclose("/etc/resolv.conf",&data);
+    i = dns_read_resolvconf(&data);
     if (i == -1) return -1;
     if (i) {
       if (!str_catc(&data,'\n')) return -1;

@@ -56,7 +56,7 @@ static int init(str *rules)
     return 0;
   }
 
-  i = ibuf_openreadclose("/etc/resolv.conf",&data);
+  i = dns_read_resolvconf(&data);
   if (i == -1) return -1;
 
   if (i) {
