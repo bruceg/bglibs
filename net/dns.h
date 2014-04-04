@@ -68,7 +68,7 @@ extern struct dns_transmit dns_resolve_tx;
 
 extern int dns_ip4_packet(stralloc *,const char *,unsigned int);
 extern int dns_ip4(stralloc *,const stralloc *);
-extern int dns_name_packet(stralloc *,const char *,unsigned int);
+extern int dns_name4_packet(stralloc *,const char *,unsigned int);
 extern void dns_name4_domain(char *,const char *);
 #define DNS_NAME4_DOMAIN 31
 extern int dns_name4(stralloc *,const char *);
