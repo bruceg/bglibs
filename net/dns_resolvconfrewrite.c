@@ -3,6 +3,7 @@
 #include <unistd.h>
 
 #include "iobuf/ibuf.h"
+#include "str/iter.h"
 #include "dns.h"
 
 static str data = {0};
@@ -14,6 +15,7 @@ static int init(str *rules)
   int i;
   int j;
   int k;
+  striter s;
 
   if (!str_copys(rules,"")) return -1;
 
@@ -25,20 +27,17 @@ static int init(str *rules)
 
   if (i) {
     if (!str_catc(&data,'\n')) return -1;
-    i = 0;
-    for (j = 0;j < data.len;++j)
-      if (data.s[j] == '\n') {
-        if (!str_catb(rules,data.s + i,j - i)) return -1;
-        while (rules->len) {
-          if (rules->s[rules->len - 1] != ' ')
-          if (rules->s[rules->len - 1] != '\t')
-          if (rules->s[rules->len - 1] != '\r')
-            break;
-          --rules->len;
-        }
-        if (!str_catc(rules,0)) return -1;
-        i = j + 1;
+    striter_loop(&s, &data, '\n') {
+      if (!str_catb(rules, s.startptr, s.len)) return -1;
+      while (rules->len) {
+	if (rules->s[rules->len - 1] != ' '
+	    && rules->s[rules->len - 1] != '\t'
+	    && rules->s[rules->len - 1] != '\r')
+	  break;
+	--rules->len;
       }
+      if (!str_catc(rules,0)) return -1;
+    }
     return 0;
   }
 
@@ -47,13 +46,10 @@ static int init(str *rules)
     if (!str_copys(&data,x)) return -1;
     if (!str_catc(&data,' ')) return -1;
     if (!str_copys(rules,"?:")) return -1;
-    i = 0;
-    for (j = 0;j < data.len;++j)
-      if (data.s[j] == ' ') {
-        if (!str_cats(rules,"+.")) return -1;
-        if (!str_catb(rules,data.s + i,j - i)) return -1;
-        i = j + 1;
-      }
+    striter_loop(&s, &data, ' ') {
+      if (!str_cats(rules, "+.")) return -1;
+      if (!str_catb(rules, s.startptr, s.len)) return -1;
+    }
     if (!str_catc(rules,0)) return -1;
     if (!str_cats(rules,"*.:")) return -1;
     if (!str_catc(rules,0)) return -1;
@@ -65,29 +61,30 @@ static int init(str *rules)
 
   if (i) {
     if (!str_catc(&data,'\n')) return -1;
-    i = 0;
-    for (j = 0;j < data.len;++j)
-      if (data.s[j] == '\n') {
-        if (memcmp("search ",data.s + i,7) == 0 || memcmp("search\t",data.s + i,7) == 0 || memcmp("domain ",data.s + i,7) == 0 || memcmp("domain\t",data.s + i,7) == 0) {
-          if (!str_copys(rules,"?:")) return -1;
-          i += 7;
-          while (i < j) {
-	    x = memchr(data.s + i,' ',j - i);
-	    k = x ? x - (data.s + i) : j - i;
-	    x = memchr(data.s + i,'\t',k);
-	    k = x ? x - (data.s + i) : k;
-            if (!k) { ++i; continue; }
-            if (!str_cats(rules,"+.")) return -1;
-            if (!str_catb(rules,data.s + i,k)) return -1;
-            i += k;
-          }
-          if (!str_catc(rules,0)) return -1;
-          if (!str_cats(rules,"*.:")) return -1;
-          if (!str_catc(rules,0)) return -1;
-          return 0;
-        }
-        i = j + 1;
+    striter_loop(&s, &data, '\n') {
+      if (memcmp("search ", s.startptr, 7) == 0
+	  || memcmp("search\t", s.startptr, 7) == 0
+	  || memcmp("domain ", s.startptr, 7) == 0
+	  || memcmp("domain\t", s.startptr, 7) == 0) {
+	if (!str_copys(rules,"?:")) return -1;
+	i = 7;
+	j = s.len;
+	while (i < j) {
+	  x = memchr(s.startptr + i,' ',j - i);
+	  k = x ? x - (s.startptr + i) : j - i;
+	  x = memchr(s.startptr + i,'\t',k);
+	  k = x ? x - (s.startptr + i) : k;
+	  if (!k) { ++i; continue; }
+	  if (!str_cats(rules,"+.")) return -1;
+	  if (!str_catb(rules, s.startptr + i, k)) return -1;
+	  i += k;
+	}
+	if (!str_catc(rules,0)) return -1;
+	if (!str_cats(rules,"*.:")) return -1;
+	if (!str_catc(rules,0)) return -1;
+	return 0;
       }
+    }
   }
 
   host[0] = 0;

@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "iobuf/ibuf.h"
+#include "str/iter.h"
 #include "dns.h"
 
 static str data = {0};
@@ -9,7 +10,7 @@ static str data = {0};
 static int init(ipv4addr ip[16])
 {
   int i;
-  int j;
+  striter j;
   int iplen = 0;
   const char *x;
 
@@ -30,22 +31,18 @@ static int init(ipv4addr ip[16])
     if (i == -1) return -1;
     if (i) {
       if (!str_catc(&data,'\n')) return -1;
-      i = 0;
-      for (j = 0;j < data.len;++j)
-        if (data.s[j] == '\n') {
-          if (memcmp("nameserver ",data.s + i,11) == 0 || memcmp("nameserver\t",data.s + i,11) == 0) {
-            i += 10;
-            while ((data.s[i] == ' ') || (data.s[i] == '\t'))
-              ++i;
-            if (iplen <= 15)
-              if (ip4_scan(data.s + i,ip + iplen)) {
-		if (memcmp(ip + iplen,"\0\0\0\0",4) == 0)
-		  memcpy(ip + iplen,"\177\0\0\1",4);
-                iplen++;
-	      }
-          }
-          i = j + 1;
-        }
+      striter_loop(&j, &data, '\n') {
+	if (memcmp("nameserver ", j.startptr, 11) == 0 || memcmp("nameserver\t", j.startptr, 11) == 0) {
+	  for (i = j.start + 10; data.s[i] == ' ' || data.s[i] == '\t'; ++i)
+	    ;
+	  if (iplen <= 15)
+	    if (ipv4_scan(data.s + i,ip + iplen)) {
+	      if (memcmp(ip + iplen,"\0\0\0\0",4) == 0)
+		memcpy(ip + iplen,"\177\0\0\1",4);
+	      iplen++;
+	    }
+	}
+      }
     }
   }
 
