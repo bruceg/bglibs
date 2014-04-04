@@ -17,7 +17,7 @@ static int init(ipv4addr ip[DNS_MAX_IPS])
   x = getenv("DNSCACHEIP");
   if (x)
     while (iplen <= 15) {
-      if (*x == '.')
+      if (*x == ',')
 	++x;
       else {
         x = ipv4_scan(x,ip + iplen);
