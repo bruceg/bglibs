@@ -33,14 +33,13 @@ int dns_ip4_packet(str *out,const char *buf,unsigned int len)
   return 0;
 }
 
-static char *q = 0;
-
 int dns_ip4_r(struct dns_transmit *tx,str *out,const char *fqdn)
 {
   unsigned int i;
   char code;
   char ch;
   unsigned int len;
+  char *q = 0;
 
   if (!str_copys(out,"")) return -1;
   len = strlen(fqdn);
@@ -64,10 +63,10 @@ int dns_ip4_r(struct dns_transmit *tx,str *out,const char *fqdn)
     }
 
     if (!dns_domain_fromdot(&q,fqdn,len)) return -1;
-    if (dns_resolve(tx,q,DNS_T_A) == -1) return -1;
-    if (dns_ip4_packet(out,tx->packet,tx->packetlen) == -1) return -1;
+    if (dns_resolve(tx,q,DNS_T_A) == -1) { free(q); return -1; }
+    free(q);
+    if (dns_ip4_packet(out,tx->packet,tx->packetlen) == -1)  return -1;
     dns_transmit_free(tx);
-    dns_domain_free(&q);
     return 0;
   }
 

@@ -2,8 +2,6 @@
 
 #include "dns.h"
 
-static char *q = 0;
-
 int dns_mx_packet(str *out,const char *buf,unsigned int len)
 {
   unsigned int pos;
@@ -11,6 +9,7 @@ int dns_mx_packet(str *out,const char *buf,unsigned int len)
   unsigned char pref[2];
   uint16 numanswers;
   uint16 datalen;
+  char *q = 0;
 
   if (!str_copys(out,"")) return -1;
 
@@ -27,8 +26,9 @@ int dns_mx_packet(str *out,const char *buf,unsigned int len)
       if (uint16_get_msb(header + 2) == DNS_C_IN) {
 	if (!dns_packet_copy(buf,len,pos,pref,2)) return -1;
 	if (!dns_packet_getname(buf,len,pos + 2,&q)) return -1;
-	if (!str_catb(out,(char*)pref,2)) return -1;
-	if (!dns_domain_todot_cat(out,q)) return -1;
+	if (!str_catb(out,(char*)pref,2)) { free(q); return -1; }
+	if (!dns_domain_todot_cat(out,q)) { free(q); return -1; }
+	free(q);
 	if (!str_catc(out,0)) return -1;
       }
     pos += datalen;
@@ -39,11 +39,12 @@ int dns_mx_packet(str *out,const char *buf,unsigned int len)
 
 int dns_mx_r(struct dns_transmit *tx,str *out,const char *fqdn)
 {
+  char *q = 0;
   if (!dns_domain_fromdot(&q,fqdn,strlen(fqdn))) return -1;
-  if (dns_resolve(tx,q,DNS_T_MX) == -1) return -1;
-  if (dns_mx_packet(out,tx->packet,tx->packetlen) == -1) return -1;
+  if (dns_resolve(tx,q,DNS_T_MX) == -1) { free(q); return -1; }
+  free(q);
+  if (dns_mx_packet(out,tx->packet,tx->packetlen) == -1)  return -1;
   dns_transmit_free(tx);
-  dns_domain_free(&q);
   return 0;
 }
 

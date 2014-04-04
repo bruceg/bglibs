@@ -2,14 +2,14 @@
 
 #include "dns.h"
 
-static char *q = 0;
-
 int dns_name4_packet(str *out,const char *buf,unsigned int len)
 {
   unsigned int pos;
   unsigned char header[12];
   uint16 numanswers;
   uint16 datalen;
+  char *q = 0;
+  int r;
 
   if (!str_copys(out,"")) return -1;
 
@@ -25,8 +25,9 @@ int dns_name4_packet(str *out,const char *buf,unsigned int len)
     if (uint16_get_msb(header) == DNS_T_PTR)
       if (uint16_get_msb(header + 2) == DNS_C_IN) {
 	if (!dns_packet_getname(buf,len,pos,&q)) return -1;
-	if (!dns_domain_todot_cat(out,q)) return -1;
-	return 0;
+	r = dns_domain_todot_cat(out,q);
+	free(q);
+	return r ? 0 : -1;
       }
     pos += datalen;
   }
@@ -42,7 +43,6 @@ int dns_name4_r(struct dns_transmit *tx,str *out,const ipv4addr *ip)
   if (dns_resolve(tx,name,DNS_T_PTR) == -1) return -1;
   if (dns_name4_packet(out,tx->packet,tx->packetlen) == -1) return -1;
   dns_transmit_free(tx);
-  dns_domain_free(&q);
   return 0;
 }
 
