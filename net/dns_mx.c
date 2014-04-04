@@ -37,12 +37,14 @@ int dns_mx_packet(str *out,const char *buf,unsigned int len)
   return 0;
 }
 
-int dns_mx(str *out,const char *fqdn)
+int dns_mx_r(struct dns_transmit *tx,str *out,const char *fqdn)
 {
   if (!dns_domain_fromdot(&q,fqdn,strlen(fqdn))) return -1;
-  if (dns_resolve(q,DNS_T_MX) == -1) return -1;
-  if (dns_mx_packet(out,dns_resolve_tx.packet,dns_resolve_tx.packetlen) == -1) return -1;
-  dns_transmit_free(&dns_resolve_tx);
+  if (dns_resolve(tx,q,DNS_T_MX) == -1) return -1;
+  if (dns_mx_packet(out,tx->packet,tx->packetlen) == -1) return -1;
+  dns_transmit_free(tx);
   dns_domain_free(&q);
   return 0;
 }
+
+DNS_R_FN_WRAP2(dns_mx, str*, const char*)

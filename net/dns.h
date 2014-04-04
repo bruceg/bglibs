@@ -70,22 +70,34 @@ extern void dns_transmit_io(struct dns_transmit *,iopoll_fd *,struct timeval *);
 extern int dns_transmit_get(struct dns_transmit *,const iopoll_fd *,const struct timeval *);
 
 extern int dns_resolvconfip(ipv4addr [DNS_MAX_IPS]);
-extern int dns_resolve(const char *,uint16);
-extern struct dns_transmit dns_resolve_tx;
+extern int dns_resolve(struct dns_transmit *,const char *,uint16);
 
 extern int dns_ip4_packet(str *,const char *,unsigned int);
+extern int dns_ip4_r(struct dns_transmit *,str *,const char *);
 extern int dns_ip4(str *,const char *);
 extern int dns_name4_packet(str *,const char *,unsigned int);
 extern void dns_name4_domain(char *,const ipv4addr *);
 #define DNS_NAME4_DOMAIN 31
+extern int dns_name4_r(struct dns_transmit *,str *,const ipv4addr *);
 extern int dns_name4(str *,const ipv4addr *);
 extern int dns_txt_packet(str *,const char *,unsigned int);
+extern int dns_txt_r(struct dns_transmit *,str *,const char *);
 extern int dns_txt(str *,const char *);
 extern int dns_mx_packet(str *,const char *,unsigned int);
+extern int dns_mx_r(struct dns_transmit *,str *,const char *);
 extern int dns_mx(str *,const char *);
 
 extern int dns_resolvconfrewrite(str *);
 extern int dns_ip4_qualify_rules(str *,str *,const char *,const str *);
 extern int dns_ip4_qualify(str *,str *,const char *);
+
+#define DNS_R_FN_WRAP2(FN,TYPE1,TYPE2)		\
+  int FN(TYPE1 p1,TYPE2 p2)			\
+  {						\
+    struct dns_transmit tx = {0};		\
+    int r = FN##_r(&tx,p1,p2);			\
+    dns_transmit_free(&tx);			\
+    return r;					\
+  }
 
 #endif

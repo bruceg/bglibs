@@ -34,14 +34,16 @@ int dns_name4_packet(str *out,const char *buf,unsigned int len)
   return 0;
 }
 
-int dns_name4(str *out,const ipv4addr *ip)
+int dns_name4_r(struct dns_transmit *tx,str *out,const ipv4addr *ip)
 {
   char name[DNS_NAME4_DOMAIN];
 
   dns_name4_domain(name,ip);
-  if (dns_resolve(name,DNS_T_PTR) == -1) return -1;
-  if (dns_name4_packet(out,dns_resolve_tx.packet,dns_resolve_tx.packetlen) == -1) return -1;
-  dns_transmit_free(&dns_resolve_tx);
+  if (dns_resolve(tx,name,DNS_T_PTR) == -1) return -1;
+  if (dns_name4_packet(out,tx->packet,tx->packetlen) == -1) return -1;
+  dns_transmit_free(tx);
   dns_domain_free(&q);
   return 0;
 }
+
+DNS_R_FN_WRAP2(dns_name4, str*, const ipv4addr*)
