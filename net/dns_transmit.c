@@ -262,7 +262,7 @@ have sent query to curserver on UDP socket s
       if (errno == ECONNREFUSED) if (d->udploop == 2) return 0;
       return nextudp(d);
     }
-    if (r + 1 > sizeof udpbuf) return 0;
+    if (r + 1 > (int)sizeof udpbuf) return 0;
 
     if (irrelevant(d,udpbuf,r)) return 0;
     if (serverwantstcp(udpbuf,r)) return firsttcp(d);

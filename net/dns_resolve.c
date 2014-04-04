@@ -7,7 +7,7 @@ struct dns_transmit dns_resolve_tx = {0};
 static void iopause(iopoll_fd *x,unsigned int len,struct timeval *deadline,struct timeval *stamp)
 {
   int millisecs;
-  int i;
+  unsigned int i;
 
   if (TV_LESS(deadline,stamp))
     millisecs = 0;
