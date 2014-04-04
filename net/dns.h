@@ -5,26 +5,27 @@
 #include <systime.h>
 #include <net/ipv4.h>
 #include <str/str.h>
+#include <uint16.h>
 
 #define TV_LESS(A,B) (((A)->tv_sec < (B)->tv_sec) || ((A)->tv_sec == (B)->tv_sec && (A)->tv_usec < (B)->tv_usec))
 
-#define DNS_C_IN "\0\1"
-#define DNS_C_ANY "\0\377"
+#define DNS_C_IN 1
+#define DNS_C_ANY 255
 
-#define DNS_T_A "\0\1"
-#define DNS_T_NS "\0\2"
-#define DNS_T_CNAME "\0\5"
-#define DNS_T_SOA "\0\6"
-#define DNS_T_PTR "\0\14"
-#define DNS_T_HINFO "\0\15"
-#define DNS_T_MX "\0\17"
-#define DNS_T_TXT "\0\20"
-#define DNS_T_RP "\0\21"
-#define DNS_T_SIG "\0\30"
-#define DNS_T_KEY "\0\31"
-#define DNS_T_AAAA "\0\34"
-#define DNS_T_AXFR "\0\374"
-#define DNS_T_ANY "\0\377"
+#define DNS_T_A 1
+#define DNS_T_NS 2
+#define DNS_T_CNAME 5
+#define DNS_T_SOA 6
+#define DNS_T_PTR 12
+#define DNS_T_HINFO 13
+#define DNS_T_MX 15
+#define DNS_T_TXT 16
+#define DNS_T_RP 17
+#define DNS_T_SIG 24
+#define DNS_T_KEY 25
+#define DNS_T_AAAA 28
+#define DNS_T_AXFR 252
+#define DNS_T_ANY 255
 
 struct dns_transmit {
   char *query; /* 0, or dynamically allocated */
@@ -39,7 +40,7 @@ struct dns_transmit {
   unsigned int pos;
   const ipv4addr *servers;
   ipv4addr localip;
-  char qtype[2];
+  uint16 qtype;
 } ;
 
 extern void dns_random_init(const char *);
@@ -60,13 +61,13 @@ extern unsigned int dns_packet_copy(const char *,unsigned int,unsigned int,unsig
 extern unsigned int dns_packet_getname(const char *,unsigned int,unsigned int,char **);
 extern unsigned int dns_packet_skipname(const char *,unsigned int,unsigned int);
 
-extern int dns_transmit_start(struct dns_transmit *,const ipv4addr [16],int,const char *,const char *,const ipv4addr *);
+extern int dns_transmit_start(struct dns_transmit *,const ipv4addr [16],int,const char *,uint16,const ipv4addr *);
 extern void dns_transmit_free(struct dns_transmit *);
 extern void dns_transmit_io(struct dns_transmit *,iopoll_fd *,struct timeval *);
 extern int dns_transmit_get(struct dns_transmit *,const iopoll_fd *,const struct timeval *);
 
 extern int dns_resolvconfip(ipv4addr [16]);
-extern int dns_resolve(const char *,const char *);
+extern int dns_resolve(const char *,uint16);
 extern struct dns_transmit dns_resolve_tx;
 
 extern int dns_ip4_packet(str *,const char *,unsigned int);

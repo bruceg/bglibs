@@ -25,7 +25,7 @@ static void iopause(iopoll_fd *x,unsigned int len,struct timeval *deadline,struc
   iopoll(x,len,millisecs);
 }
 
-int dns_resolve(const char *q,const char qtype[2])
+int dns_resolve(const char *q,uint16 qtype)
 {
   struct timeval stamp;
   struct timeval deadline;

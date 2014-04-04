@@ -1,6 +1,5 @@
 #include <string.h>
 
-#include "uint16.h"
 #include "dns.h"
 
 static char *q = 0;
@@ -24,8 +23,8 @@ int dns_mx_packet(str *out,const char *buf,unsigned int len)
     pos = dns_packet_skipname(buf,len,pos); if (!pos) return -1;
     pos = dns_packet_copy(buf,len,pos,header,10); if (!pos) return -1;
     datalen = uint16_get_msb(header + 8);
-    if (memcmp(header,DNS_T_MX,2) == 0)
-      if (memcmp(header + 2,DNS_C_IN,2) == 0) {
+    if (uint16_get_msb(header) == DNS_T_MX)
+      if (uint16_get_msb(header + 2) == DNS_C_IN) {
 	if (!dns_packet_copy(buf,len,pos,pref,2)) return -1;
 	if (!dns_packet_getname(buf,len,pos + 2,&q)) return -1;
 	if (!str_catb(out,(char*)pref,2)) return -1;

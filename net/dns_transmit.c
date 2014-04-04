@@ -6,7 +6,6 @@
 #include <unistd.h>
 
 #include "socket.h"
-#include "uint16.h"
 #include "dns.h"
 
 static int serverwantstcp(const char *buf,unsigned int len)
@@ -47,8 +46,8 @@ static int irrelevant(const struct dns_transmit *d,const char *buf,unsigned int 
   free(dn);
 
   pos = dns_packet_copy(buf,len,pos,out,4); if (!pos) return 1;
-  if (memcmp(out,d->qtype,2)) return 1;
-  if (memcmp(out + 2,DNS_C_IN,2)) return 1;
+  if (uint16_get_msb(out) != d->qtype) return 1;
+  if (uint16_get_msb(out + 2) != DNS_C_IN) return 1;
 
   return 0;
 }
@@ -190,7 +189,7 @@ static int nexttcp(struct dns_transmit *d)
   return thistcp(d);
 }
 
-int dns_transmit_start(struct dns_transmit *d,const ipv4addr servers[16],int flagrecursive,const char *q,const char qtype[2],const ipv4addr *localip)
+int dns_transmit_start(struct dns_transmit *d,const ipv4addr servers[16],int flagrecursive,const char *q,uint16 qtype,const ipv4addr *localip)
 {
   unsigned int len;
 
@@ -205,10 +204,10 @@ int dns_transmit_start(struct dns_transmit *d,const ipv4addr servers[16],int fla
   uint16_pack_msb(len+16,(unsigned char*)d->query);
   memcpy(d->query + 2,flagrecursive ? "\0\0\1\0\0\1\0\0\0\0\0\0" : "\0\0\0\0\0\1\0\0\0\0\0\0gcc-bug-workaround",12);
   memcpy(d->query + 14,q,len);
-  memcpy(d->query + 14 + len,qtype,2);
-  memcpy(d->query + 16 + len,DNS_C_IN,2);
+  uint16_pack_msb(qtype,(unsigned char*)d->query + 14 + len);
+  uint16_pack_msb(DNS_C_IN,(unsigned char*)d->query + 16 + len);
 
-  memcpy(d->qtype,qtype,2);
+  d->qtype = qtype;
   d->servers = servers;
   d->localip = *localip;
 
