@@ -6,7 +6,7 @@
 int dns_txt_packet(str *out,const char *buf,unsigned int len)
 {
   unsigned int pos;
-  char header[12];
+  unsigned char header[12];
   uint16 numanswers;
   uint16 datalen;
   char ch;
@@ -16,14 +16,14 @@ int dns_txt_packet(str *out,const char *buf,unsigned int len)
   if (!str_copys(out,"")) return -1;
 
   pos = dns_packet_copy(buf,len,0,header,12); if (!pos) return -1;
-  numanswers = uint16_get_msb((unsigned char*)header + 6);
+  numanswers = uint16_get_msb(header + 6);
   pos = dns_packet_skipname(buf,len,pos); if (!pos) return -1;
   pos += 4;
 
   while (numanswers--) {
     pos = dns_packet_skipname(buf,len,pos); if (!pos) return -1;
     pos = dns_packet_copy(buf,len,pos,header,10); if (!pos) return -1;
-    datalen = uint16_get_msb((unsigned char*)header + 8);
+    datalen = uint16_get_msb(header + 8);
     if (memcmp(header,DNS_T_TXT,2) == 0)
       if (memcmp(header + 2,DNS_C_IN,2) == 0) {
 	if (pos + datalen > len) return -1;

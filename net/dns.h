@@ -56,7 +56,7 @@ extern unsigned int dns_domain_suffixpos(const char *,const char *);
 extern int dns_domain_fromdot(char **,const char *,unsigned int);
 extern int dns_domain_todot_cat(str *,const char *);
 
-extern unsigned int dns_packet_copy(const char *,unsigned int,unsigned int,char *,unsigned int);
+extern unsigned int dns_packet_copy(const char *,unsigned int,unsigned int,unsigned char *,unsigned int);
 extern unsigned int dns_packet_getname(const char *,unsigned int,unsigned int,char **);
 extern unsigned int dns_packet_skipname(const char *,unsigned int,unsigned int);
 

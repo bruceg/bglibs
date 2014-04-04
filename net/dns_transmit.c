@@ -11,7 +11,7 @@
 
 static int serverwantstcp(const char *buf,unsigned int len)
 {
-  char out[12];
+  unsigned char out[12];
 
   if (!dns_packet_copy(buf,len,0,out,12)) return 1;
   if (out[2] & 2) return 1;
@@ -20,7 +20,7 @@ static int serverwantstcp(const char *buf,unsigned int len)
 
 static int serverfailed(const char *buf,unsigned int len)
 {
-  char out[12];
+  unsigned char out[12];
   unsigned int rcode;
 
   if (!dns_packet_copy(buf,len,0,out,12)) return 1;
@@ -32,7 +32,7 @@ static int serverfailed(const char *buf,unsigned int len)
 
 static int irrelevant(const struct dns_transmit *d,const char *buf,unsigned int len)
 {
-  char out[12];
+  unsigned char out[12];
   char *dn;
   unsigned int pos;
 
