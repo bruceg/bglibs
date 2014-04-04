@@ -30,7 +30,7 @@ static int doit(str *work,const char *rule)
   return str_cats(work,rule + colon + 1);
 }
 
-int dns_ip4_qualify_rules(str *out,str *fqdn,const str *in,const str *rules)
+int dns_ip4_qualify_rules(str *out,str *fqdn,const char *in,const str *rules)
 {
   unsigned int i;
   unsigned int j;
@@ -38,7 +38,7 @@ int dns_ip4_qualify_rules(str *out,str *fqdn,const str *in,const str *rules)
   unsigned int fqdnlen;
   const char *p;
 
-  if (!str_copy(fqdn,in)) return -1;
+  if (!str_copys(fqdn,in)) return -1;
 
   for (j = i = 0;j < rules->len;++j)
     if (!rules->s[j]) {
@@ -49,7 +49,7 @@ int dns_ip4_qualify_rules(str *out,str *fqdn,const str *in,const str *rules)
   fqdnlen = fqdn->len;
   p = memchr(fqdn->s,'+',fqdnlen);
   if (!p)
-    return dns_ip4(out,fqdn);
+    return dns_ip4(out,fqdn->s);
   plus = p - fqdn->s;
 
   i = plus + 1;
@@ -58,7 +58,7 @@ int dns_ip4_qualify_rules(str *out,str *fqdn,const str *in,const str *rules)
     j = p ? p - (fqdn->s + i) : fqdnlen - i;
     memcpy(fqdn->s + plus,fqdn->s + i,j);
     fqdn->len = plus + j;
-    if (dns_ip4(out,fqdn) == -1) return -1;
+    if (dns_ip4(out,fqdn->s) == -1) return -1;
     if (out->len) return 0;
     i += j;
     if (i >= fqdnlen) return 0;
@@ -66,7 +66,7 @@ int dns_ip4_qualify_rules(str *out,str *fqdn,const str *in,const str *rules)
   }
 }
 
-int dns_ip4_qualify(str *out,str *fqdn,const str *in)
+int dns_ip4_qualify(str *out,str *fqdn,const char *in)
 {
   static str rules;
   if (dns_resolvconfrewrite(&rules) == -1) return -1;

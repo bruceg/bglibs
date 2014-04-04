@@ -35,17 +35,19 @@ int dns_ip4_packet(str *out,const char *buf,unsigned int len)
 
 static char *q = 0;
 
-int dns_ip4(str *out,const str *fqdn)
+int dns_ip4(str *out,const char *fqdn)
 {
   unsigned int i;
   char code;
   char ch;
+  unsigned int len;
 
   if (!str_copys(out,"")) return -1;
+  len = strlen(fqdn);
   code = 0;
-  for (i = 0;i <= fqdn->len;++i) {
-    if (i < fqdn->len)
-      ch = fqdn->s[i];
+  for (i = 0;i <= len;++i) {
+    if (i < len)
+      ch = fqdn[i];
     else
       ch = '.';
 
@@ -61,7 +63,7 @@ int dns_ip4(str *out,const str *fqdn)
       continue;
     }
 
-    if (!dns_domain_fromdot(&q,fqdn->s,fqdn->len)) return -1;
+    if (!dns_domain_fromdot(&q,fqdn,len)) return -1;
     if (dns_resolve(q,DNS_T_A) == -1) return -1;
     if (dns_ip4_packet(out,dns_resolve_tx.packet,dns_resolve_tx.packetlen) == -1) return -1;
     dns_transmit_free(&dns_resolve_tx);

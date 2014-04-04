@@ -74,18 +74,18 @@ extern int dns_resolve(const char *,uint16);
 extern struct dns_transmit dns_resolve_tx;
 
 extern int dns_ip4_packet(str *,const char *,unsigned int);
-extern int dns_ip4(str *,const str *);
+extern int dns_ip4(str *,const char *);
 extern int dns_name4_packet(str *,const char *,unsigned int);
 extern void dns_name4_domain(char *,const ipv4addr *);
 #define DNS_NAME4_DOMAIN 31
 extern int dns_name4(str *,const ipv4addr *);
 extern int dns_txt_packet(str *,const char *,unsigned int);
-extern int dns_txt(str *,const str *);
+extern int dns_txt(str *,const char *);
 extern int dns_mx_packet(str *,const char *,unsigned int);
-extern int dns_mx(str *,const str *);
+extern int dns_mx(str *,const char *);
 
 extern int dns_resolvconfrewrite(str *);
-extern int dns_ip4_qualify_rules(str *,str *,const str *,const str *);
-extern int dns_ip4_qualify(str *,str *,const str *);
+extern int dns_ip4_qualify_rules(str *,str *,const char *,const str *);
+extern int dns_ip4_qualify(str *,str *,const char *);
 
 #endif
