@@ -6,6 +6,7 @@ static uint32 seed[32];
 static uint32 in[12];
 static uint32 out[8];
 static int outleft = 0;
+static int inited = 0;
 
 #define ROTATE(x,b) (((x) << (b)) | ((x) >> (32 - (b))))
 #define MUSH(i,b) x = t[i] += (((x ^ seed[i]) + sum) ^ ROTATE(x,b));
@@ -34,8 +35,9 @@ void dns_random_init(const char data[DNS_RANDOM_SEED])
   int i;
   struct timeval tv;
 
-  for (i = 0;i < 32;++i)
-    seed[i] = uint32_get((unsigned char*)data + 4 * i);
+  if (data)
+    for (i = 0;i < 32;++i)
+      seed[i] = uint32_get((unsigned char*)data + 4 * i);
 
   gettimeofday(&tv,0);
   in[4] = tv.tv_sec;
@@ -44,10 +46,15 @@ void dns_random_init(const char data[DNS_RANDOM_SEED])
   in[8] = getpid();
   in[9] = getppid();
   /* more space in 10 and 11, but this is probably enough */
+
+  inited = 1;
 }
 
 unsigned int dns_random(unsigned int n)
 {
+  if (!inited)
+    dns_random_init(0);
+
   if (!n) return 0;
 
   if (!outleft) {
