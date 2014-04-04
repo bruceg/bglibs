@@ -7,7 +7,7 @@
 
 static str data = {0};
 
-static int init(ipv4addr ip[16])
+static int init(ipv4addr ip[DNS_MAX_IPS])
 {
   int i;
   striter j;
@@ -57,9 +57,9 @@ static int init(ipv4addr ip[16])
 static int ok = 0;
 static unsigned int uses;
 static struct timeval deadline;
-static ipv4addr ip[16]; /* defined if ok */
+static ipv4addr ip[DNS_MAX_IPS]; /* defined if ok */
 
-int dns_resolvconfip(ipv4addr s[16])
+int dns_resolvconfip(ipv4addr s[DNS_MAX_IPS])
 {
   struct timeval now;
 

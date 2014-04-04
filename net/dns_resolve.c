@@ -29,7 +29,7 @@ int dns_resolve(const char *q,uint16 qtype)
 {
   struct timeval stamp;
   struct timeval deadline;
-  ipv4addr servers[16];
+  ipv4addr servers[DNS_MAX_IPS];
   ipv4addr ipzero;
   iopoll_fd x[1];
   int r;

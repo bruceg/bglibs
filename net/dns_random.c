@@ -29,7 +29,7 @@ static void surf(void)
   }
 }
 
-void dns_random_init(const char data[128])
+void dns_random_init(const char data[DNS_RANDOM_SEED])
 {
   int i;
   struct timeval tv;

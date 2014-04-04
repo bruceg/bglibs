@@ -43,7 +43,10 @@ struct dns_transmit {
   uint16 qtype;
 } ;
 
-extern void dns_random_init(const char *);
+#define DNS_RANDOM_SEED (32*4)
+#define DNS_MAX_IPS 16
+
+extern void dns_random_init(const char [DNS_RANDOM_SEED]);
 extern unsigned int dns_random(unsigned int);
 
 extern void dns_sortip(ipv4addr *,unsigned int);
@@ -61,12 +64,12 @@ extern unsigned int dns_packet_copy(const char *,unsigned int,unsigned int,unsig
 extern unsigned int dns_packet_getname(const char *,unsigned int,unsigned int,char **);
 extern unsigned int dns_packet_skipname(const char *,unsigned int,unsigned int);
 
-extern int dns_transmit_start(struct dns_transmit *,const ipv4addr [16],int,const char *,uint16,const ipv4addr *);
+extern int dns_transmit_start(struct dns_transmit *,const ipv4addr [DNS_MAX_IPS],int,const char *,uint16,const ipv4addr *);
 extern void dns_transmit_free(struct dns_transmit *);
 extern void dns_transmit_io(struct dns_transmit *,iopoll_fd *,struct timeval *);
 extern int dns_transmit_get(struct dns_transmit *,const iopoll_fd *,const struct timeval *);
 
-extern int dns_resolvconfip(ipv4addr [16]);
+extern int dns_resolvconfip(ipv4addr [DNS_MAX_IPS]);
 extern int dns_resolve(const char *,uint16);
 extern struct dns_transmit dns_resolve_tx;
 

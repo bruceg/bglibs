@@ -101,7 +101,7 @@ static int thisudp(struct dns_transmit *d)
   socketfree(d);
 
   while (d->udploop < 4) {
-    for (;d->curserver < 16;++d->curserver) {
+    for (;d->curserver < DNS_MAX_IPS;++d->curserver) {
       ip = d->servers + d->curserver;
       if (memcmp(ip,"\0\0\0\0",4)) {
 	d->query[2] = dns_random(256);
@@ -149,7 +149,7 @@ static int thistcp(struct dns_transmit *d)
   socketfree(d);
   packetfree(d);
 
-  for (;d->curserver < 16;++d->curserver) {
+  for (;d->curserver < DNS_MAX_IPS;++d->curserver) {
     ip = d->servers + d->curserver;
     if (memcmp(ip,"\0\0\0\0",4)) {
       d->query[2] = dns_random(256);
@@ -189,7 +189,7 @@ static int nexttcp(struct dns_transmit *d)
   return thistcp(d);
 }
 
-int dns_transmit_start(struct dns_transmit *d,const ipv4addr servers[16],int flagrecursive,const char *q,uint16 qtype,const ipv4addr *localip)
+int dns_transmit_start(struct dns_transmit *d,const ipv4addr servers[DNS_MAX_IPS],int flagrecursive,const char *q,uint16 qtype,const ipv4addr *localip)
 {
   unsigned int len;
 
