@@ -9,7 +9,7 @@
 
 /** IPv6 address structure. */
 typedef struct {
-    /** 128-bit IPv4 address, represented as 16 8-bit \c unsigned \c chars. */
+  /** 128-bit IPv6 address, represented as 16 8-bit \c unsigned \c chars. */
   uint8 addr[16];
 } ipv6addr;
 /** IPv6 port number. */
