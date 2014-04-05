@@ -63,6 +63,8 @@ extern int dns_domain_todot_cat(str *,const char *);
 extern unsigned int dns_packet_copy(const char *,unsigned int,unsigned int,unsigned char *,unsigned int);
 extern unsigned int dns_packet_getname(const char *,unsigned int,unsigned int,char **);
 extern unsigned int dns_packet_skipname(const char *,unsigned int,unsigned int);
+extern int dns_packet_extract(str* out, const char* buf, unsigned int len, uint16 rrtype, uint16 rrclass,
+			      int (*fn)(str*, const char*, unsigned int, unsigned int, uint16));
 
 extern int dns_transmit_start(struct dns_transmit *,const ipv4addr [DNS_MAX_IPS],int,const char *,uint16,const ipv4addr *);
 extern void dns_transmit_free(struct dns_transmit *);
