@@ -4,6 +4,7 @@
 #include <sysdeps.h>
 #include <systime.h>
 #include <net/ipv4.h>
+#include <net/ipv6.h>
 #include <str/str.h>
 #include <uint16.h>
 
@@ -80,11 +81,15 @@ extern int dns_resolve(struct dns_transmit *,const char *,uint16);
 extern int dns_ip4_packet(str *,const char *,unsigned int);
 extern int dns_ip4_r(struct dns_transmit *,str *,const char *);
 extern int dns_ip4(str *,const char *);
-extern int dns_name4_packet(str *,const char *,unsigned int);
-extern void dns_name4_domain(char *,const ipv4addr *);
-#define DNS_NAME4_DOMAIN 31
+extern int dns_name_packet(str *,const char *,unsigned int);
+#define DNS_NAME4_DOMAIN (4*4+14)
+extern void dns_name4_domain(char [DNS_NAME4_DOMAIN],const ipv4addr *);
+#define DNS_NAME6_DOMAIN (32*2+10)
+extern void dns_name6_domain(char [DNS_NAME6_DOMAIN],const ipv6addr *);
 extern int dns_name4_r(struct dns_transmit *,str *,const ipv4addr *);
 extern int dns_name4(str *,const ipv4addr *);
+extern int dns_name6_r(struct dns_transmit *,str *,const ipv6addr *);
+extern int dns_name6(str *,const ipv6addr *);
 extern int dns_txt_packet(str *,const char *,unsigned int);
 extern int dns_txt_r(struct dns_transmit *,str *,const char *);
 extern int dns_txt(str *,const char *);

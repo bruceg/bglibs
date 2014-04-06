@@ -18,8 +18,11 @@ net/dns_domain.o
 net/dns_domain_todot.o
 net/dns_ip4.o
 net/dns_mx.o
+net/dns_name_packet.o
 net/dns_name4.o
 net/dns_name4_domain.o
+net/dns_name6.o
+net/dns_name6_domain.o
 net/dns_packet.o
 net/dns_qualify.o
 net/dns_random.o
