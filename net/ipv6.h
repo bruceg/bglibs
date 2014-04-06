@@ -17,10 +17,12 @@ typedef uint16 ipv6port;
 
 extern const ipv6addr IPV6ADDR_ANY;
 extern const ipv6addr IPV6ADDR_LOOPBACK;
+extern const ipv6addr IPV6ADDR_V4PREFIX;
 
 extern const char* ipv6_scan(const char* s, ipv6addr* addr);
 extern const char* ipv6_format(const ipv6addr* addr);
 extern unsigned fmt_ipv6addr(char* buffer, const ipv6addr* addr);
+extern int ipv6_isv4addr(const ipv6addr* addr);
 
 /** @} */
 
