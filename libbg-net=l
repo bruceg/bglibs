@@ -26,7 +26,7 @@ net/dns_random.o
 net/dns_resolvconfip.o
 net/dns_resolvconfrewrite.o
 net/dns_resolve.o
-net/dns_sortip.o
+net/dns_rotate.o
 net/dns_transmit.o
 net/dns_txt.o
 net/getaddr4.o

@@ -49,7 +49,9 @@ struct dns_transmit {
 extern void dns_random_init(const char [DNS_RANDOM_SEED]);
 extern unsigned int dns_random(unsigned int);
 
-extern void dns_sortip(ipv4addr *,unsigned int);
+extern void dns_rotate(unsigned char*, unsigned int n, unsigned int shift);
+extern void dns_rotateipv4(ipv4addr*, unsigned int);
+extern void dns_rotateipv6(ipv6addr*, unsigned int);
 
 extern void dns_domain_free(char **);
 extern int dns_domain_copy(char **,const char *);

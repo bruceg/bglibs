@@ -17,7 +17,7 @@ int dns_ip4_packet(str *out,const char *buf,unsigned int len)
 {
   if (dns_packet_extract(out, buf, len, DNS_T_A, DNS_C_IN, getit) < 0)
     return -1;
-  dns_sortip((ipv4addr*)out->s,out->len/4);
+  dns_rotateipv4((ipv4addr*)out->s,out->len/4);
   return 0;
 }
 
