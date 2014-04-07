@@ -23,42 +23,20 @@ int dns_ip4_packet(str *out,const char *buf,unsigned int len)
 
 int dns_ip4_r(struct dns_transmit *tx,str *out,const char *fqdn)
 {
-  unsigned int i;
-  char code;
-  char ch;
-  unsigned int len;
   char *q = 0;
+  ipv4addr ip;
+  const char* x;
 
-  if (!str_copys(out,"")) return -1;
-  len = strlen(fqdn);
-  code = 0;
-  for (i = 0;i <= len;++i) {
-    if (i < len)
-      ch = fqdn[i];
-    else
-      ch = '.';
-
-    if ((ch == '[') || (ch == ']')) continue;
-    if (ch == '.') {
-      if (!str_catc(out,code)) return -1;
-      code = 0;
-      continue;
-    }
-    if ((ch >= '0') && (ch <= '9')) {
-      code *= 10;
-      code += ch - '0';
-      continue;
-    }
-
-    if (!dns_domain_fromdot(&q,fqdn,len)) return -1;
-    if (dns_resolve(tx,q,DNS_T_A) == -1) { free(q); return -1; }
-    free(q);
-    if (dns_ip4_packet(out,tx->packet,tx->packetlen) == -1)  return -1;
-    dns_transmit_free(tx);
+  if ((x = ipv4_scan(fqdn, &ip)) != 0 && *x == 0) {
+    if (!str_copyb(out, (char*)ip.addr, 4)) return -1;
     return 0;
   }
 
-  out->len &= ~3;
+  if (!dns_domain_fromdot(&q,fqdn,strlen(fqdn))) return -1;
+  if (dns_resolve(tx,q,DNS_T_A) == -1) { free(q); return -1; }
+  free(q);
+  if (dns_ip4_packet(out,tx->packet,tx->packetlen) == -1)  return -1;
+  dns_transmit_free(tx);
   return 0;
 }
 
