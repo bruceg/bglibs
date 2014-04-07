@@ -17,6 +17,7 @@ net/dns_domain_fromdot.o
 net/dns_domain.o
 net/dns_domain_todot.o
 net/dns_ip4.o
+net/dns_ip6.o
 net/dns_mx.o
 net/dns_name_packet.o
 net/dns_name4.o

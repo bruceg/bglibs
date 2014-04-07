@@ -81,6 +81,9 @@ extern int dns_resolve(struct dns_transmit *,const char *,uint16);
 extern int dns_ip4_packet(str *,const char *,unsigned int);
 extern int dns_ip4_r(struct dns_transmit *,str *,const char *);
 extern int dns_ip4(str *,const char *);
+extern int dns_ip6_packet(str *,const char *,unsigned int);
+extern int dns_ip6_r(struct dns_transmit *,str *,const char *);
+extern int dns_ip6(str *,const char *);
 extern int dns_name_packet(str *,const char *,unsigned int);
 #define DNS_NAME4_DOMAIN (4*4+14)
 extern void dns_name4_domain(char [DNS_NAME4_DOMAIN],const ipv4addr *);
