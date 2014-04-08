@@ -12,7 +12,6 @@ trap 'echo "Cleaning up $t"; rm -r $t' EXIT
 do_test() {
   echo "Testing $1"
   rm -f $t/*
-  sed -e '1,/^#ifdef SELFTEST_EXP$/d' -e '/^#endif/,$d' $1 >$t/test.exp
 
   sed -e 's/-o ${base}.o//' compile | \
   sh -s $1 -DSELFTEST_MAIN -o $t/test.o -include selftest.c || {
@@ -30,7 +29,11 @@ do_test() {
     return 1
   }
 
-  cat -v $t/test.out | $DIFF $t/test.exp - || {
+  ./selftest-cmp $1 $t/test.out || {
+    echo "=====> Expected output <====="
+    sed -e '1,/^#ifdef SELFTEST_EXP/d' -e '/^#endif/,$d' $1
+    echo "=====> Test output <====="
+    cat -v $t/test.out
     echo "=====> Output failed! <====="
     return 1
   }

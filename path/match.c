@@ -189,7 +189,7 @@ MAIN
   match("*.o*", 0);
   match("*.[eo]", 0);
   match("t*", 0);
-  match("*.[!o]*", 0);
+  match("*.o[u]*", 0);
 
   mkdir("[test]", 0777);
   close(open("[test]/.file", O_WRONLY | O_CREAT | O_TRUNC, 0666));
@@ -207,9 +207,8 @@ MAIN
 }
 #endif
 #ifdef SELFTEST_EXP
-* 0 => 4
+* 0 => 3
 test
-test.exp
 test.o
 test.out
 *.o 0 => 1
@@ -219,13 +218,12 @@ test.o
 test.out
 *.[eo] 0 => 1
 test.o
-t* 0 => 4
+t* 0 => 3
 test
-test.exp
 test.o
 test.out
-*.[!o]* 0 => 1
-test.exp
+*.o[u]* 0 => 1
+test.out
 [test] 0 => 1
 [test]
 [test]/* 1 => 0

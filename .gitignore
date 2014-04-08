@@ -28,6 +28,7 @@ load
 makelib
 makeshlib
 perl-head.pl
+selftest-cmp
 sysdeps.h
 systime.h
 warn-auto.sh
