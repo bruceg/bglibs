@@ -37,7 +37,7 @@ int socket_sendfd(int sock, int fd)
   cmsg->cmsg_type = SCM_RIGHTS;
   cmsg->cmsg_len = CMSG_LEN(sizeof(int));
   /* Initialize the payload: */
-  *(int *)CMSG_DATA(cmsg) = fd;
+  memcpy(CMSG_DATA(cmsg), &fd, sizeof fd);
   /* Sum of the length of all control messages in the buffer: */
   msg.msg_controllen = cmsg->cmsg_len;
 

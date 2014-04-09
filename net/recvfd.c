@@ -28,6 +28,7 @@ int socket_recvfd(int sock)
   char cbuf[CMSG_SPACE(sizeof(int))];
   struct msghdr msg;
   struct cmsghdr* cm;
+  int fd;
 
   memset(&msg, 0, sizeof msg);
   msg.msg_control = cbuf;
@@ -38,7 +39,8 @@ int socket_recvfd(int sock)
   cm->cmsg_type = SCM_RIGHTS;
   
   if (recvmsg(sock, &msg, MSG_NOSIGNAL) == -1) return -1;
-  return *(int*)CMSG_DATA(cm);
+  memcpy(&fd, CMSG_DATA(cm), sizeof fd);
+  return fd;
 #else
   errno = ENOSYS;
   return -1;
