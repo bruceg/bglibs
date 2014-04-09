@@ -60,18 +60,18 @@ void t(const char* filename, const char* pattern, unsigned options)
   obuf_putc(&outbuf, ' ');
   debugfn(fnmatch(filename, pattern, options));
 }
+void t1(const char* filename, const char* pattern)
+{
+  t(filename, pattern, 0);
+  t(filename, pattern, PATH_MATCH_DOTFILES);
+}
 MAIN
 {
-  t("abc", "*", 0);
-  t("abc", "*", 1);
-  t(".", "*", 0);
-  t(".", "*", 1);
-  t("..", "*", 0);
-  t("..", "*", 1);
-  t("...", "*", 0);
-  t("...", "*", 1);
-  t(".abc", "*", 0);
-  t(".abc", "*", 1);
+  t1("abc", "*");
+  t1(".", "*");
+  t1("..", "*");
+  t1("...", "*");
+  t1(".abc", "*");
 }
 #endif
 #ifdef SELFTEST_EXP
