@@ -27,6 +27,7 @@
 
 #include "sysdeps.h"
 #include "md5.h"
+#include "uint32.h"
 
 #ifdef ENDIAN_MSB
 # define SWAP(n)							\
@@ -66,10 +67,10 @@ md5_read_ctx (ctx, resbuf)
      const struct md5_ctx *ctx;
      void *resbuf;
 {
-  ((md5_uint32 *) resbuf)[0] = SWAP (ctx->A);
-  ((md5_uint32 *) resbuf)[1] = SWAP (ctx->B);
-  ((md5_uint32 *) resbuf)[2] = SWAP (ctx->C);
-  ((md5_uint32 *) resbuf)[3] = SWAP (ctx->D);
+  uint32_pack_lsb(ctx->A, resbuf);
+  uint32_pack_lsb(ctx->B, resbuf + 4);
+  uint32_pack_lsb(ctx->C, resbuf + 8);
+  uint32_pack_lsb(ctx->D, resbuf + 12);
 
   return resbuf;
 }
@@ -97,9 +98,10 @@ md5_finish_ctx (ctx, resbuf)
   memcpy (&ctx->buffer[bytes], fillbuf, pad);
 
   /* Put the 64-bit file length in *bits* at the end of the buffer.  */
-  *(md5_uint32 *) &ctx->buffer[bytes + pad] = SWAP (ctx->total[0] << 3);
-  *(md5_uint32 *) &ctx->buffer[bytes + pad + 4] = SWAP ((ctx->total[1] << 3) |
-							(ctx->total[0] >> 29));
+  uint32_pack_lsb(ctx->total[0] << 3,
+		  (unsigned char*)&ctx->buffer[bytes + pad]);
+  uint32_pack_lsb((ctx->total[1] << 3) | (ctx->total[0] >> 29),
+		  (unsigned char*)&ctx->buffer[bytes + pad + 4]);
 
   /* Process last bytes.  */
   md5_process_block (ctx->buffer, bytes + pad + 8, ctx);

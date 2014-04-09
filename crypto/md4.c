@@ -25,6 +25,7 @@
 
 #include "sysdeps.h"
 #include "md4.h"
+#include "uint32.h"
 
 #ifdef ENDIAN_MSB
 # define SWAP(n)							\
@@ -64,10 +65,10 @@ md4_read_ctx (ctx, resbuf)
      const struct md4_ctx *ctx;
      void *resbuf;
 {
-  ((md4_uint32 *) resbuf)[0] = SWAP (ctx->A);
-  ((md4_uint32 *) resbuf)[1] = SWAP (ctx->B);
-  ((md4_uint32 *) resbuf)[2] = SWAP (ctx->C);
-  ((md4_uint32 *) resbuf)[3] = SWAP (ctx->D);
+  uint32_pack_lsb(ctx->A, resbuf);
+  uint32_pack_lsb(ctx->B, resbuf + 4);
+  uint32_pack_lsb(ctx->C, resbuf + 8);
+  uint32_pack_lsb(ctx->D, resbuf + 12);
 
   return resbuf;
 }
@@ -103,9 +104,8 @@ md4_finish_ctx (ctx, resbuf)
     memcpy(ctx->buffer+bytes, fillbuf, 56-bytes);
 
   /* Put the 64-bit file length in *bits* at the end of the buffer.  */
-  *(md4_uint32 *) &ctx->buffer[56] = SWAP (total0 << 3);
-  *(md4_uint32 *) &ctx->buffer[60] = SWAP ((total1 << 3) |
-					   (total0 >> 29));
+  uint32_pack_lsb(total0 << 3,                    (unsigned char*)&ctx->buffer[56]);
+  uint32_pack_lsb((total1 << 3) | (total0 >> 29), (unsigned char*)&ctx->buffer[60]);
 
   /* Process last bytes.  */
   md4_process_block (ctx->buffer, ctx);
