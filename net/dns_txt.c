@@ -24,11 +24,13 @@ static int getit(str* out, const char* buf, unsigned int len, unsigned int pos, 
   return 1;
 }
 
+/** Extract text (TXT) records from a DNS response packet. */
 int dns_txt_packet(str *out,const char *buf,unsigned int len)
 {
   return dns_packet_extract(out, buf, len, DNS_T_TXT, DNS_C_IN, getit);
 }
 
+/** Request the text (TXT) records for a domain name. */
 int dns_txt_r(struct dns_transmit *tx,str *out,const char *fqdn)
 {
   char *q = 0;
@@ -39,6 +41,9 @@ int dns_txt_r(struct dns_transmit *tx,str *out,const char *fqdn)
   return 0;
 }
 
+/** \fn dns_txt(str*, const char*)
+    Request the text (TXT) records for a domain name.
+*/
 DNS_R_FN_WRAP2(dns_txt, str*, const char*)
 
 #ifdef SELFTEST_MAIN

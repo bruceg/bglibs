@@ -30,6 +30,7 @@ static void surf(void)
   }
 }
 
+/** Initialize the DNS library random state. */
 void dns_random_init(const char data[DNS_RANDOM_SEED])
 {
   int i;
@@ -50,6 +51,7 @@ void dns_random_init(const char data[DNS_RANDOM_SEED])
   inited = 1;
 }
 
+/** Generate a random number less than \c n. */
 unsigned int dns_random(unsigned int n)
 {
   if (!inited)

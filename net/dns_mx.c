@@ -16,11 +16,13 @@ static int getit(str* out, const char* buf, unsigned int len, unsigned int pos, 
   (void)datalen;
 }
 
+/** Extract mail exchanger (MX) records from a DNS response packet. */
 int dns_mx_packet(str *out,const char *buf,unsigned int len)
 {
   return dns_packet_extract(out, buf, len, DNS_T_MX, DNS_C_IN, getit);
 }
 
+/** Request the mail exchanger (MX) records for a domain name. */
 int dns_mx_r(struct dns_transmit *tx,str *out,const char *fqdn)
 {
   char *q = 0;
@@ -32,6 +34,9 @@ int dns_mx_r(struct dns_transmit *tx,str *out,const char *fqdn)
   return 0;
 }
 
+/** \fn dns_mx(str*, const char*)
+    Request the mail exchanger (MX) records for a domain name.
+*/
 DNS_R_FN_WRAP2(dns_mx, str*, const char*)
 
 #ifdef SELFTEST_MAIN

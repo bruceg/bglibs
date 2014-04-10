@@ -4,6 +4,7 @@
 
 #include "dns.h"
 
+/** Generate a DNS encoded domain name into \p out from the dotted string in \c buf. */
 int dns_domain_fromdot(char **out,const char *buf,unsigned int n)
 {
   char label[63];

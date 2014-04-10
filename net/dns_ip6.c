@@ -13,6 +13,7 @@ static int getit(str* out, const char* buf, unsigned int len, unsigned int pos, 
   (void)datalen;
 }
 
+/** Extract IPv6 address (AAAA) records from a DNS response packet. */
 int dns_ip6_packet(str *out,const char *buf,unsigned int len)
 {
   if (dns_packet_extract(out, buf, len, DNS_T_AAAA, DNS_C_IN, getit) < 0)
@@ -21,6 +22,7 @@ int dns_ip6_packet(str *out,const char *buf,unsigned int len)
   return 0;
 }
 
+/** Request the IPv6 address (AAAA) records for a domain name. */
 int dns_ip6_r(struct dns_transmit *tx,str *out,const char *fqdn)
 {
   char *q = 0;
@@ -47,6 +49,9 @@ int dns_ip6_r(struct dns_transmit *tx,str *out,const char *fqdn)
   return 0;
 }
 
+/** \fn dns_ip6(str*, const char*)
+    Request the IPv6 address (AAAA) records for a domain name.
+*/
 DNS_R_FN_WRAP2(dns_ip6, str*, const char*)
 
 #ifdef SELFTEST_MAIN

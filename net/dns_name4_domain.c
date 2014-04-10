@@ -3,6 +3,7 @@
 #include "fmt/number.h"
 #include "dns.h"
 
+/** Generate the reverse domain name for an IPv4 address. */
 void dns_name4_domain(char name[DNS_NAME4_DOMAIN],const ipv4addr *ip)
 {
   unsigned int namelen;

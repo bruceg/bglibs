@@ -1,5 +1,6 @@
 #include "dns.h"
 
+/** Request the name (PTR) record for an IPv6 address. */
 int dns_name6_r(struct dns_transmit *tx,str *out,const ipv6addr *ip)
 {
   char name[DNS_NAME6_DOMAIN];
@@ -13,6 +14,9 @@ int dns_name6_r(struct dns_transmit *tx,str *out,const ipv6addr *ip)
   return 0;
 }
 
+/** \fn dns_name6(str*, const ipv6addr*)
+    Request the name (PTR) record for an IPv6 address.
+*/
 DNS_R_FN_WRAP2(dns_name6, str*, const ipv6addr*)
 
 #ifdef SELFTEST_MAIN

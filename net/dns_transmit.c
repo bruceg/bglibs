@@ -73,6 +73,7 @@ static void socketfree(struct dns_transmit *d)
   d->s1 = 0;
 }
 
+/** Free all allocated resources in a \c dns_transmit structure. */
 void dns_transmit_free(struct dns_transmit *d)
 {
   queryfree(d);
@@ -189,6 +190,15 @@ static int nexttcp(struct dns_transmit *d)
   return thistcp(d);
 }
 
+/** Start the transmission of a DNS query.
+
+    \param d The record of the transmission state.
+    \param servers The list of servers to contact, typically filled by \c dns_resolvconfip.
+    \param flagrecursive Use recursive queries (ie querying a cache).
+    \param q The domain name to query, in DNS format.
+    \param qtype The query type number.
+    \param localip The local IP from which to send the query, may be \c NULL.
+ */
 int dns_transmit_start(struct dns_transmit *d,const ipv4addr servers[DNS_MAX_IPS],int flagrecursive,const char *q,uint16 qtype,const ipv4addr *localip)
 {
   unsigned int len;
@@ -220,6 +230,7 @@ int dns_transmit_start(struct dns_transmit *d,const ipv4addr servers[DNS_MAX_IPS
   return firstudp(d);
 }
 
+/** Fill in the \c iopoll_fd structure from a \c dns_transmit structure. */
 void dns_transmit_io(const struct dns_transmit *d,iopoll_fd *x,struct timeval *deadline)
 {
   x->fd = d->s1 - 1;
@@ -237,6 +248,10 @@ void dns_transmit_io(const struct dns_transmit *d,iopoll_fd *x,struct timeval *d
     *deadline = d->deadline;
 }
 
+/** Complete I/O on a DNS query.
+
+    \returns 1 when the query is completed.
+*/
 int dns_transmit_get(struct dns_transmit *d,const iopoll_fd *x,const struct timeval *when)
 {
   char udpbuf[513];

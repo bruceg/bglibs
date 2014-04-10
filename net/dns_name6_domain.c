@@ -3,6 +3,7 @@
 #include "fmt/number.h"
 #include "dns.h"
 
+/** Generate the reverse domain name for an IPv6 address. */
 void dns_name6_domain(char name[DNS_NAME6_DOMAIN],const ipv6addr *addr)
 {
   unsigned int i;

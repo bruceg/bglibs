@@ -31,6 +31,22 @@ static int doit(str *work,const char *rule)
   return str_cats(work,rule + colon + 1);
 }
 
+/** Qualify a domain name through DNS requests.
+
+    This function is used to qualify what may be a partial domain name
+    into a fully qualified domain name through a set of rules and a
+    resolver function. The resolution rules are read by \c
+    dns_resolvconfrewrite. For each possible qualification of the domain
+    name, the resolver function is called to test if the qualified
+    domain name exists.
+
+    \param out Output storage for the DNS record results.
+    \param fqdn Output storage for the fully qualified domain name.
+    \param rules The list of rules to use to qualify the domain name.
+    \param in Domain name (full or partial) to qualify.
+    \param fn Function to call (such as \c dns_ip4) to determine if a
+    qualified domain name exists.
+*/
 int dns_qualify_rules(str *out, str *fqdn, const char *in, const str *rules,
 		      int (*fn)(struct dns_transmit*, str*, const char*))
 {
@@ -70,6 +86,16 @@ int dns_qualify_rules(str *out, str *fqdn, const char *in, const str *rules,
   }
 }
 
+/** Qualify a domain name through DNS requests.
+
+    Calls \c dns_resolvconfrewrite and \c dns_qualify_rules.
+
+    \param out Output storage for the DNS record results.
+    \param fqdn Output storage for the fully qualified domain name.
+    \param in Domain name (full or partial) to qualify.
+    \param fn Function to call (such as \c dns_ip4) to determine if a
+    qualified domain name exists.
+*/
 int dns_qualify(str *out, str* fqdn, const char* in,
 		int (*fn)(struct dns_transmit*, str*, const char*))
 {

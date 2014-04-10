@@ -6,6 +6,9 @@ DNS should have used LZ77 instead of its own sophomoric compression algorithm.
 
 #include "dns.h"
 
+/** Copy a block of data out of a packet.
+    \returns the offset of the next byte of data, or \c 0 if the packet was too short.
+*/
 unsigned int dns_packet_copy(const char *buf,unsigned int len,unsigned int pos,unsigned char *out,unsigned int outlen)
 {
   while (outlen) {
@@ -16,6 +19,7 @@ unsigned int dns_packet_copy(const char *buf,unsigned int len,unsigned int pos,u
   return pos;
 }
 
+/** Skip over a domain name within a packet. */
 unsigned int dns_packet_skipname(const char *buf,unsigned int len,unsigned int pos)
 {
   unsigned char ch;
@@ -33,6 +37,7 @@ unsigned int dns_packet_skipname(const char *buf,unsigned int len,unsigned int p
   return 0;
 }
 
+/** Extract a domain name out of a packet, handling name compression. */
 unsigned int dns_packet_getname(const char *buf,unsigned int len,unsigned int pos,char **d)
 {
   unsigned int loop = 0;
@@ -77,6 +82,17 @@ unsigned int dns_packet_getname(const char *buf,unsigned int len,unsigned int po
   return 0;
 }
 
+/** Extract a series of records from a packet.
+
+    \param out The \c str buffer into which to put the output.
+    \param buf The result packet buffer.
+    \param len The length of \c buf .
+    \param rrtype The resource record type, one of \c DNS_T_*.
+    \param rrclass The resource record class, one of \c DNS_C_*.
+    \param fn The function to call for each record found in the
+    packet. It is responsible to sanity check the record length and
+    append it to \c out.
+*/
 int dns_packet_extract(str* out, const char* buf, unsigned int len, uint16 rrtype, uint16 rrclass,
 		       int (*fn)(str* out, const char* buf, unsigned int len, unsigned int pos, uint16 datalen))
 {

@@ -1,5 +1,6 @@
 #include "dns.h"
 
+/** Translate the domain name in \p d to a dotted text string in \p out. */
 int dns_domain_todot_cat(str *out,const char *d)
 {
   char ch;

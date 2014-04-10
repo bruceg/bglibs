@@ -13,6 +13,7 @@ static int getit(str* out, const char* buf, unsigned int len, unsigned int pos, 
   (void)datalen;
 }
 
+/** Extract name (PTR) records from a DNS response packet. */
 int dns_name_packet(str *out,const char *buf,unsigned int len)
 {
   return dns_packet_extract(out, buf, len, DNS_T_PTR, DNS_C_IN, getit);

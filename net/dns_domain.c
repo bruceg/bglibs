@@ -4,6 +4,7 @@
 
 #include "dns.h"
 
+/** Return the length of an encoded domain name. */
 unsigned int dns_domain_length(const char *dn)
 {
   const char *x;
@@ -15,6 +16,7 @@ unsigned int dns_domain_length(const char *dn)
   return x - dn;
 }
 
+/** Free a pointer to a domain name. */
 void dns_domain_free(char **out)
 {
   if (*out) {
@@ -23,6 +25,7 @@ void dns_domain_free(char **out)
   }
 }
 
+/** Copy an encoded domain name to a new pointer. */
 int dns_domain_copy(char **out,const char *in)
 {
   unsigned int len;
@@ -37,6 +40,7 @@ int dns_domain_copy(char **out,const char *in)
   return 1;
 }
 
+/** Compare two domain names for equality. */
 int dns_domain_equal(const char *dn1,const char *dn2)
 {
   unsigned int len;
@@ -48,6 +52,7 @@ int dns_domain_equal(const char *dn1,const char *dn2)
   return 1;
 }
 
+/** Test if the domain name \p big ends with \p little. */
 int dns_domain_suffix(const char *big,const char *little)
 {
   unsigned char c;
@@ -60,6 +65,7 @@ int dns_domain_suffix(const char *big,const char *little)
   }
 }
 
+/** Determine the location of the suffix \c little within \c big . */
 unsigned int dns_domain_suffixpos(const char *big,const char *little)
 {
   const char *orig = big;

@@ -7,6 +7,8 @@
 
 static str data = {0};
 
+/** Read the \c /etc/resolv.conf file.
+    If \c $DNSRESOLVCONF is set, it names a file to read instead of \c /etc/resolv.conf . */
 int dns_read_resolvconf(str *out)
 {
   const char *x;
@@ -68,6 +70,7 @@ static unsigned int uses;
 static struct timeval deadline;
 static ipv4addr ip[DNS_MAX_IPS]; /* defined if ok */
 
+/** Parse \c /etc/resolv.conf for a list of nameserver IPs. */
 int dns_resolvconfip(ipv4addr s[DNS_MAX_IPS])
 {
   struct timeval now;

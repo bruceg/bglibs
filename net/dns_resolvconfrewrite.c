@@ -107,6 +107,24 @@ static unsigned int uses;
 static struct timeval deadline;
 static str rules = {0}; /* defined if ok */
 
+/** Load the domain name qualification rules.
+
+    The rules are loaded from the file named by \c $DNSREWRITEFILE
+    (defaults to "/etc/dnsrewrite").
+
+    For compatibility, if the rewriting rules file is not present, the
+    qualification procedure looks for a local domain name in three
+    places:
+
+    -# The value of the \c $LOCALDOMAIN environment variable, if it is set.
+    -# The first \c domain or \c search line in \c /etc/resolv.conf (if any).
+    -# Everything after the first period in the system's hostname.
+
+    It translate these into instructions that add the local domain name
+    to any name without dots or brackets.
+
+    See http://cr.yp.to/djbdns/qualify.html for complete details.
+*/
 int dns_resolvconfrewrite(str *out)
 {
   struct timeval now;

@@ -23,6 +23,13 @@ static void iopause(iopoll_fd *x,unsigned int len,struct timeval *deadline,struc
   iopoll(x,len,millisecs);
 }
 
+/** Resolve a DNS query. 
+
+    This is the base query handler of the DNS library. It takes a domain
+    name and query type, sends it to all configured nameservers, and
+    handles reading the response packet. Callers are responsible for
+    parsing the desired records out of the resulting packet.
+*/
 int dns_resolve(struct dns_transmit *tx,const char *q,uint16 qtype)
 {
   struct timeval stamp;
