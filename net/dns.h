@@ -71,7 +71,7 @@ extern int dns_packet_extract(str* out, const char* buf, unsigned int len, uint1
 
 extern int dns_transmit_start(struct dns_transmit *,const ipv4addr [DNS_MAX_IPS],int,const char *,uint16,const ipv4addr *);
 extern void dns_transmit_free(struct dns_transmit *);
-extern void dns_transmit_io(struct dns_transmit *,iopoll_fd *,struct timeval *);
+extern void dns_transmit_io(const struct dns_transmit *,iopoll_fd *,struct timeval *);
 extern int dns_transmit_get(struct dns_transmit *,const iopoll_fd *,const struct timeval *);
 
 extern int dns_read_resolvconf(str *out);

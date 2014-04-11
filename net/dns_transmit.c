@@ -220,7 +220,7 @@ int dns_transmit_start(struct dns_transmit *d,const ipv4addr servers[DNS_MAX_IPS
   return firstudp(d);
 }
 
-void dns_transmit_io(struct dns_transmit *d,iopoll_fd *x,struct timeval *deadline)
+void dns_transmit_io(const struct dns_transmit *d,iopoll_fd *x,struct timeval *deadline)
 {
   x->fd = d->s1 - 1;
 
