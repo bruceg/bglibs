@@ -1,3 +1,5 @@
+- Added dns library (modified from public domain djbdns-1.05)
+
 - Added wildcard handling and substitution to bg-installer.
 
 - Added reversed IPv4 formatting functions (from Jorge Valdes).

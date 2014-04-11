@@ -74,6 +74,7 @@ c:::644:msg:msg.h:msg/msg.h
 c:::644:msg:wrap.h:msg/wrap.h
   
 d:::755:net
+c:::644:net:dns.h:net/dns.h
 c:::644:net:ipv4.h:net/ipv4.h
 c:::644:net:ipv6.h:net/ipv6.h
 c:::644:net:resolve.h:net/resolve.h

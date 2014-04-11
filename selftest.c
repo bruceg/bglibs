@@ -2,9 +2,11 @@
 
 #include <errno.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "iobuf/iobuf.h"
 #include "msg/msg.h"
+#include "path/path.h"
 #include "str/str.h"
 
 const char program[] = "selftest";
@@ -54,6 +56,17 @@ int debugsys(int result)
     NL();
   }
   return result;
+}
+
+void makefile(str* fn, const char* content)
+{
+  long len = strlen(content);
+  int fd = path_mktemp("./selftest.tmpfile", fn);
+  if (fd < 0) die1(1, "Could not create temporary file");
+  if (write(fd, content, len) != len || close(fd) != 0) {
+    unlink(fn->s);
+    die1(1, "Could not write temporary file");
+  }
 }
 
 #define MAIN void selftest(void)
