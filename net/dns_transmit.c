@@ -209,7 +209,10 @@ int dns_transmit_start(struct dns_transmit *d,const ipv4addr servers[DNS_MAX_IPS
 
   d->qtype = qtype;
   d->servers = servers;
-  d->localip = *localip;
+  if (localip != 0)
+    d->localip = *localip;
+  else
+    memset(&d->localip, 0, sizeof d->localip);
 
   d->udploop = flagrecursive ? 1 : 0;
 

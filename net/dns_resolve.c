@@ -28,13 +28,11 @@ int dns_resolve(struct dns_transmit *tx,const char *q,uint16 qtype)
   struct timeval stamp;
   struct timeval deadline;
   ipv4addr servers[DNS_MAX_IPS];
-  ipv4addr ipzero;
   iopoll_fd x[1];
   int r;
 
   if (dns_resolvconfip(servers) == -1) return -1;
-  memset(&ipzero,0,sizeof ipzero);
-  if (dns_transmit_start(tx,servers,1,q,qtype,&ipzero) == -1) return -1;
+  if (dns_transmit_start(tx,servers,1,q,qtype,0) == -1) return -1;
 
   for (;;) {
     gettimeofday(&stamp,0);
