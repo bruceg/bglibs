@@ -129,9 +129,10 @@ int dns_resolvconfrewrite(str *out)
 }
 
 #ifdef SELFTEST_MAIN
-static int dummy(str* out, const char* fn)
+static int dummy(struct dns_transmit* tx, str* out, const char* fn)
 {
   return 0;
+  (void)tx;
   (void)out;
   (void)fn;
 }

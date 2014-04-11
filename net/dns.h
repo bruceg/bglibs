@@ -101,8 +101,10 @@ extern int dns_mx_r(struct dns_transmit *,str *,const char *);
 extern int dns_mx(str *,const char *);
 
 extern int dns_resolvconfrewrite(str *);
-extern int dns_qualify_rules(str *,str *,const char *,const str *, int (*)(str*, const char*));
-extern int dns_qualify(str *,str *,const char *, int (*)(str*, const char*));
+extern int dns_qualify_rules(str *,str *,const char *,const str *,
+			     int (*)(struct dns_transmit*, str*, const char*));
+extern int dns_qualify(str *,str *,const char *,
+		       int (*)(struct dns_transmit*, str*, const char*));
 
 #define DNS_R_FN_WRAP2(FN,TYPE1,TYPE2)		\
   int FN(TYPE1 p1,TYPE2 p2)			\
