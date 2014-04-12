@@ -1,13 +1,13 @@
 #include "ipv4.h"
 
-static char* format_part(unsigned char i, char* str)
+static char* format_part(unsigned char i, char* s)
 {
   if (i >= 10) {
-    str = format_part(i / 10, str);
+    s = format_part(i / 10, s);
     i = i % 10;
   }
-  *str++ = i + '0';
-  return str;
+  *s++ = i + '0';
+  return s;
 }
 
 /** Produce a formatted C string from an IPv4 address.
@@ -45,12 +45,12 @@ to contain the standard trailing \c NUL byte.
 */
 unsigned fmt_ipv4addr(char* buffer, const ipv4addr* addr)
 {
-  char* str = buffer;
-  str = format_part(addr->addr[0], str); *str++ = '.';
-  str = format_part(addr->addr[1], str); *str++ = '.';
-  str = format_part(addr->addr[2], str); *str++ = '.';
-  str = format_part(addr->addr[3], str);
-  return str - buffer;
+  char* s = buffer;
+  s = format_part(addr->addr[0], s); *s++ = '.';
+  s = format_part(addr->addr[1], s); *s++ = '.';
+  s = format_part(addr->addr[2], s); *s++ = '.';
+  s = format_part(addr->addr[3], s);
+  return s - buffer;
 }
 
 /** Produce a reverse-formatted string from an IPv4 address.
@@ -64,12 +64,12 @@ to contain the standard trailing \c NUL byte.
 */
 unsigned fmt_ipv4addr_reverse(char* buffer, const ipv4addr* addr)
 {
-  char* str = buffer;
-  str = format_part(addr->addr[3], str); *str++ = '.';
-  str = format_part(addr->addr[2], str); *str++ = '.';
-  str = format_part(addr->addr[1], str); *str++ = '.';
-  str = format_part(addr->addr[0], str);
-  return str - buffer;
+  char* s = buffer;
+  s = format_part(addr->addr[3], s); *s++ = '.';
+  s = format_part(addr->addr[2], s); *s++ = '.';
+  s = format_part(addr->addr[1], s); *s++ = '.';
+  s = format_part(addr->addr[0], s);
+  return s - buffer;
 }
 
 #ifdef SELFTEST_MAIN

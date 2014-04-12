@@ -5,13 +5,13 @@
 
 static char hex[16] = "0123456789abcdef";
 
-static char* format_part(uint16 i, char* str)
+static char* format_part(uint16 i, char* s)
 {
-  if (i > 0xfff) *str++ = hex[(i >> 12) & 0xf];
-  if (i > 0xff)  *str++ = hex[(i >> 8) & 0xf];
-  if (i > 0xf)   *str++ = hex[(i >> 4) & 0xf];
-  *str++ = hex[i & 0xf];
-  return str;
+  if (i > 0xfff) *s++ = hex[(i >> 12) & 0xf];
+  if (i > 0xff)  *s++ = hex[(i >> 8) & 0xf];
+  if (i > 0xf)   *s++ = hex[(i >> 4) & 0xf];
+  *s++ = hex[i & 0xf];
+  return s;
 }
 
 static unsigned format_ipv4(char* buf, const ipv6addr* addr)
@@ -47,7 +47,7 @@ unsigned fmt_ipv6addr(char* buffer, const ipv6addr* addr)
   uint16 bits[8];
   int i;
   int first;
-  char* str = buffer;
+  char* s = buffer;
 
   /* Convert raw address to array of 16-bit parts */
   for (i = 0; i < 8; ++i)
@@ -56,25 +56,25 @@ unsigned fmt_ipv6addr(char* buffer, const ipv6addr* addr)
     if (bits[first] != 0)
       break;
   if (first >= 1) {
-    *str++ = ':';
-    *str++ = ':';
+    *s++ = ':';
+    *s++ = ':';
     /* A couple of special cases, to simplify IPv4 style output */
     if (first >= 8)
       i = 1;
     else if (first == 7 && bits[7] == 1)
-      *str++ = '1';
+      *s++ = '1';
     else if (first >= 6)
-      str += format_ipv4(str, addr);
+      s += format_ipv4(s, addr);
     else if (first == 5 && bits[5] == 0xffff) {
-      memcpy(str, "ffff:", 5);
-      str += 5;
-      str += format_ipv4(str, addr);
+      memcpy(s, "ffff:", 5);
+      s += 5;
+      s += format_ipv4(s, addr);
     }
     else
       for (i = first; i < 8; ++i) {
 	if (i > first)
-	  *str++ = ':';
-	str = format_part(bits[i], str);
+	  *s++ = ':';
+	s = format_part(bits[i], s);
       }
   }
   else {
@@ -90,20 +90,20 @@ unsigned fmt_ipv6addr(char* buffer, const ipv6addr* addr)
       }
     for (i = 0; i < zs; ++i) {
       if (i > 0)
-	*str++ = ':';
-      str = format_part(bits[i], str);
+	*s++ = ':';
+      s = format_part(bits[i], s);
     }
     if (zs < 8) {
-      *str++ = ':';
-      *str++ = ':';
+      *s++ = ':';
+      *s++ = ':';
       for (i = ze; i < 8; ++i) {
 	if (i > ze)
-	  *str++ = ':';
-	str = format_part(bits[i], str);
+	  *s++ = ':';
+	s = format_part(bits[i], s);
       }
     }
   }
-  return str - buffer;
+  return s - buffer;
 }
 
 #ifdef SELFTEST_MAIN

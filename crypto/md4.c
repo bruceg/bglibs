@@ -295,17 +295,17 @@ md4_process_block (buffer, ctx)
 #ifdef SELFTEST_MAIN
 #include <stdio.h>
 
-static void MDString(const char* str)
+static void MDString(const char* s)
 {
   struct md4_ctx ctx;
   unsigned char digest[16];
-  unsigned int len = strlen(str);
+  unsigned int len = strlen(s);
   unsigned i;
   
   md4_init_ctx(&ctx);
-  md4_process_bytes(str, len, &ctx);
+  md4_process_bytes(s, len, &ctx);
   md4_finish_ctx(&ctx, digest);
-  printf("MD4 (\"%s\") = ", str);
+  printf("MD4 (\"%s\") = ", s);
   for (i = 0; i < 16; i++) printf("%02x", digest[i]);
   printf("\n");
 }

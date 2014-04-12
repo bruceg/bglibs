@@ -3,13 +3,13 @@
 #include <string.h>
 #include "sha1.h"
 
-static void test(const char* str, long len)
+static void test(const char* s, long len)
 {
    SHA1_CTX ctx;
    unsigned i;
    unsigned char digest[ SHA1_DIGEST_LENGTH ];
    SHA1_Init( &ctx );
-   SHA1_Update( &ctx, (const unsigned char*)str, len );
+   SHA1_Update( &ctx, (const unsigned char*)s, len );
    SHA1_Final( &ctx, digest );
    for ( i = 0; i < sizeof(digest) ; i++ )
       printf( "%02X", digest[ i ] );

@@ -1,12 +1,12 @@
 #include "misc.h"
 
-unsigned long strtou(const char* str, const char** end)
+unsigned long strtou(const char* s, const char** end)
 {
   unsigned long u;
   unsigned digit;
-  for (u = 0; (digit = *str - '0') <= 9; ++str)
+  for (u = 0; (digit = *s - '0') <= 9; ++s)
     u = u * 10 + digit;
-  *end = str;
+  *end = s;
   return u;
 }
 

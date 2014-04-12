@@ -1,20 +1,20 @@
 #include <string.h>
 #include "ipv4.h"
 
-static const char* parse_part(const char* str, uint8* num)
+static const char* parse_part(const char* s, uint8* num)
 {
   uint8 i = 0;
-  if (*str < '0' || *str > '9')
+  if (*s < '0' || *s > '9')
     return 0;
   do {
     unsigned newi;
-    newi = i * 10 + *str - '0';
+    newi = i * 10 + *s - '0';
     if (newi < i || newi > 255) return 0;
-    ++str;
+    ++s;
     i = newi;
-  } while (*str >= '0' && *str <= '9');
+  } while (*s >= '0' && *s <= '9');
   *num = i;
-  return str;
+  return s;
 }
 
 /** Scan a C string for an IPv4 address.
