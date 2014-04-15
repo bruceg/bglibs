@@ -25,6 +25,8 @@ do_test() {
   }
 
   ( cd $t && ./test >./test.out 2>&1; ) || {
+    echo "=====> Test output <====="
+    cat -v $t/test.out
     echo "=====> Test failed! <====="
     return 1
   }

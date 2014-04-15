@@ -12,7 +12,7 @@
 const char program[] = "selftest";
 const int msg_show_pid = 0;
 
-void NL(void) { obuf_putc(&outbuf, LF); }
+void NL(void) { obuf_putc(&outbuf, LF); obuf_flush(&outbuf); }
 
 void debugstr(const str* s)
 {
