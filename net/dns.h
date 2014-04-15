@@ -172,6 +172,8 @@ extern int dns_qualify_rules(str *,str *,const char *,const str *,
 extern int dns_qualify(str *,str *,const char *,
 		       int (*)(struct dns_transmit*, str*, const char*));
 
+extern unsigned fmt_dns_domain(char*, const char*);
+
 /** Wrapper macro to create a non-reentrant function from a \c dns_*_r function. */
 #define DNS_R_FN_WRAP2(FN,TYPE1,TYPE2)		\
   int FN(TYPE1 p1,TYPE2 p2)			\
