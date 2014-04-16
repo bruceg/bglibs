@@ -141,9 +141,11 @@ struct dns_result
   }
   /** The individual record arrays. */
     rr;
+  /** Internal use buffer pointer. */
+  void* __buffer;
 };
 
-extern int dns_result_alloc(struct dns_result* d, int type, int count);
+extern int dns_result_alloc(struct dns_result* d, int type, int count, int size);
 extern void dns_result_free(struct dns_result* d);
 
 extern void dns_random_init(const char [DNS_RANDOM_SEED]);
@@ -166,7 +168,8 @@ extern unsigned int dns_packet_copy(const char *,unsigned int,unsigned int,unsig
 extern unsigned int dns_packet_getname(const char *,unsigned int,unsigned int,char **);
 extern unsigned int dns_packet_skipname(const char *,unsigned int,unsigned int);
 extern int dns_packet_extract(struct dns_result* out, const char* buf, unsigned int len, uint16 rrtype, uint16 rrclass,
-			      int (*copy)(struct dns_result* out, unsigned int i,
+			      int (*sizefn)(const char* buf, unsigned int len, unsigned int pos, uint16 datalen),
+			      int (*copy)(struct dns_result* out, unsigned int index, unsigned int offset,
 					  const char* buf, unsigned int len, unsigned int pos, uint16 datalen));
 
 extern int dns_transmit_start(struct dns_transmit *,const ipv4addr [DNS_MAX_IPS],int,const char *,uint16,const ipv4addr *);

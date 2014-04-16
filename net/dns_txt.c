@@ -2,23 +2,27 @@
 
 #include "dns.h"
 
-static int getit(struct dns_result* out, unsigned int i,
+static int sizeit(const char* buf, unsigned int len, unsigned int pos, uint16 datalen)
+{
+  if (pos + datalen > len) return -1;
+  return datalen + 1;
+  (void)buf;
+}
+
+static int getit(struct dns_result* out, unsigned int i, unsigned int offset,
 		 const char* buf, unsigned int len, unsigned int pos, uint16 datalen)
 {
   unsigned int txtlen;
   char ch;
   unsigned int j;
   unsigned int k;
-  char** name = &out->rr.name[i];
+  char* name = out->rr.name[i] = out->__buffer + offset;
 
-  if (pos + datalen > len) return -1;
   for (txtlen = j = 0; j < datalen; ) {
     ch = buf[pos + j];
     txtlen += (unsigned char)ch;
     j += (unsigned char)ch + 1;
   }
-  if ((*name = malloc(txtlen + 1)) == 0)
-    return -1;
   txtlen = 0;
   for (j = k = 0;j < datalen;++j) {
     ch = buf[pos + j];
@@ -28,17 +32,18 @@ static int getit(struct dns_result* out, unsigned int i,
       --txtlen;
       if (ch < 32) ch = '?';
       if (ch > 126) ch = '?';
-      (*name)[k++] = ch;
+      name[k++] = ch;
     }
   }
-  (*name)[k] = 0;
-  return 1;
+  name[k++] = 0;
+  return k;
+  (void)len;
 }
 
 /** Extract text (TXT) records from a DNS response packet. */
 int dns_txt_packet(struct dns_result* out, const char* buf, unsigned int len)
 {
-  return dns_packet_extract(out, buf, len, DNS_T_TXT, DNS_C_IN, getit);
+  return dns_packet_extract(out, buf, len, DNS_T_TXT, DNS_C_IN, sizeit, getit);
 }
 
 /** Request the text (TXT) records for a domain name. */

@@ -2,7 +2,17 @@
 
 #include "dns.h"
 
-static int getit(struct dns_result* out, unsigned int i,
+static int sizeit(const char* buf, unsigned int len, unsigned int pos, uint16 datalen)
+{
+  char* q = 0;
+  if (!dns_packet_getname(buf,len,pos + 2,&q)) return -1;
+  len = fmt_dns_domain(0, q);
+  free(q);
+  return len + 1;
+  (void)datalen;
+}
+
+static int getit(struct dns_result* out, unsigned int i, unsigned int offset,
 		 const char* buf, unsigned int len, unsigned int pos, uint16 datalen)
 {
   unsigned char pref[2];
@@ -10,21 +20,20 @@ static int getit(struct dns_result* out, unsigned int i,
   struct dns_mx* mx = &out->rr.mx[i];
 
   if (!dns_packet_copy(buf,len,pos,pref,2)) return -1;
-  if (!dns_packet_getname(buf,len,pos + 2,&q)) return -1;
   mx->distance = uint16_get_msb(pref);
-  len = fmt_dns_domain(0, q);
-  if ((mx->name = malloc(len + 1)) == 0) { free(q); return -1; }
-  fmt_dns_domain(mx->name, q);
+  if (!dns_packet_getname(buf,len,pos + 2,&q)) return -1;
+  mx->name = out->__buffer + offset;
+  len = fmt_dns_domain(mx->name, q);
   mx->name[len] = 0;
   free(q);
-  return 0;
+  return len + 1;
   (void)datalen;
 }
 
 /** Extract mail exchanger (MX) records from a DNS response packet. */
 int dns_mx_packet(struct dns_result* out, const char* buf, unsigned int len)
 {
-  return dns_packet_extract(out, buf, len, DNS_T_MX, DNS_C_IN, getit);
+  return dns_packet_extract(out, buf, len, DNS_T_MX, DNS_C_IN, sizeit, getit);
 }
 
 /** Request the mail exchanger (MX) records for a domain name. */

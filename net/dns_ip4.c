@@ -3,7 +3,7 @@
 
 #include "dns.h"
 
-static int getit(struct dns_result* out, unsigned int i,
+static int getit(struct dns_result* out, unsigned int i, unsigned int offset,
 		 const char* buf, unsigned int len, unsigned int pos, uint16 datalen)
 {
   unsigned char header[4];
@@ -11,12 +11,13 @@ static int getit(struct dns_result* out, unsigned int i,
   if (!dns_packet_copy(buf,len,pos,header,4)) { errno = EPROTO; return -1; }
   memcpy(&out->rr.ip4[i], header, 4);
   return 0;
+  (void)offset;
 }
 
 /** Extract IPv4 address (A) records from a DNS response packet. */
 int dns_ip4_packet(struct dns_result* out, const char* buf, unsigned int len)
 {
-  if (dns_packet_extract(out, buf, len, DNS_T_A, DNS_C_IN, getit) < 0)
+  if (dns_packet_extract(out, buf, len, DNS_T_A, DNS_C_IN, 0, getit) < 0)
     return -1;
   dns_rotateipv4(out->rr.ip4, out->count);
   return 0;
@@ -30,7 +31,7 @@ int dns_ip4_r(struct dns_transmit* tx, struct dns_result *out, const char* fqdn)
   const char* x;
 
   if ((x = ipv4_scan(fqdn, &ip)) != 0 && *x == 0) {
-    if (dns_result_alloc(out, DNS_T_A, 1) < 0)
+    if (dns_result_alloc(out, DNS_T_A, 1, 0) < 0)
       return -1;
     memcpy(out->rr.ip4, &ip, sizeof ip);
     return 0;

@@ -3,7 +3,7 @@
 
 #include "dns.h"
 
-static int getit(struct dns_result* out, unsigned int i,
+static int getit(struct dns_result* out, unsigned int i, unsigned int offset,
 		 const char* buf, unsigned int len, unsigned int pos, uint16 datalen)
 {
   unsigned char header[4];
@@ -11,12 +11,13 @@ static int getit(struct dns_result* out, unsigned int i,
   if (!dns_packet_copy(buf,len,pos,header,16)) return -1;
   memcpy(&out->rr.ip6[i], header, 16);
   return 0;
+  (void)offset;
 }
 
 /** Extract IPv6 address (AAAA) records from a DNS response packet. */
 int dns_ip6_packet(struct dns_result* out, const char* buf, unsigned int len)
 {
-  if (dns_packet_extract(out, buf, len, DNS_T_AAAA, DNS_C_IN, getit) < 0)
+  if (dns_packet_extract(out, buf, len, DNS_T_AAAA, DNS_C_IN, 0, getit) < 0)
     return -1;
   dns_rotateipv6(out->rr.ip6, out->count);
   return 0;
@@ -31,13 +32,13 @@ int dns_ip6_r(struct dns_transmit* tx, struct dns_result* out, const char* fqdn)
   const char* x;
 
   if ((x = ipv6_scan(fqdn, &ip6)) != 0 && *x == 0) {
-    if (dns_result_alloc(out, DNS_T_AAAA, 1) < 0)
+    if (dns_result_alloc(out, DNS_T_AAAA, 1, 0) < 0)
       return -1;
     memcpy(out->rr.ip6, &ip6, sizeof ip6);
     return 0;
   }
   if ((x = ipv4_scan(fqdn, &ip4)) != 0 && *x == 0) {
-    if (dns_result_alloc(out, DNS_T_AAAA, 1) < 0)
+    if (dns_result_alloc(out, DNS_T_AAAA, 1, 0) < 0)
       return -1;
     memcpy(out->rr.ip6[0].addr, IPV6ADDR_V4PREFIX.addr, 12);
     memcpy(out->rr.ip6[0].addr+12, ip4.addr, 4);
