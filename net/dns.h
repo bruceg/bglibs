@@ -113,7 +113,38 @@ struct dns_transmit {
   ipv4addr localip;
   /** The requested query type. */
   uint16 qtype;
-} ;
+};
+
+/** An individual result from a \c dns_mx query. */
+struct dns_mx
+{
+  /** The distance (or preference) number for this MX. */
+  uint16 distance;
+  /** The domain name of this MX. */
+  char* name;
+};
+
+/** DNS query results. */
+struct dns_result
+{
+  /** The number of results present. */
+  int count;
+  /** The record type of the results. */
+  int type;
+  union
+  {
+    void* __ptr;
+    ipv4addr* ip4;
+    ipv6addr* ip6;
+    struct dns_mx* mx;
+    char** name;
+  }
+  /** The individual record arrays. */
+    rr;
+};
+
+extern int dns_result_alloc(struct dns_result* d, int type, int count);
+extern void dns_result_free(struct dns_result* d);
 
 extern void dns_random_init(const char [DNS_RANDOM_SEED]);
 extern unsigned int dns_random(unsigned int);
@@ -134,8 +165,9 @@ extern int dns_domain_todot_cat(str *,const char *);
 extern unsigned int dns_packet_copy(const char *,unsigned int,unsigned int,unsigned char *,unsigned int);
 extern unsigned int dns_packet_getname(const char *,unsigned int,unsigned int,char **);
 extern unsigned int dns_packet_skipname(const char *,unsigned int,unsigned int);
-extern int dns_packet_extract(str* out, const char* buf, unsigned int len, uint16 rrtype, uint16 rrclass,
-			      int (*fn)(str* out, const char* buf, unsigned int len, unsigned int pos, uint16 datalen));
+extern int dns_packet_extract(struct dns_result* out, const char* buf, unsigned int len, uint16 rrtype, uint16 rrclass,
+			      int (*copy)(struct dns_result* out, unsigned int i,
+					  const char* buf, unsigned int len, unsigned int pos, uint16 datalen));
 
 extern int dns_transmit_start(struct dns_transmit *,const ipv4addr [DNS_MAX_IPS],int,const char *,uint16,const ipv4addr *);
 extern void dns_transmit_free(struct dns_transmit *);
@@ -146,25 +178,25 @@ extern int dns_read_resolvconf(str *out);
 extern int dns_resolvconfip(ipv4addr [DNS_MAX_IPS]);
 extern int dns_resolve(struct dns_transmit *,const char *,uint16);
 
-extern int dns_ip4_packet(str *,const char *,unsigned int);
-extern int dns_ip4_r(struct dns_transmit *,str *,const char *);
-extern int dns_ip4(str *,const char *);
-extern int dns_ip6_packet(str *,const char *,unsigned int);
-extern int dns_ip6_r(struct dns_transmit *,str *,const char *);
-extern int dns_ip6(str *,const char *);
-extern int dns_name_packet(str *,const char *,unsigned int);
+extern int dns_ip4_packet(struct dns_result*, const char*, unsigned int);
+extern int dns_ip4_r(struct dns_transmit*, struct dns_result*, const char *);
+extern int dns_ip4(struct dns_result*, const char *);
+extern int dns_ip6_packet(struct dns_result*, const char*, unsigned int);
+extern int dns_ip6_r(struct dns_transmit*, struct dns_result*, const char *);
+extern int dns_ip6(struct dns_result*, const char*);
+extern int dns_name_packet(struct dns_result*, const char *,unsigned int);
 extern void dns_name4_domain(char [DNS_NAME4_DOMAIN],const ipv4addr *);
 extern void dns_name6_domain(char [DNS_NAME6_DOMAIN],const ipv6addr *);
-extern int dns_name4_r(struct dns_transmit *,str *,const ipv4addr *);
-extern int dns_name4(str *,const ipv4addr *);
-extern int dns_name6_r(struct dns_transmit *,str *,const ipv6addr *);
-extern int dns_name6(str *,const ipv6addr *);
-extern int dns_txt_packet(str *,const char *,unsigned int);
-extern int dns_txt_r(struct dns_transmit *,str *,const char *);
-extern int dns_txt(str *,const char *);
-extern int dns_mx_packet(str *,const char *,unsigned int);
-extern int dns_mx_r(struct dns_transmit *,str *,const char *);
-extern int dns_mx(str *,const char *);
+extern int dns_name4_r(struct dns_transmit*, struct dns_result*, const ipv4addr*);
+extern int dns_name4(struct dns_result*, const ipv4addr*);
+extern int dns_name6_r(struct dns_transmit*, struct dns_result*, const ipv6addr*);
+extern int dns_name6(struct dns_result*, const ipv6addr*);
+extern int dns_txt_packet(struct dns_result*, const char *,unsigned int);
+extern int dns_txt_r(struct dns_transmit *,struct dns_result*, const char *);
+extern int dns_txt(struct dns_result*, const char *);
+extern int dns_mx_packet(struct dns_result*, const char *,unsigned int);
+extern int dns_mx_r(struct dns_transmit *,struct dns_result*, const char *);
+extern int dns_mx(struct dns_result*, const char *);
 
 extern int dns_resolvconfrewrite(str *);
 extern int dns_qualify_rules(str *,str *,const char *,const str *,
@@ -175,13 +207,13 @@ extern int dns_qualify(str *,str *,const char *,
 extern unsigned fmt_dns_domain(char*, const char*);
 
 /** Wrapper macro to create a non-reentrant function from a \c dns_*_r function. */
-#define DNS_R_FN_WRAP2(FN,TYPE1,TYPE2)		\
-  int FN(TYPE1 p1,TYPE2 p2)			\
-  {						\
-    struct dns_transmit tx = {0};		\
-    int r = FN##_r(&tx,p1,p2);			\
-    dns_transmit_free(&tx);			\
-    return r;					\
+#define DNS_R_FN_WRAP(NAME,TYPE)			\
+  int dns_##NAME(struct dns_result* out,TYPE in)	\
+  {							\
+    struct dns_transmit tx = {0};			\
+    int r = dns_##NAME##_r(&tx,out,in);			\
+    dns_transmit_free(&tx);				\
+    return r;						\
   }
 
 /** @} */

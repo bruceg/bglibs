@@ -3,7 +3,7 @@
 #include "dns.h"
 
 /** Request the name (PTR) record for an IPv4 address. */
-int dns_name4_r(struct dns_transmit *tx,str *out,const ipv4addr *ip)
+int dns_name4_r(struct dns_transmit* tx, struct dns_result* out, const ipv4addr *ip)
 {
   char name[DNS_NAME4_DOMAIN];
 
@@ -14,24 +14,25 @@ int dns_name4_r(struct dns_transmit *tx,str *out,const ipv4addr *ip)
   return 0;
 }
 
-/** \fn dns_name4(str*, const ipv4addr*)
+/** \fn dns_name4(struct dns_result*, const ipv4addr*)
     Request the name (PTR) record for an IPv4 address.
 */
-DNS_R_FN_WRAP2(dns_name4, str*, const ipv4addr*)
+DNS_R_FN_WRAP(name4, const ipv4addr*)
 
 #ifdef SELFTEST_MAIN
 #include "str/iter.h"
+struct dns_result out = {0};
 MAIN
 {
-  str out = {0};
   ipv4addr ip = {{ 69,5,1,51 }};
-  striter i;
+  int i;
 
-  dns_name4(&out, &ip);
-  striter_loop(&i, &out, 0)
-    obuf_putf(&outbuf, "d{: \"}s{\"\n}", i.len, i.startptr);
+  debugfn(dns_name4(&out, &ip));
+  for (i = 0; i < out.count; ++i)
+    obuf_putf(&outbuf, "d{: \"}s{\"\n}", i, out.rr.name[i]);
 }
 #endif
 #ifdef SELFTEST_EXP
-14: "untroubled.org"
+result=0
+0: "untroubled.org"
 #endif

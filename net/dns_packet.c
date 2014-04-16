@@ -84,41 +84,54 @@ unsigned int dns_packet_getname(const char *buf,unsigned int len,unsigned int po
 
 /** Extract a series of records from a packet.
 
-    \param out The \c str buffer into which to put the output.
-    \param buf The result packet buffer.
+    \param out The result buffer into which to put the output.
+    \param buf The packet buffer to parse.
     \param len The length of \c buf .
     \param rrtype The resource record type, one of \c DNS_T_*.
     \param rrclass The resource record class, one of \c DNS_C_*.
-    \param fn The function to call for each record found in the
+    \param copy The function to call for each record found in the
     packet. It is responsible to sanity check the record length and
-    append it to \c out.
+    add it to \c out at index \c i.
 */
-int dns_packet_extract(str* out, const char* buf, unsigned int len, uint16 rrtype, uint16 rrclass,
-		       int (*fn)(str* out, const char* buf, unsigned int len, unsigned int pos, uint16 datalen))
+int dns_packet_extract(struct dns_result* out, const char* buf, unsigned int len, uint16 rrtype, uint16 rrclass,
+		       int (*copy)(struct dns_result* out, unsigned int i,
+				   const char* buf, unsigned int len, unsigned int pos, uint16 datalen))
 {
   unsigned int pos;
+  unsigned int start;
   unsigned char header[12];
   uint16 numanswers;
   uint16 datalen;
-  int r;
-
-  if (!str_copys(out,"")) return -1;
+  unsigned int i, j;
 
   pos = dns_packet_copy(buf,len,0,header,12); if (!pos) return -1;
   numanswers = uint16_get_msb(header + 6);
   pos = dns_packet_skipname(buf,len,pos); if (!pos) return -1;
-  pos += 4;
+  start = pos += 4;
 
-  while (numanswers--) {
+  /* Count the number of records */
+  for (i = j = 0; j < numanswers; ++j, pos += datalen) {
     pos = dns_packet_skipname(buf,len,pos); if (!pos) return -1;
     pos = dns_packet_copy(buf,len,pos,header,10); if (!pos) return -1;
     datalen = uint16_get_msb(header + 8);
-    if (uint16_get_msb(header) == rrtype)
-      if (uint16_get_msb(header + 2) == rrclass)
-	if ((r = fn(out, buf, len, pos, datalen)) <= 0)
-	  return r;
-    pos += datalen;
+    if (uint16_get_msb(header) == rrtype && uint16_get_msb(header + 2) == rrclass)
+      ++i;
   }
 
+  if (dns_result_alloc(out, rrtype, i) < 0)
+    return -1;
+
+  /* Copy the records into out */
+  pos = start;
+  for (i = j = 0; j < numanswers; ++j, pos += datalen) {
+    pos = dns_packet_skipname(buf,len,pos); if (!pos) return -1;
+    pos = dns_packet_copy(buf,len,pos,header,10); if (!pos) return -1;
+    datalen = uint16_get_msb(header + 8);
+    if (uint16_get_msb(header) == rrtype && uint16_get_msb(header + 2) == rrclass) {
+      if (copy(out, i, buf, len, pos, datalen) < 0)
+	return -1;
+      ++i;
+    }
+  }
   return 0;
 }
