@@ -155,6 +155,8 @@ extern void dns_rotate(unsigned char*, unsigned int n, unsigned int shift);
 extern void dns_rotateipv4(ipv4addr*, unsigned int);
 extern void dns_rotateipv6(ipv6addr*, unsigned int);
 
+extern void dns_sort_mx(struct dns_mx* mxs, int count);
+
 extern void dns_domain_free(char **);
 extern int dns_domain_copy(char **,const char *);
 extern unsigned int dns_domain_length(const char *);

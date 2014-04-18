@@ -33,6 +33,7 @@ net/dns_resolvconfrewrite.o
 net/dns_resolve.o
 net/dns_result.o
 net/dns_rotate.o
+net/dns_sort.o
 net/dns_transmit.o
 net/dns_txt.o
 net/getaddr4.o
