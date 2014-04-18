@@ -54,18 +54,34 @@ int dns_mx_r(struct dns_transmit* tx, struct dns_result* out, const char* fqdn)
 DNS_R_FN_WRAP(mx, const char*)
 
 #ifdef SELFTEST_MAIN
-#include "str/iter.h"
-MAIN
+struct dns_result out = {0};
+
+static void doit(const char* fqdn)
 {
-  struct dns_result out = {0};
   int i;
 
-  debugfn(dns_mx(&out, "untroubled.org"));
+  debugfn(dns_mx(&out, fqdn));
+  obuf_putf(&outbuf, "s{ => }d{\n}", fqdn, out.count);
+  dns_sort_mx(out.rr.mx, out.count);
   for (i = 0; i < out.count; ++i)
     obuf_putf(&outbuf, "d{ }d{: \"}s{\"\n}", i, out.rr.mx[i].distance, out.rr.mx[i].name);
+}
+
+MAIN
+{
+  doit("untroubled.org");
+  doit("google.com");
 }
 #endif
 #ifdef SELFTEST_EXP
 result=0
+untroubled.org => 1
 0 12801: "mx.futurequest.net"
+result=0
+google.com => 5
+0 10: "aspmx.l.google.com"
+1 20: "alt1.aspmx.l.google.com"
+2 30: "alt2.aspmx.l.google.com"
+3 40: "alt3.aspmx.l.google.com"
+4 50: "alt4.aspmx.l.google.com"
 #endif
