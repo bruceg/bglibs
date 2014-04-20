@@ -21,12 +21,19 @@
 
 static void generate(struct surfrand* c)
 {
-  unsigned i = 0;
-  uint32* p;
   surf(c->generated, c->counter, c->seed);
-  for (p = c->counter, i = 0; i < SURF_IN_U32; ++i, ++p)
-    if (++*p > 0)
-      break;
+  if (!++c->counter[0])
+    if (!++c->counter[1])
+      if (!++c->counter[2])
+	if (!++c->counter[3])
+	  if (!++c->counter[4])
+	    if (!++c->counter[5])
+	      if (!++c->counter[6])
+		if (!++c->counter[7])
+		  if (!++c->counter[8])
+		    if (!++c->counter[9])
+		      if (!++c->counter[10])
+			++c->counter[11];
   c->used = 0;
 }
 
