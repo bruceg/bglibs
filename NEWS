@@ -11,6 +11,8 @@
 
 - Added support for enumerate and itemize in cli-generate.
 
+- Added surfrand_uniform function, protected against bias.
+
 Development of this version has been sponsored by FutureQuest, Inc.
 ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------

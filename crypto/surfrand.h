@@ -24,6 +24,7 @@ void surfrand_init(struct surfrand* c, const uint32* data, unsigned words);
 uint32 surfrand_uint32(struct surfrand* c);
 double surfrand_double(struct surfrand* c);
 void surfrand_fill(struct surfrand* c, unsigned char* buf, unsigned len);
+uint32 surfrand_uniform(struct surfrand* c, uint32 bound);
 
 /** @} */
 

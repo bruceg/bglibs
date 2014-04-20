@@ -113,6 +113,28 @@ void surfrand_fill(struct surfrand* c, unsigned char* buf, unsigned len)
   }
 }
 
+/** Generate a uniformly distributed random number less than \c bound.
+
+    The result is masked against bias by regenerating the result if it
+    would cause bias.
+*/
+uint32 surfrand_uniform(struct surfrand* c, uint32 bound)
+{
+  uint32 num;
+  /* 2**BITS % x == (2**BITS - x) % x == -x % x */
+  uint32 min = - bound % bound;
+
+  /* Avoid bias by keeping generating random numbers until one is within
+   * [min..UINT32_MAX]. This could theoretically loop forever, but it
+   * has a worst-case probability of 0.5 of success on each iteration,
+   * so it should rarely need more than one iteration. */
+  do {
+    num = surfrand_uint32(c);
+  } while (num < min);
+
+  return num % bound;
+}
+
 #ifdef SELFTEST_MAIN
 static void dumpn(struct surfrand* c, unsigned count)
 {
