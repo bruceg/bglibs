@@ -34,7 +34,7 @@ static void generate(struct surfrand* c)
 		    if (!++c->counter[9])
 		      if (!++c->counter[10])
 			++c->counter[11];
-  c->used = 0;
+  c->left = SURF_OUT_U32;
 }
 
 /** Initialize the \c surfrand structure.
@@ -72,7 +72,7 @@ void surfrand_init(struct surfrand* c, const uint32* data, unsigned words)
     memcpy(ptr, data, sizeof c->seed - i * 4);
   }
   memset(c->counter, 0, sizeof c->counter);
-  c->used = SURF_OUT_U32;
+  c->left = 0;
 }
 
 /** Output an random unsigned 32-bit integer.
@@ -80,9 +80,9 @@ void surfrand_init(struct surfrand* c, const uint32* data, unsigned words)
  * All the bits in the output integer are equally random. */
 uint32 surfrand_uint32(struct surfrand* c)
 {
-  if (c->used >= SURF_OUT_U32)
+  if (c->left == 0)
     generate(c);
-  return c->generated[c->used++];
+  return c->generated[--c->left];
 }
 
 /** Output a random double precision floating-point number in the range 0-1.

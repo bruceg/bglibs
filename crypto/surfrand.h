@@ -11,7 +11,7 @@ struct surfrand
 {
   /** counts the number of bytes in \c generated that have been output
    * already */
-  unsigned used;
+  unsigned left;
   /** temporary storage for the generated random data */
   uint32 generated[SURF_OUT_U32];
   /** the input seed data */
