@@ -8,9 +8,6 @@
   - Replace adt_hashb, or add some other library of hash functions
   - What about FNV or other good ones?
 
-- Finish DNS library!
-  - Implement TCP queries
-
 - Add make-compile, make-load, make-makelib scripts
 
 - exec replacement?  http://cr.yp.to/lib/pathexec.html
