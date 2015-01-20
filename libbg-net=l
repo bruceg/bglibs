@@ -31,7 +31,9 @@ net/dns_random.o
 net/dns_resolvconfip.o
 net/dns_resolvconfrewrite.o
 net/dns_resolve.o
+net/dns_result.o
 net/dns_rotate.o
+net/dns_sort.o
 net/dns_transmit.o
 net/dns_txt.o
 net/getaddr4.o
@@ -51,7 +53,7 @@ net/recv4.o
 net/recv6.o
 net/recvfd.o
 net/recvu.o
-net/resolve_error.o
+net/resolve_calldns.o
 net/resolve_ipv4addr.o
 net/resolve_ipv4name.o
 net/reuse.o

@@ -21,7 +21,12 @@ extern const char* resolve_ipv4addr(const ipv4addr* addr);
 extern int resolve_ipv4name_n(const char* name, ipv4addr* addr, int maxaddrs);
 /** Compatibility macro for resolve_ipv4name_n */
 #define resolve_ipv4name(N,A) resolve_ipv4name_n((N),(A),1)
-extern int resolve_error(void);
+extern int __resolve_error;
+/** Look up the last resolve error code. */
+#define resolve_error() (__resolve_error)
+
+struct dns_result;
+extern int resolve_calldns(int (*dnsfn)(), struct dns_result* out, const void* param);
 
 /** @} */
 
