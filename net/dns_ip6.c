@@ -4,7 +4,7 @@
 
 static int getit(str* out, const char* buf, unsigned int len, unsigned int pos, uint16 datalen)
 {
-  unsigned char header[4];
+  unsigned char header[16];
   if (datalen == 16) {
     if (!dns_packet_copy(buf,len,pos,header,16)) return -1;
     if (!str_catb(out,(char*)header,16)) return -1;
