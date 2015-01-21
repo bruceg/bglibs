@@ -115,15 +115,6 @@ c:::644::libpwcmp.a:.libs/libpwcmp.a
 c:::644::libpwcmp-module.a:.libs/libpwcmp-module.a
 c:::644::libvmailmgr.a:.libs/libvmailmgr.a
 
-d:::755:pwcmp
-s::::pwcmp:client.a:../libpwcmp.a:.libs/../libpwcmp.a
-s::::pwcmp:hex.a:../libpwcmp.a:.libs/../libpwcmp.a
-s::::pwcmp:module.a:../libpwcmp-module.a:.libs/../libpwcmp-module.a
-  
-d:::755:vmailmgr
-s::::vmailmgr:client.a:../libvmailmgr.a:.libs/../libvmailmgr.a
-s::::vmailmgr:vpwentry.a:../libvmailmgr.a:.libs/../libvmailmgr.a
-
 >man
 d:::755:man1
 c:::644:man1:bg-installer.1
