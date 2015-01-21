@@ -13,92 +13,92 @@ c:::644:bglibs:uint32.h
 c:::644:bglibs:uint64.h
 c:::644:bglibs:$2:include/*
 
-d:::755:adt
-s::::adt:ghash.h:../ghash.h
-s::::adt:gqueue.h:../gqueue.h
-s::::adt:gstack.h:../gstack.h
+d:::755:bglibs/adt
+s::::bglibs/adt:ghash.h:../ghash.h
+s::::bglibs/adt:gqueue.h:../gqueue.h
+s::::bglibs/adt:gstack.h:../gstack.h
 
-d:::755:base64
-s::::base64:base64.h:../base64.h
+d:::755:bglibs/base64
+s::::bglibs/base64:base64.h:../base64.h
 
-d:::755:cdb
-s:::644:cdb:cdb.h:../cdb.h
-s:::644:cdb:make.h:../cdb.h
-s:::644:cdb:str.h:../cdb.h
+d:::755:bglibs/cdb
+s:::644:bglibs/cdb:cdb.h:../cdb.h
+s:::644:bglibs/cdb:make.h:../cdb.h
+s:::644:bglibs/cdb:str.h:../cdb.h
 
-d:::755:cli
-s::::cli:cli.h:../cli.h
+d:::755:bglibs/cli
+s::::bglibs/cli:cli.h:../cli.h
 
-d:::755:crc
-s::::crc:crc16_arc.h:../crc16_arc.h
-s::::crc:crc16_ccitt.h:../crc16_ccitt.h
-s::::crc:crc16_xmodem.h:../crc16_xmodem.h
-s::::crc:crc32.h:../crc32.h
-s::::crc:crc32c.h:../crc32c.h
-s::::crc:crc64.h:../crc64.h
-s::::crc:gcrc.h:../gcrc.h
+d:::755:bglibs/crc
+s::::bglibs/crc:crc16_arc.h:../crc16_arc.h
+s::::bglibs/crc:crc16_ccitt.h:../crc16_ccitt.h
+s::::bglibs/crc:crc16_xmodem.h:../crc16_xmodem.h
+s::::bglibs/crc:crc32.h:../crc32.h
+s::::bglibs/crc:crc32c.h:../crc32c.h
+s::::bglibs/crc:crc64.h:../crc64.h
+s::::bglibs/crc:gcrc.h:../gcrc.h
 
-d:::755:crypto
-s::::crypto:hmac.h:../hmac.h
-s::::crypto:md5.h:../md5.h
-s::::crypto:sha1.h:../sha1.h
-s::::crypto:sha256.h:../sha256.h
-s::::crypto:sha384.h:../sha384.h
-s::::crypto:sha512.h:../sha512.h
-s::::crypto:surf.h:../surf.h
-s::::crypto:surfrand.h:../surfrand.h
+d:::755:bglibs/crypto
+s::::bglibs/crypto:hmac.h:../hmac.h
+s::::bglibs/crypto:md5.h:../md5.h
+s::::bglibs/crypto:sha1.h:../sha1.h
+s::::bglibs/crypto:sha256.h:../sha256.h
+s::::bglibs/crypto:sha384.h:../sha384.h
+s::::bglibs/crypto:sha512.h:../sha512.h
+s::::bglibs/crypto:surf.h:../surf.h
+s::::bglibs/crypto:surfrand.h:../surfrand.h
  
-d:::755:dict
-s::::dict:dict.h:../dict.h
-s::::dict:load.h:../dict.h
+d:::755:bglibs/dict
+s::::bglibs/dict:dict.h:../dict.h
+s::::bglibs/dict:load.h:../dict.h
   
-d:::755:fmt
-s::::fmt:misc.h:../fmt.h
-s::::fmt:multi.h:../fmt.h
-s::::fmt:number.h:../fmt.h
+d:::755:bglibs/fmt
+s::::bglibs/fmt:misc.h:../fmt.h
+s::::bglibs/fmt:multi.h:../fmt.h
+s::::bglibs/fmt:number.h:../fmt.h
 
-d:::755:iobuf
-s::::iobuf:ibuf.h:../ibuf.h
-s::::iobuf:iobuf.h:../iobuf.h
-s::::iobuf:obuf.h:../obuf.h
+d:::755:bglibs/iobuf
+s::::bglibs/iobuf:ibuf.h:../ibuf.h
+s::::bglibs/iobuf:iobuf.h:../iobuf.h
+s::::bglibs/iobuf:obuf.h:../obuf.h
 
-d:::755:misc
-s::::misc:misc.h:../misc.h
-s::::misc:ucspi.h:../ucspi.h
+d:::755:bglibs/misc
+s::::bglibs/misc:misc.h:../misc.h
+s::::bglibs/misc:ucspi.h:../ucspi.h
   
-d:::755:msg
-s::::msg:debug.h:../debug.h
-s::::msg:msg.h:../msg.h
-s::::msg:wrap.h:../wrap.h
+d:::755:bglibs/msg
+s::::bglibs/msg:debug.h:../debug.h
+s::::bglibs/msg:msg.h:../msg.h
+s::::bglibs/msg:wrap.h:../wrap.h
   
-d:::755:net
-s:::644:net:dns.h:../dns.h
-s:::644:net:ipv4.h:../ipv4.h
-s:::644:net:ipv6.h:../ipv6.h
-s:::644:net:resolve.h:../resolve.h
-s:::644:net:socket.h:../socket.h
+d:::755:bglibs/net
+s:::644:bglibs/net:dns.h:../dns.h
+s:::644:bglibs/net:ipv4.h:../ipv4.h
+s:::644:bglibs/net:ipv6.h:../ipv6.h
+s:::644:bglibs/net:resolve.h:../resolve.h
+s:::644:bglibs/net:socket.h:../socket.h
 
-d:::755:path
-s::::path:path.h:../path.h
+d:::755:bglibs/path
+s::::bglibs/path:path.h:../path.h
+
+d:::755:bglibs/str
+s::::bglibs/str:env.h:../envstr.h
+s::::bglibs/str:str.h:../str.h
+s::::bglibs/str:iter.h:../striter.h
+
+d:::755:bglibs/unix
+s::::bglibs/unix:cloexec.h:../unix.h
+s::::bglibs/unix:fcntl.h:../unix.h
+s::::bglibs/unix:nonblock.h:../unix.h
+s::::bglibs/unix:selfpipe.h:../selfpipe.h
+s::::bglibs/unix:signalfd.h:../signalfd.h
+s::::bglibs/unix:sig.h:../sig.h
+s::::bglibs/unix:trigger.h:../trigger.h
 
 d:::755:pwcmp
 c:::644:pwcmp:client.h:pwcmp/client.h
 c:::644:pwcmp:hex.h:pwcmp/hex.h
 c:::644:pwcmp:module.h:pwcmp/module.h
-  
-d:::755:str
-s::::str:env.h:../envstr.h
-s::::str:iter.h:../striter.h
-s::::str:str.h:../str.h
-  
-d:::755:unix
-s::::unix:cloexec.h:../unix.h
-s::::unix:fcntl.h:../unix.h
-s::::unix:nonblock.h:../unix.h
-s::::unix:selfpipe.h:../selfpipe.h
-s::::unix:signalfd.h:../signalfd.h
-s::::unix:sig.h:../sig.h
-s::::unix:trigger.h:../trigger.h
   
 d:::755:vmailmgr
 c:::644:vmailmgr:client.h:vmailmgr/client.h
