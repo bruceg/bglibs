@@ -64,7 +64,6 @@ fgrep -x /usr/local/bglibs/lib /etc/ld.so.conf >/dev/null \
 %{basedir}/include
 %{basedir}/lib/*.a
 %{basedir}/lib/*.la
-%{basedir}/lib/*.lib
 %{basedir}/lib/*.so
 %{basedir}/lib/*/*.a
 %{_bindir}/cli-generate
