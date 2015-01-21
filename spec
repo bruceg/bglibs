@@ -1,7 +1,3 @@
-%define basedir /usr/local/bglibs
-%define _libdir %{basedir}/lib
-%define _includedir %{basedir}/include
-
 Name: @PACKAGE@
 Summary: BG Libraries Collection
 Version: @VERSION@
@@ -42,30 +38,22 @@ make
 rm -fr %{buildroot}
 make install_prefix=%{buildroot} install
 
-cp -a doc %{buildroot}%{basedir}
-
 %clean
 rm -rf %{buildroot}
-
-%post
-fgrep -x /usr/local/bglibs/lib /etc/ld.so.conf >/dev/null \
-|| echo /usr/local/bglibs/lib >>/etc/ld.so.conf
-/sbin/ldconfig
 
 %files
 %defattr(-,root,root)
 %doc ANNOUNCEMENT COPYING NEWS README
-%{basedir}/lib/*.so.*
+%{_libdir}/*.so.*
 %{_bindir}/bg-installer
 
 %files devel
 %defattr(-,root,root)
-%{basedir}/doc
-%{basedir}/include
-%{basedir}/lib/*.a
-%{basedir}/lib/*.la
-%{basedir}/lib/*.so
-%{basedir}/lib/*/*.a
+%{_includedir}/bglibs
+%{_libdir}/*.a
+%{_libdir}/*.la
+%{_libdir}/*.so
+%{_libdir}/*/*.a
 %{_bindir}/cli-generate
 %{_bindir}/crc-gentab
 %{_mandir}/*/*
