@@ -4,15 +4,13 @@ c:::755::cli-generate
 c:::755::crc-gentab
 
 >include
-c:::644::sysdeps.h
-c:::644::sysdeps.h
-c:::644::systime.h
-c:::644::uintnn.h
-c:::644::uint16.h
-c:::644::uint32.h
-c:::644::uint64.h
-
 d:::755:bglibs
+c:::644:bglibs:sysdeps.h
+c:::644:bglibs:systime.h
+c:::644:bglibs:uintnn.h
+c:::644:bglibs:uint16.h
+c:::644:bglibs:uint32.h
+c:::644:bglibs:uint64.h
 c:::644:bglibs:$2:include/*
 
 d:::755:adt
