@@ -19,7 +19,7 @@ do_test() {
     return 1
   }
 
-  ./load $t/test .libs/libbg.a .libs/libbg-sysdeps.a || {
+  ./load $t/test .libs/libbg.a || {
     echo "=====> Load failed! <====="
     return 1
   }
