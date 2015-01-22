@@ -48,7 +48,7 @@
 
 #include "sysdeps.h"
 #include "systime.h"
-#include "misc.h"
+#include "fmt.h"
 
 #define N              (624)	/* length of state vector */
 #define M              (397)	/* a period parameter */

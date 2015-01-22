@@ -4,10 +4,10 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "iobuf/iobuf.h"
-#include "msg/msg.h"
-#include "path/path.h"
-#include "str/str.h"
+#include "iobuf.h"
+#include "msg.h"
+#include "path.h"
+#include "str.h"
 
 const char program[] = "selftest";
 const int msg_show_pid = 0;

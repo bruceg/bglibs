@@ -1,6 +1,6 @@
 #include <string.h>
 #include "str.h"
-#include "env.h"
+#include "envstr.h"
 
 /** Put an assignment, in \c NAME=value format, into the environment
  * string.

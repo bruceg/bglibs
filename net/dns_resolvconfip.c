@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "iobuf/ibuf.h"
-#include "str/iter.h"
+#include "ibuf.h"
+#include "striter.h"
 #include "dns.h"
 
 static str data = {0};

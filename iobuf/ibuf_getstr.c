@@ -1,5 +1,5 @@
 #include "ibuf.h"
-#include "str/str.h"
+#include "str.h"
 
 /** Read a line from the \c ibuf into a dynamic string. */
 int ibuf_getstr(ibuf* in, struct str* s, char boundary)

@@ -20,10 +20,10 @@
 #include <sys/stat.h>
 
 #include "sysdeps.h"
-#include "str/str.h"
-#include "str/iter.h"
+#include "str.h"
+#include "striter.h"
 #include "path.h"
-#include "msg/msg.h"
+#include "msg.h"
 
 static str tmplist;
 static str tmpitem;

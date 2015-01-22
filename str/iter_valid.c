@@ -1,4 +1,4 @@
-#include "iter.h"
+#include "striter.h"
 #include "str.h"
 
 /** Determine if a striter is valid (after initialization or advancing). */

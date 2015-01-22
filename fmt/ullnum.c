@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 #include <string.h>
-#include "number.h"
+#include "fmt.h"
 
 static unsigned rec(char* buffer, unsigned long long num,
 		    unsigned width, char pad,

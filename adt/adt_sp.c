@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "common.h"
+#include "adt_common.h"
 
 int adt_cmpsp(const char* const* a, const char* const* b)
 {

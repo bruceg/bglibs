@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "str/str.h"
+#include "str.h"
 #include "dict.h"
 
 void dict_str_free(void* v)

@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include "dns.h"
 #include "uint32.h"
-#include "crypto/surfrand.h"
+#include "surfrand.h"
 
 static struct surfrand state;
 static int inited = 0;

@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "str.h"
-#include "iter.h"
-#include "env.h"
+#include "striter.h"
+#include "envstr.h"
 
 /** Make a \c environ compatable array of pointers to the environment
  * string.

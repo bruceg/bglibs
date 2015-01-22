@@ -1,4 +1,4 @@
-#include "number.h"
+#include "fmt.h"
 
 /** Format an unsigned integer as (lower-case) hexadecimal with
     padding. */

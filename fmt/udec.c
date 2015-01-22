@@ -1,4 +1,4 @@
-#include "number.h"
+#include "fmt.h"
 
 /** Format an unsigned integer as decimal with padding. */
 unsigned fmt_udecw(char* buffer, unsigned long num, unsigned width, char pad)

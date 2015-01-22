@@ -16,8 +16,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 #include <string.h>
-#include "str/str.h"
-#include "misc.h"
+#include "str.h"
+#include "fmt.h"
 
 /* Format a block of characters */
 unsigned fmt_mem(char* buffer, const char* s, unsigned length,

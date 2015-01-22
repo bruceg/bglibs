@@ -1,1 +1,1 @@
-: dotlibs sysdeps.h libraries man bg-installer cli-generate selftests
+: sysdeps.h libraries programs man selftests

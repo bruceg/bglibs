@@ -1,5 +1,5 @@
 #include "vpwentry.h"
-#include "str/str.h"
+#include "str.h"
 
 static int str_catunul(str* result, unsigned long u)
 {

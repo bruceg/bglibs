@@ -25,16 +25,16 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <unistd.h>
-#include "cli/cli.h"
-#include "fmt/number.h"
-#include "iobuf/ibuf.h"
-#include "iobuf/obuf.h"
-#include "iobuf/iobuf.h"
-#include "msg/msg.h"
-#include "msg/wrap.h"
-#include "path/path.h"
-#include "str/str.h"
-#include "str/iter.h"
+#include "cli.h"
+#include "fmt.h"
+#include "ibuf.h"
+#include "obuf.h"
+#include "iobuf.h"
+#include "msg.h"
+#include "wrap.h"
+#include "path.h"
+#include "str.h"
+#include "striter.h"
 #include "bg-installer-cli.h"
 
 static const char* prefix;

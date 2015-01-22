@@ -40,7 +40,7 @@ const struct hmac_control_block hmac_sha1 = {
 };
 
 #ifdef SELFTEST_MAIN
-#include "str/str.h"
+#include "str.h"
 
 static void test_hmac(const char* key, const char* data)
 {

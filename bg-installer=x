@@ -1,8 +1,4 @@
 -static
 libbg-cli.la
-libbg-msg.la
-libbg-path.la
-libbg-iobuf.la
-libbg-fmt.la
-libbg-str.la
+libbg.la
 libbg-sysdeps.la

@@ -1,9 +1,9 @@
 #include <string.h>
-#include "iobuf/iobuf.h"
-#include "msg/msg.h"
-#include "msg/wrap.h"
-#include "path/path.h"
-#include "str/str.h"
+#include "iobuf.h"
+#include "msg.h"
+#include "wrap.h"
+#include "path.h"
+#include "str.h"
 
 const char program[] = "selftest-cmp";
 

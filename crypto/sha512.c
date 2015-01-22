@@ -209,8 +209,7 @@ void SHA512_final(SHA512_ctx* ctx, uint8* digest)
 }
 
 #ifdef SELFTEST_MAIN
-#include "iobuf/obuf.h"
-#include "str/str.h"
+#include "obuf.h"
 
 static void test(const char* s)
 {

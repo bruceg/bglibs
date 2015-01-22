@@ -27,7 +27,7 @@ my %sections;
 my @options;
 my %decls;
 my %defns;
-my %header = ( 'include' => "<cli/cli.h>\n" );
+my %header = ( 'include' => "<bglibs/cli.h>\n" );
 
 my @sections = ('return value',
 		'errors',
@@ -358,7 +358,7 @@ sub make_helpstr {
 sub output_c {
     print "/* This file was automatically generated from ${filename}, do not edit. */\n";
     print "#include <string.h>\n";
-    print "#include <iobuf/obuf.h>\n";
+    print "#include <obuf.h>\n";
     print $header{'includes'};
 
     print "const char program[] = \"$program\";\n";

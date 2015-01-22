@@ -1,5 +1,5 @@
-#include <iobuf/iobuf.h>
-#include <str/str.h>
+#include "iobuf.h"
+#include "str.h"
 
 /** Read the remainder of the \c ibuf into the \c str. */
 int ibuf_readall(ibuf* in, struct str* out)

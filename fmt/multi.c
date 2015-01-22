@@ -18,10 +18,10 @@
 #include <errno.h>
 #include <stdarg.h>
 #include <string.h>
-#include "misc.h"
-#include "multi.h"
-#include "number.h"
-#include "str/str.h"
+#include "fmt.h"
+#include "fmt.h"
+#include "fmt.h"
+#include "str.h"
 
 /** Format multiple items.
 

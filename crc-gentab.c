@@ -2,8 +2,8 @@
 #include <string.h>
 
 #include "sysdeps.h"
-#include "iobuf/iobuf.h"
-#include "msg/msg.h"
+#include "iobuf.h"
+#include "msg.h"
 
 /* This generalized CRC table generator is derived from the descriptions in
  *   ftp://ftp.adelaide.edu.au/pub/rocksoft/crc_v3.txt

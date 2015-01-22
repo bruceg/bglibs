@@ -17,8 +17,8 @@
  */
 #include "sysdeps.h"
 #include <errno.h>
-#include "net/socket.h"
-#include "unix/nonblock.h"
+#include "socket.h"
+#include "unix.h"
 
 /** Connect a socket to an IPv4 address, honouring a timeout.
  *

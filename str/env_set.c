@@ -1,6 +1,6 @@
 #include <string.h>
 #include "str.h"
-#include "env.h"
+#include "envstr.h"
 
 /** Set the named variable to the given value in the environment string. */
 int envstr_set(struct str* env, const char* var, const char* val, int overwrite)

@@ -1,4 +1,15 @@
 -static
-libbg-msg.la
-libbg-iobuf.la
+iobuf/iobuf_timeout.o
+iobuf/obuf_digits.o
+iobuf/obuf_flush.o
+iobuf/obuf_pad.o
+iobuf/obuf_put3s.o
+iobuf/obuf_put5s.o
+iobuf/obuf_putc.o
+iobuf/obuf_putunumw.o
+iobuf/obuf_stderr.o
+iobuf/obuf_stdout.o
+iobuf/obuf_write.o
+msg/common.o
+msg/die.o
 libbg-sysdeps.la

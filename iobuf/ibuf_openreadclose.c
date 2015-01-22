@@ -1,5 +1,5 @@
-#include <iobuf/iobuf.h>
-#include <str/str.h>
+#include "iobuf.h"
+#include "str.h"
 
 /** Open and read the entire file into the \c str . */
 int ibuf_openreadclose(const char* filename, struct str* out)

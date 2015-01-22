@@ -1,6 +1,6 @@
 #include <string.h>
 #include "str.h"
-#include "env.h"
+#include "envstr.h"
 
 /** Adds the string-based list of assignments to the environment string.
  * Each individual assignment in the list must be ASCII NUL terminated,

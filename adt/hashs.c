@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "common.h"
+#include "adt_common.h"
 
 adt_hash_t adt_hashs(const unsigned char* data)
 {

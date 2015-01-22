@@ -1,4 +1,4 @@
-#include "iter.h"
+#include "striter.h"
 #include "str.h"
 
 /** Start (initialize) a striter. */

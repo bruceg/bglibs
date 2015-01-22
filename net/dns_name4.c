@@ -20,7 +20,6 @@ int dns_name4_r(struct dns_transmit* tx, struct dns_result* out, const ipv4addr 
 DNS_R_FN_WRAP(name4, const ipv4addr*)
 
 #ifdef SELFTEST_MAIN
-#include "str/iter.h"
 struct dns_result out = {0};
 MAIN
 {

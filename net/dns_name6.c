@@ -20,7 +20,6 @@ int dns_name6_r(struct dns_transmit *tx, struct dns_result* out, const ipv6addr*
 DNS_R_FN_WRAP(name6, const ipv6addr*)
 
 #ifdef SELFTEST_MAIN
-#include "str/iter.h"
 struct dns_result out = {0};
 void doit(const char* addr)
 {
