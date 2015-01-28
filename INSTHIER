@@ -107,7 +107,6 @@ c:::644:vmailmgr:vpwentry.h:vmailmgr/vpwentry.h
 >lib
 l:::755::libbg.la
 l:::755::libbg-cli.la
-l:::755::libbg-sysdeps.la
 
 c:::644::libpwcmp.a:.libs/libpwcmp.a
 c:::644::libpwcmp-module.a:.libs/libpwcmp-module.a

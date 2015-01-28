@@ -1,4 +1,3 @@
 -static
 libbg-cli.la
 libbg.la
-libbg-sysdeps.la

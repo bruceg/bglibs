@@ -12,4 +12,4 @@ iobuf/obuf_stdout.o
 iobuf/obuf_write.o
 msg/common.o
 msg/die.o
-libbg-sysdeps.la
+sys/iopoll.o
