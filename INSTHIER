@@ -11,7 +11,7 @@ c:::644:bglibs:uintnn.h
 c:::644:bglibs:uint16.h
 c:::644:bglibs:uint32.h
 c:::644:bglibs:uint64.h
-c:::644:bglibs:$2:include/*
+c:::644:bglibs:$2:include/*.h
 
 d:::755:pwcmp
 c:::644:pwcmp:client.h:pwcmp/client.h
