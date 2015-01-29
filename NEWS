@@ -1,3 +1,8 @@
+Changes in version 2.00
+
+- Flattened out the installed headers and libraries.
+  NOTE: This means this package is not backwards compatible.
+
 - Added dns library (modified from public domain djbdns-1.05)
 
 - Added wildcard handling and substitution to bg-installer.
