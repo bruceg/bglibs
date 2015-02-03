@@ -1,8 +1,14 @@
+-------------------------------------------------------------------------------
+Changes in version 2.02
+
 - Fixed header include path in cli-generate.
 
 - Rewrote iobuf and str number formatting using fmt.
 
 - Added missing selftest.c file to the dist tarball (oops).
+
+Development of this version has been sponsored by FutureQuest, Inc.
+ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
 Changes in version 2.01
 
