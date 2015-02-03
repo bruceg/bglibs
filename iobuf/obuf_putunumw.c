@@ -14,39 +14,39 @@ int obuf_putunumw(obuf* out, unsigned long data, unsigned width, char pad,
 /** Write an unsigned integer as decimal to the \c obuf with padding. */
 int obuf_putuw(obuf* out, unsigned long data, unsigned width, char pad)
 {
-  return obuf_putunumw(out, data, width, pad, 10, obuf_dec_digits);
+  return obuf_putunumw(out, data, width, pad, 10, fmt_lcase_digits);
 }
 
 /** Write an unsigned integer as decimal to the \c obuf. */
 int obuf_putu(obuf* out, unsigned long data)
 {
-  return obuf_putunumw(out, data, 0, 0, 10, obuf_dec_digits);
+  return obuf_putunumw(out, data, 0, 0, 10, fmt_lcase_digits);
 }
 
 /** Write an unsigned integer as (lower-case) hexadecimal to the \c obuf
     with padding. */
 int obuf_putxw(obuf* out, unsigned long data, unsigned width, char pad)
 {
-  return obuf_putunumw(out, data, width, pad, 16, obuf_hex_lcase_digits);
+  return obuf_putunumw(out, data, width, pad, 16, fmt_lcase_digits);
 }
 
 /** Write an unsigned integer as (lower-case) hexadecimal to the \c obuf. */
 int obuf_putx(obuf* out, unsigned long data)
 {
-  return obuf_putunumw(out, data, 0, 0, 16, obuf_hex_lcase_digits);
+  return obuf_putunumw(out, data, 0, 0, 16, fmt_lcase_digits);
 }
 
 /** Write an unsigned integer as (upper-case) hexadecimal to the \c obuf
     with padding. */
 int obuf_putXw(obuf* out, unsigned long data, unsigned width, char pad)
 {
-  return obuf_putunumw(out, data, width, pad, 16, obuf_hex_ucase_digits);
+  return obuf_putunumw(out, data, width, pad, 16, fmt_ucase_digits);
 }
 
 /** Write an unsigned integer as (upper-case) hexadecimal to the \c obuf. */
 int obuf_putX(obuf* out, unsigned long data)
 {
-  return obuf_putunumw(out, data, 0, 0, 16, obuf_hex_ucase_digits);
+  return obuf_putunumw(out, data, 0, 0, 16, fmt_ucase_digits);
 }
 
 #ifdef SELFTEST_MAIN

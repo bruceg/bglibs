@@ -14,13 +14,13 @@ int obuf_putsllnumw(obuf* out, long long data, unsigned width, char pad,
 /** Write a signed long long integer as decimal to the \c obuf with padding. */
 int obuf_putiwll(obuf* out, long long data, unsigned width, char pad)
 {
-  return obuf_putsllnumw(out, data, width, pad, 10, obuf_dec_digits);
+  return obuf_putsllnumw(out, data, width, pad, 10, fmt_lcase_digits);
 }
 
 /** Write a signed long long integer as decimal to the \c obuf. */
 int obuf_putill(obuf* out, long long data)
 {
-  return obuf_putsllnumw(out, data, 0, 0, 10, obuf_dec_digits);
+  return obuf_putsllnumw(out, data, 0, 0, 10, fmt_lcase_digits);
 }
 
 #ifdef SELFTEST_MAIN

@@ -1,7 +1,8 @@
 -static
+fmt/lcase.o
+fmt/ucase.o
 fmt/unum.o
 iobuf/iobuf_timeout.o
-iobuf/obuf_digits.o
 iobuf/obuf_flush.o
 iobuf/obuf_pad.o
 iobuf/obuf_put3s.o
