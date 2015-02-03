@@ -19,7 +19,7 @@ extern const ipv4addr IPV4ADDR_ANY;
 extern const ipv4addr IPV4ADDR_BROADCAST;
 extern const ipv4addr IPV4ADDR_LOOPBACK;
 
-extern int ipv4_parse(const char* s, ipv4addr* addr, const char** end) __attribute__((__deprecated__));
+extern int ipv4_parse(const char* s, ipv4addr* addr, const char** end) __DEPRECATED__;
 extern const char* ipv4_scan(const char* s, ipv4addr* addr);
 extern const char* ipv4_format(const ipv4addr* addr);
 extern const char* ipv4_format_reverse(const ipv4addr* addr);
