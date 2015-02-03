@@ -1,2 +1,2 @@
-: %(stem)s.cli cli-generate
+: %(stem)s.cli cli-generate sysdeps.h
 ./cli-generate -c $< >$@
