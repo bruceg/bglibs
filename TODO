@@ -2,8 +2,6 @@
   transparently.
   - Use a prefix of ::4444/32 to distinguish from ::ffff/32 and ::0/32
 
-- Rewrite iobuf and str number conversion routines to use fmt
-
 - Add Jenkin's lookup3 hash http://burtleburtle.net/bob/hash/doobs.html
   - Replace adt_hashb, or add some other library of hash functions
   - What about FNV or other good ones?

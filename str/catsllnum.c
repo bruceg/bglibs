@@ -1,5 +1,5 @@
 /* str/catsllnum.c - Append an signed long long integer.
- * Copyright (C) 2003,2005  Bruce Guenter <bruce@untroubled.org>
+ * Copyright (C) 2015  Bruce Guenter <bruce@untroubled.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -15,6 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
+#include "fmt.h"
 #include "str.h"
 
 /** Append a signed long long integer, optionally padded to a minimum
@@ -22,33 +23,10 @@
 int str_catsllnumw(str* s, long long in, unsigned width, char pad,
 		   unsigned base, const char* digits)
 {
-  long long tmp;
-  unsigned size;
-  unsigned i;
-  unsigned sign;
-  unsigned padsize;
-  
-  sign = 0;
-  if (in < 0) {
-    sign = 1;
-    in = -in;
-  }
-  if (in < (long)base)
-    size = 1;
-  else
-    for (tmp = in, size = 0; tmp; tmp /= base, ++size) ;
-  padsize = (width > sign+size) ? width - sign+size : 0;
-  if (!str_realloc(s, s->len + padsize+sign+size)) return 0;
+  unsigned len = fmt_sllnumw(0, in, width, pad, base, digits);
 
-  /* If the padding is a zero, put it after the sign, otherwise before */
-  if (pad != '0')
-    while (padsize--) s->s[s->len++] = pad;
-  if (sign) s->s[s->len++] = pad;
-  if (pad == '0')
-    while (padsize--) s->s[s->len++] = pad;
-  for (i = size; i-- > 0; in /= base)
-    s->s[s->len+i] = digits[in % base];
-  s->len += size;
+  if (!str_realloc(s, s->len + len)) return 0;
+  s->len += fmt_sllnumw(s->s + s->len, in, width, pad, base, digits);
   s->s[s->len] = 0;
   return 1;
 }

@@ -1,3 +1,5 @@
+- Rewrote iobuf and str number formatting using fmt.
+-------------------------------------------------------------------------------
 Changes in version 2.01
 
 - Fixed uint##.h headers.

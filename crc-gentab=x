@@ -1,4 +1,5 @@
 -static
+fmt/unum.o
 iobuf/iobuf_timeout.o
 iobuf/obuf_digits.o
 iobuf/obuf_flush.o

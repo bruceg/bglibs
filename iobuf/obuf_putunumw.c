@@ -1,28 +1,14 @@
+#include "fmt.h"
 #include "obuf.h"
-
-static int obuf_putunumw_rec(obuf* out, unsigned long data,
-			     unsigned width, char pad,
-			     unsigned base, const char* digits)
-{
-  if (width) --width;
-  if (data >= base) {
-    if (!obuf_putunumw_rec(out, data/base, width, pad, base, digits)) return 0;
-  }
-  else {
-    if (!obuf_pad(out, width, pad)) return 0;
-  }
-  return obuf_putc(out, digits[data % base]);
-}
 
 /** Write an unsigned integer to the \c obuf with optional padding. */
 int obuf_putunumw(obuf* out, unsigned long data, unsigned width, char pad,
 		  unsigned base, const char* digits)
 {
-  if (data < base) {
-    if (width && !obuf_pad(out, --width, pad)) return 0;
-    return obuf_putc(out, digits[data]);
-  }
-  return obuf_putunumw_rec(out, data, width, pad, base, digits);
+  unsigned len = fmt_unumw(0, data, width, pad, base, digits);
+  char buf[len];
+  fmt_unumw(buf, data, width, pad, base, digits);
+  return obuf_write(out, buf, len);
 }
 
 /** Write an unsigned integer as decimal to the \c obuf with padding. */
