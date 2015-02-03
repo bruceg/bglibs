@@ -1,3 +1,5 @@
+- Fixed header include path in cli-generate.
+
 - Rewrote iobuf and str number formatting using fmt.
 
 - Added missing selftest.c file to the dist tarball (oops).
