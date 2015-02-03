@@ -2,6 +2,7 @@
 #define IO_BUF__OBUF__H__
 
 #include <stdarg.h>
+#include "sysdeps.h"
 #include "iobuf_common.h"
 
 /** \defgroup obuf obuf: Output Buffer Management
@@ -34,9 +35,9 @@ typedef struct obuf obuf;
 extern obuf outbuf;
 extern obuf errbuf;
 
-extern const char obuf_dec_digits[10];
-extern const char obuf_hex_lcase_digits[16];
-extern const char obuf_hex_ucase_digits[16];
+extern const char obuf_dec_digits[10] __DEPRECATED__;
+extern const char obuf_hex_lcase_digits[16] __DEPRECATED__;
+extern const char obuf_hex_ucase_digits[16] __DEPRECATED__;
 
 /** Create the file if it does not already exist. */
 #define OBUF_CREATE O_CREAT

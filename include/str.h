@@ -2,6 +2,7 @@
 #define STR__H__
 
 #include <stdarg.h>
+#include "sysdeps.h"
 
 /** \defgroup str str: Dynamically allocated string library.
 
@@ -59,8 +60,8 @@ typedef struct str_sortentry str_sortentry;
 
 /** \name Globals
  * @{ */
-extern const char str_lcase_digits[36];
-extern const char str_ucase_digits[36];
+extern const char str_lcase_digits[36] __DEPRECATED__;
+extern const char str_ucase_digits[36] __DEPRECATED__;
 /** @} */
 
 /** \name Overhead Functions
