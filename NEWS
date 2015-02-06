@@ -1,6 +1,11 @@
+-------------------------------------------------------------------------------
+Changes in version 2.03
+
 - Reverted libbg-cli back to static linkage (for now) to fix problem
   with cli-generate generated code.
 
+Development of this version has been sponsored by FutureQuest, Inc.
+ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
 Changes in version 2.02
 
