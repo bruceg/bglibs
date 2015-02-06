@@ -737,7 +737,7 @@ INPUT                  = bg-installer.c \
                          adt \
                          crypto \
                          fmt \
-                         instlib \
+                         include \
                          iobuf \
                          net \
                          path \
