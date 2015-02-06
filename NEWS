@@ -1,3 +1,6 @@
+- Reverted libbg-cli back to static linkage (for now) to fix problem
+  with cli-generate generated code.
+
 -------------------------------------------------------------------------------
 Changes in version 2.02
 
