@@ -76,7 +76,7 @@ int dns_qualify_rules(str *out, str *fqdn, const char *in, const str *rules,
   for (;;) {
     p = memchr(fqdn->s + i,'+',fqdnlen - i);
     j = p ? p - (fqdn->s + i) : fqdnlen - i;
-    memcpy(fqdn->s + plus,fqdn->s + i,j);
+    memmove(fqdn->s + plus,fqdn->s + i,j);
     fqdn->len = plus + j;
     if (fn(&tx,out,fqdn->s) == -1) return -1;
     if (out->len) return 0;

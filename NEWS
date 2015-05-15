@@ -1,3 +1,6 @@
+
+- Fixed bug in dns_qualify caused by use of memcpy on overlapping
+  buffers.
 -------------------------------------------------------------------------------
 Changes in version 2.03
 
