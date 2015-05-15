@@ -1,3 +1,4 @@
 /* sysdep: +struct ucred */
 #define HASPEERCRED 1
+#define _GNU_SOURCE 1
 #include <sys/socket.h>
