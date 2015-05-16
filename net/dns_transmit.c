@@ -8,6 +8,8 @@
 #include "socket.h"
 #include "dns.h"
 
+#define DNS_PORT 53
+
 static int serverwantstcp(const char *buf,unsigned int len)
 {
   unsigned char out[12];
@@ -112,7 +114,7 @@ static int thisudp(struct dns_transmit *d)
         if (!d->s1) { dns_transmit_free(d); return -1; }
 	if (randombind(d) == -1) { dns_transmit_free(d); return -1; }
 
-        if (socket_connect4(d->s1 - 1,ip,53))
+        if (socket_connect4(d->s1 - 1,ip,DNS_PORT))
           if (send(d->s1 - 1,d->query + 2,d->querylen - 2,0) == d->querylen - 2) {
 	    gettimeofday(&d->deadline,0);
 	    d->deadline.tv_sec += timeouts[d->udploop];
@@ -162,7 +164,7 @@ static int thistcp(struct dns_transmit *d)
 
       gettimeofday(&d->deadline,0);
       d->deadline.tv_sec += 10;
-      if (socket_connect4(d->s1 - 1,ip,53)) {
+      if (socket_connect4(d->s1 - 1,ip,DNS_PORT)) {
         d->tcpstate = 2;
         return 0;
       }
