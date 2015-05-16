@@ -2,10 +2,13 @@
 #include <string.h>
 
 #include "ibuf.h"
+#include "misc.h"
 #include "striter.h"
 #include "dns.h"
 
 static str data = {0};
+
+extern ipv4port dns_use_port;
 
 /** Read the \c /etc/resolv.conf file.
     If \c $DNSRESOLVCONF is set, it names a file to read instead of \c /etc/resolv.conf . */
@@ -24,6 +27,13 @@ static int init(ipv4addr ip[DNS_MAX_IPS])
   striter j;
   int iplen = 0;
   const char *x;
+
+  x = getenv("DNSCACHEPORT");
+  if (x && *x) {
+    ipv4port p = strtou(x, &x);
+    if (*x)
+      dns_use_port = p;
+  }
 
   x = getenv("DNSCACHEIP");
   if (x)

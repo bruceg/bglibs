@@ -1,4 +1,6 @@
 
+- Added support for DNS queries on an alternate port.
+
 - Fixed problem with struct ucred not being pulled in properly.
 
 - Fixed bug in dns_qualify caused by use of memcpy on overlapping
