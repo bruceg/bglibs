@@ -124,6 +124,15 @@ struct dns_mx
   char* name;
 };
 
+union dns_result_rrs
+{
+  void* __ptr;
+  ipv4addr* ip4;
+  ipv6addr* ip6;
+  struct dns_mx* mx;
+  char** name;
+};
+
 /** DNS query results. */
 struct dns_result
 {
@@ -131,16 +140,8 @@ struct dns_result
   int count;
   /** The record type of the results. */
   int type;
-  union
-  {
-    void* __ptr;
-    ipv4addr* ip4;
-    ipv6addr* ip6;
-    struct dns_mx* mx;
-    char** name;
-  }
   /** The individual record arrays. */
-    rr;
+  union dns_result_rrs rr;
   /** Internal use buffer pointer. */
   void* __buffer;
 };
