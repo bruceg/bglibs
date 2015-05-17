@@ -59,28 +59,36 @@ int dns_ip6_r(struct dns_transmit* tx, struct dns_result* out, const char* fqdn)
 DNS_R_FN_WRAP(ip6, const char*)
 
 #ifdef SELFTEST_MAIN
-struct dns_result out = {0};
-void doit(const char* fqdn)
+#include "dns-responder.c"
+void dump_ip6(int count, const union dns_result_rrs* rr)
 {
   int i;
 
-  debugfn(dns_ip6(&out, fqdn));
-  obuf_putf(&outbuf, "s{ }d{:}", fqdn, out.count);
-  for (i = 0; i < out.count; i++) {
+  for (i = 0; i < count; i++) {
     obuf_putc(&outbuf, ' ');
-    obuf_puts(&outbuf, ipv6_format(&out.rr.ip6[i]));
+    obuf_puts(&outbuf, ipv6_format(&rr->ip6[i]));
   }
   NL();
 }
+struct dns_response response1 = {
+  1, 1, 0, {
+    { "\300\014", 2, 28, 1, 123, "\x26\x07\xf8\xb0\x40\x0b\x08\x0b\x00\x00\x00\x00\x00\x00\x10\x17", 16 },
+    { "\300\014", 2, 2, 1, 123456, "\3ns1\6google\3com\0", 16 },
+  }
+};
 MAIN
 {
-  doit("1.2.3.4");
-  doit("google.ca");
+  do_dns_test("1.2.3.4", dns_ip6, dump_ip6);
+  do_dns_respond_test("google.ca", &response1, dns_ip6, dump_ip6);
 }
 #endif
 #ifdef SELFTEST_EXP_FNMATCH
 result=0
-1.2.3.4 1: ::ffff:1.2.3.4
+1.2.3.4: count=1
+ ::ffff:1.2.3.4
+27: ID=XX QR=0 opcode=0 AA=0 TC=0 RD=1 RA=0 Z=0 RCODE=0 QDCOUNT=1 ANCOUNT=0 NSCOUNT=0 ARCOUNT=0
+Question: google.ca. QTYPE=28 QCLASS=1
 result=0
-google.ca 1: 2607:f8b0:400a:*
+google.ca: count=1
+ 2607:f8b0:400b:80b::1017
 #endif

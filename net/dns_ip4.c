@@ -51,28 +51,49 @@ int dns_ip4_r(struct dns_transmit* tx, struct dns_result *out, const char* fqdn)
 DNS_R_FN_WRAP(ip4, const char*)
 
 #ifdef SELFTEST_MAIN
-struct dns_result out = {0};
-void doit(const char* fqdn)
+#include "dns-responder.c"
+void dump_ip4(int count, const union dns_result_rrs* rr)
 {
   int i;
-
-  debugfn(dns_ip4(&out, fqdn));
-  obuf_putf(&outbuf, "s{ }d{:}", fqdn, out.count);
-  for (i = 0; i < out.count; i++) {
+  for (i = 0; i < count; i++) {
     obuf_putc(&outbuf, ' ');
-    obuf_puts(&outbuf, ipv4_format(&out.rr.ip4[i]));
+    obuf_puts(&outbuf, ipv4_format(&rr->ip4[i]));
   }
   NL();
 }
+struct dns_response response1 = {
+  1, 1, 0, {
+    { "\300\014", 2, 1, 1, 512, "\105\005\001\227", 4 },
+    { "\300\014", 2, 2, 1, 123456, "\003ns1\012untroubled\3org\0", 20 },
+  }
+};
+struct dns_response response2 = {
+  3, 1, 0, {
+    { "\300\014", 2, 1, 1, 512, "\105\005\001\227", 4 },
+    { "\300\014", 2, 1, 1, 512, "\105\005\001\226", 4 },
+    { "\300\014", 2, 1, 1, 512, "\105\005\001\225", 4 },
+    { "\300\014", 2, 2, 1, 123456, "\003ns1\012untroubled\3org\0", 20 },
+  }
+};
 MAIN
 {
-  doit("1.2.3.4");
-  doit("untroubled.org");
+  do_dns_test("1.2.3.4", dns_ip4, dump_ip4);
+  do_dns_respond_test("example.com", &response1, dns_ip4, dump_ip4);
+  do_dns_respond_test("example.org", &response2, dns_ip4, dump_ip4);
 }
 #endif
 #ifdef SELFTEST_EXP
 result=0
-1.2.3.4 1: 1.2.3.4
+1.2.3.4: count=1
+ 1.2.3.4
+29: ID=XX QR=0 opcode=0 AA=0 TC=0 RD=1 RA=0 Z=0 RCODE=0 QDCOUNT=1 ANCOUNT=0 NSCOUNT=0 ARCOUNT=0
+Question: example.com. QTYPE=1 QCLASS=1
 result=0
-untroubled.org 1: 69.5.1.51
+example.com: count=1
+ 69.5.1.151
+29: ID=XX QR=0 opcode=0 AA=0 TC=0 RD=1 RA=0 Z=0 RCODE=0 QDCOUNT=1 ANCOUNT=0 NSCOUNT=0 ARCOUNT=0
+Question: example.org. QTYPE=1 QCLASS=1
+result=0
+example.org: count=3
+ 69.5.1.149 69.5.1.150 69.5.1.151
 #endif

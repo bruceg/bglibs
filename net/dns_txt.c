@@ -87,8 +87,8 @@ struct dns_response response2 = {
 };
 MAIN
 {
-  do_dns_test("2.0.0.127.sbl-xbl.spamhaus.org", &response1, dns_txt, dump_txt);
-  do_dns_test("gmail.com", &response2, dns_txt, dump_txt);
+  do_dns_respond_test("2.0.0.127.sbl-xbl.spamhaus.org", &response1, dns_txt, dump_txt);
+  do_dns_respond_test("gmail.com", &response2, dns_txt, dump_txt);
 }
 #endif
 #ifdef SELFTEST_EXP

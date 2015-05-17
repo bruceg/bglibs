@@ -123,13 +123,20 @@ static void start_dns_responder(const struct dns_response* response)
 }
 
 void do_dns_test(const char* fqdn,
-		 const struct dns_response* response,
 		 int (*fn)(struct dns_result*, const char*),
 		 void (*dump)(int, const union dns_result_rrs* rrs))
 {
   struct dns_result out = {0};
-  start_dns_responder(response);
   debugfn(fn(&out, fqdn));
   obuf_putf(&outbuf, "s{: count=}d{\n}", fqdn, out.count);
   dump(out.count, &out.rr);
+}
+
+void do_dns_respond_test(const char* fqdn,
+			 const struct dns_response* response,
+			 int (*fn)(struct dns_result*, const char*),
+			 void (*dump)(int, const union dns_result_rrs* rrs))
+{
+  start_dns_responder(response);
+  do_dns_test(fqdn, fn, dump);
 }
