@@ -121,7 +121,7 @@ static void start_dns_responder(const struct dns_response* response)
     die1sys(111, "Could not send DNS response");
   exit(0);
 }
-
+#include <string.h>
 void do_dns_test(const char* fqdn,
 		 int (*fn)(struct dns_result*, const char*),
 		 void (*dump)(int, const union dns_result_rrs* rrs))
@@ -139,4 +139,8 @@ void do_dns_respond_test(const char* fqdn,
 {
   start_dns_responder(response);
   do_dns_test(fqdn, fn, dump);
+  obuf_flush(&outbuf);
 }
+
+#define DUMP static void dump_rr(int count, const union dns_result_rrs* rr)
+#define RESPONSE static const struct dns_response
