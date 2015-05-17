@@ -60,7 +60,7 @@ DNS_R_FN_WRAP(ip6, const char*)
 
 #ifdef SELFTEST_MAIN
 #include "dns-responder.c"
-void dump_ip6(int count, const union dns_result_rrs* rr)
+DUMP
 {
   int i;
 
@@ -70,7 +70,7 @@ void dump_ip6(int count, const union dns_result_rrs* rr)
   }
   NL();
 }
-struct dns_response response1 = {
+RESPONSE response1 = {
   1, 1, 0, {
     { "\300\014", 2, 28, 1, 123, "\x26\x07\xf8\xb0\x40\x0b\x08\x0b\x00\x00\x00\x00\x00\x00\x10\x17", 16 },
     { "\300\014", 2, 2, 1, 123456, "\3ns1\6google\3com\0", 16 },
@@ -78,8 +78,8 @@ struct dns_response response1 = {
 };
 MAIN
 {
-  do_dns_test("1.2.3.4", dns_ip6, dump_ip6);
-  do_dns_respond_test("google.ca", &response1, dns_ip6, dump_ip6);
+  do_dns_test("1.2.3.4", dns_ip6);
+  do_dns_respond_test("google.ca", &response1, dns_ip6);
 }
 #endif
 #ifdef SELFTEST_EXP_FNMATCH

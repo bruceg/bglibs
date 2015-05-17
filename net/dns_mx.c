@@ -82,8 +82,8 @@ RESPONSE response2 = {
 };
 MAIN
 {
-  do_dns_respond_test("untroubled.org", &response1, dns_mx, dump_rr);
-  do_dns_respond_test("google.com", &response2, dns_mx, dump_rr);
+  do_dns_respond_test("untroubled.org", &response1, dns_mx);
+  do_dns_respond_test("google.com", &response2, dns_mx);
 }
 #endif
 #ifdef SELFTEST_EXP

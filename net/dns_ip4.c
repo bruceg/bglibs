@@ -52,7 +52,7 @@ DNS_R_FN_WRAP(ip4, const char*)
 
 #ifdef SELFTEST_MAIN
 #include "dns-responder.c"
-void dump_ip4(int count, const union dns_result_rrs* rr)
+DUMP
 {
   int i;
   for (i = 0; i < count; i++) {
@@ -61,13 +61,13 @@ void dump_ip4(int count, const union dns_result_rrs* rr)
   }
   NL();
 }
-struct dns_response response1 = {
+RESPONSE response1 = {
   1, 1, 0, {
     { "\300\014", 2, 1, 1, 512, "\105\005\001\227", 4 },
     { "\300\014", 2, 2, 1, 123456, "\003ns1\012untroubled\3org\0", 20 },
   }
 };
-struct dns_response response2 = {
+RESPONSE response2 = {
   3, 1, 0, {
     { "\300\014", 2, 1, 1, 512, "\105\005\001\227", 4 },
     { "\300\014", 2, 1, 1, 512, "\105\005\001\226", 4 },
@@ -77,9 +77,9 @@ struct dns_response response2 = {
 };
 MAIN
 {
-  do_dns_test("1.2.3.4", dns_ip4, dump_ip4);
-  do_dns_respond_test("example.com", &response1, dns_ip4, dump_ip4);
-  do_dns_respond_test("example.org", &response2, dns_ip4, dump_ip4);
+  do_dns_test("1.2.3.4", dns_ip4);
+  do_dns_respond_test("example.com", &response1, dns_ip4);
+  do_dns_respond_test("example.org", &response2, dns_ip4);
 }
 #endif
 #ifdef SELFTEST_EXP
