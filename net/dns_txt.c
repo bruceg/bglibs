@@ -63,29 +63,44 @@ int dns_txt_r(struct dns_transmit* tx, struct dns_result* out, const char* fqdn)
 DNS_R_FN_WRAP(txt, const char*)
 
 #ifdef SELFTEST_MAIN
-struct dns_result out = {0};
-void doit(const char* fqdn)
+#include "dns-responder.c"
+void dump_txt(int count, const union dns_result_rrs* rr)
 {
   int i;
-  debugfn(dns_txt(&out, fqdn));
-  obuf_putf(&outbuf, "d{ record\n}", out.count);
-  for (i = 0; i < out.count; ++i) {
-    obuf_puts(&outbuf, out.rr.name[i]);
+  for (i = 0; i < count; ++i) {
+    obuf_puts(&outbuf, rr->name[i]);
     NL();
   }
 }
+struct dns_response response1 = {
+  2, 1, 0, {
+    { "\300\014", 2, 16, 1, 5, "\050http://www.spamhaus.org/sbl/query/SBL233", 41 },
+    { "\300\014", 2, 16, 1, 5, "\055http://www.spamhaus.org/query/bl?ip=127.0.0.2", 46 },
+    { "\300\026", 2, 2, 1, 3132, "\001g\002ns\300\036", 7 },
+  }
+};
+struct dns_response response2 = {
+  1, 1, 0, {
+    { "\300\014", 2, 16, 1, 512, "\037v=spf1 redirect=_spf.google.com", 32 },
+    { "\300\026", 2, 2, 1, 123456, "\003ns2\006google\300\022", 13 },
+  }
+};
 MAIN
 {
-  doit("gmail.com");
-  doit("2.0.0.127.sbl-xbl.spamhaus.org");
+  do_dns_test("2.0.0.127.sbl-xbl.spamhaus.org", &response1, dns_txt, dump_txt);
+  do_dns_test("gmail.com", &response2, dns_txt, dump_txt);
 }
 #endif
 #ifdef SELFTEST_EXP
+48: ID=XX QR=0 opcode=0 AA=0 TC=0 RD=1 RA=0 Z=0 RCODE=0 QDCOUNT=1 ANCOUNT=0 NSCOUNT=0 ARCOUNT=0
+Question: 2.0.0.127.sbl-xbl.spamhaus.org. QTYPE=16 QCLASS=1
 result=0
-1 record
-v=spf1 redirect=_spf.google.com
-result=0
-2 record
+2.0.0.127.sbl-xbl.spamhaus.org: count=2
 http://www.spamhaus.org/sbl/query/SBL233
 http://www.spamhaus.org/query/bl?ip=127.0.0.2
+27: ID=XX QR=0 opcode=0 AA=0 TC=0 RD=1 RA=0 Z=0 RCODE=0 QDCOUNT=1 ANCOUNT=0 NSCOUNT=0 ARCOUNT=0
+Question: gmail.com. QTYPE=16 QCLASS=1
+result=0
+gmail.com: count=1
+v=spf1 redirect=_spf.google.com
 #endif
