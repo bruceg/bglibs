@@ -27,6 +27,8 @@ extern int __resolve_error;
 
 struct dns_result;
 extern int resolve_calldns(int (*dnsfn)(), struct dns_result* out, const void* param);
+extern int resolve_qualdns(int (*dnsfn)(struct dns_transmit*, struct dns_result* out, const char*),
+                           struct dns_result* out, const char* name);
 
 /** @} */
 

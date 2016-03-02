@@ -7,6 +7,12 @@
 #include "uint32.h"
 #include <sys/wait.h>
 
+#define DUMP void dump_rrs(int count, const union dns_result_rrs* rr)
+#define NODUMP DUMP { (void)count; (void)rr; }
+#define RESPONSE static const struct dns_response
+
+extern DUMP;
+
 static int dns_responder_pid = 0;
 extern ipv4port dns_use_port;
 struct dns_response_rr
@@ -130,8 +136,6 @@ static void wait_dns_responder(void)
   waitpid(dns_responder_pid, NULL, 0);
 }
 
-void dump_rrs(int count, const union dns_result_rrs* rr);
-
 void do_dns_test(const char* fqdn, int (*fn)(struct dns_result*, const char*))
 {
   struct dns_result out = {0};
@@ -149,6 +153,3 @@ void do_dns_respond_test(const char* fqdn,
   obuf_flush(&outbuf);
   wait_dns_responder();
 }
-
-#define DUMP void dump_rrs(int count, const union dns_result_rrs* rr)
-#define RESPONSE static const struct dns_response
