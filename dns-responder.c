@@ -5,6 +5,7 @@
 #include "socket.h"
 #include "uint16.h"
 #include "uint32.h"
+#include <sys/wait.h>
 
 static int dns_responder_pid = 0;
 extern ipv4port dns_use_port;
@@ -21,7 +22,7 @@ struct dns_response_rr
 struct dns_response
 {
   uint16 ancount, nscount, arcount;
-  struct dns_response_rr rr[];
+  struct dns_response_rr rr[8];
 };
 
 static long dump_name(const unsigned char* data)
@@ -86,7 +87,7 @@ static int make_response(unsigned char* buf, int offset, const struct dns_respon
   return offset;
 }
 
-static void start_dns_responder(const struct dns_response* response)
+static void start_dns_responder(const struct dns_response* response, int count)
 {
   int sockfd;
   ipv4addr addr;
@@ -113,13 +114,20 @@ static void start_dns_responder(const struct dns_response* response)
     die1sys(111, "Could not fork");
   if (dns_responder_pid != 0)
     return;
-  if ((r = socket_recv4(sockfd, (char*)buf, sizeof buf, &addr, &port)) < 0)
-    die1sys(111, "Could not receive DNS packet");
-  offset = dump_request(buf, r);
-  offset = make_response(buf, offset, response);
-  if ((r = socket_send4(sockfd, (char*)buf, offset, &addr, port)) != offset)
-    die1sys(111, "Could not send DNS response");
+  for (; count > 0; ++response, --count) {
+    if ((r = socket_recv4(sockfd, (char*)buf, sizeof buf, &addr, &port)) < 0)
+      die1sys(111, "Could not receive DNS packet");
+    offset = dump_request(buf, r);
+    offset = make_response(buf, offset, response);
+    if ((r = socket_send4(sockfd, (char*)buf, offset, &addr, port)) != offset)
+      die1sys(111, "Could not send DNS response");
+  }
   exit(0);
+}
+
+static void wait_dns_responder(void)
+{
+  waitpid(dns_responder_pid, NULL, 0);
 }
 
 void dump_rrs(int count, const union dns_result_rrs* rr);
@@ -136,9 +144,10 @@ void do_dns_respond_test(const char* fqdn,
 			 const struct dns_response* response,
 			 int (*fn)(struct dns_result*, const char*))
 {
-  start_dns_responder(response);
+  start_dns_responder(response, 1);
   do_dns_test(fqdn, fn);
   obuf_flush(&outbuf);
+  wait_dns_responder();
 }
 
 #define DUMP void dump_rrs(int count, const union dns_result_rrs* rr)
