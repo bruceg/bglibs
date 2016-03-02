@@ -47,8 +47,8 @@ static int doit(str *work,const char *rule)
     \param fn Function to call (such as \c dns_ip4) to determine if a
     qualified domain name exists.
 */
-int dns_qualify_rules(str *out, str *fqdn, const char *in, const str *rules,
-		      int (*fn)(struct dns_transmit*, str*, const char*))
+int dns_qualify_rules(struct dns_result* out, str *fqdn, const char *in, const str *rules,
+		      int (*fn)(struct dns_transmit*, struct dns_result*, const char*))
 {
   unsigned int i;
   unsigned int j;
@@ -79,7 +79,7 @@ int dns_qualify_rules(str *out, str *fqdn, const char *in, const str *rules,
     memmove(fqdn->s + plus,fqdn->s + i,j);
     fqdn->len = plus + j;
     if (fn(&tx,out,fqdn->s) == -1) return -1;
-    if (out->len) return 0;
+    if (out->count) return 0;
     i += j;
     if (i >= fqdnlen) return 0;
     ++i;
@@ -96,8 +96,8 @@ int dns_qualify_rules(str *out, str *fqdn, const char *in, const str *rules,
     \param fn Function to call (such as \c dns_ip4) to determine if a
     qualified domain name exists.
 */
-int dns_qualify(str *out, str* fqdn, const char* in,
-		int (*fn)(struct dns_transmit*, str*, const char*))
+int dns_qualify(struct dns_result* out, str* fqdn, const char* in,
+		int (*fn)(struct dns_transmit*, struct dns_result*, const char*))
 {
   static str rules;
   if (dns_resolvconfrewrite(&rules) == -1) return -1;

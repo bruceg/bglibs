@@ -205,10 +205,10 @@ extern int dns_mx_r(struct dns_transmit *,struct dns_result*, const char *);
 extern int dns_mx(struct dns_result*, const char *);
 
 extern int dns_resolvconfrewrite(str *);
-extern int dns_qualify_rules(str *,str *,const char *,const str *,
-			     int (*)(struct dns_transmit*, str*, const char*));
-extern int dns_qualify(str *,str *,const char *,
-		       int (*)(struct dns_transmit*, str*, const char*));
+extern int dns_qualify_rules(struct dns_result*,str *,const char *,const str *,
+			     int (*)(struct dns_transmit*, struct dns_result*, const char*));
+extern int dns_qualify(struct dns_result*,str *,const char *,
+		       int (*)(struct dns_transmit*, struct dns_result*, const char*));
 
 extern unsigned fmt_dns_domain(char*, const char*);
 

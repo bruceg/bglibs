@@ -3,6 +3,8 @@
 
 - Fixed problem with struct ucred not being pulled in properly.
 
+- Fixed prototype for (unused) dns_qualify.
+
 - Fixed bug in dns_qualify caused by use of memcpy on overlapping
   buffers.
 -------------------------------------------------------------------------------
