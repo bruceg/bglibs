@@ -69,3 +69,42 @@ int dns_domain_fromdot(char **out,const char *buf,unsigned int n)
   *out = x;
   return 1;
 }
+
+#ifdef SELFTEST_MAIN
+#include "iobuf.h"
+
+void dump(const char* name)
+{
+  int len;
+  do {
+    int i;
+    len = *name++;
+    obuf_putf(&outbuf, "\\[d\\]", len);
+    for (i = 0; i < len; i++, name++)
+      obuf_putc(&outbuf, *name);
+  } while (len > 0);
+  obuf_endl(&outbuf);
+}
+
+void testit(const char* dot)
+{
+  char* name = 0;
+  debugfn(dns_domain_fromdot(&name, dot, strlen(dot)));
+  dump(name);
+}
+
+MAIN
+{
+  testit("example.com");
+  testit("joe.example.org");
+  testit("\146oo");
+}
+#endif
+#ifdef SELFTEST_EXP
+result=1
+[7]example[3]com[0]
+result=1
+[3]joe[7]example[3]org[0]
+result=1
+[3]foo[0]
+#endif
