@@ -63,27 +63,27 @@ DUMP
   for (i = 0; i < count; ++i)
     obuf_putf(&outbuf, "d{ }d{: \"}s{\"\n}", i, rr->mx[i].distance, rr->mx[i].name);
 }
-RESPONSE response1 = {
-  1, 3, 0, {
-    { "\300\014", 2, 15, 1, 86400, "2\1\2mx\vfuturequest\3net\0", 22 },
-    { "\300\014", 2, 1, 1, 123456, "\3ns2\300\061", 6 },
-    { "\300\014", 2, 1, 1, 123456, "\3ns1\300\061", 6 },
-    { "\300\014", 2, 1, 1, 123456, "\3ns3\300\061", 6 },
-  }
-};
-RESPONSE response2 = {
-  5, 0, 0, {
-    { "\300\014", 2, 15, 1, 86400, "\0\024\4alt1\5aspmx\1l\6google\3com\0", 27 },
-    { "\300\014", 2, 15, 1, 86400, "\0\012\5aspmx\1l\6google\3com\0", 22, },
-    { "\300\014", 2, 15, 1, 86400, "\0\036\4alt2\5aspmx\1l\6google\3com\0", 27 },
-    { "\300\014", 2, 15, 1, 86400, "\0\050\4alt3\5aspmx\1l\6google\3com\0", 27 },
-    { "\300\014", 2, 15, 1, 86400, "\0\062\4alt4\5aspmx\1l\6google\3com\0", 27 },
-  }
+RESPONSE responses[] = {
+  { 1, 3, 0, {
+      { "\300\014", 2, 15, 1, 86400, "2\1\2mx\vfuturequest\3net\0", 22 },
+      { "\300\014", 2, 1, 1, 123456, "\3ns2\300\061", 6 },
+      { "\300\014", 2, 1, 1, 123456, "\3ns1\300\061", 6 },
+      { "\300\014", 2, 1, 1, 123456, "\3ns3\300\061", 6 },
+    }
+  },
+  { 5, 0, 0, {
+      { "\300\014", 2, 15, 1, 86400, "\0\024\4alt1\5aspmx\1l\6google\3com\0", 27 },
+      { "\300\014", 2, 15, 1, 86400, "\0\012\5aspmx\1l\6google\3com\0", 22, },
+      { "\300\014", 2, 15, 1, 86400, "\0\036\4alt2\5aspmx\1l\6google\3com\0", 27 },
+      { "\300\014", 2, 15, 1, 86400, "\0\050\4alt3\5aspmx\1l\6google\3com\0", 27 },
+      { "\300\014", 2, 15, 1, 86400, "\0\062\4alt4\5aspmx\1l\6google\3com\0", 27 },
+    }
+  },
 };
 MAIN
 {
-  do_dns_respond_test("untroubled.org", &response1, dns_mx);
-  do_dns_respond_test("google.com", &response2, dns_mx);
+  const char* names[] = { "untroubled.org", "google.com", NULL };
+  do_dns_respond_tests(dns_mx, names, responses, 2);
 }
 #endif
 #ifdef SELFTEST_EXP

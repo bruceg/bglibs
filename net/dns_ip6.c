@@ -78,8 +78,8 @@ RESPONSE response1 = {
 };
 MAIN
 {
-  do_dns_test("1.2.3.4", dns_ip6);
-  do_dns_respond_test("google.ca", &response1, dns_ip6);
+  const char* names[] = { "1.2.3.4", "google.ca", NULL };
+  do_dns_respond_tests(dns_ip6, names, &response1, 1);
 }
 #endif
 #ifdef SELFTEST_EXP_FNMATCH

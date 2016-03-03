@@ -72,23 +72,23 @@ DUMP
     NL();
   }
 }
-RESPONSE response1 = {
-  2, 1, 0, {
-    { "\300\014", 2, 16, 1, 5, "\050http://www.spamhaus.org/sbl/query/SBL233", 41 },
-    { "\300\014", 2, 16, 1, 5, "\055http://www.spamhaus.org/query/bl?ip=127.0.0.2", 46 },
-    { "\300\026", 2, 2, 1, 3132, "\001g\002ns\300\036", 7 },
-  }
-};
-RESPONSE response2 = {
-  1, 1, 0, {
-    { "\300\014", 2, 16, 1, 512, "\037v=spf1 redirect=_spf.google.com", 32 },
-    { "\300\026", 2, 2, 1, 123456, "\003ns2\006google\300\022", 13 },
-  }
+RESPONSE responses[] = {
+  { 2, 1, 0, {
+      { "\300\014", 2, 16, 1, 5, "\050http://www.spamhaus.org/sbl/query/SBL233", 41 },
+      { "\300\014", 2, 16, 1, 5, "\055http://www.spamhaus.org/query/bl?ip=127.0.0.2", 46 },
+      { "\300\026", 2, 2, 1, 3132, "\001g\002ns\300\036", 7 },
+    }
+  },
+  { 1, 1, 0, {
+      { "\300\014", 2, 16, 1, 512, "\037v=spf1 redirect=_spf.google.com", 32 },
+      { "\300\026", 2, 2, 1, 123456, "\003ns2\006google\300\022", 13 },
+    }
+  },
 };
 MAIN
 {
-  do_dns_respond_test("2.0.0.127.sbl-xbl.spamhaus.org", &response1, dns_txt);
-  do_dns_respond_test("gmail.com", &response2, dns_txt);
+  const char* names[] = { "2.0.0.127.sbl-xbl.spamhaus.org", "gmail.com", NULL };
+  do_dns_respond_tests(dns_txt, names, responses, 2);
 }
 #endif
 #ifdef SELFTEST_EXP

@@ -144,12 +144,14 @@ void do_dns_test(const char* fqdn, int (*fn)(struct dns_result*, const char*))
   dump_rrs(out.count, &out.rr);
 }
 
-void do_dns_respond_test(const char* fqdn,
-			 const struct dns_response* response,
-			 int (*fn)(struct dns_result*, const char*))
+void do_dns_respond_tests(int (*fn)(struct dns_result*, const char*),
+                          const char** fqdn,
+                          const struct dns_response* responses, int count)
 {
-  start_dns_responder(response, 1);
-  do_dns_test(fqdn, fn);
-  obuf_flush(&outbuf);
+  start_dns_responder(responses, count);
+  while (*fqdn) {
+    do_dns_test(*fqdn++, fn);
+    obuf_flush(&outbuf);
+  }
   wait_dns_responder();
 }
