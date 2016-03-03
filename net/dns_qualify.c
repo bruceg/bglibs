@@ -77,7 +77,7 @@ int dns_qualify_rules(struct dns_result* out, str *fqdn, const char *in, const s
     p = memchr(fqdn->s + i,'+',fqdnlen - i);
     j = p ? p - (fqdn->s + i) : fqdnlen - i;
     memmove(fqdn->s + plus,fqdn->s + i,j);
-    fqdn->len = plus + j;
+    if (!str_truncate(fqdn, plus + j)) return -1;
     if (fn(&tx,out,fqdn->s) == -1) return -1;
     if (out->count) return 0;
     i += j;
@@ -107,15 +107,16 @@ int dns_qualify(struct dns_result* out, str* fqdn, const char* in,
 
 #ifdef SELFTEST_MAIN
 
-static int records = 0;
+static int skip = 0;
 static int dummy(struct dns_transmit* tx, struct dns_result* out, const char* fqdn)
 {
-  out->count = records;
-  records = 0;
+  obuf_putf(&outbuf, "{using }s\\\n", fqdn);
+  out->count = !skip;
+  if (skip > 0)
+    --skip;
   return 0;
   (void)tx;
   (void)out;
-  (void)fqdn;
 }
 
 MAIN
@@ -130,20 +131,42 @@ MAIN
   debugstrfn(dns_qualify(&out,&fqdn,"sth.local",dummy), &fqdn);
   debugstrfn(dns_qualify(&out,&fqdn,"me",dummy), &fqdn);
   debugstrfn(dns_qualify(&out,&fqdn,"sth.a",dummy), &fqdn);
-  records = 1;
   debugstrfn(dns_qualify(&out,&fqdn,"sth",dummy), &fqdn);
+  skip = 1;
   debugstrfn(dns_qualify(&out,&fqdn,"sth",dummy), &fqdn);
   debugstrfn(dns_qualify(&out,&fqdn,"sth.",dummy), &fqdn);
+  debugstrfn(dns_qualify(&out,&fqdn,"a.b+.c.d+.e.f+.g.h",dummy), &fqdn);
+  skip = 1;
+  debugstrfn(dns_qualify(&out,&fqdn,"a.b+.c.d+.e.f+.g.h",dummy), &fqdn);
+  skip = 2;
+  debugstrfn(dns_qualify(&out,&fqdn,"a.b+.c.d+.e.f+.g.h",dummy), &fqdn);
   unlink(rcfile.s);
 }
 #endif
 #ifdef SELFTEST_EXP
 result=0
+using example.com
 result=0 len=11 size=16 s=example.com
+using me.local
 result=0 len=8 size=16 s=me.local
+using 127.0.0.1
 result=0 len=9 size=16 s=127.0.0.1
+using sth.af.mil
 result=0 len=10 size=16 s=sth.af.mil
+using sth.domain1.com
 result=0 len=15 size=48 s=sth.domain1.com
+using sth.domain1.com
+using sth.domain2.net
 result=0 len=15 size=48 s=sth.domain2.net
+using sth
 result=0 len=3 size=48 s=sth
+using a.b.c.d
+result=0 len=7 size=48 s=a.b.c.d
+using a.b.c.d
+using a.b.e.f
+result=0 len=7 size=48 s=a.b.e.f
+using a.b.c.d
+using a.b.e.f
+using a.b.g.h
+result=0 len=7 size=48 s=a.b.g.h
 #endif
