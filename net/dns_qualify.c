@@ -103,3 +103,47 @@ int dns_qualify(struct dns_result* out, str* fqdn, const char* in,
   if (dns_resolvconfrewrite(&rules) == -1) return -1;
   return dns_qualify_rules(out,fqdn,in,&rules,fn);
 }
+
+
+#ifdef SELFTEST_MAIN
+
+static int records = 0;
+static int dummy(struct dns_transmit* tx, struct dns_result* out, const char* fqdn)
+{
+  out->count = records;
+  records = 0;
+  return 0;
+  (void)tx;
+  (void)out;
+  (void)fqdn;
+}
+
+MAIN
+{
+  struct dns_result out = {0};
+  str fqdn = {0};
+  str rcfile = {0};
+
+  makefile(&rcfile, "-.local:me.local\n=me:127.0.0.1\n*.a:.af.mil\n?:+.domain1.com+.domain2.net\n*.:\n");
+  debugfn(setenv("DNSREWRITEFILE", rcfile.s, 1));
+  debugstrfn(dns_qualify(&out,&fqdn,"example.com",dummy), &fqdn);
+  debugstrfn(dns_qualify(&out,&fqdn,"sth.local",dummy), &fqdn);
+  debugstrfn(dns_qualify(&out,&fqdn,"me",dummy), &fqdn);
+  debugstrfn(dns_qualify(&out,&fqdn,"sth.a",dummy), &fqdn);
+  records = 1;
+  debugstrfn(dns_qualify(&out,&fqdn,"sth",dummy), &fqdn);
+  debugstrfn(dns_qualify(&out,&fqdn,"sth",dummy), &fqdn);
+  debugstrfn(dns_qualify(&out,&fqdn,"sth.",dummy), &fqdn);
+  unlink(rcfile.s);
+}
+#endif
+#ifdef SELFTEST_EXP
+result=0
+result=0 len=11 size=16 s=example.com
+result=0 len=8 size=16 s=me.local
+result=0 len=9 size=16 s=127.0.0.1
+result=0 len=10 size=16 s=sth.af.mil
+result=0 len=15 size=48 s=sth.domain1.com
+result=0 len=15 size=48 s=sth.domain2.net
+result=0 len=3 size=48 s=sth
+#endif
