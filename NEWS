@@ -1,4 +1,6 @@
 
+- Fixed DNS self-tests relying on external data.
+
 - Added support for DNS queries on an alternate port.
 
 - Fixed problem with struct ucred not being pulled in properly.
