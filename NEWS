@@ -3,6 +3,8 @@
 
 - Added support for DNS queries on an alternate port.
 
+- Added support for $MSG_NO_PROGRAM to suppress the "program: " prefix.
+
 - Fixed problem with struct ucred not being pulled in properly.
 
 - Fixed several problems with dns_qualify.

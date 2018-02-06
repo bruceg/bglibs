@@ -12,7 +12,10 @@ void msg_common(const char* type,
 		const char* d, const char* e, const char* f,
 		int showsys)
 {
-  if (program != 0) {
+  static int msg_show_program = -1;
+  if (msg_show_program < 0)
+    msg_show_program = getenv("MSG_NO_PROGRAM") == NULL;
+  if (msg_show_program) {
     obuf_puts(&errbuf, program);
     if (&msg_show_pid != 0 && msg_show_pid) {
       if (!pid || msg_show_pid < 0)
