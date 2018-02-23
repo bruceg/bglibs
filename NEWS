@@ -1,3 +1,5 @@
+-------------------------------------------------------------------------------
+Changes in version 2.04
 
 - Fixed DNS self-tests relying on external data.
 
@@ -8,6 +10,9 @@
 - Fixed problem with struct ucred not being pulled in properly.
 
 - Fixed several problems with dns_qualify.
+
+Development of this version has been sponsored by FutureQuest, Inc.
+ossi@FutureQuest.net  http://www.FutureQuest.net/
 -------------------------------------------------------------------------------
 Changes in version 2.03
 
