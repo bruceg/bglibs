@@ -34,7 +34,8 @@ void hmac_prepare(const struct hmac_control_block* hcb,
 		  void* midstate,
 		  const str* secret)
 {
-  unsigned char state[hcb->state_size];
+  uint64 statebuf[(hcb->state_size + 7) / sizeof(uint64)];
+  unsigned char *state = (unsigned char *)statebuf;
   unsigned char block[hcb->block_size];
   unsigned i;
 
@@ -80,8 +81,9 @@ void hmac_finish(const struct hmac_control_block* hcb,
 		 const str* nonce,
 		 void* output)
 {
-  unsigned char state[hcb->state_size];
-  
+  uint64 statebuf[(hcb->state_size + 7) / sizeof(uint64)];
+  unsigned char *state = (unsigned char *)statebuf;
+
   /* Generate H1 = H(K XOR ipad, nonce) */
   hcb->inject(state, midstate);
   hcb->update(state, (const unsigned char*)nonce->s, nonce->len);
@@ -106,7 +108,8 @@ void hmac(const struct hmac_control_block* hcb,
 	  const str* nonce,
 	  void* output)
 {
-  unsigned char midstate[hcb->state_size*2];
+  uint64 statebuf[(hcb->state_size * 2 + 7) / sizeof(uint64)];
+  unsigned char *midstate = (unsigned char *)statebuf;
 
   hmac_prepare(hcb, midstate, secret);
   hmac_finish(hcb, midstate, nonce, output);
