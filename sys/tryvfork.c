@@ -1,4 +1,6 @@
-void main()
+#include <unistd.h>
+
+int main()
 {
   vfork();
 }

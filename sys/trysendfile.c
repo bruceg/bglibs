@@ -2,7 +2,7 @@
 #include <asm/unistd.h>
 #include <unistd.h>
 
-void main(void) {
+int main(void) {
   int x;
   x = __NR_sendfile;
   sendfile(0, 1, 0, 0);

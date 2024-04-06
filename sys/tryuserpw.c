@@ -1,6 +1,6 @@
 #include <userpw.h>
 
-void main()
+int main()
 {
   struct userpw *upw;
 

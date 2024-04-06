@@ -1,7 +1,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-void main()
+int main()
 {
   getpeereid();
 }

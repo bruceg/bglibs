@@ -1,6 +1,7 @@
 #include <shadow.h>
+#include <stdio.h>
 
-void main()
+int main()
 {
   struct spwd *spw;
 
