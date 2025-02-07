@@ -48,7 +48,7 @@ if [ $# -gt 0 ]; then
     do_test $c || exitcode=false
   done
 else
-  for c in `fgrep -l '#ifdef SELFTEST_MAIN' */*.c`
+  for c in `grep -F -l '#ifdef SELFTEST_MAIN' */*.c`
   do
     do_test $c || exitcode=false
   done
