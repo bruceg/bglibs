@@ -21,6 +21,7 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <unistd.h>
+#include <string.h>
 #include "socket.h"
 
 /** Make an UNIX domain connection. */
