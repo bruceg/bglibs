@@ -1,5 +1,4 @@
 #include <signal.h>
-#include <sys/signal.h>
 #include "sig.h"
 #include "sysdeps.h"
 
