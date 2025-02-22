@@ -5,7 +5,7 @@
 int __resolve_error = 0;
 
 /** Call a dns_* function and save an error code if necessary. */
-int resolve_calldns(int (*dnsfn)(), struct dns_result* out, const void* param)
+int resolve_calldns(int (*dnsfn)(struct dns_result*, const void*), struct dns_result* out, const void* param)
 {
   if (dnsfn(out, param) < 0) {
     __resolve_error = RESOLVE_TEMPFAIL;
