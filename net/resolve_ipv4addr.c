@@ -1,11 +1,15 @@
 #include "dns.h"
 #include "resolve.h"
 
+static int dns_name4_wrapper(struct dns_result *res, const void *ptr) {
+  return dns_name4(res, (const ipv4addr*)ptr);
+}
+
 /** Look up the domain name corresponding to an IPv4 address. */
 const char* resolve_ipv4addr(const ipv4addr* addr)
 {
   static struct dns_result out = {0};
-  if (!resolve_calldns(dns_name4, &out, addr))
+  if (!resolve_calldns(dns_name4_wrapper, &out, addr))
     return 0;
   return out.rr.name[0];
 }

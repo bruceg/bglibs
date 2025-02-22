@@ -4,6 +4,5 @@
 /* sysdep: -sysselect */
 
 #include <sys/time.h>
-extern int select();
 
 #endif

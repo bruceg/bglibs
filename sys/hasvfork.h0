@@ -2,7 +2,6 @@
 #define FORK_H
 
 /* sysdep: -vfork */
-extern pid_t fork();
 #define vfork fork
 
 #endif
