@@ -17,8 +17,14 @@ void msg_common(const char* type,
     msg_show_program = getenv("MSG_NO_PROGRAM") == NULL;
   if (msg_show_program) {
     obuf_puts(&errbuf, program);
-    if (&msg_show_pid != 0 && msg_show_pid) {
-      if (!pid || msg_show_pid < 0)
+    /* Read msg_show_pid through a volatile lvalue: the library carries a
+     * default definition (msg/show_pid.c) that programs override, and with
+     * LTO the compiler would otherwise constant-fold that default (0) and
+     * ignore the program's definition. */
+    const int show_pid = (&msg_show_pid != 0)
+      ? *(const volatile int*)&msg_show_pid : 0;
+    if (show_pid) {
+      if (!pid || show_pid < 0)
 	pid = getpid();
       obuf_putc(&errbuf, '[');
       obuf_putu(&errbuf, pid);
